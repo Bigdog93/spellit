@@ -14,12 +14,12 @@ spring:
       matching-strategy: ant_path_matcher
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/spellit?serverTimezone=Asia/Seoul
-    username: ssafy
+    url: jdbc:mysql://j8d201.p.ssafy.io:3305/spellit?serverTimezone=Asia/Seoul
+    username: root
     password: ssafy
   jpa:
-    database: mysql
-    database-platform: org.hibernate.spatial.dialect.mysql.MySQL56InnoDBSpatialDialect
+#    database: mysql
+#    database-platform: org.hibernate.spatial.dialect.mysql.MySQL56InnoDBSpatialDialect
     hibernate:
       ddl-auto: create
     #    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect

@@ -16,17 +16,17 @@ import javax.persistence.*;
 @AllArgsConstructor
 @DynamicInsert
 @DynamicUpdate
-public class MemberEntity extends BaseTimeEntity {
+public class MemberEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id", nullable = false)
     private Long id;
 
-    @Column(nullable = false, length = 40, unique = true)
+    @Column(nullable = false, length = 40)
     private String email;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = true, length = 7, unique = true)
+    @Column(length = 7)
     private String nickname;
     @Column(nullable = false)
     @ColumnDefault("1")
@@ -42,8 +42,7 @@ public class MemberEntity extends BaseTimeEntity {
     private int winCount;
     @Column(nullable = false)
     @ColumnDefault("0")
-    private int character;
-
+    private int gameCharacter;
 
     @Column
     @ColumnDefault("false")
