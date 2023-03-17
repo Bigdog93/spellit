@@ -1,6 +1,10 @@
 import { useState } from "react"
-
+import MyDeck from './MyDeck'
 const Ready = () => {
-  return 
+
+
+  return <div>
+    <MyDeck />
+  </div>
 }
 export default Ready
