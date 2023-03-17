@@ -6,8 +6,8 @@ server:
       charset: UTF-8
       enabled: true
       force: true
-  ssl:
-    enabled: false
+#  ssl:
+#    enabled: false
 spring:
   mvc:
     pathmatch:
