@@ -48,4 +48,11 @@ public class MemberEntity extends BaseTimeEntity {
     @Column
     @ColumnDefault("false")
     private boolean isDeleted;
+
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
+
+    private enum Authority{
+        ROLE_USER, ROLE_ADMIN
+    }
 }
