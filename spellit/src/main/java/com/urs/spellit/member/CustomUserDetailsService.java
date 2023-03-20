@@ -1,7 +1,6 @@
-package com.tutorial.jwtsecurity.service;
+package com.urs.spellit.member;
 
-import com.tutorial.jwtsecurity.entity.Member;
-import com.tutorial.jwtsecurity.repository.MemberRepository;
+import com.urs.spellit.member.model.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,7 +30,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     // DB 에 User 값이 존재한다면 UserDetails 객체로 만들어서 리턴
     private UserDetails createUserDetails(Member member) {
         GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(member.getAuthority().toString());
-
         return new User(
                 String.valueOf(member.getId()),
                 member.getPassword(),

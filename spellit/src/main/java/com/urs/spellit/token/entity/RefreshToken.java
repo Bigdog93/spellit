@@ -1,4 +1,4 @@
-package com.tutorial.jwtsecurity.entity;
+package com.urs.spellit.token.entity;
 
 import lombok.Builder;
 import lombok.Getter;

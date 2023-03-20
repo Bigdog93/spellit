@@ -1,7 +1,7 @@
-package com.tutorial.jwtsecurity.config;
+package com.urs.spellit.configure;
 
-import com.tutorial.jwtsecurity.jwt.JwtFilter;
-import com.tutorial.jwtsecurity.jwt.TokenProvider;
+import com.urs.spellit.jwt.JwtFilter;
+import com.urs.spellit.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

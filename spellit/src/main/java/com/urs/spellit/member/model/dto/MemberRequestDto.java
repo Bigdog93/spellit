@@ -1,7 +1,7 @@
-package com.urs.spellit.token.dto;
+package com.urs.spellit.member.model.dto;
 
-import com.tutorial.jwtsecurity.entity.Authority;
-import com.tutorial.jwtsecurity.entity.Member;
+import com.urs.spellit.auth.entity.Authority;
+import com.urs.spellit.member.model.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

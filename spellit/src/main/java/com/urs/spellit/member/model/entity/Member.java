@@ -1,5 +1,6 @@
 package com.urs.spellit.member.model.entity;
 
+import com.urs.spellit.auth.entity.Authority;
 import com.urs.spellit.common.model.BaseTimeEntity;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -16,7 +17,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @DynamicInsert
 @DynamicUpdate
-public class MemberEntity extends BaseTimeEntity {
+public class Member extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id", nullable = false)
@@ -52,7 +53,4 @@ public class MemberEntity extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
-    private enum Authority{
-        ROLE_USER, ROLE_ADMIN
-    }
 }

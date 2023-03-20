@@ -1,14 +1,14 @@
-package com.tutorial.jwtsecurity.service;
+package com.urs.spellit.auth;
 
-import com.tutorial.jwtsecurity.controller.dto.MemberRequestDto;
-import com.tutorial.jwtsecurity.controller.dto.MemberResponseDto;
-import com.tutorial.jwtsecurity.controller.dto.TokenRequestDto;
-import com.tutorial.jwtsecurity.controller.dto.TokenDto;
-import com.tutorial.jwtsecurity.entity.Member;
-import com.tutorial.jwtsecurity.entity.RefreshToken;
-import com.tutorial.jwtsecurity.jwt.TokenProvider;
-import com.tutorial.jwtsecurity.repository.MemberRepository;
-import com.tutorial.jwtsecurity.repository.RefreshTokenRepository;
+import com.urs.spellit.jwt.TokenProvider;
+import com.urs.spellit.member.MemberRepository;
+import com.urs.spellit.member.model.dto.MemberRequestDto;
+import com.urs.spellit.member.model.dto.MemberResponseDto;
+import com.urs.spellit.member.model.entity.Member;
+import com.urs.spellit.token.RefreshTokenRepository;
+import com.urs.spellit.token.dto.TokenDto;
+import com.urs.spellit.token.dto.TokenRequestDto;
+import com.urs.spellit.token.entity.RefreshToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

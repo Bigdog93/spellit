@@ -1,6 +1,6 @@
-package com.tutorial.jwtsecurity.repository;
+package com.urs.spellit.token;
 
-import com.tutorial.jwtsecurity.entity.RefreshToken;
+import com.urs.spellit.token.entity.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

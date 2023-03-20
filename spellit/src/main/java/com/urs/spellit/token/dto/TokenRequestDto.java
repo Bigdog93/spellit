@@ -1,4 +1,4 @@
-package com.tutorial.jwtsecurity.controller.dto;
+package com.urs.spellit.token.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

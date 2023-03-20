@@ -1,4 +1,4 @@
-package com.tutorial.jwtsecurity.jwt;
+package com.urs.spellit.jwt;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
