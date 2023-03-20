@@ -5,11 +5,11 @@ import React, { useState, useRef, useEffect } from "react";
 // import brokenspell from "../assets/brokenspell.png";
 
 // 임시 이미지
-import image1 from "../../../assets/Image1.jpg";
-import image2 from "../../../assets/Image2.jpg";
-import image3 from "../../../assets/Image3.jpg";
-import image4 from "../../../assets/Image4.jpg";
-import image5 from "../../../assets/Image5.jpg";
+import image1 from "@/assets/minigame/Image1.jpg";
+import image2 from "@/assets/minigame/Image2.jpg";
+import image3 from "@/assets/minigame/Image3.jpg";
+import image4 from "@/assets/minigame/Image4.jpg";
+import image5 from "@/assets/minigame/Image5.jpg";
 
 interface onTimeProp {
   onTime: boolean;
@@ -25,20 +25,15 @@ let oneTwo = end * 0.25;
 let twoThree = end * 0.5;
 let threeFour = end * 0.75;
 
-const Click = ({
-  onTime,
-  handleTimer,
-  isDone,
-  handleResult,
-}: onTimeProp) => {
+const Click = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
   // 게임의 성공/실패를 관리하는 state(기본이 실패)
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   // 클릭수를 관리하는 state
   const [clicked, setClicked] = useState<number>(0);
 
   // 클릭에 따라 달라지는 Img를 관리하는 state
-  const [spellImg, setSpellImg] = useState(image1);
+  const [spellImg, setSpellImg] = useState<string>(image1);
 
   // 클릭신호를 받는 useRef
   const clickedSpell = useRef<HTMLDivElement>(null);
