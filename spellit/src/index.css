@@ -6,3 +6,13 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+@font-face {
+  font-family: "HeirofLightBold";
+  src: url("../assets/font/HeirofLightBold.ttf")
+}
+
+@font-face {
+  font-family: "HeirofLightRegular";
+  src: url("../assets/font/HeirofLightRegular.ttf")
+}
