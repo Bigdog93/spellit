@@ -30,6 +30,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 	HashMap<Integer, String> room_host = new HashMap<>();
 	private final RoomManager roomManager;
 	ObjectMapper mapper = new ObjectMapper();
+    // commit Test
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
