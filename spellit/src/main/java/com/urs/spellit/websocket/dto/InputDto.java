@@ -11,9 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class InputDto {
 	private String event;
-	private String nickname;
-	private int level;
-	private int room;
-	private String msg;
-	private Object startData;
+	private int roomId;
+	private int memberId;
+	private Object data;
 }

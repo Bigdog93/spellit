@@ -1,19 +1,20 @@
 package com.urs.spellit.websocket.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.web.socket.WebSocketSession;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class PlayerDto {
 	private WebSocketSession session;
-	private int level;
 	private String nickname;
-	private boolean isReady;
-	private boolean isHost;
+	private int play_count;
+	private int win_count;
+
+	// 추후 추가 예정
+//	private GameCharacter gameCharacter;
+//	private List<Card> deck;
 }
