@@ -9,7 +9,7 @@ WORKDIR /spellit
 
 # port 3000
 EXPOSE 3000
-RUN npm run build
+RUN CI=false npm run build
 # work dir에 build 폴더 생성 후, 현재 경로에 있는 build를 복사
 # RUN mkdir ./build
 # ADD ./build ./build
