@@ -1,0 +1,33 @@
+#TimerBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-sizing: border-box;
+
+    /* position: absolute; */
+    width: 200px;
+    height: 100px;
+    left: 1100px;
+    top: 30px;
+
+    background: rgba(27, 0, 85, 0.6);
+    border: 3px solid #FFFFFF;
+    box-shadow: 0px 0px 30px #FFFFFF;
+    border-radius: 20px;
+    /* transform: matrix(-1, 0, 0, 1, 0, 0); */
+}
+
+#TimerBox h1 {
+    padding-left: 5px;
+
+    font-family: 'Maiandra GD';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 48px;
+    letter-spacing: 0.2em;
+    color: red;
+
+    text-shadow: -1.5px -1.5px 0 rgb(255, 255, 255), 1.5px -1.5px 0 rgb(255, 255, 255), -1.5px 1.5px 0 rgb(255, 255, 255), 1.5px 1.5px 0 rgb(255, 255, 255);
+}
