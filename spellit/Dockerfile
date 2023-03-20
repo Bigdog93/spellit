@@ -7,7 +7,9 @@ FROM node:16-alpine as builder
 # work dir 고정
 WORKDIR /spellit
 COPY package.json .
-RUN npm install
+RUN npm install -g serve
+RUN serve -s build
+
 COPY . .
 
 # port 3000
