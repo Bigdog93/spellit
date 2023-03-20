@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 const initialCostState = {
-  cost: 0,
+  cost: 30,
 };
 
 const costSlice = createSlice({

@@ -16,7 +16,7 @@ const Ready = () => {
   // cost 부족할 때 shake 효과
   const [isShaking, setIsShaking] = useState(false);
 
-  function handleClick() {
+  function shake() {
     setIsShaking(true);
     setTimeout(() => setIsShaking(false), 1000);
   }
@@ -26,13 +26,15 @@ const Ready = () => {
 
   // 카드 선택
   const selectCard = (event: React.MouseEvent<HTMLImageElement>) => {
-    console.log(event)
-    console.log(event.currentTarget.alt)
-    setselectedCard([
-      ...selectedCards,
-      event.currentTarget.alt
-    ])
-    subCost()
+    if(cost-10 < 0) {
+      shake()
+    } else{
+      setselectedCard([
+        ...selectedCards,
+        event.currentTarget.alt
+      ])
+      subCost()
+    }
   };
 
   // 선택한 카드 삭제
@@ -59,7 +61,7 @@ const Ready = () => {
     <div>
       { cost }
 
-      <div className={isShaking ? "shake selectedCardBox" : "selectedCardBox"} onClick={handleClick}>
+      <div className={isShaking ? "shake selectedCardBox" : "selectedCardBox"}>
         <img src={Frame} alt="frame"/>
         <div className="selectedCard">
           {selectedCards.map((card: string, index: number) => (
