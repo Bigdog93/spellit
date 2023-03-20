@@ -4,6 +4,7 @@ const Ready = () => {
 
 
   return <div>
+    <p>ready</p>
     <MyDeck />
   </div>
 }

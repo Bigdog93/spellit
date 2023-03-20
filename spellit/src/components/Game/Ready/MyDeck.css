@@ -1,0 +1,44 @@
+.cards{
+}
+
+.cards img{
+  width: 331.38px;
+}
+
+.card1 {
+  transform: rotate(-10deg);
+  position: absolute;
+  left: 230px;
+  top: 833.54px;
+}
+
+.card2 {
+  transform: rotate(-5deg);
+  position: absolute;
+
+  left: 518.17px;
+  top: 770.36px;
+}
+
+.card3 {
+  /* transform: rotate(-10deg); */
+  position: absolute;
+  left: 804.37px;
+  top: 738.36px;
+}
+.card4 {
+  transform: rotate(5deg);
+  position: absolute;
+  left: 1101.44px;
+  top: 734px;
+}
+.card5 {
+  transform: rotate(10deg);
+  position: absolute;
+  left: 1381.88px;
+  top: 745.51px;
+}
+.selected {
+  filter: drop-shadow(0px 0px 20px #B973C3);
+  z-index: 999999999;
+}
