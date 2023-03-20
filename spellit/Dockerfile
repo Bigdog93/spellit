@@ -1,4 +1,4 @@
-FROM nginx
+FROM node:16-alpine as builder
 
 # frontend docker container에 spellit 디렉터리 생성
 RUN pwd
