@@ -1,12 +1,11 @@
 import { useState } from "react"
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, Provider } from 'react-redux';
 
 import { costActions } from '../../../store/cost';
 
 import './index.css'
 import Frame from '../../../assets/ui/Frame.png'
-import { EntityState } from "@reduxjs/toolkit";
-import { RootState } from "@react-three/fiber";
+import { RootState } from "@/store";
 
 const Ready = () => {
   
@@ -46,7 +45,7 @@ const Ready = () => {
   };
 
   // cost + or -
-  // const cost = useSelector((state) => state.cost.cost);
+  const cost = useSelector((state: RootState) => state.cost.cost);
 
   const dispatch = useDispatch();
 
@@ -58,7 +57,8 @@ const Ready = () => {
   }
   return (
     <div>
-      {/* { cost } */}
+      { cost }
+
       <div className={isShaking ? "shake selectedCardBox" : "selectedCardBox"} onClick={handleClick}>
         <img src={Frame} alt="frame"/>
         <div className="selectedCard">
