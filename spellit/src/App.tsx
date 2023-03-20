@@ -4,7 +4,7 @@ import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Home from "./components/Home";
-import Ready from "./components/Game/Ready";
+import Game from "./components/Game";
 
 function App() {
   const [readypage, setReadyPage] = useState(false);
@@ -13,7 +13,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route index element={<Home />} />
-        <Route path="ready" element={<Ready />} />
+        <Route path="game" element={<Game />} />
       </Routes>
     </BrowserRouter>
   );

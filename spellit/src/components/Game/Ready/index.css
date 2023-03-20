@@ -1,0 +1,98 @@
+@keyframes shake {
+  0% { transform: translateX(0); }
+  10% { transform: translateX(-10px); }
+  20% { transform: translateX(10px); }
+  30% { transform: translateX(-10px); }
+  40% { transform: translateX(10px); }
+  50% { transform: translateX(-10px); }
+  60% { transform: translateX(10px); }
+  70% { transform: translateX(-10px); }
+  80% { transform: translateX(10px); }
+  90% { transform: translateX(-10px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.5s;
+}
+
+
+.selectedCardBox {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.selectedCard {
+  position: absolute;
+  justify-content: space-between;
+  /* top: 0;
+  left: 0; */
+  /* display: flex; */
+}
+.selectedCard img {
+  width: 240px;
+  padding: 1rem;
+}
+
+.cards {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.cards img{
+  width: 331.38px;
+}
+
+.mycard:nth-child(1) {
+  transform: rotate(-10deg);
+}
+.mycard:nth-child(2) {
+  transform: rotate(-5deg);
+}
+/* .mycard:nth-child(3) {
+  transform: rotate(-10deg);
+} */
+.mycard:nth-child(4) {
+  transform: rotate(5deg);
+}
+.mycard:nth-child(5) {
+  transform: rotate(10deg);
+}
+
+/* .card1 {
+  transform: rotate(-10deg);
+  position: absolute;
+  left: 230px;
+  top: 833.54px;
+}
+
+.card2 {
+  transform: rotate(-5deg);
+  position: absolute;
+
+  left: 518.17px;
+  top: 770.36px;
+}
+
+.card3 {
+  position: absolute;
+  left: 804.37px;
+  top: 738.36px;
+}
+.card4 {
+  transform: rotate(5deg);
+  position: absolute;
+  left: 1101.44px;
+  top: 734px;
+}
+.card5 {
+  transform: rotate(10deg);
+  position: absolute;
+  left: 1381.88px;
+  top: 745.51px;
+} */
+.mycard:hover {
+  filter: drop-shadow(0px 0px 20px #B973C3);
+  z-index: 999999999;
+}
