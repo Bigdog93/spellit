@@ -1,29 +1,22 @@
-import { Fragment } from 'react';
-
-import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import Home from "./components/Home";
-import Ready from "./components/Game/Ready";
+import Home from "@/components/Home"
+import Ready from "@/components/Game/Ready"
+import Defence from '@/components/Game/Defense/Defense';
 
 function App() {
-  const [readypage, setReadyPage] = useState(false);
   
   return (
     <BrowserRouter>
+		<Home/>
       <Routes>
         <Route index element={<Home />} />
         <Route path="ready" element={<Ready />} />
+				<Route path="defense" element={<Defence/>}/>
       </Routes>
     </BrowserRouter>
   );
-  // return (
-  //   <div className="App">
-  //     <p>Here's App.tsx</p>
-  //     <button>ReadyPage</button>
 
-  //   </div>
-  // );
 }
 
 export default App;

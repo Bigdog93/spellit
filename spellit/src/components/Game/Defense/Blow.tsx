@@ -7,21 +7,14 @@ interface onTimeProp {
   handleResult: () => void;
 }
 
-const Blow = ({
-  onTime,
-  handleTimer,
-  isDone,
-  handleResult,
-}: onTimeProp) => {
-
-  const [count, setCount] = useState(0);
+const Blow = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
+  const [count, setCount] = useState<number>(0);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   // console.log(count);
 
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const streamRef = useRef<MediaStream | null>(null);
   const handleMicInput = async (stream: MediaStream) => {
-
     // audioctx를 만들어 web audio api를 사용할 수 있도록 함
     const audioContext = new AudioContext();
     audioContext.resume();
@@ -83,7 +76,7 @@ const Blow = ({
     navigator.mediaDevices
       .getUserMedia({ audio: true })
       .then((stream) => {
-				// stream을 받아왔을 때
+        // stream을 받아왔을 때
         streamRef.current = stream;
         // onTime 값이 true일 때 handleMicInput 함수를 실행
         if (onTime) {
@@ -93,7 +86,7 @@ const Blow = ({
       .catch((error) => console.error(error));
   }, [onTime]);
 
-	// 게임이 끝나면 마이크 입력 중단
+  // 게임이 끝나면 마이크 입력 중단
   useEffect(() => {
     if (isDone) {
       streamRef.current?.getTracks().forEach((track) => {
@@ -102,7 +95,7 @@ const Blow = ({
     }
   }, [isDone]);
 
-	// 일정 count이상을 달성하면 게임 정지
+  // 일정 count이상을 달성하면 게임 정지
   useEffect(() => {
     if (count >= 600) {
       // 게임 정지
@@ -112,7 +105,6 @@ const Blow = ({
       setIsSuccess(true);
     }
   }, [count, handleTimer, handleResult]);
-
 
   return (
     <div>

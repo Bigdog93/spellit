@@ -1,13 +1,15 @@
-import { useCallback, useState, useRef } from "react";
+import { useCallback, useState, useRef, useEffect } from "react";
 
-// import Timer from "./Timer";
-import Timer from "@/components/Game/Defense/Timer"
-import Click from "./Click";
-import BlowToDefense from "./Blow";
+import Timer from "@/components/Game/Defense/Timer";
+import Click from "@/components/Game/Defense/Click";
+import Blow from "@/components/Game/Defense/Blow";
 
-import styles from "./DefenceTurn.module.css";
+import styles from "@/components/Game/Defense/Defence.module.css";
 
 const Defence = () => {
+  // 게임 선택(둘중 하나)
+  const [gameSelect, setGameSelect] = useState<"click" | "blow" | null>(null);
+
   // 게임이 진행되는 중인지 판단하는 state
 
   const [onTime, setOnTime] = useState<boolean>(false);
@@ -30,6 +32,13 @@ const Defence = () => {
     e.preventDefault();
   };
 
+  useEffect(() => {
+    const gameTypes: ("click" | "blow")[] = ["click", "blow"];
+    let max = 2;
+    const randomIdx = Math.floor(Math.random() * max);
+    setGameSelect(gameTypes[randomIdx]);
+  }, []);
+
   return (
     <div
       className={styles.box}
@@ -45,9 +54,21 @@ const Defence = () => {
           handleResult={handleResult}
           isDone={isDone}
         />
-        {/* <ClickToDefense handleTimer={handleTimer} onTime={onTime} handleResult={handleResult} isDone={isDone}/> */}
-        <BlowToDefense handleTimer={handleTimer} onTime={onTime} handleResult={handleResult} isDone={isDone}/>
-        {/* <Test/> */}
+        {gameSelect === "click" ? (
+          <Click
+            handleTimer={handleTimer}
+            onTime={onTime}
+            handleResult={handleResult}
+            isDone={isDone}
+          />
+        ) : gameSelect === "blow" ? (
+          <Blow
+            handleTimer={handleTimer}
+            onTime={onTime}
+            handleResult={handleResult}
+            isDone={isDone}
+          />
+        ) : null}
       </div>
     </div>
   );
