@@ -1,14 +1,21 @@
 import { useState } from "react"
 
 import Coin from './Coin'
+// import soundEffect from '../../utils/SoundEffect';
 
 import MatchFrame_blue from '../../assets/ui/MatchFrame_blue.png'
 import MatchFrame_red from '../../assets/ui/MatchFrame_red.png'
 import VS from '../../assets/ui/VS.png'
 import Agnes from '../../assets/character/Agnes_temp.png'
 import Emilia from '../../assets/character/Emilia_temp.png'
+// import mp3 from '../../assets/bgm/RecalloftheShadows.mp3'
 
 const Matching = () => {
+  
+  // const se = soundEffect(mp3, 2);
+
+  // se.play();
+
   const [coin, setCoin] = useState(false);
 
   const [nickname, setNickname] = useState('인의동 대마법사');
