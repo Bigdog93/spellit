@@ -1,18 +1,19 @@
-import { useState, useRef, useEffect } from "react"
-// import MyDeck from './MyDeck'
+import { useState } from "react"
+import { useSelector, useDispatch } from 'react-redux';
+
+import { costActions } from '../../../store/cost';
+
 import './index.css'
-
 import Frame from '../../../assets/ui/Frame.png'
+import { EntityState } from "@reduxjs/toolkit";
+import { RootState } from "@react-three/fiber";
 
-type ReadyProps = {
-  cost: number
-}
-
-const Ready = ({cost}: ReadyProps) => {
+const Ready = () => {
   
   // 나의 덱 정보 저장
   const myCards = ['Fire1', 'Light1', 'Ice1', 'Wind1', 'Dark1']
   
+
   // cost 부족할 때 shake 효과
   const [isShaking, setIsShaking] = useState(false);
 
@@ -32,6 +33,7 @@ const Ready = ({cost}: ReadyProps) => {
       ...selectedCards,
       event.currentTarget.alt
     ])
+    subCost()
   };
 
   // 선택한 카드 삭제
@@ -40,20 +42,27 @@ const Ready = ({cost}: ReadyProps) => {
     console.log(event.currentTarget)
     setselectedCard(selectedCards.slice(0, index).concat(selectedCards.slice(index + 1)));
     navigator.vibrate(200);
+    addCost()
   };
 
   // cost + or -
-  const [currentCost, setCurrentCost] = useState(cost);
-  const handleAddCost = () => {
-    setCurrentCost(currentCost + 10);
+  // const cost = useSelector((state) => state.cost.cost);
+
+  const dispatch = useDispatch();
+
+  const addCost = () => {
+    dispatch(costActions.add(10))
+  }
+  const subCost = () => {
+    dispatch(costActions.sub(10))
   }
   return (
     <div>
-      {cost}
+      {/* { cost } */}
       <div className={isShaking ? "shake selectedCardBox" : "selectedCardBox"} onClick={handleClick}>
         <img src={Frame} alt="frame"/>
         <div className="selectedCard">
-          {selectedCards.map((card, index) => (
+          {selectedCards.map((card: string, index: number) => (
             <img 
               key={index} 
               src={require(`../../../assets/card/icon/${card}.png`)} 
