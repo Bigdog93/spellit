@@ -1,4 +1,3 @@
-import { useState } from "react"
 import Fire1 from '../../../assets/card/front/Fire1.png'
 import Light1 from '../../../assets/card/front/Light1.png'
 import Ice1 from '../../../assets/card/front/Ice1.png'
@@ -9,7 +8,7 @@ import './MyDeck.css'
 
 const MyDeck = () => {
 
-  const mydeck = ['Fire1', 'Light1', 'Ice1', 'Wind1', 'Dark1']
+  // const mydeck = ['Fire1', 'Light1', 'Ice1', 'Wind1', 'Dark1']
 
   return <div className="cards">
     <img src={Fire1} alt="card" className="card1 selected"></img>
