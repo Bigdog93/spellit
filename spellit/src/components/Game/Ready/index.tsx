@@ -4,13 +4,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { costActions } from '../../../store/cost';
 import { RootState } from "@/store";
 
-import Frame from '../../../assets/ui/Frame.png'
 import './index.css'
+import Frame from '../../../assets/ui/Frame.png'
+import ConfirmBtn from '../../../assets/ui/ReadyConfirmBtn.png'
 
 const Ready = () => {
 
   // 나의 덱 정보 저장
   // store/user.tsx의 정보 업뎃 및 연동 필요
+  // 요소 명 수정해야할 수도 있음
   const myCards = ['Fire1', 'Light1', 'Ice1', 'Wind1', 'Dark1']
   
 
@@ -47,8 +49,16 @@ const Ready = () => {
     addCost()
   };
 
+  // skill 확정
+  // 수정 필
+  const confirmSkills = () => {
+    console.log('확인')
+  }
+
   // cost + or -
+  // 카드에 따른 cost 수정 필
   const cost = useSelector((state: RootState) => state.cost.cost);
+  const maxCost = 30
 
   const dispatch = useDispatch();
 
@@ -60,21 +70,28 @@ const Ready = () => {
   }
   return (
     <div>
-      { cost }
-
-      <div className={isShaking ? "shake selectedCardBox" : "selectedCardBox"}>
-        <img src={Frame} alt="frame"/>
-        <div className="selectedCard">
-          {selectedCards.map((card: string, index: number) => (
-            <img 
-              key={index} 
-              src={require(`../../../assets/card/icon/${card}.png`)} 
-              alt={card}
-              onClick={(event) => removeCard(event, index)}
-            ></img>
-          ))}
+      <div className="flex-container">
+        <div className="cost">
+          <div>COST</div>
+          { cost }/{ maxCost }
         </div>
+        <div className={isShaking ? "shake selectedCardBox" : "selectedCardBox"}>
+          <img src={Frame} alt="frame"/>
+          <div className="selectedCard">
+            {selectedCards.map((card: string, index: number) => (
+              <img 
+                key={index} 
+                src={require(`../../../assets/card/icon/${card}.png`)} 
+                alt={card}
+                onClick={(event) => removeCard(event, index)}
+              ></img>
+            ))}
+          </div>
+        </div>
+        <img src={ ConfirmBtn } alt="confirmBtn" onClick={confirmSkills} className='confirmBtn'/>
       </div>
+
+      
       <div className="cards">
         {myCards.map((card, index) => (
           <img 

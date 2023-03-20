@@ -16,7 +16,19 @@
   animation: shake 0.5s;
 }
 
-
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  vertical-align: middle;
+}
+.cost{
+  /* font-size: 32px; */
+  width: 400px;
+}
+.confirmBtn {
+  object-fit: cover;
+  height: 400px;
+}
 .selectedCardBox {
   position: relative;
   display: flex;

@@ -1,0 +1,30 @@
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-evenly; */
+}
+
+.player {
+    display: flex;
+    flex-direction: column;
+    height: 50px;
+}
+
+.character{
+    position: relative;
+}
+.player-info {
+    position: absolute;
+    top: 0;
+}
+.player1 {
+    
+}
+.player1 {
+    font-size: 50pt;
+    text-shadow: 1px 0 #76A2F9, 0 1px #76A2F9, 1px 0 #76A2F9, 0 1px #76A2F9;
+}
+.player2 {
+    font-size: 50pt;
+    text-shadow: 1px 0 #FB7F96, 0 1px #FB7F96, 1px 0 #FB7F96, 0 1px #FB7F96;
+}
