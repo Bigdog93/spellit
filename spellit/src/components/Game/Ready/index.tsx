@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { costActions } from "@/store/cost"
 
 import { RootState } from "@/store"
+import './index.css'
 import ConfirmBtn from '../../../assets/ui/ReadyConfirmBtn.png'
 import Frame from '../../../assets/ui/Frame.png'
 

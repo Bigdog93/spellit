@@ -34,12 +34,12 @@ function CoinFlipper() {
 
   return (
     <div className="CoinFlipper">
-      {flips1}
-      <Coin side={flips1} isRolling={isRolling} />
-      <button disabled={isRolling} onClick={handleClick}>
+      {/* {flips1} */}
+      <Coin side={flips1} isRolling={isRolling}/>
+      {/* <button disabled={isRolling} onClick={handleClick}>
         {isRolling ? 'Rolling...' : 'Flip me!'}
-      </button>
-      <Coin side={flips2} isRolling={isRolling} />
+      </button> */}
+      {/* <Coin side={flips2} isRolling={isRolling} /> */}
     </div>
   );
 }

@@ -1,10 +1,11 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import Coin from './CoinFlipper'
 // import soundEffect from '../../utils/SoundEffect';
 
-import MatchFrame_blue from '../../assets/ui/MatchFrame_blue.png'
-import MatchFrame_red from '../../assets/ui/MatchFrame_red.png'
+import './index.css'
+import MatchFrame_blue from '../../assets/ui/match-frame-blue.png'
+import MatchFrame_red from '../../assets/ui/match-frame-red.png'
 import VS from '../../assets/ui/VS.png'
 import Agnes from '../../assets/character/Agnes_temp.png'
 import Emilia from '../../assets/character/Emilia_temp.png'
@@ -16,7 +17,13 @@ const Matching = () => {
 
   // se.play();
 
-  const [coin, setCoin] = useState(true);
+  const [coin, setCoin] = useState(false);
+
+  const coinHandler = () => {
+    setCoin(true)
+  }
+  
+  window.setTimeout(coinHandler, 3000)
 
   const [nickname, setNickname] = useState('인의동 대마법사');
   const [winCount, setwinCount] = useState(234);
@@ -24,40 +31,48 @@ const Matching = () => {
 
   return (
     <div>
-      {/* <div className="flex-container">
+      <div className="flex-container">
         <div className="player">
-          <img src={Agnes} alt="1P-character" className="character"/>
+          <img src={Agnes} alt="1P-character"/>
           <div className="player-info">
-            <img src={MatchFrame_blue} alt="1P"/>
-            <div>
-              <div>
-                { winCount }승
-                { nickname }
+            <img src={MatchFrame_red} alt="1P"/>
+            <div className="player1">
+              <div className="upper-info">
+                <div>
+                  { winCount }승
+                </div>
+                <div>
+                  { nickname }
+                </div>
               </div>
               { message }
             </div>
           </div>
         </div>
 
-        <div>
-          <img src={VS} alt="vs"/>
-        </div>
+        <img src={VS} alt="vs" className="vs"/>
 
         <div className="player">
-          <img src={Emilia} alt="2P" />
+          <img src={Emilia} alt="2P-character"/>
           <div className="player-info">
-            <img src={MatchFrame_red} alt="2P" />
+            <img src={MatchFrame_blue} alt="2P"/>
             <div className="player2">
-              <div>
-                { nickname }
-                { winCount }승
+              <div className="upper-info">
+                <div>
+                  { nickname }
+                </div>
+                <div>
+                  { winCount }승
+                </div>
               </div>
               { message }
             </div>
           </div>
         </div>
-      </div> */}
-      {coin && <Coin />}
+      </div>
+      <div className="coin-flipper">
+        {coin && <Coin />}
+      </div>
     </div>
   )
   }
