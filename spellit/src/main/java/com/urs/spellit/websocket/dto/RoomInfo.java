@@ -16,6 +16,8 @@ import java.util.Map;
 @AllArgsConstructor
 public class RoomInfo {
 	private long roomId;
+	/**/
+	private int turn;
 	private List<PlayerDto> playerList;
 
 	public void sendMessage(TextMessage msg) throws IOException {
