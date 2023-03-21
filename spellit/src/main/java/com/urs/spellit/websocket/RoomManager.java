@@ -3,14 +3,17 @@ package com.urs.spellit.websocket;
 import com.urs.spellit.websocket.dto.PlayerDto;
 import com.urs.spellit.websocket.dto.RoomInfo;
 import org.springframework.stereotype.Component;
+import org.springframework.web.socket.TextMessage;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
 public class RoomManager {
-    private int roomCount;
-    private Map<Integer, RoomInfo> roomMap = new HashMap<>();
+    private long roomCount;
+    private Map<Long, RoomInfo> roomMap = new HashMap<>();
 
     public RoomInfo makeRoom(PlayerDto playerDto1,PlayerDto playerDto2) {
         RoomInfo room = new RoomInfo();
@@ -20,6 +23,13 @@ public class RoomManager {
         roomMap.put(room.getRoomId(), room);
         return room;
     }
+    public RoomInfo getRoomInfo(long roomId) {
+        return roomMap.get(roomId);
+    }
+    public List<PlayerDto> getPlayers(long roomId) {
+        return roomMap.get(roomId).getPlayerList();
+    }
+
 
     public void clearRoom(int roomId) {
         roomMap.remove(roomId);

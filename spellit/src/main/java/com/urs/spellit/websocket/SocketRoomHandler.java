@@ -2,7 +2,9 @@ package com.urs.spellit.websocket;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.urs.spellit.member.MemberRepository;
 import com.urs.spellit.member.MemberService;
+import com.urs.spellit.member.model.entity.Member;
 import com.urs.spellit.websocket.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -14,10 +16,7 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Queue;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -25,6 +24,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 
 	private Logger logger = LoggerFactory.getLogger(SocketRoomHandler.class);
 	private final MemberService memberService;
+	private final MemberRepository memberRepository;
 	ArrayList<WebSocketSession> allSession = new ArrayList<>();
 	Queue<PlayerDto> readyQueue = new ArrayDeque<>();
 	HashMap<Integer, String> room_host = new HashMap<>();
@@ -42,12 +42,43 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 		// 온 메시지를 inputDto로 매핑해줘요
 		InputDto inputDto = mapper.readValue((String) message.getPayload(), InputDto.class);
 		String event = inputDto.getEvent();
-		int roomId = inputDto.getRoomId();
-		int memberId = inputDto.getMemberId();
+		long roomId = inputDto.getRoomId();
+		long memberId = inputDto.getMemberId();
 		Object data = inputDto.getData();
 //		 각 이벤트에 따라 if문을 실행해 줘요
-		if(event.equals("matchStart")) {
-
+		if(event.equals("matchStart")) { // 빠른 매치 눌렀을 때
+			PlayerDto player = getPlayerByMemberId(session, memberId);
+			if (readyQueue.isEmpty()) { // 대기열 사람 없으면 대기열 큐에 집어넣음
+				readyQueue.add(player);
+				Map<String, Object> infoMap = new HashMap<>();
+				// "entQueue" 문자열을 type 에 담아 재송신
+				TextMessage textMessage = makeTextMsg("entQueue", infoMap);
+				session.sendMessage(textMessage);
+			} else {
+				// 대기열에 사람 있으면 뽑아서 매칭 시켜줌
+				PlayerDto otherPlayer = readyQueue.poll();
+				RoomInfo room = roomManager.makeRoom(player, otherPlayer); // 방 만들어주기
+				Map<String, Object> infoMap = new HashMap<>();
+				infoMap.put("roomInfo", room); // 방 정보 담아서
+				room.sendMessage(makeTextMsg("connected", infoMap, player.getNickname())); // 전송
+			}
+		}else { // 매칭 된 이후(게임 시작)
+			RoomInfo room = roomManager.getRoomInfo(roomId); // 방정보 가져오기
+			List<PlayerDto> players = room.getPlayerList(); // 플레이어 정보 가져오기
+			// 나랑 상대 구분
+			PlayerDto me = null;
+			PlayerDto other = null;
+			for(int i = 0; i < 2; i++) {
+				if(players.get(i).getMemberId() == memberId) {
+					me = players.get(i);
+				}else {
+					other = players.get(i);
+				}
+			}
+			Map<String, Object> infoMap = new HashMap<>();
+			if(event.equals("loaded")) {
+				other.getSession().sendMessage(makeTextMsg("loaded", infoMap));
+			}
 		}
 	}
 
@@ -90,10 +121,32 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 //		}
 	}
 
-	public TextMessage makeTextMsg(String event, InputDto inputDto, String nickname) throws JsonProcessingException {
+	/* 멤버 id(PK) 값으로 DB 에서 불러와 websocket 이랑 버무려서 PlayerDto 로 만들기*/
+	public PlayerDto getPlayerByMemberId(WebSocketSession session, long memberId) {
+		Optional<Member> memberOption = memberRepository.findById(memberId);
+		if(!memberOption.isEmpty()) {
+			return null;
+		}
+		Member member = memberOption.get();
+		return PlayerDto.makePlayerDto(session, member);
+	}
+	public TextMessage makeTextMsg(String type, Map infoMap) throws JsonProcessingException {
 		HashMap<String, Object> dto = new HashMap<>();
-		dto.put("type", event);
+		dto.put("type", type);
+		dto.put("info", infoMap);
+		return new TextMessage(mapper.writeValueAsString(dto));
+	}
+	public TextMessage makeTextMsg(String type, InputDto inputDto, String nickname) throws JsonProcessingException {
+		HashMap<String, Object> dto = new HashMap<>();
+		dto.put("type", type);
 		dto.put("info", inputDto.getData());
+		dto.put("nickname", nickname);
+		return new TextMessage(mapper.writeValueAsString(dto));
+	}
+	public TextMessage makeTextMsg(String type, Map infoMap, String nickname) throws JsonProcessingException {
+		HashMap<String, Object> dto = new HashMap<>();
+		dto.put("type", type);
+		dto.put("info", infoMap);
 		dto.put("nickname", nickname);
 		return new TextMessage(mapper.writeValueAsString(dto));
 	}
