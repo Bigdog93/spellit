@@ -1,4 +1,10 @@
 import { useState, ChangeEvent, FormEvent } from "react"
+import API from "@/utils/API"
+
+interface LoginInfo {
+  'email': string;
+  'password': string;
+}
 
 const Login = () => {
 
@@ -18,12 +24,26 @@ const Login = () => {
   //   return data;
   // };
 
-  const register = () => {}
+  const loginHandler = () => {
+    const body : LoginInfo = {'email': id, 'password': pw}
+    const response = API.post<any>(
+      "member/login", 
+      body, 
+      // {headers: {
+      //   Authorization: sessionStorage.getItem('token')
+      // }}
+    );
+    return response;
+  };
 
   const submitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log('login btn')
-    
+    const login = loginHandler
+    console.log(login)
+    // if(login) {
+    //   console.log('hello')
+    // }
     // const expenseData = {
     //   title: enteredTitle,
     //   amount: enteredAmount,
