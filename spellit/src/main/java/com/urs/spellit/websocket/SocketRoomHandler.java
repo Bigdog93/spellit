@@ -55,15 +55,15 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
 		System.out.println("누군가 소켓이 끊어짐");
 		int room = 0;
-		Loop1: for (Integer i : room_map.keySet()) {
-			for (PlayerDto p : room_map.get(i)) {
-				if (p.getSession().equals(session)) {
-					room = i;
-					room_map.get(i).remove(p);
-					break Loop1;
-				}
-			}
-		}//
+//		Loop1: for (Integer i : room_map.keySet()) {
+//			for (PlayerDto p : room_map.get(i)) {
+//				if (p.getSession().equals(session)) {
+//					room = i;
+//					room_map.get(i).remove(p);
+//					break Loop1;
+//				}
+//			}
+//		}//
 		for (WebSocketSession w : allSession) {
 			if (w.equals(session)) {
 				allSession.remove(w);
@@ -71,14 +71,14 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 			}
 		}
 		AllRoomMsgDto dto = new AllRoomMsgDto("all_room", new ArrayList<RoomInfo>());
-		for (Integer j : room_map.keySet()) {
+		/*for (Integer j : room_map.keySet()) {
 			dto.getRoomInfo().add(new RoomInfo(j, room_map.get(j).size()));
-		}
+		}*/
 		TextMessage msg = new TextMessage(mapper.writeValueAsString(dto));
 		for (WebSocketSession w : allSession) {
 			w.sendMessage(msg);
 		}
-		if (room != 0) {
+		/*if (room != 0) {
 			MsgDto dto2 = new MsgDto("me", room, new ArrayList<isHostDto>());
 			for (PlayerDto p : room_map.get(room)) {
 				dto2.getPlayers().add(new isHostDto(p.getLevel(), p.getNickname(), p.isReady(), p.isHost()));
@@ -87,7 +87,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 			for (PlayerDto p : room_map.get(room)) {
 				p.getSession().sendMessage(msg2);
 			}
-		}
+		}*/
 	}
 
 	public TextMessage makeTextMsg(String event, InputDto inputDto, String nickname) throws JsonProcessingException {
