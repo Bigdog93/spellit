@@ -23,6 +23,7 @@ public class PlayerDto {
 	// 추후 추가 예정
 	private GameCharacterEntity gameCharacterEntity;
 	private List<CardEntity> deck;
+	private int isFirst;
 
 	public static PlayerDto makePlayerDto(WebSocketSession session, Member member) {
 		return PlayerDto.builder()
