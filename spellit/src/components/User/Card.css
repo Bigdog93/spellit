@@ -18,9 +18,12 @@
 }
 
 .flip-container:hover .flip-inner-container {
+
+  cursor: pointer;
   transform: rotateY(-180deg);
   cursor: pointer;
 }
+
 
 .flip-front,
 .flip-back {

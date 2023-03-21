@@ -1,6 +1,6 @@
 const Home = () => {
   return <div>
-    <p>This is Home.tsx</p>
+    {/* <p>This is Home.tsx</p> */}
   </div>
 }
 export default Home
