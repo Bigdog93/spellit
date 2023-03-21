@@ -16,7 +16,7 @@ const Matching = () => {
 
   // se.play();
 
-  const [coin, setCoin] = useState(false);
+  const [coin, setCoin] = useState(true);
 
   const [nickname, setNickname] = useState('인의동 대마법사');
   const [winCount, setwinCount] = useState(234);
@@ -31,7 +31,7 @@ const Matching = () => {
         <div className="player">
           <img src={Agnes} alt="1P-character" className="character"/>
           <div className="player-info">
-            <img src={MatchFrame_blue} alt="1P" />
+            <img src={MatchFrame_blue} alt="1P"/>
             <div>
               <div>
                 { winCount }승
@@ -50,9 +50,9 @@ const Matching = () => {
         {/* 2P */}
         <div className="player">
           <img src={Emilia} alt="2P" />
-          <div className="player2">
+          <div className="player-info">
             <img src={MatchFrame_red} alt="2P" />
-            <div>
+            <div className="player2">
               <div>
                 { nickname }
                 { winCount }승

@@ -5,26 +5,30 @@
 }
 
 .player {
+    position: relative;
     display: flex;
     flex-direction: column;
     height: 50px;
 }
 
 .character{
-    position: relative;
+  
 }
+
 .player-info {
     position: absolute;
     top: 0;
+    left: 0;
 }
-.player1 {
-    
-}
+
 .player1 {
     font-size: 50pt;
+    text-align: right;
     text-shadow: 1px 0 #76A2F9, 0 1px #76A2F9, 1px 0 #76A2F9, 0 1px #76A2F9;
 }
+
 .player2 {
     font-size: 50pt;
+    text-align: left;
     text-shadow: 1px 0 #FB7F96, 0 1px #FB7F96, 1px 0 #FB7F96, 0 1px #FB7F96;
 }

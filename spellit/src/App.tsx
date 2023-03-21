@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import Game from "./components/Game";
 import Matching from "./components/Matching";
+import User from './components/User'
 
 function App() {
   
@@ -12,6 +13,7 @@ function App() {
         <Route index element={<Home />} />
         <Route path="game" element={<Game />} />
         <Route path="matching" element={<Matching />} />
+        <Route path="user" element={<User />} />
       </Routes>
     </BrowserRouter>
   );
