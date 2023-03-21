@@ -1,17 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
+import authReducer from './auth';
+import useReducer from './user';
+import sessionReduser from './session';
+import costReducer from './cost';
 
-const initialIndexState = {
-  temp: 0,
-};
 
-const indexSlice = createSlice({
-  name: 'index',
-  initialState: initialIndexState,
-  reducers: {
-    
-  },
+const store = configureStore({
+  reducer: { auth: authReducer, user: useReducer, session: sessionReduser, cost: costReducer },
 });
 
-export const indxActions = indexSlice.actions;
+export default store;
+export type RootState = ReturnType<typeof store.getState>
 
+<<<<<<< HEAD
+=======
 export default indexSlice.reducer;
+>>>>>>> 16c75a0051d681e2a86c82eaa572ec3dab5370fe
