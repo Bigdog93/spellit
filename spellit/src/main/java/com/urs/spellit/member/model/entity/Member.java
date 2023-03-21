@@ -41,9 +41,12 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     @ColumnDefault("0")
     private int winCount;
-    @Column(nullable = false)
-    @ColumnDefault("0")
-    private int gameCharacter;
+//    @Column(nullable = false)
+//    @ColumnDefault("0")
+//    private int gameCharacter;
+//    @Column(nullable = false)
+//    @ColumnDefault("0")
+//    private int characterId;
 
     @Column
     @ColumnDefault("false")
