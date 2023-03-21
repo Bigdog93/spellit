@@ -1,3 +1,67 @@
-.coin-bg {
-  background-color: black;
+.Coin-container {
+  width: 250px;
+  height: 250px;
+  margin: 0 auto;
+  perspective: 1000px;
+}
+
+.Coin {
+  height: 100%;
+  position: relative;
+  text-align: center;
+  transform-style: preserve-3d;
+  transition: transform 0.8s;
+}
+
+.Coin-animation {
+  animation: rotate-coin 2s linear infinite;
+}
+
+@keyframes rotate-coin {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+
+
+.Coin-front, .Coin-back {
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  backface-visibility: hidden;
+}
+
+.Coin-front img {
+  width: 100%;
+  height: 100%;
+  /* z-index: 2; */
+}
+
+.Coin-back img {
+	width: 100%;
+  height: 100%;
+  /* border-radius: 10px; */
+  z-index: 50000000;
+}
+
+.Coin-back {
+  width: 100%;
+  height: 100%;
+	/* width: 280px;
+  height: 380px;
+  background: white; */
+  /* transform: rotateY(180deg); */
+}
+.rotate-animation {
+  /* width: 100%;
+  height: 100%; */
+	/* width: 280px;
+  height: 380px;
+  background: white; */
+  transform: rotateY(180deg);
 }

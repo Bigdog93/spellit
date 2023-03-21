@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-import Coin from './Coin'
+import Coin from './CoinFlipper'
 // import soundEffect from '../../utils/SoundEffect';
 
 import MatchFrame_blue from '../../assets/ui/MatchFrame_blue.png'
@@ -24,10 +24,7 @@ const Matching = () => {
 
   return (
     <div>
-      <p>This is Matching index.tsx</p>
-      <div className="flex-container">
-
-        {/* 1P */}
+      {/* <div className="flex-container">
         <div className="player">
           <img src={Agnes} alt="1P-character" className="character"/>
           <div className="player-info">
@@ -42,12 +39,10 @@ const Matching = () => {
           </div>
         </div>
 
-        {/* VS */}
         <div>
           <img src={VS} alt="vs"/>
         </div>
 
-        {/* 2P */}
         <div className="player">
           <img src={Emilia} alt="2P" />
           <div className="player-info">
@@ -61,7 +56,7 @@ const Matching = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       {coin && <Coin />}
     </div>
   )

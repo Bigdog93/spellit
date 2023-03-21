@@ -5,7 +5,7 @@ const sessionIndexState = {
 };
 
 const sessionSlice = createSlice({
-  name: 'index',
+  name: 'session',
   initialState: sessionIndexState,
   reducers: {
     
