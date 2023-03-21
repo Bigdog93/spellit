@@ -23,4 +23,12 @@ public class RoomInfo {
 			p.getSession().sendMessage(msg);
 		}
 	}
+	public void setPlayersPriority() {
+		int firstPlayer = (int) (Math.random() * 2);
+		if(firstPlayer == 0) {
+			playerList.get(0).setIsFirst(1);
+		}else {
+			playerList.get(1).setIsFirst(1);
+		}
+	}
 }
