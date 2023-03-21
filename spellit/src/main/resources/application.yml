@@ -45,6 +45,8 @@ logging:
 secret:
   key: believ8ebeli7ev6ethat5lifeisno4tadrea1mitsfal3lWhatthoughourBestOerhopeaheavyswayHopeagain2eriemfojc
 jwt:
+  secret:
+    key: believ8ebeli7ev6ethat5lifeisno4tadrea1mitsfal3lWhatthoughourBestOerhopeaheavyswayHopeagain2eriemfojc
   token:
     secret-key: [secret-key]
   access-token:

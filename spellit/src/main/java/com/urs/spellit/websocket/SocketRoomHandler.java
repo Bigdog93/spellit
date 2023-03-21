@@ -71,23 +71,27 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 			}
 		}
 		AllRoomMsgDto dto = new AllRoomMsgDto("all_room", new ArrayList<RoomInfo>());
-		/*for (Integer j : room_map.keySet()) {
-			dto.getRoomInfo().add(new RoomInfo(j, room_map.get(j).size()));
-		}*/
+
+//		for (Integer j : room_map.keySet()) {
+//			dto.getRoomInfo().add(new RoomInfo(j, room_map.get(j).size()));
+//		}
+
 		TextMessage msg = new TextMessage(mapper.writeValueAsString(dto));
 		for (WebSocketSession w : allSession) {
 			w.sendMessage(msg);
 		}
-		/*if (room != 0) {
-			MsgDto dto2 = new MsgDto("me", room, new ArrayList<isHostDto>());
-			for (PlayerDto p : room_map.get(room)) {
-				dto2.getPlayers().add(new isHostDto(p.getLevel(), p.getNickname(), p.isReady(), p.isHost()));
-			}
-			TextMessage msg2 = new TextMessage(mapper.writeValueAsString(dto2));
-			for (PlayerDto p : room_map.get(room)) {
-				p.getSession().sendMessage(msg2);
-			}
-		}*/
+
+//		if (room != 0) {
+//			MsgDto dto2 = new MsgDto("me", room, new ArrayList<isHostDto>());
+//			for (PlayerDto p : room_map.get(room)) {
+//				dto2.getPlayers().add(new isHostDto(p.getLevel(), p.getNickname(), p.isReady(), p.isHost()));
+//			}
+//			TextMessage msg2 = new TextMessage(mapper.writeValueAsString(dto2));
+//			for (PlayerDto p : room_map.get(room)) {
+//				p.getSession().sendMessage(msg2);
+//			}
+//		}
+
 	}
 
 	public TextMessage makeTextMsg(String event, InputDto inputDto, String nickname) throws JsonProcessingException {
