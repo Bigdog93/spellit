@@ -1,12 +1,4 @@
 import { useState } from "react"
-import { useSelector, useDispatch } from 'react-redux';
-
-import { costActions } from '../../../store/cost';
-import { RootState } from "@/store";
-
-import './index.css'
-import Frame from '../../../assets/ui/Frame.png'
-import ConfirmBtn from '../../../assets/ui/ReadyConfirmBtn.png'
 
 const Ready = () => {
 

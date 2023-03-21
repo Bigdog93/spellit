@@ -12,3 +12,7 @@ const store = configureStore({
 export default store;
 export type RootState = ReturnType<typeof store.getState>
 
+<<<<<<< HEAD
+=======
+export default indexSlice.reducer;
+>>>>>>> 16c75a0051d681e2a86c82eaa572ec3dab5370fe
