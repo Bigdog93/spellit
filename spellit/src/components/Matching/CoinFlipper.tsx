@@ -8,17 +8,18 @@ function CoinFlipper() {
   const [isRolling, setIsRolling] = useState(true);
 
   const handleClick = (): void => {
-    // let player1 = ''
-    // let player2 = ''
-
-    // const order = (o: string) => {
-    //   (if o == 'head') {
-
-    //   } else {
-
-    //   }
-    // }
     const side = Math.random() < 0.5 ? 'head' : 'tail';
+
+    const order = (o: string) => {
+      if ( o == 'head') {
+        setFlips1('head')
+        setFlips2('tail')
+      } else {
+        setFlips1('tail')
+        setFlips2('head')
+      }
+    }
+    order(side);
     // const newFlips = side;
     setFlips1(side);
     // setFlips2()
