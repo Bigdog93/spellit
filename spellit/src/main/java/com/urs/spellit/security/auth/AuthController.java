@@ -1,10 +1,10 @@
-package com.urs.spellit.auth;
+package com.urs.spellit.security.auth;
 
 
 import com.urs.spellit.member.model.dto.MemberRequestDto;
 import com.urs.spellit.member.model.dto.MemberResponseDto;
-import com.urs.spellit.token.dto.TokenDto;
-import com.urs.spellit.token.dto.TokenRequestDto;
+import com.urs.spellit.security.token.dto.TokenDto;
+import com.urs.spellit.security.token.dto.TokenRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

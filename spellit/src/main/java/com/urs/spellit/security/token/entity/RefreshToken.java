@@ -1,4 +1,4 @@
-package com.urs.spellit.token.entity;
+package com.urs.spellit.security.token.entity;
 
 import lombok.Builder;
 import lombok.Getter;

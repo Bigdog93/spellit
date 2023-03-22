@@ -14,8 +14,17 @@ public class GameCharacterEntity {
 
     @Column(nullable = false)
     private String characterName;
-
-    @Column(nullable = false)
-    private String characterImg;
+    @Column
+    private String englishName;
+    @Column
+    private String stand;
+    @Column
+    private String hurt;
+    @Column
+    private String attack;
+    @Column
+    private String winner;
+    @Column
+    private String combo;
 
 }

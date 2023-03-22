@@ -1,4 +1,4 @@
-package com.urs.spellit.jwt;
+package com.urs.spellit.security.jwt;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

@@ -1,8 +1,8 @@
 package com.urs.spellit.configure;
 
-import com.urs.spellit.jwt.JwtAccessDeniedHandler;
-import com.urs.spellit.jwt.JwtAuthenticationEntryPoint;
-import com.urs.spellit.jwt.TokenProvider;
+import com.urs.spellit.security.jwt.JwtAccessDeniedHandler;
+import com.urs.spellit.security.jwt.JwtAuthenticationEntryPoint;
+import com.urs.spellit.security.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
