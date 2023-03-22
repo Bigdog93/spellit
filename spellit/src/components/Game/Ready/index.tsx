@@ -15,7 +15,7 @@ const Ready = () => {
   // 나의 덱 정보 저장
   // store/user.tsx의 정보 업뎃 및 연동 필요
   // 요소 명 수정해야할 수도 있음
-  const myCards = ['Fire1', 'Light1', 'Ice1', 'Wind1', 'Dark1']
+  const myCards = ['fire1', 'light1', 'ice1', 'wind1', 'dark1']
 
   // cost 부족할 때 나타는 shake 효과
   const [isShaking, setIsShaking] = useState(false);

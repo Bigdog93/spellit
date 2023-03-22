@@ -34,7 +34,7 @@
         0 0 5px #ffffff;
 }
 
-.windSpell-correct{
+.wind1-correct{
     color: rgb(23, 205, 72);
     text-shadow:
         0 0 2px rgb(0, 0, 0),
@@ -47,7 +47,7 @@
         0 0 10px #92ed99;
 }
 
-.fireSpell-correct{
+.fire1-correct{
     color: rgb(205, 23, 23);
     text-shadow:
         0 0 2px rgb(0, 0, 0),
@@ -60,7 +60,7 @@
         0 0 10px #ed9292;
 }
 
-.sparkSpell-correct{
+.spark1-correct{
     color: rgb(205, 184, 23);
     text-shadow:
         0 0 2px rgb(0, 0, 0),
@@ -73,7 +73,7 @@
         0 0 10px #e7ed92;
 }
 
-.iceSpell-correct{
+.ice1-correct{
     color: rgb(23, 47, 205);
     text-shadow:
         0 0 2px rgb(0, 0, 0),
@@ -86,7 +86,7 @@
         0 0 10px #92bced;
 }
 
-.stormSpell-correct{
+.storm1-correct{
     color: rgb(156, 205, 23);
     text-shadow:
         0 0 2px rgb(0, 0, 0),
@@ -99,7 +99,7 @@
         0 0 10px #edde92;
 }
 
-.lightSpell-correct{
+.light1-correct{
     color: rgb(28, 28, 28);
     text-shadow:
         0 0 2px rgb(0, 0, 0),
@@ -112,7 +112,7 @@
         0 0 10px #484848;
 }
 
-.darkSpell-correct{
+.dark1-correct{
     color: rgb(28, 28, 28);
     text-shadow:
         0 0 2px rgb(0, 0, 0),
