@@ -32,4 +32,5 @@ public class RefreshToken {
         this.value = token;
         return this;
     }
+
 }

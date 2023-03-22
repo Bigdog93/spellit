@@ -61,4 +61,13 @@ public class Member extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
+    public void changeIsDeleted(boolean isDeleted)
+    {
+        this.isDeleted=isDeleted;
+    }
+    public void changeNickname(String nickname)
+    {
+        this.nickname=nickname;
+    }
+
 }
