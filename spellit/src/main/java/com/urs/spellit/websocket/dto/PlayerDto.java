@@ -16,14 +16,18 @@ import java.util.List;
 public class PlayerDto {
 	private WebSocketSession session;
 	private long memberId;
+	private int hp;
 	private String nickname;
 	private int play_count;
 	private int win_count;
-
+	private int cost;
 	// 추후 추가 예정
 	private GameCharacterEntity gameCharacterEntity;
 	private List<CardEntity> deck;
+	private List<CardEntity> selectedCards;
 	private int isFirst;
+	private int idx;
+	private boolean defence;
 
 	public static PlayerDto makePlayerDto(WebSocketSession session, Member member) {
 		return PlayerDto.builder()

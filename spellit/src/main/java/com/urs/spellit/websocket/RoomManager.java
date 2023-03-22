@@ -15,9 +15,11 @@ public class RoomManager {
     private long roomCount;
     private Map<Long, RoomInfo> roomMap = new HashMap<>();
 
+
     public RoomInfo makeRoom(PlayerDto playerDto1,PlayerDto playerDto2) {
         RoomInfo room = new RoomInfo();
         room.setRoomId(roomCount++);
+        room.setCost(8);
         room.getPlayerList().add(playerDto1);
         room.getPlayerList().add(playerDto2);
         roomMap.put(room.getRoomId(), room);
