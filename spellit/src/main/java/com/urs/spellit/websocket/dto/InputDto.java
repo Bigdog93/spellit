@@ -13,5 +13,5 @@ public class InputDto {
 	private String event;
 	private long roomId;
 	private long memberId;
-	private String data;
+	private Object data;
 }

@@ -2,6 +2,9 @@ package com.urs.spellit.websocket;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.urs.spellit.game.CardRepository;
 import com.urs.spellit.game.DeckRepository;
@@ -11,6 +14,7 @@ import com.urs.spellit.member.MemberRepository;
 import com.urs.spellit.member.MemberService;
 import com.urs.spellit.member.model.entity.Member;
 import com.urs.spellit.websocket.dto.*;
+import com.urs.spellit.websocket.utils.MyParser;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,8 +39,8 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 	Queue<PlayerDto> readyQueue = new ArrayDeque<>();
 	HashMap<Integer, String> room_host = new HashMap<>();
 	private final RoomManager roomManager;
-	ObjectMapper mapper = new ObjectMapper();
-	JsonParser jsonParser = new JsonParser();
+	private final ObjectMapper mapper = new ObjectMapper();
+	final private MyParser myParser;
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -47,26 +51,31 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 	@Override
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
 		// 온 메시지를 inputDto로 매핑해줘요
-		InputDto inputDto = mapper.readValue((String) message.getPayload(), InputDto.class);
-		String event = inputDto.getEvent();
-		long roomId = inputDto.getRoomId();
-		long memberId = inputDto.getMemberId();
-		String data = inputDto.getData();
+		logger.info("메시지 도착");
+		JsonObject input = JsonParser.parseString((String) message.getPayload()).getAsJsonObject();
+		String event = myParser.getString("event", input);
+		long roomId = myParser.getLong("roomId", input);
+		long memberId = myParser.getLong("memberId", input);
+		JsonElement data = input.get("data");
+		logger.info("*************************data 값이다!! : " + data.toString());
+		Map<String, Object> infoMap = new HashMap<>();
+		if(event.equals("test")) {
+			List<CardEntity> cardList = new ArrayList<>();
+			cardList.add(CardEntity.builder().id(0l).title("영원의 동토").cost(4).spell("이야호").damage(150).build());
+			cardList.add(CardEntity.builder().id(1l).title("화염탄").cost(10).spell("후랴빳빠라").damage(95800).build());
+			infoMap.put("test는 어떻게 되었나??", cardList);
+			infoMap.put("되돌려주마", myParser.getBackData(data));
+			session.sendMessage(makeTextMsg("test", infoMap));
+			return;
+		}
 //		 각 이벤트에 따라 if문을 실행해 줘요
 		/* 빠른 매치 눌렀을 때*/
 		if(event.equals("matchStart")) {
 			PlayerDto player = getPlayerByMemberId(session, memberId);
-			List<DeckEntity> deckEntities = deckRepository.findAllByMemberId(memberId);
-			List<CardEntity> deck = new ArrayList<>();
-			for(DeckEntity d : deckEntities) {
-				deck.add(d.getCard());
-			}
-			player.setDeck(deck);
 			/*--- 대기열 사람 없으면 대기열 큐에 집어넣음 ---*/
 			if (readyQueue.isEmpty()) {
 				player.setIdx(0);
 				readyQueue.add(player);
-				Map<String, Object> infoMap = new HashMap<>();
 				// "entQueue" 문자열을 type 에 담아 재송신
 				TextMessage textMessage = makeTextMsg("entQueue", player);
 				session.sendMessage(textMessage);
@@ -76,7 +85,6 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 				player.setIdx(1);
 				RoomInfo room = roomManager.makeRoom(player, otherPlayer); // 방 만들어주기
 				room.setPlayersPriority(); // 선공 후공 정해주기, 선공, 후공 순서대로 List 재정렬
-				Map<String, Object> infoMap = new HashMap<>();
 				infoMap.put("roomInfo", room); // 방 정보 담아서
 				room.sendMessage(makeTextMsg("connected", infoMap)); // 전송
 			}
@@ -95,7 +103,6 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 					other = players.get(i);
 				}
 			}
-			Map<String, Object> infoMap = new HashMap<>();
 			if(me == null || other == null) {
 				infoMap.put("msg", "플레이어가 없습니다.");
 				room.sendMessage(makeTextMsg("error", infoMap));
@@ -119,8 +126,8 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 					break;
 				case "attackTurn": // 공격 턴으로(준비 턴에서 세팅한 카드들 넘겨줌)
 					isReady[me.getIdx()] = true;
-					PlayerDto player = mapper.readValue(data, PlayerDto.class);
-					me.setSelectedCards(player.getSelectedCards());
+					List<CardEntity> cardList = myParser.getList("cards", data, CardEntity.class);
+					me.setSelectedCards(cardList);
 					if(isReady(isReady, room, 2)) {
 						List<SelectedCardsDto> response = new ArrayList<>();
 						List<CardEntity> firstCards = players.get(0).getSelectedCards();
@@ -158,9 +165,11 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 					break;
 				case "settleTurn": // 정산 차례
 					isReady[me.getIdx()] = true;
-					me.setDefence(mapper.readValue(data, Boolean.class));
+					Object obj = myParser.getBackData(data);
+					me.setMyObj(obj);
 					if(isReady(isReady, room, 4)) {
-						room.sendMessage(makeTextMsg("toSettle", data));
+						players.get(0).getSession().sendMessage(makeTextMsg("settle", players.get(1).getMyObj()));
+						players.get(1).getSession().sendMessage(makeTextMsg("settle", players.get(0).getMyObj()));
 					}
 					break;
 				case "gameOver": // 게임 끝
@@ -223,7 +232,14 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 			return null;
 		}
 		Member member = memberOption.get();
-		return PlayerDto.makePlayerDto(session, member);
+		PlayerDto player = PlayerDto.makePlayerDto(session, member);
+		List<DeckEntity> deckEntities = deckRepository.findAllByMemberId(memberId);
+		List<CardEntity> deck = new ArrayList<>();
+		for(DeckEntity d : deckEntities) {
+			deck.add(d.getCard());
+		}
+		player.setDeck(deck);
+		return player;
 	}
 	public boolean isReady(boolean[] isReady, RoomInfo room, int nextTurn) {
 		if(isReady[0] && isReady[1]) {
