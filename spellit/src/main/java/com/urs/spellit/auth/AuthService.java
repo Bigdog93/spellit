@@ -17,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -34,6 +36,21 @@ public class AuthService {
 
         Member member = memberRequestDto.toMember(passwordEncoder);
         return MemberResponseDto.of(memberRepository.save(member));
+    }
+
+    @Transactional
+    public int withdrawal(MemberRequestDto memberRequestDto) {
+        if (!memberRepository.existsByEmail(memberRequestDto.getEmail())) {
+            throw new RuntimeException("가입하지 않은 유저입니다");
+        }
+        Optional<Member> member = memberRepository.findByEmail(memberRequestDto.getEmail());
+        try {
+            memberRepository.deleteById(member.get().getId());
+            return 200;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 500;
+        }
     }
 
     @Transactional
@@ -58,6 +75,17 @@ public class AuthService {
 
         // 5. 토큰 발급
         return tokenDto;
+    }
+
+    @Transactional
+    public int logout(MemberRequestDto memberRequestDto)
+    {
+        if(!memberRepository.existsByEmail(memberRequestDto.getEmail()))
+        {
+            throw new RuntimeException("로그인하지 않은 유저입니다");
+        }
+        //memberRepository.
+        return 200;
     }
 
     @Transactional
@@ -89,4 +117,5 @@ public class AuthService {
         // 토큰 발급
         return tokenDto;
     }
+
 }

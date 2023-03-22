@@ -61,4 +61,5 @@ public class Member extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
+    //public void
 }

@@ -18,14 +18,24 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final AuthService authService;
 
-    @PostMapping("/signup")
+    @PostMapping("/signup") //회원가입
     public ResponseEntity<MemberResponseDto> signup(@RequestBody MemberRequestDto memberRequestDto) {
         return ResponseEntity.ok(authService.signup(memberRequestDto));
     }
+    @PostMapping("/withdrawal") //회원탈퇴
+    public ResponseEntity<Integer> withdrawal(@RequestBody MemberRequestDto memberRequestDto) {
+        return ResponseEntity.ok(authService.withdrawal(memberRequestDto));
+    }
 
-    @PostMapping("/login")
+    @PostMapping("/login") //로그인
     public ResponseEntity<TokenDto> login(@RequestBody MemberRequestDto memberRequestDto) {
         return ResponseEntity.ok(authService.login(memberRequestDto));
+    }
+
+    @PostMapping("/logout") //로그아웃
+    public ResponseEntity<Integer> logout(@RequestBody MemberRequestDto memberRequestDto)
+    {
+        return ResponseEntity.ok(authService.logout(memberRequestDto));
     }
 
     @PostMapping("/reissue")
