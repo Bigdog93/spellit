@@ -1,9 +1,12 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
-import { costActions } from "@/store/cost"
+import { useNavigate } from "react-router-dom"
+import './index.css'
 
 import { RootState } from "@/store"
-import './index.css'
+import { costActions } from "@/store/cost"
+import { attackActions } from "@/store/attack"
+
 import ConfirmBtn from '../../../assets/ui/ReadyConfirmBtn.png'
 import Frame from '../../../assets/ui/Frame.png'
 
@@ -47,10 +50,16 @@ const Ready = () => {
     addCost()
   };
 
+  const dispatch = useDispatch();
   // skill 확정
   // 수정 필
+
+  const navigate = useNavigate();
   const confirmSkills = () => {
-    console.log('확인')
+    console.log('확인');
+    // console.log(selectedCards);
+    dispatch(attackActions.attackStart(selectedCards));
+    navigate("/attack");
   }
 
   // cost + or -
@@ -58,7 +67,7 @@ const Ready = () => {
   const cost = useSelector((state: RootState) => state.cost.cost);
   const maxCost = 30
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const addCost = () => {
     dispatch(costActions.add(10))
