@@ -28,6 +28,7 @@ public class PlayerDto {
 	private int isFirst;
 	private int idx;
 	private boolean defence;
+	private Object myObj;
 
 	public static PlayerDto makePlayerDto(WebSocketSession session, Member member) {
 		return PlayerDto.builder()
