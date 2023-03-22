@@ -58,7 +58,8 @@ const Login = () => {
 
   const toHome = () => {
     navigate('/home')
-  }
+  };
+
   return (
     <div className='bg'>
       <form action="submit" onSubmit={submitHandler}>
