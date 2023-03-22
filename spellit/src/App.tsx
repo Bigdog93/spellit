@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+
 import Home from "./components/Home";
 import Game from "./components/Game";
 import Matching from "./components/Matching";
@@ -8,6 +9,8 @@ import Ready from "@/components/Game/Ready"
 import Defence from '@/components/Game/Defense/Defense';
 import Attack from "@/components/Game/Attack/Attack";
 import Login from "./components/Auth/Login";
+import Signup from "./components/Auth/Signup";
+import OAuth from "./components/Auth/OAuth";
 
 function App() {
   
@@ -15,7 +18,7 @@ function App() {
     <BrowserRouter>
 		<Home/>
       <Routes>
-        <Route index element={<Login />} />
+        {/* <Route index element={<Login />} /> */}
         <Route path="game" element={<Game />} />
         <Route path="matching" element={<Matching />} />
         <Route path="user" element={<User />} />
@@ -23,6 +26,8 @@ function App() {
 				<Route path="defense" element={<Defence/>}/>
         <Route path="attack" element={<Attack/>}/>
         <Route path="login" element={<Login/>}/>
+        <Route path="oath" element={<OAuth/>}/>
+        <Route path="join" element={<Signup/>}/>
       </Routes>
     </BrowserRouter>
   );
