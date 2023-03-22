@@ -27,11 +27,11 @@ public class Member extends BaseTimeEntity {
     @Column(name = "member_id", nullable = false)
     private Long id;
 
-    @Column(nullable = false, length = 40)
+    @Column(nullable = false, length = 40,unique = true)
     private String email;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false,length = 7)
+    @Column(nullable = false,length = 7,unique = true)
     private String nickname;
     @Column(nullable = false)
     @ColumnDefault("1")
@@ -61,5 +61,13 @@ public class Member extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
-    //public void
+    public void changeIsDeleted(boolean isDeleted)
+    {
+        this.isDeleted=isDeleted;
+    }
+    public void changeNickname(String nickname)
+    {
+        this.nickname=nickname;
+    }
+
 }
