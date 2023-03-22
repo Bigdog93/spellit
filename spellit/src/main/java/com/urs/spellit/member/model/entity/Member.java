@@ -2,7 +2,6 @@ package com.urs.spellit.member.model.entity;
 
 import com.urs.spellit.auth.entity.Authority;
 import com.urs.spellit.common.model.BaseTimeEntity;
-import com.urs.spellit.game.entity.CardEntity;
 import com.urs.spellit.game.entity.DeckEntity;
 import com.urs.spellit.game.entity.GameCharacterEntity;
 import lombok.*;
@@ -32,7 +31,7 @@ public class Member extends BaseTimeEntity {
     private String email;
     @Column(nullable = false)
     private String password;
-    @Column(length = 7)
+    @Column(nullable = false,length = 10)
     private String nickname;
     @Column(nullable = false)
     @ColumnDefault("1")

@@ -21,7 +21,7 @@ spring:
     database: mysql
 #    database-platform: org.hibernate.spatial.dialect.mysql.MySQL56InnoDBSpatialDialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     #    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     properties:
       hibernate:
