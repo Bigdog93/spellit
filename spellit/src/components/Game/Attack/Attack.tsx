@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/";
 import Timer from "../Items/Timer";
+import HpBar from "../Items/HpBar";
 import './Attack.css'
 
 import SpellBox from "../../../assets/InGame/SpellBox.png";
@@ -51,8 +52,8 @@ const darkSpell: Spell = {
 
 function Attack() {
     const chooseCards = useSelector((state: RootState) => state.chooseCards.chooseCards);
-    console.log(chooseCards);
-    console.log('왜렌더링이 계속 되냐고옹오ㅗ오오오오오')
+    // console.log(chooseCards);
+    // console.log('왜렌더링이 계속 되냐고옹오ㅗ오오오오오')
 
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   
@@ -78,7 +79,7 @@ function Attack() {
     // 타이머 띄우기
     const [sec, setSec] = useState<number>(0);
 
-    const SpellIt = async (selectSpell:Spell) => {
+    const SpellIt = async (selectSpell:Spell, idx:number) => {
       
         let spellLength = 0; // 띄어쓰기 제거한 주문의 길이
         for (let i = 0; i < selectSpell.content.length; i++) {
@@ -120,7 +121,7 @@ function Attack() {
         });
 
         // 음성 인식 시작
-        await recognition.start();
+        recognition.start();
         setSec(selectSpell.time);
         console.log('SpeechRecognition start!')
 
@@ -130,46 +131,65 @@ function Attack() {
         }, 1000)
         
         // 주문 제한 시간 흐른 후 음성인식 종료
-        await setTimeout(() => {
+        setTimeout(() => {
             recognition.stop();
             clearInterval(interval);
             console.log('SpeechRecognition end!')
-        }, selectSpell.time*1000);    
+            // class 속성 제거하기
+            setTimeout(() => {
+              for (let j=0; j<selectSpell.content.length; j++) {
+                const spellClass = document.getElementById(`spell-${j}`);
+                spellClass?.classList.remove(`${selectSpell.name}-correct`)
+                // console.log(selectSpell.name);
+                // console.log('옛다 제거함~')
+              }
+              setIdx(idx+1);
+            }, 500)
+        }, selectSpell.time*1000); 
+
     };
 
+    const [idx, setIdx] = useState(0);
     useEffect(() => {
-      chooseCards.map(async (card: string, idx:number) => {
       console.log(idx);
-      if (fireSpell.name == card) {
-          SpellIt(fireSpell);
-          await setTimeout(() => console.log("영창중..."), fireSpell.time*1000);
-        } else if (iceSpell.name == card) {
-          SpellIt(iceSpell);
-          await setTimeout(() => console.log("영창중..."), iceSpell.time*1000);
-        } else if (sparkSpell.name == card) {
-          SpellIt(sparkSpell);
-          await setTimeout(() => console.log("영창중..."), sparkSpell.time*1000);
-        } else if (lightSpell.name == card) {
-          SpellIt(lightSpell);
-          await setTimeout(() => console.log("영창중..."), lightSpell.time*1000);
-        } else if (darkSpell.name == card) {
-          SpellIt(darkSpell);
-          await setTimeout(() => console.log("영창중..."), darkSpell.time*1000);
-        } else if (windSpell.name == card) {
-          SpellIt(windSpell);
-          await setTimeout(() => console.log("영창중..."), windSpell.time*1000);
-        } else if (stormSpell.name == card) {
-          SpellIt(stormSpell);
-          await setTimeout(() => console.log("영창중..."), stormSpell.time*1000);
+      if (fireSpell.name == chooseCards[idx]) {
+          SpellIt(fireSpell, idx);
+        } else if (iceSpell.name == chooseCards[idx]) {
+          SpellIt(iceSpell, idx);
+        } else if (sparkSpell.name == chooseCards[idx]) {
+          SpellIt(sparkSpell, idx);
+        } else if (lightSpell.name == chooseCards[idx]) {
+          SpellIt(lightSpell, idx);
+        } else if (darkSpell.name == chooseCards[idx]) {
+          SpellIt(darkSpell, idx);
+        } else if (windSpell.name == chooseCards[idx]) {
+          SpellIt(windSpell, idx);
+        } else if (stormSpell.name == chooseCards[idx]) {
+          SpellIt(stormSpell, idx);
         }
-      })
-    }, [])
-    
+        console.log(idx);
+        
+        // 주문 삭제하기
+        // if (idx == chooseCards.length) {
+        //   const spell = document.querySelectorAll('span')
+        //   for (let i=0; i<spell.length; i++) {
+        //     spell[i].remove()
+        //   }
+          
+        //   const percent = document.querySelector("percent") as HTMLDivElement;
+        //   percent.remove()
+
+        // }
+    }, [idx])
 
 
     return (
         <div className="attack-bg">
+          <div className="attack-top-items">
+            <HpBar></HpBar>
             <Timer time={sec}></Timer>
+            <HpBar></HpBar>
+          </div>
             {/* <button onClick={() => {handleClick(sparkSpell)}}>뇌전의 창</button>
             <button onClick={() => {handleClick(iceSpell)}}>영원의 동토</button>
             <button onClick={() => {handleClick(stormSpell)}}>남양의 폭풍</button>
