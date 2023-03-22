@@ -39,7 +39,7 @@ spring:
       max-request-size: 16MB
 logging:
   level:
-    root: debug
+    root: info
     org.hibernate.type: error
 
 secret:
