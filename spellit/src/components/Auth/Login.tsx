@@ -9,28 +9,21 @@ import kakao from '../../assets/ui/kakao_login_medium_narrow.png'
 const Login = () => {
   const navigate = useNavigate();
 
-  const [id, setId] = useState('')
-  const [pw, setPw] = useState('')
+  const [id, setId] = useState('');
+  const [pw, setPw] = useState('');
 
   const idChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setId(event.target.value);
-  }
+  };
     
   const pwChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setPw(event.target.value);
-  }
- 
-
+  };
+  
   const submitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log('login btn')
-    // axios.post(process.env.REACT_APP_SPRING + 'member/login', {'email': id, 'password': pw})
-    // .then((res)=> {
-    //   console.log(res)
-    // })
-    // .catch((err)=>{
-    //   console.log(err)
-    // })
+   
     API.post<any>(
       "member/login", 
       {'email': id, 'password': pw}, 
@@ -60,6 +53,10 @@ const Login = () => {
     navigate('/join')
   };
 
+  const toHome = () => {
+    navigate('/home')
+  };
+
   return (
     <div className='bg'>
       <div className="login-box">
@@ -83,8 +80,10 @@ const Login = () => {
         <br />
         <img src={kakao} alt="kakao" className="mouse-hover" onClick={onKakao}/>
         <p onClick={toSignup} className="mouse-hover">회원가입</p>
+        <button onClick={toHome}>넘어가기</button>
       </div>
     </div>
   )
 }
-export default Login
+
+export default Login;

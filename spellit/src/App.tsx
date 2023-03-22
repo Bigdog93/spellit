@@ -18,7 +18,7 @@ function App() {
     <BrowserRouter>
 		{/* <Home/> */}
       <Routes>
-        <Route index element={<Home />} />
+        {/* <Route index element={<Login />} /> */}
         <Route path="game" element={<Game />} />
         <Route path="matching" element={<Matching />} />
         <Route path="user" element={<User />} />
