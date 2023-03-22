@@ -58,7 +58,7 @@ const Login = () => {
   };
 
   return (
-    <div className='bg'>
+    <div className='auth-bg'>
       <div className="login-box">
         <form action="submit" className="login-form" onSubmit={submitHandler}>
           <label htmlFor="">ID</label>
