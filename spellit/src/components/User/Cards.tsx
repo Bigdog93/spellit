@@ -8,8 +8,7 @@ const Cards = () => {
     <div className={`${style.items}`}>
       { cards.map((card: string, index: number) => (
         <Card key={index} card={card}/>
-      ))
-}
+      ))}
       
     </div>
   )

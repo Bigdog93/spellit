@@ -7,6 +7,11 @@ const User = () => {
       <div className={`${style.items}`}>
         <Cards />
       </div>
+      <div className={`${style.cardselectcontainer}`}>
+        <div className={`${style.cardselect}`}>
+          e
+        </div>
+      </div>
     </div>
   )
 }
