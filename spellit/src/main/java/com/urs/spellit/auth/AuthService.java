@@ -45,11 +45,12 @@ public class AuthService {
         }
         Optional<Member> member = memberRepository.findByEmail(memberRequestDto.getEmail());
         try {
-            memberRepository.deleteById(member.get().getId());
+            member.get().changeNickname("null");
+            member.get().changeIsDeleted(true);
             return 200;
         } catch (Exception e) {
             e.printStackTrace();
-            return 500;
+            throw new RuntimeException("회원탈퇴 실패");
         }
     }
 
@@ -84,8 +85,17 @@ public class AuthService {
         {
             throw new RuntimeException("로그인하지 않은 유저입니다");
         }
-        //memberRepository.
-        return 200;
+        Optional<Member> member = memberRepository.findByEmail(memberRequestDto.getEmail());
+        Optional<RefreshToken> refreshToken=refreshTokenRepository.findByKey(Long.toString(member.get().getId()));
+        try{
+            refreshTokenRepository.delete(refreshToken.get());
+            return 200;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            throw new RuntimeException("로그아웃 실패");
+        }
     }
 
     @Transactional
