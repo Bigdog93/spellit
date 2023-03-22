@@ -21,7 +21,8 @@ public class CardEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "card_id", nullable = false)
     private Long id;
-
+    @Column(nullable = false)
+    private String code;
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
@@ -30,8 +31,6 @@ public class CardEntity {
     private int cost;
     @Column(nullable = false)
     private int damage;
-    @Column(nullable = false)
-    private String magicImg;
     @Column(nullable = false)
     private int attribute;
 

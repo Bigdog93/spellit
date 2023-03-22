@@ -1,6 +1,6 @@
-package com.urs.spellit.jwt;
+package com.urs.spellit.security.jwt;
 
-import com.urs.spellit.token.dto.TokenDto;
+import com.urs.spellit.security.token.dto.TokenDto;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

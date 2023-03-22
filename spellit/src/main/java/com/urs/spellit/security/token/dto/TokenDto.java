@@ -1,4 +1,4 @@
-package com.urs.spellit.token.dto;
+package com.urs.spellit.security.token.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

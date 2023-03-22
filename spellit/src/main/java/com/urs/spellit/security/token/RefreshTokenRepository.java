@@ -1,6 +1,6 @@
-package com.urs.spellit.token;
+package com.urs.spellit.security.token;
 
-import com.urs.spellit.token.entity.RefreshToken;
+import com.urs.spellit.security.token.entity.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

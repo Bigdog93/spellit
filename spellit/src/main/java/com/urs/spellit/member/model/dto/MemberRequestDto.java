@@ -1,6 +1,6 @@
 package com.urs.spellit.member.model.dto;
 
-import com.urs.spellit.auth.entity.Authority;
+import com.urs.spellit.security.auth.entity.Authority;
 import com.urs.spellit.member.model.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
