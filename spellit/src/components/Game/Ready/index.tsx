@@ -1,8 +1,11 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
-import { costActions } from "@/store/cost"
+import { useNavigate } from "react-router-dom"
 
 import { RootState } from "@/store"
+import { costActions } from "@/store/cost"
+import { attackActions } from "@/store/attack"
+
 import ConfirmBtn from '../../../assets/ui/ReadyConfirmBtn.png'
 import Frame from '../../../assets/ui/Frame.png'
 
@@ -11,7 +14,7 @@ const Ready = () => {
   // 나의 덱 정보 저장
   // store/user.tsx의 정보 업뎃 및 연동 필요
   // 요소 명 수정해야할 수도 있음
-  const myCards = ['Fire1', 'Light1', 'Ice1', 'Wind1', 'Dark1']
+  const myCards = ['fireSpell', 'lightSpell', 'iceSpell', 'windSpell', 'darkSpell']
   
 
   // cost 부족할 때 나타는 shake 효과
@@ -47,10 +50,16 @@ const Ready = () => {
     addCost()
   };
 
+  const dispatch = useDispatch();
   // skill 확정
   // 수정 필
+
+  const navigate = useNavigate();
   const confirmSkills = () => {
-    console.log('확인')
+    console.log('확인');
+    // console.log(selectedCards);
+    dispatch(attackActions.attackStart(selectedCards));
+    navigate("/attack");
   }
 
   // cost + or -
@@ -58,7 +67,7 @@ const Ready = () => {
   const cost = useSelector((state: RootState) => state.cost.cost);
   const maxCost = 30
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const addCost = () => {
     dispatch(costActions.add(10))

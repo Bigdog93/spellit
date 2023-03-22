@@ -1,6 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/";
 import Timer from "../Items/Timer";
 import './Attack.css'
+
+import SpellBox from "../../../assets/InGame/SpellBox.png";
+import SkillBar from "../../../assets/InGame/SkillBar.png";
 
 interface Spell {
     name: string;
@@ -8,7 +13,47 @@ interface Spell {
     time: number;
 }
 
+const windSpell: Spell = {
+  name: "windSpell",
+  content: "칼날의 바람이여 적을 베어라",
+  time: 4,
+};
+const fireSpell: Spell = {
+  name: "fireSpell",
+  content: "타올라라 불꽃 적을 태우는 탄환이 되어 날아라",
+  time: 5,
+};
+const sparkSpell: Spell = {
+  name: "sparkSpell",
+  content: "모여라 대기의 번개 천지를 뒤흔드는 굉음의 뇌광 창이 되어 적을 꿰뚫어라",
+  time: 8,
+};
+const iceSpell: Spell = {
+  name: "iceSpell",
+  content: "냉기여 휘몰아쳐라 빛을 삼키고 온기를 먹어치우며 이 땅을 내달려 모든 것이 얼어붙을 것이니",
+  time: 9,
+};
+const stormSpell: Spell = {
+  name: "stormSpell",
+  content: "불어라 한줄기 바람 모이고 모여 적들을 쓸어버려라",
+  time: 5,
+};
+const lightSpell: Spell = {
+  name: "lightSpell",
+  content: "악을 멸하는 성스러운 빛이여 마의 존재를 멸하는 성화의 빛으로 적을 강타해라",
+  time: 8,
+};
+const darkSpell: Spell = {
+  name: "darkSpell",
+  content: "어둠보다 어두운자여 심연 깊은 곳에서 우리를 올려다보는 자여 한 점 빛조차 허락하지 않는 어둠을 내보여 그 공포로 영혼까지 떨게 하라",
+  time: 12,
+};
+
 function Attack() {
+    const chooseCards = useSelector((state: RootState) => state.chooseCards.chooseCards);
+    console.log(chooseCards);
+    console.log('왜렌더링이 계속 되냐고옹오ㅗ오오오오오')
+
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   
     // 인스턴스 생성
@@ -27,50 +72,14 @@ function Attack() {
   
     const [spanEl, setSpanEl] = useState<JSX.Element[]>([]);
     const reg = /[~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/ ]/gim;
-    
-    const windSpell: Spell = {
-      name: "windSpell",
-      content: "칼날의 바람이여 적을 베어라",
-      time: 4,
-    };
-    const fireSpell: Spell = {
-      name: "fireSpell",
-      content: "타올라라 불꽃 적을 태우는 탄환이 되어 날아라",
-      time: 5,
-    };
-    const sparkSpell: Spell = {
-      name: "sparkSpell",
-      content: "모여라 대기의 번개 천지를 뒤흔드는 굉음의 뇌광 창이 되어 적을 꿰뚫어라",
-      time: 8,
-    };
-    const iceSpell: Spell = {
-      name: "iceSpell",
-      content: "냉기여 휘몰아쳐라 빛을 삼키고 온기를 먹어치우며 이 땅을 내달려 모든 것이 얼어붙을 것이니",
-      time: 9,
-    };
-    const stormSpell: Spell = {
-      name: "stormSpell",
-      content: "불어라 한줄기 바람 모이고 모여 적들을 쓸어버려라",
-      time: 5,
-    };
-    const lightSpell: Spell = {
-      name: "lightSpell",
-      content: "악을 멸하는 성스러운 빛이여 마의 존재를 멸하는 성화의 빛으로 적을 강타해라",
-      time: 8,
-    };
-    const darkSpell: Spell = {
-      name: "darkSpell",
-      content: "어둠보다 어두운자여 심연 깊은 곳에서 우리를 올려다보는 자여 한 점 빛조차 허락하지 않는 어둠을 내보여 그 공포로 영혼까지 떨게 하라",
-      time: 12,
-    };
 
     const spanList: JSX.Element[] = [];
 
     // 타이머 띄우기
     const [sec, setSec] = useState<number>(0);
 
-    // 주문 버튼 클릭시 음성 인식 시작
-    const handleClick = (selectSpell:Spell) => {
+    const SpellIt = async (selectSpell:Spell) => {
+      
         let spellLength = 0; // 띄어쓰기 제거한 주문의 길이
         for (let i = 0; i < selectSpell.content.length; i++) {
             if (!selectSpell.content[i].match(reg)) {
@@ -111,7 +120,7 @@ function Attack() {
         });
 
         // 음성 인식 시작
-        recognition.start();
+        await recognition.start();
         setSec(selectSpell.time);
         console.log('SpeechRecognition start!')
 
@@ -121,32 +130,73 @@ function Attack() {
         }, 1000)
         
         // 주문 제한 시간 흐른 후 음성인식 종료
-        setTimeout(() => {
+        await setTimeout(() => {
             recognition.stop();
             clearInterval(interval);
             console.log('SpeechRecognition end!')
-        }, selectSpell.time*1000);
-        
+        }, selectSpell.time*1000);    
     };
 
+    useEffect(() => {
+      chooseCards.map(async (card: string, idx:number) => {
+      console.log(idx);
+      if (fireSpell.name == card) {
+          SpellIt(fireSpell);
+          await setTimeout(() => console.log("영창중..."), fireSpell.time*1000);
+        } else if (iceSpell.name == card) {
+          SpellIt(iceSpell);
+          await setTimeout(() => console.log("영창중..."), iceSpell.time*1000);
+        } else if (sparkSpell.name == card) {
+          SpellIt(sparkSpell);
+          await setTimeout(() => console.log("영창중..."), sparkSpell.time*1000);
+        } else if (lightSpell.name == card) {
+          SpellIt(lightSpell);
+          await setTimeout(() => console.log("영창중..."), lightSpell.time*1000);
+        } else if (darkSpell.name == card) {
+          SpellIt(darkSpell);
+          await setTimeout(() => console.log("영창중..."), darkSpell.time*1000);
+        } else if (windSpell.name == card) {
+          SpellIt(windSpell);
+          await setTimeout(() => console.log("영창중..."), windSpell.time*1000);
+        } else if (stormSpell.name == card) {
+          SpellIt(stormSpell);
+          await setTimeout(() => console.log("영창중..."), stormSpell.time*1000);
+        }
+      })
+    }, [])
+    
+
+
     return (
-        <>
+        <div className="attack-bg">
             <Timer time={sec}></Timer>
-            <button onClick={() => {handleClick(sparkSpell)}}>뇌전의 창</button>
+            {/* <button onClick={() => {handleClick(sparkSpell)}}>뇌전의 창</button>
             <button onClick={() => {handleClick(iceSpell)}}>영원의 동토</button>
             <button onClick={() => {handleClick(stormSpell)}}>남양의 폭풍</button>
             <button onClick={() => {handleClick(fireSpell)}}>화염탄</button>
             <button onClick={() => {handleClick(lightSpell)}}>멸마의 성휘</button>
             <button onClick={() => {handleClick(darkSpell)}}>무광의 심연</button>
-            <button onClick={() => {handleClick(windSpell)}}>풍화의 검</button>
-            <br />
+            <button onClick={() => {handleClick(windSpell)}}>풍화의 검</button> */}
             <div className="SpellBox">
-                <img style={{ width: 800, height: 400}} src="assets/InGame/SpellBox.png" alt="" />
+                <img style={{ width: 800, height: 400}} src={SpellBox} alt="" />
                 <div id='origin'>{spanEl}</div>
             </div>
             <div className="words"></div>
             <div id="percent"></div>
-        </>
+
+            <div>
+              <img src={SkillBar} alt="" />
+              <div>
+              {chooseCards.map((card: string, index: number) => (
+              <img 
+                key={index} 
+                src={require(`../../../assets/card/icon/${card}.png`)} 
+                alt={card}
+              ></img>
+            ))}
+              </div>
+            </div>
+        </div>
     )
 }
 

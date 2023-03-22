@@ -1,5 +1,5 @@
-import front from '../../assets/card/front/Fire1.png'
-import back from '../../assets/card/back/Fire1.png'
+import front from '../../assets/card/front/fireSpell.png'
+import back from '../../assets/card/back/fireSpell.png'
 import './Card.css'
 
 const Cards = () => {

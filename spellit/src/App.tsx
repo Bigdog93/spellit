@@ -12,7 +12,7 @@ function App() {
   
   return (
     <BrowserRouter>
-		<Home/>
+		{/* <Home/> */}
       <Routes>
         <Route index element={<Home />} />
         <Route path="game" element={<Game />} />
