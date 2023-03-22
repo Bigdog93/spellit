@@ -1,5 +1,6 @@
 import { useState, ChangeEvent, FormEvent } from "react"
 import API from "@/utils/API"
+import { useNavigate } from "react-router-dom";
 
 interface LoginInfo {
   'email': string;
@@ -7,17 +8,18 @@ interface LoginInfo {
 }
 
 const Login = () => {
+  const navigate = useNavigate();
 
-  const [id, setId] = useState('')
-  const [pw, setPw] = useState('')
+  const [id, setId] = useState('');
+  const [pw, setPw] = useState('');
 
   const idChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setId(event.target.value);
-  }
+  };
     
   const pwChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setPw(event.target.value);
-  }
+  };
 
   // const register = async (user: UserRegistrationModel) => {
   //   const { data } = await http.post<UserRegistrationModel, AxiosResponse<{ accessToken: string }>>("/users", user);
@@ -54,6 +56,9 @@ const Login = () => {
     setPw('');
   };
 
+  const toHome = () => {
+    navigate('/home')
+  }
   return (
     <div className='bg'>
       <form action="submit" onSubmit={submitHandler}>
@@ -73,6 +78,7 @@ const Login = () => {
         <br />
         <button type="submit">Connect</button>
       </form>
+      <button onClick={toHome}>넘어가기</button>
     </div>
   )
 }
