@@ -10,7 +10,7 @@ const store = configureStore({
   reducer: {
     auth: authReducer, 
     user: useReducer, 
-    session: sessionReduser, 
+    // session: sessionReducer, 
     cost: costReducer,
     chooseCards: attackReducer },
 });

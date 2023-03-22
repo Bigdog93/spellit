@@ -11,10 +11,18 @@ import Attack from "@/components/Game/Attack/Attack";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 import OAuth from "./components/Auth/OAuth";
+import Chatting from "./components/Chatting";
+import TextInputBox from "./components/TextInputBox";
 
+import WebsocektProvider from './store/session'
 function App() {
   
   return (
+    <div>
+      <WebsocektProvider>
+        <Chatting/>
+        <TextInputBox/>
+      </WebsocektProvider>
     <BrowserRouter>
 		{/* <Home/> */}
       <Routes>
@@ -28,8 +36,10 @@ function App() {
         <Route path="login" element={<Login/>}/>
         <Route path="oath" element={<OAuth/>}/>
         <Route path="join" element={<Signup/>}/>
+        <Route path="test" element={<Chatting/>}/>
       </Routes>
     </BrowserRouter>
+    </div>
   );
 }
 
