@@ -9,6 +9,8 @@ import "./Settle.css";
 function Settle() {
     const dispatch = useDispatch();
 
+    // 주문 영창에 대한 처리된 데미지 값을 서버에서 받아서 이펙트 효과와 함께 데미지값으로 넘겨주기
+    const chooseCards = useSelector((state: RootState) => (state.attack.chooseCards));
     const firstHp = useSelector((state: RootState) => (state.attack.firstHp));
     const secondHp = useSelector((state: RootState) => (state.attack.secondHp));
     

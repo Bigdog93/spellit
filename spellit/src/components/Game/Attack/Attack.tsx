@@ -173,9 +173,9 @@ function Attack() {
         }
         console.log(idx);
 
-        if (idx == chooseCards.length) {
-          navigate('/settle');
-        }
+        // if (idx == chooseCards.length) {
+        //   navigate('/settle');
+        // }
         
         // 주문 삭제하기
         // if (idx == chooseCards.length) {
@@ -231,16 +231,17 @@ function Attack() {
             <div className="words"></div>
             <div id="percent"></div>
 
-            <div>
-              <img src={SkillBar} alt="" />
-              <div>
-              {chooseCards.map((card: string, index: number) => (
-              <img 
-                key={index} 
-                src={require(`../../../assets/card/icon/${card}.png`)} 
-                alt={card}
-              ></img>
-            ))}
+            <div className="spell-bar-box">
+              <img src={SkillBar} alt="" style={{width: '100%', height: '181px'}} />
+              <div className="spells">
+                {chooseCards.map((card: string, index: number) => (
+                  <img 
+                    style={{height: '150px', margin: '10px'}}
+                    key={index} 
+                    src={require(`../../../assets/card/icon/${card}.png`)} 
+                    alt={card}
+                  ></img>
+                ))}
               </div>
             </div>
         </div>

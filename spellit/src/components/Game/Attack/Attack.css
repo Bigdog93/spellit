@@ -125,6 +125,22 @@
         0 0 10px #484848;
 }
 
+.spell-bar-box {
+    position: relative;
+    display: inline-block;
+
+    width: 800px;
+}
+
+.spells {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    
+    padding-left: 10px;    
+}
+
 #percent {
     color: white;
 }
