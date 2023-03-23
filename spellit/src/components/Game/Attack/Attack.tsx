@@ -1,5 +1,5 @@
-
 import React, { useState, useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/";
 import Timer from "../Items/Timer";
@@ -9,7 +9,6 @@ import './Attack.css'
 
 import SpellBox from "../../../assets/InGame/SpellBox.png";
 import SkillBar from "../../../assets/InGame/SkillBar.png";
-import { useNavigate } from "react-router-dom";
 
 interface Spell {
     name: string;
@@ -61,7 +60,7 @@ function Attack() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   
     // 인스턴스 생성
-    const recognition = new SpeechRecognition();
+    const recognition = new SpeechRecognition();58
   
     // true면 말을 실시간으로 출력 false면 말을 마친 후에 출력
     recognition.interimResults = true;
@@ -171,11 +170,10 @@ function Attack() {
         } else if (storm1.name == chooseCards[idx]) {
           SpellIt(storm1, idx);
         }
-        console.log(idx);
 
-        // if (idx == chooseCards.length) {
-        //   navigate('/settle');
-        // }
+        if (idx == chooseCards.length) {
+          navigate('/settle');
+        }
         
         // 주문 삭제하기
         // if (idx == chooseCards.length) {
