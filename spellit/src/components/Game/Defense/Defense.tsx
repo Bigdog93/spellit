@@ -4,7 +4,8 @@ import Timer from "@/components/Game/Defense/Timer";
 import Click from "@/components/Game/Defense/Click";
 import Blow from "@/components/Game/Defense/Blow";
 
-import styles from "@/components/Game/Defense/Defence.module.css";
+
+import styles from "./Defence.module.css";
 
 const Defence = () => {
   // 게임 선택(둘중 하나)

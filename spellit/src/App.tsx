@@ -16,8 +16,7 @@ import Test from "./components/Test";
 function App() {
   
   return (
-    <div>
-      <BrowserRouter>
+    <BrowserRouter>
       <Routes>
         {/* <Route index element={<Login />}/> */}
         <Route path="home" element={<Home />} />
