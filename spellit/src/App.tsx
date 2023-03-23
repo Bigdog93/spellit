@@ -8,7 +8,6 @@ function App() {
   
   return (
     <BrowserRouter>
-		<Home/>
       <Routes>
         <Route index element={<Home />} />
         <Route path="ready" element={<Ready />} />
