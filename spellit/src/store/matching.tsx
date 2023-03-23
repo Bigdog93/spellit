@@ -3,6 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 const initialMatching = {
   matched: false,
+  done: false,
   p1: [],
   p2: [],
 };
@@ -11,7 +12,8 @@ const matchingSlice = createSlice({
   name: 'matching',
   initialState: initialMatching,
   reducers: {
-    connected(chooseCards, action: PayloadAction<string[]>) {
+    endMatching(state) {
+      state.done = true
     },
   },
 });

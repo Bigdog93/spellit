@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 import { RootState } from "@/store/";
-
+import { matchingActions } from "@/store/matching";
 import CoinFlipper from './CoinFlipper'
 
 import './Versus.css'
@@ -12,13 +12,20 @@ import VS from '../../assets/ui/VS.png'
 
 const Versus = () => {
 
+  const dispatch = useDispatch();
+
   const [coin, setCoin] = useState(false);
 
   const coinHandler = () => {
     setCoin(true)
   }
   
+  const endMatching = () => {
+    dispatch(matchingActions.endMatching())
+  };
+
   window.setTimeout(coinHandler, 3000)
+  window.setTimeout(endMatching, 10000)
 
   const p1 = useSelector((state: RootState) => state.player.p1);
   const p2 = useSelector((state: RootState) => state.player.p2);
