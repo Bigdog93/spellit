@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-const Attack =  () => {
-  return (
-    <div>
-
-    </div>
-  )
-}
-=======
 import React, { useState, useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/";
@@ -229,5 +220,4 @@ function Attack() {
     )
 }
 
->>>>>>> fd6e6fa0e2f42bd2cbc6deeaa2b4cacd2153a37f
 export default Attack;
