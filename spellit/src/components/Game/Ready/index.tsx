@@ -64,6 +64,7 @@ const Ready = () => {
 
   // cost + or -
   // 카드에 따른 cost 수정 필
+  // maxCost 수정 필
   const cost = useSelector((state: RootState) => state.cost.cost);
   const maxCost = 30
 

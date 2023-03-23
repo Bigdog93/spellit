@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const sessionIndexState = {
+const sessionState = {
   temp: 0,
 };
 
 const sessionSlice = createSlice({
   name: 'session',
-  initialState: sessionIndexState,
+  initialState: sessionState,
   reducers: {
     
   },

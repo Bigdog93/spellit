@@ -11,14 +11,16 @@ import Attack from "@/components/Game/Attack/Attack";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 import OAuth from "./components/Auth/OAuth";
+import Test from "./components/Test";
 
 function App() {
   
   return (
-    <BrowserRouter>
-		{/* <Home/> */}
+    <div>
+      <BrowserRouter>
       <Routes>
-        {/* <Route index element={<Login />} /> */}
+        {/* <Route index element={<Login />}/> */}
+        <Route path="home" element={<Home />} />
         <Route path="game" element={<Game />} />
         <Route path="matching" element={<Matching />} />
         <Route path="user" element={<User />} />
@@ -28,8 +30,10 @@ function App() {
         <Route path="login" element={<Login/>}/>
         <Route path="oath" element={<OAuth/>}/>
         <Route path="join" element={<Signup/>}/>
+        <Route path="test" element={<Test/>}/>
       </Routes>
     </BrowserRouter>
+    </div>
   );
 }
 
