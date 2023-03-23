@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 public class SpellitApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpellitApplication.class, args);
+		SpringApplication.run(SpellitApplication.class, args)
 	}
 
 }
