@@ -60,7 +60,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
   let ws = useRef<WebSocket | null>(null).current;
   let send = ws?.send;
   const dispatch = useDispatch();
-  
+
   if (!ws) {
     ws = new WebSocket(webSocketUrl);
     ws.onopen = () => {
@@ -89,7 +89,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
   }
 
   return (
-    <WebSocketContext.Provider value={[ws, send]}>
+    <WebSocketContext.Provider value={{ ws, send }}>
       {children}
     </WebSocketContext.Provider>
   );

@@ -61,7 +61,7 @@ function Attack() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   
     // 인스턴스 생성
-    const recognition = new SpeechRecognition();58
+    const recognition = new SpeechRecognition();
   
     // true면 말을 실시간으로 출력 false면 말을 마친 후에 출력
     recognition.interimResults = true;

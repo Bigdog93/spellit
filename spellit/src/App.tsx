@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { WebSocketProvider } from "@/store/websocket"
+import { WebSocketProvider } from "./store/websocket";
 
 
 import Home from "./components/Home";
-import Game from "./components/Game";
+import Game from "./components/Game/Game";
 import Matching from "./components/Matching";
 import User from './components/User'
 import Ready from "@/components/Game/Ready"
@@ -28,7 +28,7 @@ function App() {
           <Route path="user" element={<User />} />
           <Route path="ready" element={<Ready />} />
           <Route path="defense" element={<Defence/>}/>
-          <Route path="attack" element={<Attack/>}/>
+          {/* <Route path="attack" element={<Attack/>}/> */}
           <Route path="login" element={<Login/>}/>
           <Route path="oath" element={<OAuth/>}/>
           <Route path="join" element={<Signup/>}/>
