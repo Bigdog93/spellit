@@ -1,14 +1,39 @@
-.hp-box {
+.settle-bg {
+    height: 100vh;
+    background: url(../../assets/InGame/BgImg.png) no-repeat center;
+    background-size: cover;
+}
+
+.settle-top-itmes {
+    display: flex;
+    justify-content: space-between;
+
+    min-width: 1250px;
+}
+
+.first-hp-box, .second-hp-box {
+    position: relative;
+    display: inline-block;
+}
+
+.first-hp-bar, .second-hp-bar {
     box-sizing: border-box;
 
-    /* position: absolute; */
-    width: 476px;
-    height: 57px;
-    left: 166px;
-    top: 58px;
+    position: absolute;
+    /* width: 80vw; */
+    height: 45px;
+    top: 7px;
 
     background: #FFF500;
     border: 1.3px solid #FFFFFF;
     box-shadow: 0px 0px 6px rgba(255, 255, 255, 0.8);
     border-radius: 14px;
+}
+
+.first-hp-bar {
+    left: 7px;
+}
+
+.second-hp-bar {
+    right: 7px;
 }
