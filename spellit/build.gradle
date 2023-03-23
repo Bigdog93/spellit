@@ -42,6 +42,9 @@ dependencies {
 	// openvidu
 	// https://mvnrepository.com/artifact/io.openvidu/openvidu-java-client
 	implementation group: 'io.openvidu', name: 'openvidu-java-client', version: '2.25.0'
+
+	// swagger
+	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
 }
 
 tasks.named('test') {
