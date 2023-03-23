@@ -12,7 +12,7 @@ const Matching = () => {
 
   const { send } = useContext(WebSocketContext);
 
-  const vs = useSelector((state: RootState) => state.attack.chooseCards);
+  const vs = useSelector((state: RootState) => state.matching.matched);
 
   useEffect(() => {
     send({
