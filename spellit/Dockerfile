@@ -1,32 +1,25 @@
-FROM node:16-alpine as builder
+FROM nginx
 
-# frontend docker container에 spellit 디렉터리 생성
-# RUN pwd
-# RUN mkdir /spellit
+RUN mkdir /project
 
-# work dir 고정
-WORKDIR /spellit
-COPY package.json .
-RUN npm install
-COPY . .
+# work dir app 고정
+WORKDIR /project
 
-# port 3000
+# work dir에 build 폴더 생성
+RUN mkdir ./build
+
+
+# pc의 현재 경로의 build 폴더를 workdir의 build 폴더로 복사
+ADD ./build ./build
+
+# nginx 의 default.conf 삭제
+RUN rm /etc/nginx/conf.d/default.conf
+
+# host pc의 nginx.conf를 아래 경로로 복사
+COPY ./nginx.conf /etc/nginx/conf.d
+
+# port 3000번
 EXPOSE 3000
-CMD ["npm", "start"]
 
-# CMD ["npm", "run", "build"]
-#RUN CI=false npm run build
-# work dir에 build 폴더 생성 후, 현재 경로에 있는 build를 복사
-# RUN mkdir ./build
-# ADD ./build ./build
-
-# nginx default.conf 삭제
-# RUN rm /etc/nginx/conf.d/default.conf
-
-# 현재 ec2 nginx.conf를 frontend container에 있는 nginx.conf로 복사
-# COPY ./nginx.conf /etc/nginx/conf.d
-
-
-
-# container 실행 시 자동으로 실행할 명령어 (nginx 실행)
-# CMD ["nginx", "-g", "daemon off;"]
+# container 실행 시, 자동으로 실행할 command, nginx 시작
+CMD ["nginx", "-g", "daemon off;"]
