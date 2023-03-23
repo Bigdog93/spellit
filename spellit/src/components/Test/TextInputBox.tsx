@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import { WebSocketContext } from '../store/session'
+import { WebSocketContext } from '../../utils/WebsocektProvider'
 
 
 

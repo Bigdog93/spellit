@@ -1,6 +1,5 @@
 import { useContext, useState } from 'react'
-// import { WebSocketContext } from '../../../store/WebSocketProvider';
-import { WebSocketContext } from '../store/session'
+import { WebSocketContext } from '../../utils/WebsocektProvider'
 
 function Chatting() {
   const ws = useContext(WebSocketContext);
@@ -16,8 +15,7 @@ function Chatting() {
   ws.current.onmessage = (event: MessageEvent) => {
     const data = JSON.parse(event.data) 
     console.log(data)
-    addItem(data.chat);
-    
+    addItem(data.test);
   };
 
   return (
