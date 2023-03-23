@@ -1,16 +1,22 @@
+.settle-bg {
+    height: 100vh;
+    background: url(../../assets/InGame/BgImg.png) no-repeat center;
+    background-size: cover;
+}
+
 .hp-box {
-    position: relative;
-    display: inline-block;
+    /* position: relative; */
+    /* display: inline-block; */
 }
 
 .hp-bar {
     box-sizing: border-box;
 
-    position: absolute;
+    /* position: absolute; */
     width: 476px;
     height: 57px;
-    left: 0;
-    top: 7px;
+    /* left: 0; */
+    /* top: 7px; */
 
     background: #FFF500;
     border: 1.3px solid #FFFFFF;

@@ -11,6 +11,7 @@ import Attack from "@/components/Game/Attack/Attack";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 import OAuth from "./components/Auth/OAuth";
+import Settle from "./components/Settle/Settle";
 
 function App() {
   
@@ -28,6 +29,7 @@ function App() {
         <Route path="login" element={<Login/>}/>
         <Route path="oath" element={<OAuth/>}/>
         <Route path="join" element={<Signup/>}/>
+        <Route path="settle" element={<Settle/>}/>
       </Routes>
     </BrowserRouter>
   );

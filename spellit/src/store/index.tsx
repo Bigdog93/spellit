@@ -12,7 +12,7 @@ const store = configureStore({
     user: useReducer, 
     session: sessionReduser, 
     cost: costReducer,
-    chooseCards: attackReducer },
+    attack: attackReducer,},
 });
 
 export default store;

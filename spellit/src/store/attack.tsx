@@ -14,10 +14,12 @@ const attackSlice = createSlice({
     attackStart(chooseCards, action: PayloadAction<string[]>) {
         chooseCards.chooseCards = action.payload;
     },
-    // settleHp(firstHp, secondHp, action: PayloadAction<number>) {
-    //   firstHp.firstHp = action.payload;
-    //   secondHp.secondHp = action.payload;
-    // }
+    firstHit(hp, action: PayloadAction<number>) {
+      hp.firstHp = hp.firstHp - action.payload;
+    },
+    secondHit(hp, action: PayloadAction<number>) {
+      hp.secondHp = hp.secondHp - action.payload;
+    },
   },
 });
 

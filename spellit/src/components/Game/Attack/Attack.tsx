@@ -1,12 +1,15 @@
+
 import React, { useState, useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/";
 import Timer from "../Items/Timer";
-import Settle from "@/components/Settle/Settle";
+import HpBar from "../Items/HpBar";
+
 import './Attack.css'
 
 import SpellBox from "../../../assets/InGame/SpellBox.png";
 import SkillBar from "../../../assets/InGame/SkillBar.png";
+import { useNavigate } from "react-router-dom";
 
 interface Spell {
     name: string;
@@ -51,7 +54,7 @@ const dark1: Spell = {
 };
 
 function Attack() {
-    const chooseCards = useSelector((state: RootState) => state.chooseCards.chooseCards);
+    const chooseCards = useSelector((state: RootState) => state.attack.chooseCards);
     // console.log(chooseCards);
     // console.log('왜렌더링이 계속 되냐고옹오ㅗ오오오오오')
 
@@ -149,6 +152,7 @@ function Attack() {
 
     };
 
+    const navigate = useNavigate();
     const [idx, setIdx] = useState(0);
     useEffect(() => {
       console.log(idx);
@@ -168,6 +172,10 @@ function Attack() {
           SpellIt(storm1, idx);
         }
         console.log(idx);
+
+        if (idx == chooseCards.length) {
+          navigate('/settle');
+        }
         
         // 주문 삭제하기
         // if (idx == chooseCards.length) {
@@ -182,11 +190,31 @@ function Attack() {
         // }
     }, [idx])
 
+    const firstHp = useSelector((state: RootState) => (state.attack.firstHp));
+    const secondHp = useSelector((state: RootState) => (state.attack.secondHp));
+    
+    console.log(firstHp);
+    
+    const firstHpStyle = {
+        width: `${firstHp}px`,
+        backgroundColor: firstHp > 150 ? '#FFF500' : '#FF0000' ,
+    }
+    const secondHpStyle = {
+        width: `${secondHp}px`,
+        backgroundColor: secondHp > 150 ? '#FFF500' : '#FF0000' ,
+    }
 
     return (
         <div className="attack-bg">
           <div className="attack-top-items">
-            <Settle></Settle>
+          <div className='first-hp-box'>
+                <HpBar></HpBar>
+                <div className="hp-bar" style={firstHpStyle}></div>
+            </div>
+            <div className='second-hp-box'>
+                <HpBar></HpBar>
+                <div className="hp-bar" style={secondHpStyle}></div>
+            </div>
             <Timer time={sec}></Timer>
           </div>
             {/* <button onClick={() => {handleClick(spark1)}}>뇌전의 창</button>
