@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/";
 import Timer from "../Items/Timer";
-import HpBar from "../Items/HpBar";
+import Settle from "@/components/Settle/Settle";
 import './Attack.css'
 
 import SpellBox from "../../../assets/InGame/SpellBox.png";
@@ -186,9 +186,8 @@ function Attack() {
     return (
         <div className="attack-bg">
           <div className="attack-top-items">
-            <HpBar></HpBar>
+            <Settle></Settle>
             <Timer time={sec}></Timer>
-            <HpBar></HpBar>
           </div>
             {/* <button onClick={() => {handleClick(spark1)}}>뇌전의 창</button>
             <button onClick={() => {handleClick(ice1)}}>영원의 동토</button>

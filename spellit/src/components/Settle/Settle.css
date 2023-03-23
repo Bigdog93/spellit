@@ -1,11 +1,16 @@
 .hp-box {
+    position: relative;
+    display: inline-block;
+}
+
+.hp-bar {
     box-sizing: border-box;
 
-    /* position: absolute; */
+    position: absolute;
     width: 476px;
     height: 57px;
-    left: 166px;
-    top: 58px;
+    left: 0;
+    top: 7px;
 
     background: #FFF500;
     border: 1.3px solid #FFFFFF;

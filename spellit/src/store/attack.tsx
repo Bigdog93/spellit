@@ -3,6 +3,8 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 const initialAttack = {
   chooseCards: [""],
+  firstHp: 500,
+  secondHp: 500,
 };
 
 const attackSlice = createSlice({
@@ -12,6 +14,10 @@ const attackSlice = createSlice({
     attackStart(chooseCards, action: PayloadAction<string[]>) {
         chooseCards.chooseCards = action.payload;
     },
+    // settleHp(firstHp, secondHp, action: PayloadAction<number>) {
+    //   firstHp.firstHp = action.payload;
+    //   secondHp.secondHp = action.payload;
+    // }
   },
 });
 
