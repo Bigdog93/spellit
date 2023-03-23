@@ -1,0 +1,14 @@
+.hp-box {
+    box-sizing: border-box;
+
+    /* position: absolute; */
+    width: 476px;
+    height: 57px;
+    left: 166px;
+    top: 58px;
+
+    background: #FFF500;
+    border: 1.3px solid #FFFFFF;
+    box-shadow: 0px 0px 6px rgba(255, 255, 255, 0.8);
+    border-radius: 14px;
+}

@@ -1,4 +1,5 @@
 import './Items.css';
+import TimerImg from "../../../assets/InGame/TimerImg.png";
 
 // 타입 지정
 interface Time {
@@ -9,7 +10,7 @@ function Timer(props:Time) {
     return (
         <>
             <div id="TimerBox">
-                <img src="assets/InGame/TimerImg.png" alt="" />
+                <img src={TimerImg} alt="" />
                 <h1>{props.time}</h1>
             </div>
         </>
