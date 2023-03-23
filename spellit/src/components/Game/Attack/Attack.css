@@ -4,6 +4,13 @@
     background-size: cover;
 }
 
+.attack-top-items {
+    display: flex;
+    justify-content: space-between;
+
+    min-width: 1250px;
+}
+
 .SpellBox {
     position: relative;
     display: inline-block;

@@ -11,18 +11,19 @@ function Settle() {
 
     // 주문 영창에 대한 처리된 데미지 값을 서버에서 받아서 이펙트 효과와 함께 데미지값으로 넘겨주기
     const chooseCards = useSelector((state: RootState) => (state.attack.chooseCards));
+    const defaultHP = useSelector((state: RootState) => (state.attack.defaultHp));
     const firstHp = useSelector((state: RootState) => (state.attack.firstHp));
     const secondHp = useSelector((state: RootState) => (state.attack.secondHp));
     
     // console.log(firstHp);
     
     const firstHpStyle = {
-        width: `${firstHp}px`,
-        backgroundColor: firstHp > 150 ? '#FFF500' : '#FF0000' ,
+        width: `${(100 * (firstHp / defaultHP))}%`,
+        backgroundColor: firstHp > defaultHP*0.3 ? '#FFF500' : '#FF0000' ,
     }
     const secondHpStyle = {
-        width: `${secondHp}px`,
-        backgroundColor: secondHp > 150 ? '#FFF500' : '#FF0000' ,
+        width: `${(100 * (firstHp / defaultHP))}%`,
+        backgroundColor: secondHp > defaultHP*0.3 ? '#FFF500' : '#FF0000' ,
     }
 
     const damageStack = [100, 200, 50, 20];
@@ -50,13 +51,15 @@ function Settle() {
 
     return (
         <div className='settle-bg'>
-            <div className='first-hp-box'>
-                <HpBar></HpBar>
-                <div className="hp-bar" style={firstHpStyle}></div>
-            </div>
-            <div className='second-hp-box'>
-                <HpBar></HpBar>
-                <div className="hp-bar" style={secondHpStyle}></div>
+            <div className='settle-top-itmes'>
+                <div className='first-hp-box'>
+                    <HpBar></HpBar>
+                    <div className="first-hp-bar" style={firstHpStyle}></div>
+                </div>
+                <div className='second-hp-box'>
+                    <HpBar></HpBar>
+                    <div className="second-hp-bar" style={secondHpStyle}></div>
+                </div>
             </div>
         </div>
     )

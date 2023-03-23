@@ -207,15 +207,15 @@ function Attack() {
     return (
         <div className="attack-bg">
           <div className="attack-top-items">
-          <div className='first-hp-box'>
+            <div className='first-hp-box'>
                 <HpBar></HpBar>
-                <div className="hp-bar" style={firstHpStyle}></div>
-            </div>
-            <div className='second-hp-box'>
-                <HpBar></HpBar>
-                <div className="hp-bar" style={secondHpStyle}></div>
+                <div className="first-hp-bar" style={firstHpStyle}></div>
             </div>
             <Timer time={sec}></Timer>
+            <div className='second-hp-box'>
+                <HpBar></HpBar>
+                <div className="second-hp-bar" style={secondHpStyle}></div>
+            </div>
           </div>
             {/* <button onClick={() => {handleClick(spark1)}}>뇌전의 창</button>
             <button onClick={() => {handleClick(ice1)}}>영원의 동토</button>

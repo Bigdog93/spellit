@@ -3,8 +3,9 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 const initialAttack = {
   chooseCards: [""],
-  firstHp: 500,
-  secondHp: 500,
+  defaultHp: 450,
+  firstHp: 450,
+  secondHp: 450,
 };
 
 const attackSlice = createSlice({
