@@ -21,7 +21,7 @@ spring:
     database: mysql
 #    database-platform: org.hibernate.spatial.dialect.mysql.MySQL56InnoDBSpatialDialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     #    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     properties:
       hibernate:
@@ -42,11 +42,21 @@ logging:
     root: info
     org.hibernate.type: error
 
+#secret:
+#  key: believ8ebeli7ev6ethat5lifeisno4tadrea1mitsfal3lWhatthoughourBestOerhopeaheavyswayHopeagain2eriemfojc
+#jwt:
+#  secret:
+#    key: believ8ebeli7ev6ethat5lifeisno4tadrea1mitsfal3lWhatthoughourBestOerhopeaheavyswayHopeagain2eriemfojc
+#  token:
+#    secret-key: [secret-key]
+#  access-token:
+#    expire-length: 1800000
+#  refresh-token:
+#    expire-length: 1209600000
+
 secret:
-  key: believ8ebeli7ev6ethat5lifeisno4tadrea1mitsfal3lWhatthoughourBestOerhopeaheavyswayHopeagain2eriemfojc
+  key: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
 jwt:
-  secret:
-    key: believ8ebeli7ev6ethat5lifeisno4tadrea1mitsfal3lWhatthoughourBestOerhopeaheavyswayHopeagain2eriemfojc
   token:
     secret-key: [secret-key]
   access-token:

@@ -2,7 +2,6 @@ package com.urs.spellit.member;
 
 import com.urs.spellit.game.DeckRepository;
 import com.urs.spellit.game.GameService;
-import com.urs.spellit.game.entity.CardEntity;
 import com.urs.spellit.game.entity.DeckEntity;
 import com.urs.spellit.member.model.dto.MemberResponseDto;
 import com.urs.spellit.member.model.entity.Member;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,4 +38,14 @@ public class MemberService {
                 .orElseThrow(()->new RuntimeException("유저 정보가 없습니다."));
     }
 
+    //public CharacterResponseDto setMyCharacter(int characterId) {
+    //}
+
+    public List<DeckEntity> getUserDeck(Long memberId) {
+        List<DeckEntity> deck = deckRepository.findAllByMemberId(memberId);
+        if(deck.isEmpty()) {
+            throw new RuntimeException("덱 정보가 없습니다.");
+        }
+        return deck;
+    }
 }
