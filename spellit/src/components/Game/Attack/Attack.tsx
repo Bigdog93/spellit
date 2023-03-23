@@ -1,8 +1,11 @@
+
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/";
 import Timer from "../Items/Timer";
 import HpBar from "../Items/HpBar";
+
 import './Attack.css'
 
 import SpellBox from "../../../assets/InGame/SpellBox.png";
@@ -51,14 +54,14 @@ const dark1: Spell = {
 };
 
 function Attack() {
-    const chooseCards = useSelector((state: RootState) => state.chooseCards.chooseCards);
+    const chooseCards = useSelector((state: RootState) => state.attack.chooseCards);
     // console.log(chooseCards);
     // console.log('왜렌더링이 계속 되냐고옹오ㅗ오오오오오')
     //@ts-ignore
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   
     // 인스턴스 생성
-    const recognition = new SpeechRecognition();
+    const recognition = new SpeechRecognition();58
   
     // true면 말을 실시간으로 출력 false면 말을 마친 후에 출력
     recognition.interimResults = true;
@@ -149,6 +152,7 @@ function Attack() {
 
     };
 
+    const navigate = useNavigate();
     const [idx, setIdx] = useState(0);
     useEffect(() => {
       console.log(idx);
@@ -167,7 +171,10 @@ function Attack() {
         } else if (storm1.name == chooseCards[idx]) {
           SpellIt(storm1, idx);
         }
-        console.log(idx);
+
+        if (idx == chooseCards.length) {
+          navigate('/settle');
+        }
         
         // 주문 삭제하기
         // if (idx == chooseCards.length) {
@@ -182,13 +189,32 @@ function Attack() {
         // }
     }, [idx])
 
+    const firstHp = useSelector((state: RootState) => (state.attack.firstHp));
+    const secondHp = useSelector((state: RootState) => (state.attack.secondHp));
+    
+    console.log(firstHp);
+    
+    const firstHpStyle = {
+        width: `${firstHp}px`,
+        backgroundColor: firstHp > 150 ? '#FFF500' : '#FF0000' ,
+    }
+    const secondHpStyle = {
+        width: `${secondHp}px`,
+        backgroundColor: secondHp > 150 ? '#FFF500' : '#FF0000' ,
+    }
 
     return (
         <div className="attack-bg">
           <div className="attack-top-items">
-            <HpBar></HpBar>
+            <div className='first-hp-box'>
+                <HpBar></HpBar>
+                <div className="first-hp-bar" style={firstHpStyle}></div>
+            </div>
             <Timer time={sec}></Timer>
-            <HpBar></HpBar>
+            <div className='second-hp-box'>
+                <HpBar></HpBar>
+                <div className="second-hp-bar" style={secondHpStyle}></div>
+            </div>
           </div>
             {/* <button onClick={() => {handleClick(spark1)}}>뇌전의 창</button>
             <button onClick={() => {handleClick(ice1)}}>영원의 동토</button>
@@ -204,16 +230,17 @@ function Attack() {
             <div className="words"></div>
             <div id="percent"></div>
 
-            <div>
-              <img src={SkillBar} alt="" />
-              <div>
-              {chooseCards.map((card: string, index: number) => (
-              <img 
-                key={index} 
-                src={require(`../../../assets/card/icon/${card}.png`)} 
-                alt={card}
-              ></img>
-            ))}
+            <div className="spell-bar-box">
+              <img src={SkillBar} alt="" style={{width: '100%', height: '181px'}} />
+              <div className="spells">
+                {chooseCards.map((card: string, index: number) => (
+                  <img 
+                    style={{height: '150px', margin: '10px'}}
+                    key={index} 
+                    src={require(`../../../assets/card/icon/${card}.png`)} 
+                    alt={card}
+                  ></img>
+                ))}
               </div>
             </div>
         </div>

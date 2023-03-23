@@ -13,11 +13,9 @@ import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 import OAuth from "./components/Auth/OAuth";
 import Test from "./components/Test";
-import { useState } from 'react';
+import Settle from "./components/Settle/Settle";
 
 function App() {
-  
-  const [conn, setConn] = useState(WebSocket.prototype);
 
   return (
     <BrowserRouter>
@@ -35,6 +33,7 @@ function App() {
           <Route path="oath" element={<OAuth/>}/>
           <Route path="join" element={<Signup/>}/>
           <Route path="test" element={<Test/>}/>
+          <Route path="settle" element={<Settle/>}/>
         </Routes>
       </WebSocketProvider>
     </BrowserRouter>

@@ -4,6 +4,13 @@
     background-size: cover;
 }
 
+.attack-top-items {
+    display: flex;
+    justify-content: space-between;
+
+    min-width: 1250px;
+}
+
 .SpellBox {
     position: relative;
     display: inline-block;
@@ -123,6 +130,22 @@
         0 0 10px #484848,
         0 0 10px #484848,
         0 0 10px #484848;
+}
+
+.spell-bar-box {
+    position: relative;
+    display: inline-block;
+
+    width: 800px;
+}
+
+.spells {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    
+    padding-left: 10px;    
 }
 
 #percent {
