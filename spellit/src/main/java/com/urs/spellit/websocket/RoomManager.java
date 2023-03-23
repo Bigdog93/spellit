@@ -4,6 +4,7 @@ import com.urs.spellit.websocket.dto.PlayerDto;
 import com.urs.spellit.websocket.dto.RoomInfo;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -33,7 +34,22 @@ public class RoomManager {
     }
 
 
-    public void clearRoom(int roomId) {
+    public void clearRoom(long roomId) {
         roomMap.remove(roomId);
+    }
+
+    public PlayerDto dropSession(WebSocketSession session) {
+        for(RoomInfo room : roomMap.values()) {
+            for(PlayerDto p : room.getPlayerList()) {
+                if(p.getSession().equals(session)) {
+                    room.getPlayerList().remove(p);
+                    PlayerDto remainPlayer = room.getPlayerList().remove(0);
+                    clearRoom(room.getRoomId());
+                    room = null;
+                    return remainPlayer;
+                }
+            }
+        }
+        return null;
     }
 }

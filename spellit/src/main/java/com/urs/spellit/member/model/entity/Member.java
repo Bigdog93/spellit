@@ -1,6 +1,6 @@
 package com.urs.spellit.member.model.entity;
 
-import com.urs.spellit.auth.entity.Authority;
+import com.urs.spellit.security.auth.entity.Authority;
 import com.urs.spellit.common.model.BaseTimeEntity;
 import com.urs.spellit.game.entity.DeckEntity;
 import com.urs.spellit.game.entity.GameCharacterEntity;
@@ -27,11 +27,11 @@ public class Member extends BaseTimeEntity {
     @Column(name = "member_id", nullable = false)
     private Long id;
 
-    @Column(nullable = false, length = 40,unique = true)
+    @Column(nullable = false, length = 40, unique = true)
     private String email;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false,length = 7,unique = true)
+    @Column(nullable = false,length = 7, unique = true)
     private String nickname;
     @Column(nullable = false)
     @ColumnDefault("1")

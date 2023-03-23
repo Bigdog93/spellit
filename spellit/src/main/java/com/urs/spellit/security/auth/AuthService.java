@@ -1,14 +1,14 @@
-package com.urs.spellit.auth;
+package com.urs.spellit.security.auth;
 
-import com.urs.spellit.jwt.TokenProvider;
+import com.urs.spellit.security.jwt.TokenProvider;
 import com.urs.spellit.member.MemberRepository;
 import com.urs.spellit.member.model.dto.MemberRequestDto;
 import com.urs.spellit.member.model.dto.MemberResponseDto;
 import com.urs.spellit.member.model.entity.Member;
-import com.urs.spellit.token.RefreshTokenRepository;
-import com.urs.spellit.token.dto.TokenDto;
-import com.urs.spellit.token.dto.TokenRequestDto;
-import com.urs.spellit.token.entity.RefreshToken;
+import com.urs.spellit.security.token.RefreshTokenRepository;
+import com.urs.spellit.security.token.dto.TokenDto;
+import com.urs.spellit.security.token.dto.TokenRequestDto;
+import com.urs.spellit.security.token.entity.RefreshToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

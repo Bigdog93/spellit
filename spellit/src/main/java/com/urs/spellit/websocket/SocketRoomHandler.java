@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.urs.spellit.game.CardRepository;
 import com.urs.spellit.game.DeckRepository;
+import com.urs.spellit.game.GameService;
 import com.urs.spellit.game.entity.CardEntity;
 import com.urs.spellit.game.entity.DeckEntity;
 import com.urs.spellit.member.MemberRepository;
@@ -35,6 +36,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 	private final MemberService memberService;
 	private final MemberRepository memberRepository;
 	private final DeckRepository deckRepository;
+	private final GameService gameService;
 	ArrayList<WebSocketSession> allSession = new ArrayList<>();
 	Queue<PlayerDto> readyQueue = new ArrayDeque<>();
 	HashMap<Integer, String> room_host = new HashMap<>();
@@ -185,43 +187,19 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
 		System.out.println("누군가 소켓이 끊어짐");
-		int room = 0;
-//		Loop1: for (Integer i : room_map.keySet()) {
-//			for (PlayerDto p : room_map.get(i)) {
-//				if (p.getSession().equals(session)) {
-//					room = i;
-//					room_map.get(i).remove(p);
-//					break Loop1;
-//				}
-//			}
-//		}//
+		// 끊어진 세션 쫓아내고 방폭하고 남은 사람 가져오기
+		PlayerDto remainPlayer = roomManager.dropSession(session);
+		if(remainPlayer != null) { // 플레이 중인 사람이었다면
+			remainPlayer.getSession().sendMessage(makeTextMsg("otherDrop", null)); // 너 상대 나갔다고 알려줘요
+		}
+		// 연결되어있는 모든 세션 중에서 제거 해요
 		for (WebSocketSession w : allSession) {
 			if (w.equals(session)) {
 				allSession.remove(w);
 				break;
 			}
 		}
-		AllRoomMsgDto dto = new AllRoomMsgDto("all_room", new ArrayList<RoomInfo>());
 
-//		for (Integer j : room_map.keySet()) {
-//			dto.getRoomInfo().add(new RoomInfo(j, room_map.get(j).size()));
-//		}
-
-		TextMessage msg = new TextMessage(mapper.writeValueAsString(dto));
-		for (WebSocketSession w : allSession) {
-			w.sendMessage(msg);
-		}
-
-//		if (room != 0) {
-//			MsgDto dto2 = new MsgDto("me", room, new ArrayList<isHostDto>());
-//			for (PlayerDto p : room_map.get(room)) {
-//				dto2.getPlayers().add(new isHostDto(p.getLevel(), p.getNickname(), p.isReady(), p.isHost()));
-//			}
-//			TextMessage msg2 = new TextMessage(mapper.writeValueAsString(dto2));
-//			for (PlayerDto p : room_map.get(room)) {
-//				p.getSession().sendMessage(msg2);
-//			}
-//		}
 
 	}
 
@@ -233,12 +211,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 		}
 		Member member = memberOption.get();
 		PlayerDto player = PlayerDto.makePlayerDto(session, member);
-		List<DeckEntity> deckEntities = deckRepository.findAllByMemberId(memberId);
-		List<CardEntity> deck = new ArrayList<>();
-		for(DeckEntity d : deckEntities) {
-			deck.add(d.getCard());
-		}
-		player.setDeck(deck);
+		player.setDeck(gameService.getUserDeck(memberId));
 		return player;
 	}
 	public boolean isReady(boolean[] isReady, RoomInfo room, int nextTurn) {
