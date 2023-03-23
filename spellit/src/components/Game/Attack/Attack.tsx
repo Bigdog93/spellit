@@ -16,8 +16,8 @@ interface Spell {
     time: number;
 }
 
-const wind1: Spell = {
-  name: "wind1",
+const wind3: Spell = {
+  name: "wind3",
   content: "칼날의 바람이여 적을 베어라",
   time: 4,
 };
@@ -26,8 +26,8 @@ const fire1: Spell = {
   content: "타올라라 불꽃 적을 태우는 탄환이 되어 날아라",
   time: 5,
 };
-const spark1: Spell = {
-  name: "spark1",
+const wind1: Spell = {
+  name: "wind1",
   content: "모여라 대기의 번개 천지를 뒤흔드는 굉음의 뇌광 창이 되어 적을 꿰뚫어라",
   time: 8,
 };
@@ -60,7 +60,7 @@ function Attack() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   
     // 인스턴스 생성
-    const recognition = new SpeechRecognition();58
+    const recognition = new SpeechRecognition();
   
     // true면 말을 실시간으로 출력 false면 말을 마친 후에 출력
     recognition.interimResults = true;
@@ -159,14 +159,14 @@ function Attack() {
           SpellIt(fire1, idx);
         } else if (ice1.name == chooseCards[idx]) {
           SpellIt(ice1, idx);
-        } else if (spark1.name == chooseCards[idx]) {
-          SpellIt(spark1, idx);
+        } else if (wind1.name == chooseCards[idx]) {
+          SpellIt(wind1, idx);
         } else if (light1.name == chooseCards[idx]) {
           SpellIt(light1, idx);
         } else if (dark1.name == chooseCards[idx]) {
           SpellIt(dark1, idx);
-        } else if (wind1.name == chooseCards[idx]) {
-          SpellIt(wind1, idx);
+        } else if (wind3.name == chooseCards[idx]) {
+          SpellIt(wind3, idx);
         } else if (storm1.name == chooseCards[idx]) {
           SpellIt(storm1, idx);
         }
