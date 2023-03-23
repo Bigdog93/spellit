@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { WebSocketProvider } from "@/store/websocket"
 
 
 import Home from "./components/Home";
@@ -12,27 +13,31 @@ import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 import OAuth from "./components/Auth/OAuth";
 import Test from "./components/Test";
+import { useState } from 'react';
 
 function App() {
   
+  const [conn, setConn] = useState(WebSocket.prototype);
+
   return (
     <BrowserRouter>
-      <Routes>
-        {/* <Route index element={<Login />}/> */}
-        <Route path="home" element={<Home />} />
-        <Route path="game/:roomId" element={<Game />} />
-        <Route path="matching" element={<Matching />} />
-        <Route path="user" element={<User />} />
-        <Route path="ready" element={<Ready />} />
-				<Route path="defense" element={<Defence/>}/>
-        <Route path="attack" element={<Attack/>}/>
-        <Route path="login" element={<Login/>}/>
-        <Route path="oath" element={<OAuth/>}/>
-        <Route path="join" element={<Signup/>}/>
-        <Route path="test" element={<Test/>}/>
-      </Routes>
+      <WebSocketProvider>
+        <Routes>
+          {/* <Route index element={<Login />}/> */}
+          <Route path="home" element={<Home />} />
+          <Route path="game/:roomId" element={<Game />} />
+          <Route path="matching" element={<Matching />} />
+          <Route path="user" element={<User />} />
+          <Route path="ready" element={<Ready />} />
+          <Route path="defense" element={<Defence/>}/>
+          <Route path="attack" element={<Attack/>}/>
+          <Route path="login" element={<Login/>}/>
+          <Route path="oath" element={<OAuth/>}/>
+          <Route path="join" element={<Signup/>}/>
+          <Route path="test" element={<Test/>}/>
+        </Routes>
+      </WebSocketProvider>
     </BrowserRouter>
-    </div>
   );
 }
 

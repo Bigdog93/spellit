@@ -5,10 +5,10 @@ import WebsocektProvider from '../../utils/WebsocektProvider'
 const Test = () => {
   return (
     <div>
-      <WebsocektProvider>
+      {/* <WebsocektProvider> */}
         <Chatting/>
         <TextInputBox/>
-      </WebsocektProvider>
+      {/* </WebsocektProvider> */}
     </div>
   )
 };

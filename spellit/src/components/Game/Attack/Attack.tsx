@@ -54,7 +54,7 @@ function Attack() {
     const chooseCards = useSelector((state: RootState) => state.chooseCards.chooseCards);
     // console.log(chooseCards);
     // console.log('왜렌더링이 계속 되냐고옹오ㅗ오오오오오')
-
+    //@ts-ignore
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   
     // 인스턴스 생성
@@ -98,7 +98,7 @@ function Attack() {
         const trimText = selectSpell.content.replaceAll(" ", ""); // 띄어쓰기 제거한 주문
         // console.log(trimText);
 
-        recognition.addEventListener("result", (e) => {
+        recognition.addEventListener("result", (e :any) => {
             console.log("말하는 중이잖아요?");
             let transcript = e.results[0][0].transcript; // 인식된 음성 글자
             transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
