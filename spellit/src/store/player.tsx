@@ -10,7 +10,7 @@ type PlayerType =
     playCount : number,
     winCount : number,
     cost : number,
-    gameCharacter : GameCharacterType,
+    gameCharacterEntity : GameCharacterType,
     deck : Array<DeckType>,
     selectedCards : [],
     isFirst : 0 | 1,

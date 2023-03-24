@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { WebSocketProvider } from "./store/websocket";
-
+import { useSelector } from "react-redux";
+import { RootState } from "./store";
 
 import Home from "./components/Home";
 import Game from "./components/Game";
@@ -17,12 +18,14 @@ import Settle from "./components/Settle/Settle";
 import Result from "./components/Game/Result";
 
 function App() {
+  const isLogged = useSelector((state: RootState) => state.auth.isAuthenticated);
 
   return (
     <WebSocketProvider>
       <BrowserRouter>
         <Routes>
           {/* <Route index element={<Login />}/> */}
+          { isLogged ? <Route index element={<Login />}/> : <Route index element={<Home />}/>}
           <Route path="home" element={<Home />} />
           <Route path="game/:roomId" element={<Game />} />
           <Route path="matching" element={<Matching />} />

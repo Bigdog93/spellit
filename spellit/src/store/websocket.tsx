@@ -12,6 +12,7 @@ export { WebSocketContext };
   
 export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) => {
   const webSocketUrl = `ws://localhost:8080/api/socket`
+  // const webSocketUrl = `wss://j8d201.p.ssafy.com/api/socket`
   let ws = useRef<WebSocket | null>(null).current;
   let send = ws?.send;
   const dispatch = useDispatch();
@@ -63,6 +64,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
 
       } else if (type === 'loading') {
         console.log('loading 입니다.')
+        dispatch(matchingActions.end2PLoading())
 
       } else if (type === 'toReady') {
         console.log('toReady 입니다.')
