@@ -2,23 +2,27 @@
     height: 100vh;
     background: url(../../assets/InGame/BgImg.png) no-repeat center;
     background-size: cover;
+
+    /* padding-left: 5px;
+    padding-right: 5px; */
 }
 
 .settle-top-itmes {
     display: flex;
     justify-content: space-between;
 
-    min-width: 1250px;
+    min-width: 1000px;
 }
 
 .first-hp-box, .second-hp-box {
     position: relative;
     display: inline-block;
+    margin: 10px;
 }
 
 .first-hp-bar, .second-hp-bar {
     box-sizing: border-box;
-
+    display: flex;
     position: absolute;
     /* width: 80vw; */
     height: 45px;
@@ -36,4 +40,42 @@
 
 .second-hp-bar {
     right: 7px;
+}
+
+.settle-bottom-items {
+    display: flex;
+    justify-content: space-between;
+}
+
+.first-player, .second-player {
+    /* margin: 100px; */
+    position: relative;
+    animation-name: player-move-up-down;
+    animation-duration: 2.5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+  
+@keyframes player-move-up-down {
+    0% {top: 0;}
+    50% {top: 30px;}
+    100% {top: 0;}
+}
+
+.first-player img {
+    position: relative;
+    animation-name: effect-move-up-down;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes effect-move-up-down {
+    0% {top: 0;}
+    50% {top: 20px;}
+    100% {top: 0;}
+}
+
+.hidden-effect {
+    visibility: hidden;
 }

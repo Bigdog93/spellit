@@ -17,25 +17,25 @@ interface Spell {
     time: number;
 }
 
-const wind1: Spell = {
-  name: "wind1",
+const wind3: Spell = {
+  name: "wind3",
   content: "칼날의 바람이여 적을 베어라",
   time: 4,
 };
 const fire1: Spell = {
   name: "fire1",
   content: "타올라라 불꽃 적을 태우는 탄환이 되어 날아라",
-  time: 5,
+  time: 2,
 };
-const spark1: Spell = {
-  name: "spark1",
+const wind1: Spell = {
+  name: "wind1",
   content: "모여라 대기의 번개 천지를 뒤흔드는 굉음의 뇌광 창이 되어 적을 꿰뚫어라",
   time: 8,
 };
 const ice1: Spell = {
   name: "ice1",
   content: "냉기여 휘몰아쳐라 빛을 삼키고 온기를 먹어치우며 이 땅을 내달려 모든 것이 얼어붙을 것이니",
-  time: 9,
+  time: 2,
 };
 const storm1: Spell = {
   name: "storm1",
@@ -155,19 +155,19 @@ function Attack() {
     const navigate = useNavigate();
     const [idx, setIdx] = useState(0);
     useEffect(() => {
-      console.log(idx);
+      // console.log(idx);
       if (fire1.name == chooseCards[idx]) {
           SpellIt(fire1, idx);
         } else if (ice1.name == chooseCards[idx]) {
           SpellIt(ice1, idx);
-        } else if (spark1.name == chooseCards[idx]) {
-          SpellIt(spark1, idx);
+        } else if (wind1.name == chooseCards[idx]) {
+          SpellIt(wind1, idx);
         } else if (light1.name == chooseCards[idx]) {
           SpellIt(light1, idx);
         } else if (dark1.name == chooseCards[idx]) {
           SpellIt(dark1, idx);
-        } else if (wind1.name == chooseCards[idx]) {
-          SpellIt(wind1, idx);
+        } else if (wind3.name == chooseCards[idx]) {
+          SpellIt(wind3, idx);
         } else if (storm1.name == chooseCards[idx]) {
           SpellIt(storm1, idx);
         }
@@ -192,7 +192,7 @@ function Attack() {
     const firstHp = useSelector((state: RootState) => (state.attack.firstHp));
     const secondHp = useSelector((state: RootState) => (state.attack.secondHp));
     
-    console.log(firstHp);
+    // console.log(firstHp);
     
     const firstHpStyle = {
         width: `${firstHp}px`,

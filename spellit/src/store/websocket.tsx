@@ -1,87 +1,98 @@
-// import { createSlice } from '@reduxjs/toolkit';
-// import type { PayloadAction } from '@reduxjs/toolkit'
-// import useRef from 'react';
-
-// // type sessionType = {
-// //   ws: {
-// //     new (url: string | URL, protocols?: string | string[] | undefined): WebSocket;
-// //     prototype: WebSocket;
-// //     readonly CLOSED: number;
-// //     readonly CLOSING: number;
-// //     readonly CONNECTING: number;
-// //     readonly OPEN: number;
-// //   }
-// // }
-
-// const sessionState = {
-//   ws: WebSocket.prototype,
-// };
-
-// const sessionSlice = createSlice({
-//   name: 'session',
-//   initialState: sessionState,
-//   reducers: {
-//     connect(state) {
-//       console.log("connecting");
-//       state.ws = new WebSocket(`ws://localhost:8080/api/socket`);
-//       state.ws.onopen = () => {
-//         state.ws.onmessage = (e :MessageEvent) => {
-//           console.log(e);
-//           const content = JSON.parse(e.data);
-//           console.log(content);
-//         }
-//       }
-//     },
-//     send(state, action: PayloadAction<Object>) {
-//       console.log("send 호출 됨");
-//       console.log(action);
-//       state.ws.send(JSON.stringify(action.payload));
-//     }
-//   },
-// });
-
-// export const sessionActions = sessionSlice.actions;
-
-// export default sessionSlice.reducer;
-
 import { createContext, useRef } from 'react';
-
 import { costActions } from "@/store/cost"
-import { attackActions } from "@/store/attack"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store';
+
+import store from "@/store/";
+import { playerActions } from "@/store/player"
+import { matchingActions } from './matching';
+import { roomActions } from './room';
 
 const WebSocketContext = createContext<any>(null);
 export { WebSocketContext };
 
-
+  
 export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) => {
-  const webSocketUrl = `ws://localhost:8080/api/socket`
+  // const webSocketUrl = `ws://localhost:8080/api/socket`
+  const webSocketUrl = `wss://j8d201.p.ssafy.io/api/socket`
   let ws = useRef<WebSocket | null>(null).current;
   let send = ws?.send;
   const dispatch = useDispatch();
 
+  const state = store.getState();
+
   if (!ws) {
     ws = new WebSocket(webSocketUrl);
+
     ws.onopen = () => {
       console.log("connected to " + webSocketUrl);
     }
+
     ws.onclose = error => {
       console.log("disconnect from " + webSocketUrl);
       console.log(error);
     };
+
     ws.onerror = error => {
       console.log("connection error " + webSocketUrl);
       console.log(error);
     };
+
     ws.onmessage = (e) => {
       console.log(e);
       const content = JSON.parse(e.data);
       const type = content.type;
       const info = content.info;
       if (type === 'test') {
+        console.log('test입니다.')
+        dispatch(costActions.set(info.data));
         
-      } else if (type === '') {
+      } else if (type === 'entQueue') {
+        console.log('entQueue 입니다.')
+
+      } else if (type === 'connected') {
+          console.log('connected 입니다.')
+          console.log(info)
+          // 매칭 성공했을 때 player의 p1은 나, p2는 상대방에 넣음
+          if (info.roomInfo.playerList[0].memberId === state.user.id ) {
+            dispatch(playerActions.setP1(info.roomInfo.playerList[0]))
+            dispatch(playerActions.setP2(info.roomInfo.playerList[1]))
+          } else {
+            dispatch(playerActions.setP1(info.roomInfo.playerList[1]))
+            dispatch(playerActions.setP2(info.roomInfo.playerList[0]))
+          }
+          dispatch(matchingActions.connected())
+          // room 정보 설정
+          dispatch(roomActions.setRoom(info.roomInfo))
+
+      } else if (type === 'loaded') {
+        console.log('loaded 입니다.')
+        dispatch(matchingActions.p2Loading())
+
+
+      } else if (type === 'toReady') {
+        console.log('toReady 입니다.')
+
+      } else if (type === 'toAttack') {
+        console.log('toAttack 입니다.')
+
+      } else if (type === 'otherSpell') {
+        console.log('otherSpell 입니다.')
+
+      } else if (type === 'combo') {
+        console.log('combo 입니다.')
+
+      } else if (type === 'toDefense') {
+        console.log('toDefense 입니다.')
+
+      } else if (type === 'toSettle') {
+        console.log('toSettle 입니다.')
+
+      } else if (type === 'gameOver') {
+        console.log('gameOver입니다.')
         
+      } else {
+        console.log('그런 이벤트는 없습니다.')
       }
     }
 

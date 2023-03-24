@@ -1,9 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { WebSocketProvider } from "./store/websocket";
-
+import { useSelector } from "react-redux";
+import { RootState } from "./store";
 
 import Home from "./components/Home";
-import Game from "./components/Game/Game";
+import Game from "./components/Game";
 import Matching from "./components/Matching";
 import User from './components/User'
 import Ready from "@/components/Game/Ready"
@@ -14,29 +15,33 @@ import Signup from "./components/Auth/Signup";
 import OAuth from "./components/Auth/OAuth";
 import Test from "./components/Test";
 import Settle from "./components/Settle/Settle";
+import Result from "./components/Game/Result";
 
 function App() {
+  const isLogged = useSelector((state: RootState) => state.auth.isAuthenticated);
 
   return (
-    <BrowserRouter>
-      <WebSocketProvider>
+    <WebSocketProvider>
+      <BrowserRouter>
         <Routes>
           {/* <Route index element={<Login />}/> */}
+          { isLogged ? <Route index element={<Login />}/> : <Route index element={<Home />}/>}
           <Route path="home" element={<Home />} />
           <Route path="game/:roomId" element={<Game />} />
           <Route path="matching" element={<Matching />} />
           <Route path="user" element={<User />} />
           <Route path="ready" element={<Ready />} />
           <Route path="defense" element={<Defence/>}/>
-          {/* <Route path="attack" element={<Attack/>}/> */}
+          <Route path="attack" element={<Attack/>}/>
           <Route path="login" element={<Login/>}/>
           <Route path="oath" element={<OAuth/>}/>
           <Route path="join" element={<Signup/>}/>
           <Route path="test" element={<Test/>}/>
           <Route path="settle" element={<Settle/>}/>
+          <Route path="result" element={<Result/>}/>
         </Routes>
-      </WebSocketProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </WebSocketProvider>
   );
 }
 
