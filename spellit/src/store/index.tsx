@@ -5,6 +5,7 @@ import matchingReducer from './matching';
 import costReducer from './cost';
 import attackReducer from './attack';
 import playerReducer from './player';
+import roomReducer from './room';
 
 const store = configureStore({
   reducer: {
@@ -13,7 +14,9 @@ const store = configureStore({
     matching: matchingReducer,
     player: playerReducer,
     cost: costReducer,
-    attack: attackReducer,},
+    attack: attackReducer,
+    room: roomReducer,
+  },
 });
 
 export default store;

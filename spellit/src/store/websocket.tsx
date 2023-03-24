@@ -6,6 +6,7 @@ import { RootState } from '@/store';
 import store from "@/store/";
 import { playerActions } from "@/store/player"
 import { matchingActions } from './matching';
+import { roomActions } from './room';
 
 const WebSocketContext = createContext<any>(null);
 export { WebSocketContext };
@@ -61,6 +62,8 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
             dispatch(playerActions.setP2(info.roomInfo.playerList[0]))
           }
           dispatch(matchingActions.connected())
+          // room 정보 설정
+          dispatch(roomActions.setRoom(info.roomInfo))
 
       } else if (type === 'loaded') {
         console.log('loaded 입니다.')

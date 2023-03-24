@@ -26,10 +26,19 @@ function CoinFlipper(coin: coinType) {
     }
   }
 
+  const memberId = useSelector((state: RootState) => state.user.id);
+  const roomId = useSelector((state: RootState) => state.room.roomId);
+
   // 동전 던지기 끝났을 때 store 업뎃
   const rollingEnd = () => {
     console.log('endLoading in CoinFlipper')
     dispatch(matchingActions.p1Loading())
+    send({
+      event: 'loading',
+      data: '',
+      memberId: memberId,
+      roomId: roomId,
+    })
   }
 
 
