@@ -1,8 +1,7 @@
 import { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 
 import { RootState } from "@/store/";
-import { matchingActions } from "@/store/matching";
 import CoinFlipper from './CoinFlipper'
 
 import './Versus.css'
@@ -12,20 +11,14 @@ import VS from '../../assets/ui/VS.png'
 
 const Versus = () => {
 
-  const dispatch = useDispatch();
-
   const [coin, setCoin] = useState(false);
 
   const coinHandler = () => {
     setCoin(true)
   }
   
-  const endMatching = () => {
-    dispatch(matchingActions.endMatching())
-  };
 
   window.setTimeout(coinHandler, 3000)
-  window.setTimeout(endMatching, 10000)
 
   const p1 = useSelector((state: RootState) => state.player.p1);
   const p2 = useSelector((state: RootState) => state.player.p2);
@@ -34,7 +27,7 @@ const Versus = () => {
     <div>
       <div className="flex-container">
         <div className="player">
-          {/* <img src={require(`../../../assets/card/character/${p1?.gameCharacter.englishName}.png`)} alt="1P-character"/> */}
+          <img src={require(`../../assets/character/${p1?.gameCharacterEntity.englishName}_win.png`)} alt="1P-character"/>
           <div className="player-info">
             <img src={MatchFrame_red} alt="1P"/>
             <div className="player1">
@@ -54,13 +47,13 @@ const Versus = () => {
         <img src={VS} alt="vs" className="vs"/>
 
         <div className="player">
-          {/* <img src={require(`../../../assets/card/character/${p2?.gameCharacter.englishName}_default.png`)} alt="2P-character"/> */}
+          <img src={require(`../../assets/character/${p2?.gameCharacterEntity.englishName}_win.png`)} alt="2P-character"/>
           <div className="player-info">
             <img src={MatchFrame_blue} alt="2P"/>
             <div className="player2">
               <div className="upper-info">
                 <div>
-                  { p1?.nickname }승
+                  { p2?.nickname }승
                 </div>
                 <div>
                   { p2?.winCount }
