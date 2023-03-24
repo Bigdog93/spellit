@@ -26,35 +26,36 @@ FROM node:lts-alpine as builder
 
 # app 만들기- nodejs application folder
 
-RUN mkdir /project
+RUN pwd
+# RUN mkdir /tmp
 
-WORKDIR /project
+# WORKDIR /tmp
 
-COPY package*.json ./
+# COPY package*.json ./
 
-RUN npm install -g serve
+# RUN npm install -g serve
 
-COPY . .
+# COPY . .
 
-RUN npm run build
+# RUN npm run build
 
-# nginx config
+# # nginx config
 
-FROM nginx
+# FROM nginx
 
-RUN mkdir /project
+# RUN mkdir /project
 
-WORKDIR /project
+# WORKDIR /project
 
-# nginx 의 default.conf 삭제
-RUN rm -rf /etc/nginx/conf.d/default.conf
+# # nginx 의 default.conf 삭제
+# RUN rm -rf /etc/nginx/conf.d/default.conf
 
-# host pc의 nginx.conf를 아래 경로로 복사
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+# # host pc의 nginx.conf를 아래 경로로 복사
+# COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
-COPY --from=builder /spellit/build /usr/share/nginx/html
+# COPY --from=builder /spellit/build /usr/share/nginx/html
 
-EXPOSE 3000
+# EXPOSE 3000
 
-CMD ["nginx", "-g", "daemon off;"]
+# CMD ["nginx", "-g", "daemon off;"]
 
