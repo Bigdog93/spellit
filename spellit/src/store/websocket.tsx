@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import store from "@/store/";
 import { playerActions } from "@/store/player"
+import { matchingActions } from './matching';
 
 const WebSocketContext = createContext<any>(null);
 export { WebSocketContext };
@@ -48,18 +49,17 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
 
       } else if (type === 'connected') {
           console.log('connected 입니다.')
+          console.log(info)
           // 매칭 성공했을 때 player의 p1은 나, p2는 상대방에 넣음
-          if (info.playerlist[0].memberId === state.user.memberId ) {
-            dispatch(playerActions.setP1(info.playerlist[0]))
-            dispatch(playerActions.setP2(info.playerlist[1]))
+          if (info.roomInfo.playerList[0].memberId === state.user.id ) {
+            dispatch(playerActions.setP1(info.roomInfo.playerList[0]))
+            dispatch(playerActions.setP2(info.roomInfo.playerList[1]))
           } else {
-            dispatch(playerActions.setP1(info.playerlist[1]))
-            dispatch(playerActions.setP2(info.playerlist[0]))
+            dispatch(playerActions.setP1(info.roomInfo.playerList[1]))
+            dispatch(playerActions.setP2(info.roomInfo.playerList[0]))
           }
-
-          state.matching.matched = true;
           
-
+          dispatch(matchingActions.endMatching())
 
       } else if (type === 'loading') {
         console.log('loading 입니다.')

@@ -14,11 +14,13 @@ const Matching = () => {
   const { send } = useContext(WebSocketContext);
 
   const vs = useSelector((state: RootState) => state.matching.matched);
-  
+  const memberId = useSelector((state: RootState) => state.user.id);
+
   useEffect(() => {
     send({
       event: 'matchStart',
-			memberId: 1
+			memberId: memberId,
+      data: ''
 		})
   });
 
@@ -32,6 +34,7 @@ const Matching = () => {
 
   return (
     <div>
+      {memberId}
       { !vs && <Loading/> }
       { vs && <Versus/> }
     </div>

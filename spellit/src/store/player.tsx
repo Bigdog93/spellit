@@ -20,7 +20,7 @@ type PlayerType =
   }
 
 type GameCharacterType = {
-  id : Number,
+  id : number,
   characterName : string,
   englishName : string,
   stand : string,
@@ -29,14 +29,15 @@ type GameCharacterType = {
   winner : string,
   combo : string,
 }
+
 type DeckType = {
-  id : Number,
+  id : number,
   code : string,
   title : string,
   spell : string,
-  cost : Number,
-  damage : Number,
-  attribute : Number,
+  cost : number,
+  damage : number,
+  attribute : number,
 }
   
 

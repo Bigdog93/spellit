@@ -1,7 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit'
-
-const initialMatching = {
+type initialMatchingType = {
+  matched: boolean,
+  done: boolean,
+  p1: [],
+  p2: [],
+};
+const initialMatchingState: initialMatchingType = {
   matched: false,
   done: false,
   p1: [],
@@ -10,10 +15,10 @@ const initialMatching = {
 
 const matchingSlice = createSlice({
   name: 'matching',
-  initialState: initialMatching,
+  initialState: initialMatchingState,
   reducers: {
     endMatching(state) {
-      state.done = true
+      state.done = !state.done
     },
   },
 });
