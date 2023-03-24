@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GameCharacterRepository extends JpaRepository<GameCharacterEntity, Long> {
+    GameCharacterEntity findById(long characterId);
 }
