@@ -13,25 +13,29 @@ const Matching = () => {
   const navigate = useNavigate();
   const { send } = useContext(WebSocketContext);
 
-  const vs = useSelector((state: RootState) => state.matching.matched);
-  
+  const vs = useSelector((state: RootState) => state.matching.done);
+  const memberId = useSelector((state: RootState) => state.user.id);
+
   useEffect(() => {
     send({
       event: 'matchStart',
-			memberId: 1
+			memberId: memberId,
+      data: ''
 		})
   });
 
-  const toGame = useSelector((state: RootState) => state.matching.done);
+  const p1Loading = useSelector((state: RootState) => state.matching.p1Loading);
+  const p2Loading = useSelector((state: RootState) => state.matching.p2Loading);
 
   useEffect(() => {
-    if(toGame) {
+    if(p1Loading && p2Loading) {
       navigate('/game/1')
     }
-  }, [toGame, navigate]);
+  }, [p1Loading, p2Loading, navigate]);
 
   return (
     <div>
+      {memberId}
       { !vs && <Loading/> }
       { vs && <Versus/> }
     </div>

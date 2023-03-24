@@ -29,12 +29,13 @@ const Versus = () => {
 
   const p1 = useSelector((state: RootState) => state.player.p1);
   const p2 = useSelector((state: RootState) => state.player.p2);
-
+  
   return (
     <div>
       <div className="flex-container">
         <div className="player">
-          {/* <img src={require(`../../../assets/card/character/${p1?.gameCharacter.englishName}.png`)} alt="1P-character"/> */}
+          {/* <img src={require(p1Img)} alt="1P-character"/> */}
+          <img src={require(`../../assets/character/${p1?.gameCharacterEntity.englishName}_win.png`)} alt="1P-character"/>
           <div className="player-info">
             <img src={MatchFrame_red} alt="1P"/>
             <div className="player1">
@@ -54,7 +55,8 @@ const Versus = () => {
         <img src={VS} alt="vs" className="vs"/>
 
         <div className="player">
-          {/* <img src={require(`../../../assets/card/character/${p2?.gameCharacter.englishName}_default.png`)} alt="2P-character"/> */}
+          {/* <img src={require(p2Img)} alt="2P-character"/> */}
+          <img src={require(`../../assets/character/${p2?.gameCharacterEntity.englishName}_win.png`)} alt="2P-character"/>
           <div className="player-info">
             <img src={MatchFrame_blue} alt="2P"/>
             <div className="player2">

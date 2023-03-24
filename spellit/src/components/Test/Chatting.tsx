@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from 'react'
-import { WebSocketContext } from '../../utils/WebsocektProvider'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 
 function Chatting() {
   // const ws = useContext(WebSocketContext);
