@@ -1,13 +1,18 @@
 import Chatting from "../../components/Test/Chatting";
 import TextInputBox from "../../components/Test/TextInputBox";
 import WebsocektProvider from '../../utils/WebsocektProvider'
+import OpenViduVideo from './openviduTest'
+import { OpenviduProvider } from '@/store/openvidu'
 
 const Test = () => {
   return (
     <div>
       {/* <WebsocektProvider> */}
-        <Chatting/>
-        <TextInputBox/>
+      <OpenviduProvider>
+        {/* <Chatting/>
+      <TextInputBox /> */}
+        <OpenViduVideo />
+        </OpenviduProvider>
       {/* </WebsocektProvider> */}
     </div>
   )

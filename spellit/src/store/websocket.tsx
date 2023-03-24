@@ -53,8 +53,7 @@ import { useDispatch } from 'react-redux';
 const WebSocketContext = createContext<any>(null);
 export { WebSocketContext };
 
-  
-// eslint-disable-next-line import/no-anonymous-default-export
+
 export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) => {
   const webSocketUrl = `ws://localhost:8080/api/socket`
   let ws = useRef<WebSocket | null>(null).current;
@@ -77,10 +76,13 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
     ws.onmessage = (e) => {
       console.log(e);
       const content = JSON.parse(e.data);
+      const type = content.type;
       const info = content.info;
-      
-      dispatch(costActions.set(info.data));
-      
+      if (type === 'test') {
+        
+      } else if (type === '') {
+        
+      }
     }
 
     send = (data: any) => {
