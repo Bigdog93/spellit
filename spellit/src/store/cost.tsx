@@ -9,14 +9,14 @@ const costSlice = createSlice({
   name: 'cost',
   initialState: initialCostState,
   reducers: {
-    set(cost, action: PayloadAction<number>) {
-      cost.cost = action.payload;
+    set(state, action: PayloadAction<number>) {
+      state.cost = action.payload;
     },
-    add(cost, action: PayloadAction<number>) {
-      cost.cost += action.payload;
+    add(state, action: PayloadAction<number>) {
+      state.cost += action.payload;
     },
-    sub(cost, action: PayloadAction<number>) {
-      cost.cost -= action.payload;
+    sub(state, action: PayloadAction<number>) {
+      state.cost -= action.payload;
     },
   },
 });
