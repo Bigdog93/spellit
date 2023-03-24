@@ -73,7 +73,7 @@ export const OpenviduProvider =  ({ children }: { children: React.ReactNode }) =
         }
     }
 
-    const joinSession = async (callBack :Function) => {
+    const joinSession = async () => {
         // --- 1) Get an OpenVidu object ---
 
         OV = new OpenVidu();
