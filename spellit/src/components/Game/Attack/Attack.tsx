@@ -25,7 +25,7 @@ const wind3: Spell = {
 const fire1: Spell = {
   name: "fire1",
   content: "타올라라 불꽃 적을 태우는 탄환이 되어 날아라",
-  time: 5,
+  time: 2,
 };
 const wind1: Spell = {
   name: "wind1",
@@ -35,7 +35,7 @@ const wind1: Spell = {
 const ice1: Spell = {
   name: "ice1",
   content: "냉기여 휘몰아쳐라 빛을 삼키고 온기를 먹어치우며 이 땅을 내달려 모든 것이 얼어붙을 것이니",
-  time: 9,
+  time: 2,
 };
 const storm1: Spell = {
   name: "storm1",
@@ -155,7 +155,7 @@ function Attack() {
     const navigate = useNavigate();
     const [idx, setIdx] = useState(0);
     useEffect(() => {
-      console.log(idx);
+      // console.log(idx);
       if (fire1.name == chooseCards[idx]) {
           SpellIt(fire1, idx);
         } else if (ice1.name == chooseCards[idx]) {
@@ -192,7 +192,7 @@ function Attack() {
     const firstHp = useSelector((state: RootState) => (state.attack.firstHp));
     const secondHp = useSelector((state: RootState) => (state.attack.secondHp));
     
-    console.log(firstHp);
+    // console.log(firstHp);
     
     const firstHpStyle = {
         width: `${firstHp}px`,
