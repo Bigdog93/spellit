@@ -25,13 +25,15 @@ const Login = () => {
     console.log('login btn')
    
     API.post<any>(
-      "member/login", 
+      "auth/login", 
       {'email': id, 'password': pw}, 
       // {headers: {
       //   Authorization: sessionStorage.getItem('token')
       // }}
     ).then((res) => {
       console.log(res)
+      const token = res.data.accessToken
+      sessionStorage.setItem('token', JSON.stringify(token));
       navigate('/home')
     }).catch((err) => {
       console.log(err)

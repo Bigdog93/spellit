@@ -4,7 +4,7 @@ import API from "@/utils/API"
 
 import './Login.css'
 import kakao from '../../assets/ui/kakao_login_medium_narrow.png'
-
+import axios from 'axios'
 
 const Signup = () => {
 
@@ -46,10 +46,19 @@ const Signup = () => {
       console.log('worng pw')
     }
   }
-  const signupHandler = () => {
-    // const body : SignupInfo = {'email': email, 'password': password1, 'nickname': nickname, 'startSpell': startSpell}
-    const response = API.post<any>(
-      "member/join", 
+
+  const signupHandler = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log('signup btn')
+    // axios.post(process.env.REACT_APP_SPRING + 'member/join', 
+    // {'email': email, 'password': password1, 'nickname': nickname, 'startSpell': startSpell})
+    // .then((res) => {
+    //   console.log(res)
+    // }).catch((err) => {
+    //   console.log(err)
+    // })
+    API.post<any>(
+      "auth/signup", 
       {'email': email, 'password': password1, 'nickname': nickname, 'startSpell': startSpell}, 
       // {headers: {
       //   Authorization: sessionStorage.getItem('token')
@@ -57,18 +66,11 @@ const Signup = () => {
     ).then((response) => {
       console.log(response)
       console.log(response.data)
-
-    }
-
-    );
-    return response;
-  };
-
-  const submitHandler = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log('signup btn')
-    const signup = signupHandler
-    console.log(signup)
+    }).catch((err) => {
+      console.log(err)
+    });
+    // const signup = signupHandler
+    // console.log(signup)
     // if(login) {
     //   console.log('hello')
     // }
@@ -87,7 +89,7 @@ const Signup = () => {
   return (
     <div className='auth-bg'>
       <div className="login-box">
-        <form action="submit" className="login-form" onSubmit={submitHandler}>
+        <form action="submit" className="login-form" onSubmit={signupHandler}>
           <div>
             <label htmlFor="">EMAIL</label>
             <br />
