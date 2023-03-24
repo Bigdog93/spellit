@@ -37,3 +37,29 @@
 .second-hp-bar {
     right: 7px;
 }
+
+.settle-bottom-items {
+    display: inline-block;
+    justify-content: space-between;
+}
+
+.first-player, .second-player {
+    /* margin: 100px; */
+    position: relative;
+    animation-name: move-up-down;
+    animation-duration: 2.5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+  
+  @keyframes move-up-down {
+    0% {
+      top: 0;
+    }
+    50% {
+      top: 30px;
+    }
+    100% {
+      top: 0;
+    }
+  }

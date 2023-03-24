@@ -6,6 +6,8 @@ import { RootState } from "@/store/";
 import HpBar from '../Game/Items/HpBar';
 
 import "./Settle.css";
+import LUNA_attack from '../../assets/character/LUNA_attack.png';
+import AK_attack from '../../assets/character/AK_attack.png';
 
 function Settle() {
     const dispatch = useDispatch();
@@ -50,9 +52,9 @@ function Settle() {
             hit(damage);
         } else if (firstHp <= damage) {
             hit(firstHp);
-            navigate('/result');
+            // navigate('/result');
         } else if ( d >= damageStack.length) {
-            navigate('/ready');
+            // navigate('/ready');
         }
     }, [d]);
 
@@ -67,6 +69,10 @@ function Settle() {
                     <HpBar></HpBar>
                     <div className="second-hp-bar" style={secondHpStyle}></div>
                 </div>
+            </div>
+            <div className='settle-bottom-items'>
+                <img className='first-player' src={AK_attack} alt="" style={{width: '300px', height: '400px'}}/>
+                <img className='second-player' src={LUNA_attack} alt="" style={{width: '350px', height: '450px'}}/>
             </div>
         </div>
     )
