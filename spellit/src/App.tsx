@@ -14,6 +14,7 @@ import Signup from "./components/Auth/Signup";
 import OAuth from "./components/Auth/OAuth";
 import Test from "./components/Test";
 import Settle from "./components/Settle/Settle";
+import Result from "./components/Game/Result";
 
 function App() {
 
@@ -28,12 +29,13 @@ function App() {
           <Route path="user" element={<User />} />
           <Route path="ready" element={<Ready />} />
           <Route path="defense" element={<Defence/>}/>
-          {/* <Route path="attack" element={<Attack/>}/> */}
+          <Route path="attack" element={<Attack/>}/>
           <Route path="login" element={<Login/>}/>
           <Route path="oath" element={<OAuth/>}/>
           <Route path="join" element={<Signup/>}/>
           <Route path="test" element={<Test/>}/>
           <Route path="settle" element={<Settle/>}/>
+          <Route path="result" element={<Result/>}/>
         </Routes>
       </WebSocketProvider>
     </BrowserRouter>

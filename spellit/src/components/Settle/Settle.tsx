@@ -28,7 +28,7 @@ function Settle() {
         backgroundColor: secondHp > defaultHP*0.3 ? '#FFF500' : '#FF0000' ,
     }
 
-    const damageStack = [10, 50, 30];
+    const damageStack = [100, 100, 100];
     const [d, setD] = useState(0);
 
     // 데미지 정산
@@ -39,21 +39,19 @@ function Settle() {
         console.log('firstHp : '+firstHp);
         console.log('secondHP : '+secondHp);
         setTimeout(() => {
-            console.log('얍!')
+            console.log('얍!'+ d)
             setD(d+1);
         }, 1000)
     }
-
+    
     useEffect(() => {
         const damage = damageStack[d];
-        if (firstHp > damage) {
-            hit(damageStack[d])
-        }
-
-        if (d >= damageStack.length) {
-            // setTimeout(() => {
-            //     console.log('뉴 턴 사과!')
-            // }, 1000);
+        if (firstHp > damage && d < damageStack.length) {
+            hit(damage);
+        } else if (firstHp <= damage) {
+            hit(firstHp);
+            navigate('/result');
+        } else if ( d >= damageStack.length) {
             navigate('/ready');
         }
     }, [d]);
