@@ -6,50 +6,52 @@ import { matchingActions } from '@/store/matching';
 import { WebSocketContext } from '@/store/websocket'
 import { RootState } from '@/store';
 
-function CoinFlipper(coin: any) {
+interface coinType {
+  coin: 0 | 1 | undefined
+}
+
+function CoinFlipper(coin: coinType) {
   const dispatch = useDispatch();
   const { send } = useContext(WebSocketContext);
 
   const [flips, setFlips] = useState<string>('');
   const [isRolling, setIsRolling] = useState(true);
 
-  const handleClick = (): void => {
-
-    const order = () => {
-      if (!coin) {
-        setFlips('head')
-      } else {
-        setFlips('tail')
-      }
+  // 코인 앞뒤로 할당
+  const order = () => {
+    if (!coin) {
+      setFlips('head')
+    } else {
+      setFlips('tail')
     }
+  }
+
+  // 동전 던지기 끝났을 때 store 업뎃
+  const rollingEnd = () => {
+    console.log('endLoading in CoinFlipper')
+    dispatch(matchingActions.p1Loading())
+  }
+
+
+  const rollingHandler = (): void => {
     order();
 
-    setIsRolling(true);
-    setTimeout(() => setIsRolling(false), 5000);
-    setTimeout(() => endLoading(), 6000);
+    // 5초 후 동전 던지기 끝냄
+    setTimeout(() => {
+      console.log('동전 던지기 타이머 on')
+      setIsRolling(false) 
+      rollingEnd()}
+      , 5000
+    );
   };
 
-  const endLoading = () => {
-    dispatch(matchingActions.end1PLoading())
-  }
-  useEffect(() => {
-    handleClick();
-  }, []);
 
-  const p1Ready = useSelector((state: RootState) => state.matching.p1Loading);
-  const p2Ready = useSelector((state: RootState) => state.matching.p2Loading);
-  const memberId = useSelector((state: RootState) => state.user.id);
   
   useEffect(() => {
-    if(p1Ready && p2Ready) {
-      send({
-        event: 'readyTurn',
-        data: '',
-        roomId: 1,
-        memberId: memberId
-      })
-    }
-  }, [p1Ready, p2Ready]);
+    rollingHandler();
+  }, []);
+
+  
 
   return (
     <div className="CoinFlipper">

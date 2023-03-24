@@ -1,6 +1,7 @@
 import { createContext, useRef } from 'react';
 import { costActions } from "@/store/cost"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 import store from "@/store/";
 import { playerActions } from "@/store/player"
@@ -11,8 +12,8 @@ export { WebSocketContext };
 
   
 export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) => {
-  const webSocketUrl = `ws://localhost:8080/api/socket`
-  // const webSocketUrl = `wss://j8d201.p.ssafy.com/api/socket`
+  // const webSocketUrl = `ws://localhost:8080/api/socket`
+  const webSocketUrl = `wss://j8d201.p.ssafy.com/api/socket`
   let ws = useRef<WebSocket | null>(null).current;
   let send = ws?.send;
   const dispatch = useDispatch();
@@ -59,12 +60,12 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
             dispatch(playerActions.setP1(info.roomInfo.playerList[1]))
             dispatch(playerActions.setP2(info.roomInfo.playerList[0]))
           }
-          
-          dispatch(matchingActions.endMatching())
+          dispatch(matchingActions.connected())
 
-      } else if (type === 'loading') {
-        console.log('loading 입니다.')
-        dispatch(matchingActions.end2PLoading())
+      } else if (type === 'loaded') {
+        console.log('loaded 입니다.')
+        dispatch(matchingActions.p2Loading())
+
 
       } else if (type === 'toReady') {
         console.log('toReady 입니다.')

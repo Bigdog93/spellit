@@ -2,18 +2,18 @@ import { createSlice } from '@reduxjs/toolkit';
 // import type { PayloadAction } from '@reduxjs/toolkit'
 
 type initialMatchingType = {
-  matched: boolean,
-  done: boolean,
+  connected: boolean,
+  game: boolean,
   p1Loading: boolean,
   p2Loading: boolean,
   p1: [],
   p2: [],
 };
 const initialMatchingState: initialMatchingType = {
-  matched: false,
-  done: false,
-  p1Loading: false,
-  p2Loading: false,
+  connected: false, // 게임 상대 찾았는지 여부
+  game: false,  // 게임을 시작할지 여부
+  p1Loading: false, // 나 동전던지기 끝났는지 여부
+  p2Loading: false, // 상대 동전던지기 끝났는지 여부
   p1: [],
   p2: [],
 };
@@ -22,13 +22,18 @@ const matchingSlice = createSlice({
   name: 'matching',
   initialState: initialMatchingState,
   reducers: {
-    endMatching(state) {
-      state.done = !state.done
+    connected(state){
+      // state.connected = !state.connected
+      state.connected = true
     },
-    end1PLoading(state) {
+    startGame(state) {
+      state.game = !state.game
+    },
+    p1Loading(state) {
+      console.log('p1Loading in store')
       state.p1Loading = true
     },
-    end2PLoading(state) {
+    p2Loading(state) {
       state.p1Loading = true
     },
   },
