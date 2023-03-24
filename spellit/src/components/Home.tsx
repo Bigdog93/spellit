@@ -17,7 +17,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const toQuickStart = () => {
-    navigate("/match");
+    navigate("/matching");
   };
 
   return (

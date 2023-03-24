@@ -25,8 +25,10 @@ const Matching = () => {
   const toGame = useSelector((state: RootState) => state.matching.done);
 
   useEffect(() => {
-    navigate('/game/1')
-  }, [toGame]);
+    if(toGame) {
+      navigate('/game/1')
+    }
+  }, [toGame, navigate]);
 
   return (
     <div>

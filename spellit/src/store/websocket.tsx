@@ -1,11 +1,9 @@
 import { createContext, useRef } from 'react';
 import { costActions } from "@/store/cost"
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import store from "@/store/";
-import { userActions } from "@/store/user"
 import { playerActions } from "@/store/player"
-import { matchingActions } from "@/store/matching"
 
 const WebSocketContext = createContext<any>(null);
 export { WebSocketContext };
@@ -51,7 +49,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
       } else if (type === 'connected') {
           console.log('connected 입니다.')
           // 매칭 성공했을 때 player의 p1은 나, p2는 상대방에 넣음
-          if (info.playerlist[0].memberId == state.user.memberId ) {
+          if (info.playerlist[0].memberId === state.user.memberId ) {
             dispatch(playerActions.setP1(info.playerlist[0]))
             dispatch(playerActions.setP2(info.playerlist[1]))
           } else {

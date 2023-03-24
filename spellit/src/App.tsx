@@ -25,7 +25,7 @@ function App() {
           {/* <Route index element={<Login />}/> */}
           <Route path="home" element={<Home />} />
           <Route path="game/:roomId" element={<Game />} />
-          <Route path="match" element={<Matching />} />
+          <Route path="matching" element={<Matching />} />
           <Route path="user" element={<User />} />
           <Route path="ready" element={<Ready />} />
           <Route path="defense" element={<Defence/>}/>

@@ -49,11 +49,8 @@ const Signup = () => {
   const signupHandler = () => {
     // const body : SignupInfo = {'email': email, 'password': password1, 'nickname': nickname, 'startSpell': startSpell}
     const response = API.post<any>(
-      "member/join", 
+      "auth/join", 
       {'email': email, 'password': password1, 'nickname': nickname, 'startSpell': startSpell}, 
-      // {headers: {
-      //   Authorization: sessionStorage.getItem('token')
-      // }}
     ).then((response) => {
       console.log(response)
       console.log(response.data)
