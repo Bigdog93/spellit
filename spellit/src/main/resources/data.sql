@@ -22,8 +22,8 @@ VALUES
 ("dark2", "탐닉의 심연", "끌어당겨라 ,집어삼켜라, 빛을 질투하는 어둠이여, 게걸스럽게 탐하여 모든것을 빼앗아라", 9, 230, 5);
 
 INSERT INTO game_character
-(character_name, stand, hurt, attack, winner, combo)
+(character_name, english_name, stand, hurt, attack, winner, combo)
 VALUES
-("곽춘배", "", "", "", "", ""),
-("아이리", "", "", "", "", ""),
-("루나", "", "", "", "", "")
+("곽춘배", "CB", "", "", "", "", ""),
+("키리카", "AK", "", "", "", "", ""),
+("루나", "LUNA", "", "", "", "", "")

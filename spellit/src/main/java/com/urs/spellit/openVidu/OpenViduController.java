@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.PostConstruct;
 import java.util.Map;
 
-@CrossOrigin
+@CrossOrigin("/**")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/ov")
 public class OpenViduController {
 
     @Value("${OPENVIDU_URL}")

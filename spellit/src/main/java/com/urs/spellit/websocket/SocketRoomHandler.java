@@ -2,15 +2,12 @@ package com.urs.spellit.websocket;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.urs.spellit.game.CardRepository;
 import com.urs.spellit.game.DeckRepository;
 import com.urs.spellit.game.GameService;
 import com.urs.spellit.game.entity.CardEntity;
-import com.urs.spellit.game.entity.DeckEntity;
 import com.urs.spellit.member.MemberRepository;
 import com.urs.spellit.member.MemberService;
 import com.urs.spellit.member.model.entity.Member;
@@ -43,7 +40,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 	private final RoomManager roomManager;
 	private final ObjectMapper mapper = new ObjectMapper();
 	final private MyParser myParser;
-	
+
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		System.out.println("누군과 소켓과 연결됨");
@@ -74,6 +71,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 		/* 빠른 매치 눌렀을 때*/
 		if(event.equals("matchStart")) {
 			PlayerDto player = getPlayerByMemberId(session, memberId);
+			logger.info("player : " + player.getNickname());
 			/*--- 대기열 사람 없으면 대기열 큐에 집어넣음 ---*/
 			if (readyQueue.isEmpty()) {
 				player.setIdx(0);
@@ -205,8 +203,9 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 
 	/* 멤버 id(PK) 값으로 DB 에서 불러와 websocket 이랑 버무려서 PlayerDto 로 만들기*/
 	public PlayerDto getPlayerByMemberId(WebSocketSession session, long memberId) {
+		logger.info("player.memberId : " + memberId);
 		Optional<Member> memberOption = memberRepository.findById(memberId);
-		if(!memberOption.isEmpty()) {
+		if(memberOption.isEmpty()) {
 			return null;
 		}
 		Member member = memberOption.get();
