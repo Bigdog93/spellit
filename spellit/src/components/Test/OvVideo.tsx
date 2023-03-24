@@ -1,13 +1,21 @@
-import { useRef, useState, useContext } from "react"
+import { useRef, useState, useContext, useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { Publisher, Session, StreamManager, Subscriber } from 'openvidu-browser';
 import { IProps } from '@/components/Test/openviduTest'
 
-const OvVideo = (streamManager :IProps['mainStreamManager'], sub: IProps['sub']) => {
+const OvVideo = (streamManager :any) => {
     const video = useRef(HTMLVideoElement.prototype);
     // let { OV, openviduState, joinSession, test } = useContext(OpenviduContext);
     // let { OV, openviduState, joinSession, subscribers } = useContext(OpenviduContext);
-    streamManager.addVideoElement(video.current);
+    useEffect(() => {
+        if (streamManager.streamManager !== undefined) {
+            console.log(streamManager);
+            streamManager.streamManager.addVideoElement(video.current);
+        }
+        return () => {
+
+        }
+    }, [streamManager])
     
     return (
         <div>

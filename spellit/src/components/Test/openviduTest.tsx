@@ -9,7 +9,7 @@ import React, { Component } from 'react';
 
 
 export interface IProps {
-    mainStreamManager: StreamManager,
+    mainStreamManager: any,
     subscribers: Array<Subscriber>,
     sub: Subscriber,
 }
@@ -296,10 +296,13 @@ const OpenViduVideo = () => {
     }
 
     useEffect(() => {
-        // joinSession();
-        // componentDidMount();
-        // componentWillUnmount();
-    })
+        joinSession();
+        return () => {
+            componentDidMount();
+            componentWillUnmount();
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
     const showSubs = () => {
         console.log(subscribers);
         console.log(publisher);
@@ -308,10 +311,10 @@ const OpenViduVideo = () => {
 
     return (
         <>
-            {mainStreamManager && <OvVideo {...mainStreamManager}></OvVideo>}
+            {mainStreamManager && <OvVideo streamManager={mainStreamManager}></OvVideo>}
             {subscribers.map((sub:any, idx:number) => {
                 <div key={idx}>
-                    <OvVideo {...sub}></OvVideo>
+                    <OvVideo streamManager={sub}></OvVideo>
                 </div>
             })}
             <button onClick={joinSession}>joinSession</button>
