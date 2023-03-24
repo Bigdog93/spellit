@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { WebSocketProvider } from "./store/websocket";
 
 
-import Home from "./components/index";
+import Home from "./components/Home";
 import Game from "./components/Game";
 import Matching from "./components/Matching";
 import User from './components/User'
