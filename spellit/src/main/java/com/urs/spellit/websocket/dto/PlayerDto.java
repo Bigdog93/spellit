@@ -1,5 +1,6 @@
 package com.urs.spellit.websocket.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.urs.spellit.game.entity.CardEntity;
 import com.urs.spellit.game.entity.GameCharacterEntity;
 import com.urs.spellit.member.model.entity.Member;
@@ -14,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class PlayerDto {
+	@JsonIgnore
 	private WebSocketSession session;
 	private long memberId;
 	private int hp;

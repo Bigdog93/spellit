@@ -45,6 +45,8 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     @ColumnDefault("0")
     private int winCount;
+    @Column
+    private String profileMsg;
 
     @ManyToOne
     @JoinColumn(name = "character_id")
