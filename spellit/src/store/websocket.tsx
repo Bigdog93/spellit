@@ -1,34 +1,41 @@
 import { createContext, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { costActions } from "@/store/cost"
-// import { attackActions } from "@/store/attack"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+import store from "@/store/";
+import { userActions } from "@/store/user"
+import { playerActions } from "@/store/player"
+import { matchingActions } from "@/store/matching"
 
 const WebSocketContext = createContext<any>(null);
 export { WebSocketContext };
 
   
-// eslint-disable-next-line import/no-anonymous-default-export
 export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) => {
-  const navigate = useNavigate()
   const webSocketUrl = `ws://localhost:8080/api/socket`
   let ws = useRef<WebSocket | null>(null).current;
   let send = ws?.send;
   const dispatch = useDispatch();
 
+  const state = store.getState();
+
   if (!ws) {
     ws = new WebSocket(webSocketUrl);
+
     ws.onopen = () => {
       console.log("connected to " + webSocketUrl);
     }
+
     ws.onclose = error => {
       console.log("disconnect from " + webSocketUrl);
       console.log(error);
     };
+
     ws.onerror = error => {
       console.log("connection error " + webSocketUrl);
       console.log(error);
     };
+
     ws.onmessage = (e) => {
       console.log(e);
       const content = JSON.parse(e.data);
@@ -37,9 +44,24 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
       if (type === 'test') {
         console.log('test입니다.')
         dispatch(costActions.set(info.data));
-        navigate('/home')
+        
       } else if (type === 'entQueue') {
         console.log('entQueue 입니다.')
+
+      } else if (type === 'connected') {
+          console.log('connected 입니다.')
+          // 매칭 성공했을 때 player의 p1은 나, p2는 상대방에 넣음
+          if (info.playerlist[0].memberId == state.user.memberId ) {
+            dispatch(playerActions.setP1(info.playerlist[0]))
+            dispatch(playerActions.setP2(info.playerlist[1]))
+          } else {
+            dispatch(playerActions.setP1(info.playerlist[1]))
+            dispatch(playerActions.setP2(info.playerlist[0]))
+          }
+
+          state.matching.matched = true;
+          
+
 
       } else if (type === 'loading') {
         console.log('loading 입니다.')

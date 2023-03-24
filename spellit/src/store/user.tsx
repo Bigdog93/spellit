@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const userIndexState = {
-  temp: 0,
+  memberId: 1,
+  nickname: null,
 };
 
 const userSlice = createSlice({
@@ -12,6 +13,6 @@ const userSlice = createSlice({
   },
 });
 
-export const userAction = userSlice.actions;
+export const userActions = userSlice.actions;
 
 export default userSlice.reducer;

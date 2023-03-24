@@ -3,7 +3,7 @@ import { WebSocketProvider } from "./store/websocket";
 
 
 import Home from "./components/Home";
-import Game from "./components/Game/Game";
+import Game from "./components/Game";
 import Matching from "./components/Matching";
 import User from './components/User'
 import Ready from "@/components/Game/Ready"
@@ -19,13 +19,13 @@ import Result from "./components/Game/Result";
 function App() {
 
   return (
-    <BrowserRouter>
-      <WebSocketProvider>
+    <WebSocketProvider>
+      <BrowserRouter>
         <Routes>
           {/* <Route index element={<Login />}/> */}
           <Route path="home" element={<Home />} />
           <Route path="game/:roomId" element={<Game />} />
-          <Route path="matching" element={<Matching />} />
+          <Route path="match" element={<Matching />} />
           <Route path="user" element={<User />} />
           <Route path="ready" element={<Ready />} />
           <Route path="defense" element={<Defence/>}/>
@@ -37,8 +37,8 @@ function App() {
           <Route path="settle" element={<Settle/>}/>
           <Route path="result" element={<Result/>}/>
         </Routes>
-      </WebSocketProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </WebSocketProvider>
   );
 }
 
