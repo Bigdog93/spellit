@@ -50,6 +50,7 @@ public class Member extends BaseTimeEntity {
     @JoinColumn(name = "character_id")
     private GameCharacterEntity gameCharacterEntity;
 
+
     @OneToMany(mappedBy = "member")
     private List<DeckEntity> deck = new ArrayList<>();
 

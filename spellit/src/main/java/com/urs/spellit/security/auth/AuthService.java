@@ -1,5 +1,6 @@
 package com.urs.spellit.security.auth;
 
+import com.urs.spellit.game.GameService;
 import com.urs.spellit.member.MemberRepository;
 import com.urs.spellit.member.model.dto.MemberRequestDto;
 import com.urs.spellit.member.model.dto.MemberResponseDto;
@@ -27,6 +28,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final GameService gameService;
 
     @Transactional
     public MemberResponseDto signup(MemberRequestDto memberRequestDto) {
@@ -35,6 +37,8 @@ public class AuthService {
         }
 
         Member member = memberRequestDto.toMember(passwordEncoder);
+        //member.setGameCharacterEntity(new GameCharacterEntity(1L,"곽춘배","CB"));
+        member.setGameCharacterEntity(gameService.getCharacter(1L));
         return MemberResponseDto.of(memberRepository.save(member));
     }
 
