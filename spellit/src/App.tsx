@@ -12,6 +12,7 @@ import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 import OAuth from "./components/Auth/OAuth";
 import Settle from "./components/Settle/Settle";
+import Result from "./components/Game/Result";
 
 function App() {
   
@@ -30,6 +31,7 @@ function App() {
         <Route path="oath" element={<OAuth/>}/>
         <Route path="join" element={<Signup/>}/>
         <Route path="settle" element={<Settle/>}/>
+        <Route path="result" element={<Result/>}/>
       </Routes>
     </BrowserRouter>
   );
