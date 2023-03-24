@@ -70,4 +70,9 @@ public class Member extends BaseTimeEntity {
         this.nickname=nickname;
     }
 
+    public void changeGameCharacter(GameCharacterEntity gameCharacter)
+    {
+        this.gameCharacterEntity=gameCharacter;
+    }
+
 }

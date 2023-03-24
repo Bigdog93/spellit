@@ -2,6 +2,7 @@ package com.urs.spellit.member;
 
 import com.urs.spellit.common.util.SecurityUtil;
 import com.urs.spellit.game.entity.DeckEntity;
+import com.urs.spellit.game.entity.GameCharacterEntity;
 import com.urs.spellit.member.model.dto.MemberResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -23,14 +24,13 @@ public class MemberController {
     @GetMapping("/info") //내 정보 요청
     public ResponseEntity<MemberResponseDto> findMemberInfoById()
     {
-        //System.out.println("memberid: "+SecurityUtil.getCurrentMemberId());
         return ResponseEntity.ok(memberService.findMemberInfoById(SecurityUtil.getCurrentMemberId()));
     }
 
     @GetMapping("/info/{userid}") //타 사용자 정보 요청
     public ResponseEntity<MemberResponseDto> findMemberInfoByEmail(@PathVariable("userid") String email)
     {
-        return ResponseEntity.ok(memberService.findMemberInfoByEmail(email));
+        return ResponseEntity.ok(memberService.findMemberInfoByEmail(SecurityUtil.getAnotherMemberEmail(email)));
     }
 
     @GetMapping("/deck") //사용자 덱 정보 요청
@@ -39,10 +39,10 @@ public class MemberController {
         return ResponseEntity.ok(memberService.getUserDeck(SecurityUtil.getCurrentMemberId()));
     }
 
-//    @PutMapping("/character")
-//    public ResponseEntity<CharacterResponseDto> setMyCharacter(@RequestBody int characterId)
-//    {
-//        return ResponseEntity.ok((memberService.setMyCharacter(characterId)));
-//    }
+    @PutMapping("/character") //캐릭터 선택
+    public ResponseEntity<GameCharacterEntity> setMyCharacter(@RequestBody Long characterId)
+    {
+        return ResponseEntity.ok(memberService.setMyCharacter(SecurityUtil.getCharacterId(characterId)));
+    }
 
 }

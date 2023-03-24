@@ -35,4 +35,6 @@ public class MemberResponseDto {
                 .gameCharacter(member.getGameCharacterEntity())
                 .build();
     }
+
+
 }

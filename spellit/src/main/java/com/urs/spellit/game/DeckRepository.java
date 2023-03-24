@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface DeckRepository extends JpaRepository<DeckEntity, Long> {
-    List<DeckEntity> findAllByMemberId(long memberId);
+    List<DeckEntity> findByMemberId(long memberId);
 }
