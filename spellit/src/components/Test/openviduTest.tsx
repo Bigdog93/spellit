@@ -31,7 +31,7 @@ const OpenViduVideo = () => {
     // }
     let mySessionId: string = "0";
     let myUserName: string = "default" + Math.random().toString();
-    let session: Session | null | undefined = undefined;
+    const [session, setSession] = useState<Session | undefined>(undefined);
     // let mainStreamManager: Publisher | undefined = undefined;  // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
     const [mainStreamManager, setMainStreamManager] = useState<Publisher | undefined>(undefined)
     let [publisher, setPublisher] = useState<StreamManager | undefined>(undefined);
@@ -91,32 +91,34 @@ const OpenViduVideo = () => {
 
         // --- 2) Init a session ---
 
-        session = OV.initSession();
+        setSession(OV.initSession());
+
+        if (session === undefined) return;
         var mySession = session;
 
         // --- 3) Specify the actions when events take place in the session ---
 
         // On every new Stream received...
-        mySession.on('streamCreated', (event :StreamEvent) => {
+        session.on('streamCreated', (event :StreamEvent) => {
             // Subscribe to the Stream to receive it. Second parameter is undefined
             // so OpenVidu doesn't create an HTML video by its own
-            var subscriber = mySession.subscribe(event.stream, undefined);
+            var subscriber = session.subscribe(event.stream, undefined);
             var tmpSubscribers = [...subscribers];
             tmpSubscribers.push(subscriber);
-            console.log(subscribers);
+            console.log("누군가 들어옴 : ", subscribers);
             // Update the state with the new subscribers
             setSubscribers(tmpSubscribers);
         });
 
         // On every Stream destroyed...
-        mySession.on('streamDestroyed', (event : StreamEvent) => {
+        session.on('streamDestroyed', (event : StreamEvent) => {
 
             // Remove the stream from 'subscribers' array
             deleteSubscriber(event.stream.streamManager);
         });
 
         // On every asynchronous exception...
-        mySession.on('exception', (exception :ExceptionEvent) => {
+        session.on('exception', (exception :ExceptionEvent) => {
             console.warn(exception);
         });
 
@@ -125,18 +127,18 @@ const OpenViduVideo = () => {
         // Get a token from the OpenVidu deployment
         const token: string = await getToken();
         console.log("token : " + token);
-        await mySession.connect(token, { clientData: myUserName });
+        await session.connect(token, { clientData: myUserName });
         // --- 5) Get your own camera stream ---
 
         // Init a publisher passing undefined as targetElement (we don't want OpenVidu to insert a video
         // element: we will manage it on our own) and with the desired properties
         let newPublisher = await OV?.initPublisherAsync(undefined, {
             audioSource: undefined, // The source of audio. If undefined default microphone
-            videoSource: undefined, // The source of video. If undefined default webcam
+            videoSource: false, // The source of video. If undefined default webcam
             publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
-            publishVideo: true, // Whether you want to start publishing with your video enabled or not
+            publishVideo: false, // Whether you want to start publishing with your video enabled or not
             resolution: '0x0', // The resolution of your video
-            frameRate: 30, // The frame rate of your video
+            frameRate: 60, // The frame rate of your video
             insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
             mirror: false, // Whether to mirror your local video or not
         });
@@ -150,9 +152,9 @@ const OpenViduVideo = () => {
         if (!OV) return;
         var devices = await OV.getDevices();
         var videoDevices = devices.filter(device => device.kind === 'videoinput');
-        var currentVideoDeviceId = newPublisher.stream.getMediaStream().getVideoTracks()[0].getSettings().deviceId;
+        // var currentVideoDeviceId = newPublisher.stream.getMediaStream().getVideoTracks()[0].getSettings().deviceId;
         // var currentVideoDevice = videoDevices.find(device => device.deviceId === currentVideoDeviceId);
-        // var currentVideoDeviceId = newPublisher.stream.getMediaStream().getAudioTracks()[0].getSettings().deviceId;
+        var currentVideoDeviceId = newPublisher.stream.getMediaStream().getAudioTracks()[0].getSettings().deviceId;
         currentVideoDevice = videoDevices.find(device => device.deviceId === currentVideoDeviceId);
 
         // Set the main video in the page to display our webcam and store our Publisher
@@ -216,7 +218,7 @@ const OpenViduVideo = () => {
 
         // Empty all properties...
         OV = null;
-        session = undefined;
+        setSession(undefined);
         setSubscribers([]);
         mySessionId = '0';
         myUserName = 'Participant' + Math.floor(Math.random() * 100);
@@ -298,6 +300,7 @@ const OpenViduVideo = () => {
     useEffect(() => {
         joinSession();
         return () => {
+            leaveSession();
             componentDidMount();
             componentWillUnmount();
         }
@@ -312,13 +315,15 @@ const OpenViduVideo = () => {
     return (
         <>
             {mainStreamManager && <OvVideo streamManager={mainStreamManager}></OvVideo>}
-            {subscribers.map((sub:any, idx:number) => {
-                <div key={idx}>
-                    <OvVideo streamManager={sub}></OvVideo>
-                </div>
-            })}
             <button onClick={joinSession}>joinSession</button>
             <button onClick={showSubs}>showSubs</button>
+            {subscribers.map((sub:any, idx:number) => {
+                return (
+                    <div key={idx}>
+                        <OvVideo streamManager={sub}></OvVideo>
+                    </div>
+                )
+            })}
         </>
     )
 }
