@@ -1,0 +1,18 @@
+.auth-bg {
+  background: url('../../assets/ui/auth-bg.png') ;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem 3rem;
+  border: 2px solid white;
+  background-color: rgb(255, 255, 255, 0.5);
+}

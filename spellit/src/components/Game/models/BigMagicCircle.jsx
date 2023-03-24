@@ -16,7 +16,6 @@ export default function BigMagicCircle(props) {
 
   return (
     <group {...props} dispose={null} scale={[5.5, 5.5, 5.5]}>
-			<pointLight intensity={0.8} />
       <mesh
         ref={bigMagicCircleRef}
         geometry={nodes.TestBigSpell.geometry}

@@ -5,6 +5,7 @@ import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { MathUtils } from "three";
 
+
 export default function MypageButton(props) {
   const { nodes, materials } = useGLTF("./models/mypagebutton.glb");
 
@@ -23,6 +24,7 @@ export default function MypageButton(props) {
 
   return (
     <group {...props} dispose={null} scale={[1.5, 1.5, 1.5]}>
+			
       <mesh
         ref={myPageRef}
         geometry={nodes["Group_68_(1)"].geometry}
@@ -35,3 +37,5 @@ export default function MypageButton(props) {
     </group>
   );
 }
+
+

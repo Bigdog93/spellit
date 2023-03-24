@@ -5,8 +5,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
   background: linear-gradient(180deg, #2F374B 0%, rgba(14, 18, 32, 0.951248) 99.97%, rgba(1, 4, 16, 0.933153) 99.98%, rgba(17, 9, 36, 0.598958) 99.99%, #4A7AC8 100%);
+  color: white;
 }
-
+.mouse-hover{
+  cursor:pointer;
+}
+button {
+  cursor:pointer;
+}
 @font-face {
   font-family: "HeirofLightBold";
   src: url("./assets/font/HeirofLightBold.ttf")
