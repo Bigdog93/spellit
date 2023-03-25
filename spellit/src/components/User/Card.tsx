@@ -5,7 +5,6 @@ interface Props {
 };
 
 const Cards: React.FC<Props> = ({card}) => {
-
   
   return (
     <div className="flip-container">
