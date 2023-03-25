@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { attackActions } from '@/store/attack';
 import { RootState } from "@/store/";
-import HpBar from '../Game/Items/HpBar';
+
+import ProfileHp from '../Game/Items/ProfileHp';
 
 import "./Settle.css";
 import LUNA_attack from '../../assets/character/LUNA_attack.png';
@@ -80,11 +81,11 @@ function Settle() {
         <div className='settle-bg'>
             <div className='settle-top-itmes'>
                 <div className='first-hp-box'>
-                    <HpBar></HpBar>
+                    <ProfileHp></ProfileHp>
                     <div className="first-hp-bar" style={firstHpStyle}></div>
                 </div>
                 <div className='second-hp-box'>
-                    <HpBar></HpBar>
+                    <ProfileHp></ProfileHp>
                     <div className="second-hp-bar" style={secondHpStyle}></div>
                 </div>
             </div>

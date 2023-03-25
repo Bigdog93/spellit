@@ -1,8 +1,9 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/";
+
+import ProfileHp from "../Items/ProfileHp";
 import Timer from "../Items/Timer";
 import HpBar from "../Items/HpBar";
 
@@ -189,6 +190,7 @@ function Attack() {
         // }
     }, [idx])
 
+    const defaultHP = useSelector((state: RootState) => (state.attack.defaultHp));
     const firstHp = useSelector((state: RootState) => (state.attack.firstHp));
     const secondHp = useSelector((state: RootState) => (state.attack.secondHp));
     
@@ -196,46 +198,42 @@ function Attack() {
     
     const firstHpStyle = {
         width: `${firstHp}px`,
-        backgroundColor: firstHp > 150 ? '#FFF500' : '#FF0000' ,
+        backgroundColor: firstHp > defaultHP/4 ? '#FFF500' : '#FF0000' ,
     }
     const secondHpStyle = {
         width: `${secondHp}px`,
-        backgroundColor: secondHp > 150 ? '#FFF500' : '#FF0000' ,
+        backgroundColor: secondHp > defaultHP/4 ? '#FFF500' : '#FF0000' ,
     }
 
     return (
         <div className="attack-bg">
           <div className="attack-top-items">
             <div className='first-hp-box'>
-                <HpBar></HpBar>
+                <ProfileHp></ProfileHp>
                 <div className="first-hp-bar" style={firstHpStyle}></div>
             </div>
             <Timer time={sec}></Timer>
             <div className='second-hp-box'>
-                <HpBar></HpBar>
+                <ProfileHp></ProfileHp>
                 <div className="second-hp-bar" style={secondHpStyle}></div>
             </div>
           </div>
-            {/* <button onClick={() => {handleClick(spark1)}}>뇌전의 창</button>
-            <button onClick={() => {handleClick(ice1)}}>영원의 동토</button>
-            <button onClick={() => {handleClick(storm1)}}>남양의 폭풍</button>
-            <button onClick={() => {handleClick(fire1)}}>화염탄</button>
-            <button onClick={() => {handleClick(light1)}}>멸마의 성휘</button>
-            <button onClick={() => {handleClick(dark1)}}>무광의 심연</button>
-            <button onClick={() => {handleClick(wind1)}}>풍화의 검</button> */}
+
+          <div id="percent"></div>
+          
+          <div className="attack-bottom-itmes">
             <div className="SpellBox">
                 <img style={{ width: 800, height: 400}} src={SpellBox} alt="" />
                 <div id='origin'>{spanEl}</div>
             </div>
-            <div className="words"></div>
-            <div id="percent"></div>
+            {/* <div className="words"></div> */}
 
             <div className="spell-bar-box">
-              <img src={SkillBar} alt="" style={{width: '100%', height: '181px'}} />
+              <img src={SkillBar} alt="" style={{width: '100%', height: '120px'}} />
               <div className="spells">
                 {chooseCards.map((card: string, index: number) => (
                   <img 
-                    style={{height: '150px', margin: '10px'}}
+                    style={{height: '100px', margin: '10px'}}
                     key={index} 
                     src={require(`../../../assets/card/icon/${card}.png`)} 
                     alt={card}
@@ -243,6 +241,8 @@ function Attack() {
                 ))}
               </div>
             </div>
+
+          </div>
         </div>
     )
 }
