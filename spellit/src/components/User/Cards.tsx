@@ -19,7 +19,7 @@ const Cards = ({cards, selectCard}: PropsType) => {
     selectCard(data);
     console.log(data)
   }
-
+ 
   return (
     <div className={`${style.items}`}>
       { cards.map((card: CardType, index: number) => (
