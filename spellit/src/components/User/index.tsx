@@ -36,13 +36,33 @@ const User = () => {
     return () => {}
   }, [])
 
+  const [deck, setDeck] = useState<Array<CardType>>([]);
+
+  const selectCard = (res: CardType) => {
+    let flag = false;
+    for (const i of deck) {
+      if (i === res) {
+        flag = true;
+      }
+    }
+    if (!flag) {
+      setDeck([...deck, res])
+      console.log('cardseledted')
+      console.log(deck)
+    }
+  };
+
   return (
     <div className={`${style.bg}`}>
       <div className={`${style.items}`}>
-        <Cards cards={cards} />
+        <Cards cards={cards} selectCard={selectCard}/>
       </div>
+      {/* 선택된 카드 덱 */}
       <div className={`${style.cardselectcontainer}`}>
         <div className={`${style.cardselect}`}>
+          {deck.map((item: CardType, index: number) => (
+           <div key={index}>{item.title}</div>
+          ))}
         </div>
       </div>
     </div>
@@ -50,3 +70,4 @@ const User = () => {
 }
 
 export default User;
+
