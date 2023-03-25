@@ -21,60 +21,129 @@ function Settle() {
     const secondHp = useSelector((state: RootState) => (state.attack.secondHp));
     
     // console.log(firstHp);
+    const damageStack = [150, 150, 100];
+    const [d, setD] = useState(0);
     
     const firstHpStyle = {
-        width: `${(100 * (firstHp / defaultHP))}%`,
+        width: `${firstHp}px`,
         backgroundColor: firstHp > defaultHP*0.3 ? '#FFF500' : '#FF0000' ,
     }
     const secondHpStyle = {
-        width: `${(100 * (firstHp / defaultHP))}%`,
+        width: `${secondHp}px`,
         backgroundColor: secondHp > defaultHP*0.3 ? '#FFF500' : '#FF0000' ,
     }
-
-    const damageStack = [100, 100, 100];
-    const [d, setD] = useState(0);
-    
     
     // 데미지 정산
-    const hit = (damage: number) => {
-        // const effectList = [...chooseCards];
-        // 배열의 맨 처음 값을 pop
-        // const effect = effectList.shift();
-        // console.log(effect);
-        console.log('이펙트 띄우기')
-        // console.log(effect);
-        console.log('d : ', d)
-        const hideEffect = document.querySelector(`.${chooseCards[d]}-${d}`);
-        // console.log(hideEffect);
-        setTimeout(() => {
-            hideEffect?.classList.add('hidden-effect');
-            dispatch(attackActions.firstHit(damage));
-            dispatch(attackActions.secondHit(damage));
+    // const hit = (damage: number) => {
+    //     // const effectList = [...chooseCards];
+    //     // 배열의 맨 처음 값을 pop
+    //     // const effect = effectList.shift();
+    //     // console.log(effect);
+    //     console.log('이펙트 띄우기')
+    //     // console.log(effect);
+    //     console.log('d : ', d)
+    //     const hideEffect = document.querySelector(`.${chooseCards[d]}-${d}`);
+    //     // console.log(hideEffect);
+    //     setTimeout(() => {
+    //         hideEffect?.classList.add('hidden-effect');
+    //         dispatch(attackActions.firstHit(damage));
+    //         dispatch(attackActions.secondHit(damage));
             
-            // action 이후에 state값이 바로 변경되어 반영되지 않음,, 왜일까,,?
-            console.log('firstHp : '+ firstHp);
-            console.log('secondHP : '+ secondHp);
-            setTimeout(() => {
-                console.log('얍!')
-                setD(d+1);
-            }, 1000)
-        }, 1500);
-    }
+    //         // action 이후에 state값이 바로 변경되어 반영되지 않음,, 왜일까,,?
+    //         console.log('firstHp : '+ firstHp);
+    //         console.log('secondHP : '+ secondHp);
+    //         setTimeout(() => {
+    //             console.log('얍!')
+    //             setD(d+1);
+    //         }, 5000)
+    //     }, 5000);
+    // }
 
     useEffect(() => {
-        console.log('d : '+d);
         const damage = damageStack[d];
-
-        if (firstHp > 0 && d < chooseCards.length) {
-            if (firstHp <= damage) {
-                hit(firstHp);
-                navigate('/result');
-            }
-            hit(damage);
-        } else if ( d >= chooseCards.length) {
-            hit(damage)
-            navigate('/ready');
+        
+        // 스킬 이펙트 숨기는 함수
+        async function hideEffect () {
+            const hiddenEffect = document.querySelector(`.${chooseCards[d]}-${d}`);
+            setTimeout(() => {
+                hiddenEffect?.classList.add('hidden-effect');
+            }, 2000);
         }
+        
+        // result 페이지로 이동
+        async function moveResult () {
+            setTimeout(() => {
+                navigate('/result');
+            }, 5000);
+        }
+
+        // ready 페이지로 이동
+        async function moveReady () {
+            setTimeout(() => {
+                navigate('/ready');
+            }, 3000);
+        }
+
+        // 데미지 공격하는 함수
+        const hit = async (damage: number) => {
+            console.log('이펙트 띄우기')
+            console.log('d : ', d)
+            setTimeout(() => {
+                dispatch(attackActions.firstHit(damage));
+                dispatch(attackActions.secondHit(damage));
+                
+                // action 이후에 state값이 바로 변경되어 반영되지 않음,, 왜일까,,?
+                console.log('firstHp : '+ firstHp);
+                console.log('secondHP : '+ secondHp);
+                setTimeout(() => {
+                    console.log('얍!')
+                    setD(d+1);
+                }, 2000)
+            }, 3000);
+        }
+        
+        if (d < chooseCards.length) {
+            if (firstHp <= damage) {
+                hideEffect();
+                hit(firstHp);
+                moveResult();
+                
+            } else {
+                hideEffect();
+                hit(damage);
+            }
+        } else {
+            if (firstHp > 0) {
+                moveReady();
+            } else {
+                hideEffect();
+                hit(firstHp);
+                moveResult();
+            }
+        }
+        
+        // if (d < chooseCards.length) {
+        //     if (firstHp <= damage) {
+        //         hit(firstHp);
+        //         setTimeout(() => {
+        //             navigate('/result');
+        //         }, 0);
+        //     } else {
+        //         hit(damage);
+        //     }
+        // } else {
+        //     if (firstHp > 0) {
+        //         setTimeout(() => {
+        //             navigate('/ready');
+        //         }, 0);
+        //     } else {
+        //         hit(firstHp);
+        //         setTimeout(() => {
+        //             navigate('/result');
+        //         }, 0);
+        //     }
+        // }
+
     }, [d]);
 
     return (
