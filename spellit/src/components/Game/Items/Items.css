@@ -1,3 +1,8 @@
+.profile-hp-box {
+    display: flex;
+    align-items: center;
+}
+
 #TimerBox {
     display: flex;
     justify-content: center;
@@ -6,8 +11,8 @@
     box-sizing: border-box;
 
     /* position: absolute; */
-    width: 200px;
-    height: 100px;
+    width: 130px;
+    height: 80px;
     left: 1100px;
     top: 30px;
 
@@ -24,7 +29,7 @@
     font-family: 'Maiandra GD';
     font-style: normal;
     font-weight: 700;
-    font-size: 40px;
+    font-size: 30px;
     line-height: 48px;
     letter-spacing: 0.2em;
     color: red;
