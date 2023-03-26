@@ -42,10 +42,10 @@ public class MemberController {
         return ResponseEntity.ok(memberService.getUserDeck(SecurityUtil.getCurrentMemberId()));
     }
 
-    @PutMapping("/deck") //사용자 덱 설정
-    public ResponseEntity<List<CardEntity>> setUserDeck(@RequestBody List<CardEntity> cards)
+    @PostMapping("/deck") //사용자 덱 설정
+    public ResponseEntity<List<CardEntity>> setUserDeck(@RequestBody List<Integer> cards_id)
     {
-        return ResponseEntity.ok(memberService.setUserDeck(cards));
+        return ResponseEntity.ok(memberService.setUserDeck(cards_id));
     }
 
     @PutMapping("/character") //캐릭터 선택

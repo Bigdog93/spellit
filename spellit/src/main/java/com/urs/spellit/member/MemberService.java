@@ -1,6 +1,7 @@
 package com.urs.spellit.member;
 
 import com.urs.spellit.common.util.SecurityUtil;
+import com.urs.spellit.game.CardRepository;
 import com.urs.spellit.game.DeckRepository;
 import com.urs.spellit.game.GameService;
 import com.urs.spellit.game.entity.CardEntity;
@@ -15,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +28,8 @@ public class MemberService {
     private final GameService gameService;
     private final MemberRepository memberRepository;
     private final DeckRepository deckRepository;
+    private final CardRepository cardRepository;
+
     public MemberResponseDto findMemberInfoById(Long memberId)
     {
         Optional<Member> optional = memberRepository.findById(memberId);
@@ -67,11 +71,16 @@ public class MemberService {
         return MemberRecordResponseDto.of(member.get());
     }
 
-    public List<CardEntity> setUserDeck(List<CardEntity> cards) {
+    public List<CardEntity> setUserDeck(List<Integer> cards_id) {
         Optional<Member> member=memberRepository.findById(SecurityUtil.getCurrentMemberId());
         deckRepository.deleteAllByMemberId(SecurityUtil.getCurrentMemberId());
-
-        member.get().setUserDeck(member.get(),cards);
+        List<CardEntity> cards= new ArrayList<>();
+        for(int cardId : cards_id)
+        {
+            cards.add(cardRepository.findById(cardId));
+        }
+        //member.get().setUserDeck(member.get(),cards);
+        member.get().setUserDeck(DeckEntity.toDeck(deckRepository,member.get(),cards));
         memberRepository.save(member.get());
         return gameService.getUserDeck(member.get().getId());
     }

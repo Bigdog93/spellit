@@ -91,14 +91,15 @@ public class Member extends BaseTimeEntity {
 
         this.playCount++;
     }
-    public void setUserDeck(Member member,List<CardEntity> deck)
+    //public void setUserDeck(Member member,List<CardEntity> deck)
+    public void setUserDeck(List<DeckEntity> deckList)
     {
-        this.deck=new ArrayList<>();
+        /*this.deck=new ArrayList<>();
         List<DeckEntity> deckList=new ArrayList<>();
         for(int i=1;i<=this.deck.size();i++)
         {
-            deckList.add(new DeckEntity(member,deck.get(i-1)));
-        }
+            deckList.add(DeckEntity.toDeck(member,deck.get(i-1)));
+        }*/
         this.deck=deckList;
     }
 

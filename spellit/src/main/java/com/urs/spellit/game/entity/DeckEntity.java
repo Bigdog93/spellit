@@ -1,15 +1,19 @@
 package com.urs.spellit.game.entity;
 
+import com.urs.spellit.game.DeckRepository;
 import com.urs.spellit.member.model.entity.Member;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name="deck")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Builder
 public class DeckEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,4 +30,20 @@ public class DeckEntity {
     @JoinColumn(name = "card_id")
     private CardEntity card;
 
+    public static List<DeckEntity> toDeck(DeckRepository deckRepository, Member member, List<CardEntity> cards)
+    {
+        List<DeckEntity> deckList=new ArrayList<>();
+        for(CardEntity card : cards)
+        {
+            deckList.add(DeckEntity.builder()
+                    .member(member)
+                    .card(card)
+                    .build());
+        }
+        for(DeckEntity deck : deckList)
+        {
+            deckRepository.save(deck);
+        }
+        return deckList;
+    }
 }
