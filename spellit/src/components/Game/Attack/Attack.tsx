@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/";
+import { WebSocketContext } from "@/store/websocket";
 
 import ProfileHp from "../Items/ProfileHp";
 import Timer from "../Items/Timer";
@@ -56,6 +57,8 @@ const dark1: Spell = {
 };
 
 function Attack() {
+    const { send } = useContext(WebSocketContext);
+
     const myDeckList = useSelector((state: RootState) => state.attack.p1Deck);
     const dispatch = useDispatch();
 

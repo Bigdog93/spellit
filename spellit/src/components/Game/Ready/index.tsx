@@ -11,9 +11,13 @@ import { attackActions } from "@/store/attack"
 
 import ConfirmBtn from '../../../assets/ui/ReadyConfirmBtn.png'
 import Frame from '../../../assets/ui/Frame.png'
+import { matchingActions } from "@/store/matching"
 
 const Ready = () => {
 	const { send } = useContext(WebSocketContext);
+
+  const p1 = useSelector((state: RootState) => state.player.p1);
+  const p2 = useSelector((state: RootState) => state.player.p2);
 
   // 나의 덱 정보 저장
   // store/user.tsx의 정보 업뎃 및 연동 필요
@@ -64,14 +68,20 @@ const Ready = () => {
     console.log('확인');
     // console.log(selectedCards);
     // dispatch(attackActions.attackStart(selectedCards));
-    dispatch(attackActions.p1DeckList(selectedCards));
+    // dispatch(attackActions.p1DeckList(selectedCards));
     send({
       event: 'readyTurn',
       memberId: memberId,
       roomId: roomId,
-      data: ''
+      data: {
+        // 선택한 카드 정보와 선후공 순서를 보내줌
+        selectedCards: selectedCards,
+        isFirst: p1?.isFirst,
+      }
     })
-    navigate("/attack");
+    dispatch(matchingActions.p1Ready());
+    // dispatch(matchingActions.startGame());
+    // navigate("/attack");
   }
 
   // cost + or -

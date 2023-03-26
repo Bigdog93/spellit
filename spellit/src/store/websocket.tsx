@@ -72,6 +72,11 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
       } else if (type === 'toReady') {
         console.log('toReady 입니다.')
 
+        // p1 p2 모두 준비 되면 체크필
+        if (info.toReady) {
+          dispatch(matchingActions.p2Ready())
+        }
+
       } else if (type === 'toAttack') {
         console.log('toAttack 입니다.')
 
