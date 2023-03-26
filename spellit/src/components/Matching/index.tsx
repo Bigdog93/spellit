@@ -38,13 +38,16 @@ const Matching = () => {
   useEffect(() => {
     if(p1Loading && p2Loading) {
       // dispatch(matchingActions.startGame())
-
       send({
         event: 'readyTurn',
         memberId: memberId,
         data: ''
       })
       navigate('/game/1')
+    } else {
+      console.log('loaded 외않와')
+      console.log(p1Loading)
+      console.log(p2Loading)
     }
   }, [p1Loading, p2Loading, navigate]);
 

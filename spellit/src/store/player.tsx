@@ -57,6 +57,7 @@ const playerSlice = createSlice({
   reducers: {
     setP1(state, action: PayloadAction<PlayerType>) {
       state.p1 = action.payload
+      console.log(state.p1.memberId)
     },
     setP2(state, action: PayloadAction<PlayerType>) {
       state.p2 = action.payload

@@ -11,13 +11,24 @@ type DeckType = {
   attribute : number,
 }
 
+type GameCharacterType = {
+  id : number,
+  characterName : string,
+  englishName : string,
+  stand : string,
+  hurt : string,
+  attack : string,
+  winner : string,
+  combo : string,
+}
+
 type userInitialType = {
-  deck: Array<DeckType>,
+  deck: Array<DeckType> | null,
   email: string,
   exp: number,
-  gameCharacter:string | null,
+  gameCharacter: GameCharacterType | null,
   id: number | null,
-  level: number
+  level: number,
   nickname: string,
   playCount: number,
   winCount: number,
@@ -43,7 +54,6 @@ const userSlice = createSlice({
   initialState: userInitialState,
   reducers: {
     setMyInfo(state, action:PayloadAction<userInitialType>) {
-      console.log(action.payload)
       state.deck = action.payload.deck
       state.email = action.payload.email
       state.exp = action.payload.exp
@@ -53,7 +63,6 @@ const userSlice = createSlice({
       state.nickname = action.payload.nickname
       state.playCount = action.payload.playCount
       state.winCount = action.payload.winCount
-      console.log(state)
     }
     
   },
