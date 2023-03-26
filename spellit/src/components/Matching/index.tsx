@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { WebSocketContext } from '@/store/websocket'
 import { RootState } from "@/store/";
-import { matchingActions } from "@/store/matching";
+// import { matchingActions } from "@/store/matching";
 
 import './index.css'
 import Versus from "./Versus"
@@ -34,21 +34,21 @@ const Matching = () => {
   
   const p1Loading = useSelector((state: RootState) => state.matching.p1Loading);
   const p2Loading = useSelector((state: RootState) => state.matching.p2Loading);
+  const roomId = useSelector((state: RootState) => state.room.roomId);
   // p1, p2 모두 동전 던지기가 끝났을 때 stored의 game 업뎃
   useEffect(() => {
     if(p1Loading && p2Loading) {
       // dispatch(matchingActions.startGame())
+      console.log('if문 안이야')
       send({
         event: 'readyTurn',
         memberId: memberId,
         data: ''
       })
-      navigate('/game/1')
-    } else {
-      console.log('loaded 외않와')
-      console.log(p1Loading)
-      console.log(p2Loading)
+      navigate(`/game/${roomId}`)
     }
+    console.log('if문 밖이야')
+
   }, [p1Loading, p2Loading, navigate]);
 
   

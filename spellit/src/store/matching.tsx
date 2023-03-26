@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 // import type { PayloadAction } from '@reduxjs/toolkit'
 
+import { WebSocketContext } from './websocket';
+import { useContext } from 'react';
+
 type initialMatchingType = {
   connected: boolean,
   game: boolean,
@@ -35,7 +38,7 @@ const matchingSlice = createSlice({
       state.p1Loading = true
     },
     p2Loading(state) {
-      state.p1Loading = true
+      state.p2Loading = true
     },
   },
 });
