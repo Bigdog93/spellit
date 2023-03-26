@@ -17,9 +17,9 @@ export interface IProps {
 
 const OpenViduVideo = () => {
     
-    const openviduUrl = `http://localhost:8080/api/sessions`
-    const APPLICATION_SERVER_URL = `http://localhost:8080/api/`;
-    let test = 0;
+    // const openviduUrl = `http://localhost:8080/api/sessions`
+    const APPLICATION_SERVER_URL = `http://j8d201.p.ssafy.io/api/`;
+    // let test = 0;
     // type openviduType = {
     //     mySessionId: string,
     //     myUserName: string,
