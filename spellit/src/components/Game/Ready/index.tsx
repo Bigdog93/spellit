@@ -1,8 +1,10 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from "react-router-dom"
+
 import './index.css'
 
+import { WebSocketContext } from '@/store/websocket'
 import { RootState } from "@/store"
 import { costActions } from "@/store/cost"
 import { attackActions } from "@/store/attack"
@@ -11,6 +13,7 @@ import ConfirmBtn from '../../../assets/ui/ReadyConfirmBtn.png'
 import Frame from '../../../assets/ui/Frame.png'
 
 const Ready = () => {
+	const { send } = useContext(WebSocketContext);
 
   // 나의 덱 정보 저장
   // store/user.tsx의 정보 업뎃 및 연동 필요
@@ -53,12 +56,20 @@ const Ready = () => {
   const dispatch = useDispatch();
   // skill 확정
   // 수정 필
+  const roomId = useSelector((state: RootState) => state.room.roomId);
+  const memberId = useSelector((state: RootState) => state.user.id);
 
   const navigate = useNavigate();
   const confirmSkills = () => {
     console.log('확인');
     // console.log(selectedCards);
     dispatch(attackActions.attackStart(selectedCards));
+    send({
+      event: 'readyTurn',
+      memberId: memberId,
+      roomId: roomId,
+      data: ''
+    })
     navigate("/attack");
   }
 

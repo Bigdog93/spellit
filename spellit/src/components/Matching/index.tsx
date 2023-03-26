@@ -27,7 +27,6 @@ const Matching = () => {
       data: ''
 		})
     return () => {
-
     }
   }, []);
 
@@ -40,12 +39,8 @@ const Matching = () => {
     if(p1Loading && p2Loading) {
       // dispatch(matchingActions.startGame())
       console.log('if문 안이야')
-      send({
-        event: 'readyTurn',
-        memberId: memberId,
-        data: ''
-      })
       navigate(`/game/${roomId}`)
+     
     }
     console.log('if문 밖이야')
 

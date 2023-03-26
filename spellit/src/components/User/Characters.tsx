@@ -23,8 +23,8 @@ const Characters = ({characters, selectCharacter}: PropsType) => {
     <div className={`${style.items}`}>
       { characters.map((character: CharacterType, index: number) => (
         <div onClick={(e) => onSelectCharacter(character)}>
-          {character.characterName}
-          {/* <img src={require(`../../assets/character/${character.englishName}_portrait.png`)} alt="" /> */}
+          {/* {character.characterName} */}
+          <img src={require(`../../assets/character/${character.englishName}_card.png`)} alt="" />
           {/* <Card key={index} card={card.code}/> */}
         </div>
       ))}

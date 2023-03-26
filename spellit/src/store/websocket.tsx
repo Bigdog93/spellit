@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import store from "@/store/";
 import { RootState } from '@/store';
-import { playerActions } from "@/store/player"
+import { playerActions } from "@/store/player";
 import { matchingActions } from './matching';
-import { roomActions } from './room';
+import { roomActions } from "@/store/room";
 
 const WebSocketContext = createContext<any>(null);
 export { WebSocketContext };
@@ -77,7 +77,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
 
       } else if (type === 'otherSpell') {
         console.log('otherSpell 입니다.')
-
+        
       } else if (type === 'combo') {
         console.log('combo 입니다.')
 
