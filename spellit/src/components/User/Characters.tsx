@@ -12,14 +12,13 @@ interface PropsType {
   characters: Array<CharacterType>;
   selectCharacter: (res: CharacterType) => void;
 };
+
 const Characters = ({characters, selectCharacter}: PropsType) => {
   const onSelectCharacter = (data:any)=>{
-    // selectCard(data);
+    selectCharacter(data);
     console.log(data)
   }
  
-  
-
   return (
     <div className={`${style.items}`}>
       { characters.map((character: CharacterType, index: number) => (

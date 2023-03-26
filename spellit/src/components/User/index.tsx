@@ -119,7 +119,6 @@ const User = () => {
     navigator.vibrate(200);
   };
 
-  // const [switch, setSwitch] = useState<boolean>(false);
 
   const [mode, setMode] = useState<boolean>(false)
   const switchHandler = () => { 

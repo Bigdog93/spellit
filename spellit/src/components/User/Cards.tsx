@@ -14,6 +14,7 @@ interface PropsType {
   cards: Array<CardType>;
   selectCard: (res: CardType) => void;
 };
+
 const Cards = ({cards, selectCard}: PropsType) => {
   const onSelectCard = (data:any)=>{
     selectCard(data);
