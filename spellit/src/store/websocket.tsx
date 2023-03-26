@@ -77,7 +77,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
 
       } else if (type === 'otherSpell') {
         console.log('otherSpell 입니다.')
-
+        
       } else if (type === 'combo') {
         console.log('combo 입니다.')
 
