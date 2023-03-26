@@ -55,10 +55,10 @@ public class MemberService {
         return deck;
     }
 
-    public GameCharacterEntity setMyCharacter(Long characterId) {
-        GameCharacterEntity gameCharacterEntity=gameService.getCharacter(characterId); //캐릭터ID에 대응하는 개체 (ex. 곽춘배)
+    public GameCharacterEntity setMyCharacter(GameCharacterEntity gameCharacterEntity) {
+        GameCharacterEntity gameCharacter=gameService.getCharacter(gameCharacterEntity.getId()); //캐릭터ID에 대응하는 개체 (ex. 곽춘배)
         Optional<Member> member=memberRepository.findById(SecurityUtil.getCurrentMemberId()); //id로 멤버레포의 멤버 찾음 (ex. 이재완)
-        member.get().changeGameCharacter(gameCharacterEntity); //이재완의 gamecharacter = 곽춘배
+        member.get().changeGameCharacter(gameCharacter); //이재완의 gamecharacter = 곽춘배
         memberRepository.save(member.get());
         return gameCharacterEntity; //곽춘배 반환
     }
@@ -71,13 +71,20 @@ public class MemberService {
         return MemberRecordResponseDto.of(member.get());
     }
 
-    public List<CardEntity> setUserDeck(List<Integer> cards_id) {
+    public List<CardEntity> setUserDeck(List<CardEntity> cardEntities) {
         Optional<Member> member=memberRepository.findById(SecurityUtil.getCurrentMemberId());
         deckRepository.deleteAllByMemberId(SecurityUtil.getCurrentMemberId());
         List<CardEntity> cards= new ArrayList<>();
-        for(int cardId : cards_id)
+        for(CardEntity cardEntity : cardEntities)
         {
-            cards.add(cardRepository.findById(cardId));
+            try {
+                long cardId = cardEntity.getId();
+                cards.add(cardRepository.findById(cardId));
+            }
+            catch(Exception e)
+            {
+                throw new RuntimeException("존재하지 않는 카드입니다.");
+            }
         }
         //member.get().setUserDeck(member.get(),cards);
         member.get().setUserDeck(DeckEntity.toDeck(deckRepository,member.get(),cards));

@@ -34,8 +34,15 @@ public class GameService {
     }
     public GameCharacterEntity getCharacter(long characterId)
     {
-        GameCharacterEntity gameCharacterEntity=gameCharacterRepository.findById(characterId);
-        return gameCharacterEntity;
+        try {
+            GameCharacterEntity gameCharacterEntity = gameCharacterRepository.findById(characterId);
+            return gameCharacterEntity;
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException("존재하지 않는 캐릭터 id입니다.");
+        }
+
     }
 
 }

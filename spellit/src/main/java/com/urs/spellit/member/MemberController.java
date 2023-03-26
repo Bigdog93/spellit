@@ -43,15 +43,15 @@ public class MemberController {
     }
 
     @PostMapping("/deck") //사용자 덱 설정
-    public ResponseEntity<List<CardEntity>> setUserDeck(@RequestBody List<Integer> cards_id)
+    public ResponseEntity<List<CardEntity>> setUserDeck(@RequestBody List<CardEntity> cardEntities)
     {
-        return ResponseEntity.ok(memberService.setUserDeck(cards_id));
+        return ResponseEntity.ok(memberService.setUserDeck(cardEntities));
     }
 
     @PutMapping("/character") //캐릭터 선택
-    public ResponseEntity<GameCharacterEntity> setMyCharacter(@RequestBody Long characterId)
+    public ResponseEntity<GameCharacterEntity> setMyCharacter(@RequestBody GameCharacterEntity gameCharacterEntity)
     {
-        return ResponseEntity.ok(memberService.setMyCharacter(characterId));
+        return ResponseEntity.ok(memberService.setMyCharacter(gameCharacterEntity));
     }
 
     @PutMapping("/record") //전적 갱신
