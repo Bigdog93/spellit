@@ -47,7 +47,8 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
       const info = content.info;
       if (type === 'test') {
         console.log('test입니다.')
-        dispatch(costActions.set(info.data));
+        // dispatch(costActions.set(info.data));
+        console.log(content);
         
       } else if (type === 'entQueue') {
         console.log('entQueue 입니다.')
