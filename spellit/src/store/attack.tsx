@@ -1,6 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit'
 
+type attackInfoType = {
+  transcript: string,
+  selectSpell: string,
+}
+
 type initialAttackType = {
   defaultHp: number,
   p1Hp: number,
@@ -9,6 +14,8 @@ type initialAttackType = {
   p2Deck: string[],
   p1Damage: number[],
   p2Damage: number[],
+  onTimer: boolean,
+  attackInfo: attackInfoType,
 }
 
 const initialAttack: initialAttackType = {
@@ -18,7 +25,12 @@ const initialAttack: initialAttackType = {
   p1Deck: [],       // p1 선택한 덱 리스트
   p2Deck: [],       // p2 선택한 덱 리스트
   p1Damage: [],     // p1 영창 후 각 주문의 맞은 단어에 대한 데미지
-  p2Damage: [],     // p2 영창 후 각 주문의 맞은 단어에 대한 데미지 
+  p2Damage: [],     // p2 영창 후 각 주문의 맞은 단어에 대한 데미지
+  onTimer: false,   // timer On / Off 유무
+  attackInfo: {     // 주문 영창시 상대에게 나의 영창 상황을 보낼 데이터
+    transcript: "",
+    selectSpell: "",
+  }
 };
 
 const attackSlice = createSlice({
@@ -48,7 +60,13 @@ const attackSlice = createSlice({
     },
     p2Hit(state, action: PayloadAction<number>) {
       state.p2Hp = state.p2Hp - action.payload;
-    }
+    },
+    onTimer(state, action: PayloadAction<boolean>) {
+      state.onTimer = action.payload;
+    },
+    attackInfo(state, action: PayloadAction<attackInfoType>) {
+      state.attackInfo = action.payload;
+    },
   },
 });
 

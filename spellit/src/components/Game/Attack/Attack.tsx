@@ -84,6 +84,9 @@ function Attack() {
     // 타이머 띄우기
     const [sec, setSec] = useState<number>(0);
 
+    // 타이머 사용 유무
+    const [onTimer, setOnTimer] = useState<boolean>(false);
+
     // 주문영창 스킬 리스트
     const [damageList, setDamageList] = useState<number[]>([]);
 
@@ -115,6 +118,13 @@ function Attack() {
             transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
             console.log(transcript);
 
+            // 상대에게 보낼 영창정보
+            const attackInfo = {
+              transcript: transcript,
+              selectSpell: selectSpell.name,
+            }
+            dispatch(attackActions.attackInfo(attackInfo));
+
             let correct = 0;
             console.log("------------------------------------------------");
             for (let i = 0; i < transcript.length; i++) {
@@ -134,6 +144,8 @@ function Attack() {
 
         // 음성 인식 시작
         recognition.start();
+        setOnTimer(true);
+        dispatch(attackActions.onTimer(true));
         setSec(selectSpell.time);
         console.log('SpeechRecognition start!')
 
@@ -145,6 +157,8 @@ function Attack() {
         // 주문 제한 시간 흐른 후 음성인식 종료
         setTimeout(() => {
             recognition.stop();
+            setOnTimer(false);
+            dispatch(attackActions.onTimer(false));
             clearInterval(interval);
             console.log('SpeechRecognition end!')
             // class 속성 제거하기
