@@ -4,8 +4,10 @@ import { RootState } from "@/store"
 import OvVideo from '@/components/Test/OvVideo'
 import { ExceptionEvent, OpenVidu, Publisher, Session, StreamEvent, StreamManager, Subscriber } from 'openvidu-browser';
 import axios from "axios";
+import { WebSocketContext } from '@/store/websocket'
 
 import React, { Component } from 'react';
+import { send } from "q";
 
 
 export interface IProps {
@@ -19,6 +21,7 @@ const OpenViduVideo = () => {
     
     // const openviduUrl = `http://localhost:8080/api/sessions`
     const APPLICATION_SERVER_URL = `https://j8d201.p.ssafy.io/api/`;
+    // const APPLICATION_SERVER_URL = `http://localhost:8080/api/`;
     // let test = 0;
     // type openviduType = {
     //     mySessionId: string,
@@ -31,12 +34,14 @@ const OpenViduVideo = () => {
     // }
     let mySessionId: string = "0";
     let myUserName: string = "default" + Math.random().toString();
-    const [session, setSession] = useState<Session | undefined>(undefined);
+    const [OV, setOV] = useState<OpenVidu | null>(new OpenVidu());
+    const [session, setSession] = useState<Session | undefined>(OV?.initSession());
     // let mainStreamManager: Publisher | undefined = undefined;  // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
     const [mainStreamManager, setMainStreamManager] = useState<Publisher | undefined>(undefined)
     let [publisher, setPublisher] = useState<StreamManager | undefined>(undefined);
     // let subscribers: Array<StreamManager> = [];
     const [subscribers, setSubscribers] = useState<Array<StreamManager>>([]);
+    const [token, setToken] = useState<string | null>(null);
     let currentVideoDevice: any = null;
     // let openviduState :openviduType = {
     //     mySessionId: '0',
@@ -47,14 +52,13 @@ const OpenViduVideo = () => {
     //     subscribers: [],
     //     currentVideoDevice: undefined,
     // }
-    let OV :OpenVidu | null = null;
-    const componentDidMount = () => {
-        window.addEventListener('beforeunload', onbeforeunload);
-    }
+    // const componentDidMount = () => {
+    //     window.addEventListener('beforeunload', onbeforeunload);
+    // }
 
-    const componentWillUnmount = () => {
-        window.removeEventListener('beforeunload', onbeforeunload);
-    }
+    // const componentWillUnmount = () => {
+    //     window.removeEventListener('beforeunload', onbeforeunload);
+    // }
 
     const onbeforeunload = (event :any) => {
         leaveSession();
@@ -86,18 +90,23 @@ const OpenViduVideo = () => {
 
     const joinSession = async () => {
         // --- 1) Get an OpenVidu object --
-        OV = new OpenVidu();
+        // setOV(new OpenVidu());
         console.log("joinSession");
 
+        console.log(session);
         // --- 2) Init a session ---
+        // setSession(OV?.initSession());
 
-        setSession(OV.initSession());
-
-        if (session === undefined) return;
+        console.log(session);
+        // console.log("session is not undefined", session);
         var mySession = session;
 
         // --- 3) Specify the actions when events take place in the session ---
 
+        if (session === undefined) {
+            console.log(session);
+            return;
+        }
         // On every new Stream received...
         session.on('streamCreated', (event :StreamEvent) => {
             // Subscribe to the Stream to receive it. Second parameter is undefined
@@ -127,6 +136,7 @@ const OpenViduVideo = () => {
         // Get a token from the OpenVidu deployment
         const token: string = await getToken();
         console.log("token : " + token);
+        setToken(token);
         await session.connect(token, { clientData: myUserName });
         // --- 5) Get your own camera stream ---
 
@@ -145,7 +155,7 @@ const OpenViduVideo = () => {
         console.log("newPublisher : ", newPublisher);
 
         // --- 6) Publish your stream ---
-        if (!newPublisher) return;
+        if (!newPublisher || mySession === undefined) return;
         mySession.publish(newPublisher);
 
         // Obtain the current video device in use
@@ -217,7 +227,7 @@ const OpenViduVideo = () => {
         }
 
         // Empty all properties...
-        OV = null;
+        setOV(null);
         setSession(undefined);
         setSubscribers([]);
         mySessionId = '0';
@@ -279,6 +289,7 @@ const OpenViduVideo = () => {
      * more about the integration of OpenVidu in your application server.
      */
     const getToken = async () => {
+        console.log("getToken run");
         const sessionId = await createSession(mySessionId);
         return await createToken(sessionId);
     }
@@ -287,6 +298,7 @@ const OpenViduVideo = () => {
         const response = await axios.post(APPLICATION_SERVER_URL + 'ov/sessions', { customSessionId: sessionId }, {
             headers: { 'Content-Type': 'application/json', },
         });
+        console.log(response);
         return response.data; // The sessionId
     }
 
@@ -297,12 +309,19 @@ const OpenViduVideo = () => {
         return response.data; // The token
     }
 
+
+
     useEffect(() => {
+        window.addEventListener('beforeunload', leaveSession);
+        // setTimeout(() => {
+        //     joinSession();
+        // }, 1000);
         joinSession();
         return () => {
-            leaveSession();
-            componentDidMount();
-            componentWillUnmount();
+            window.addEventListener('beforeunload', onbeforeunload);
+            // leaveSession();
+            // componentDidMount();
+            // componentWillUnmount();
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -311,12 +330,21 @@ const OpenViduVideo = () => {
         console.log(publisher);
         console.log(mainStreamManager);
     }
+    const { send } = useContext(WebSocketContext);
+    function testFunction() {
+        send({
+            event: 'test',
+            memberId: 0,
+            data: '바람의 칼날이여'
+        })
+    }
 
     return (
         <>
             {mainStreamManager && <OvVideo streamManager={mainStreamManager}></OvVideo>}
             <button onClick={joinSession}>joinSession</button>
             <button onClick={showSubs}>showSubs</button>
+            <button onClick={testFunction}>testFunction</button>
             {subscribers.map((sub:any, idx:number) => {
                 return (
                     <div key={idx}>
