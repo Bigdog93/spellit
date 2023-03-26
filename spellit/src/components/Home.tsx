@@ -1,7 +1,7 @@
 // import * as THREE from "three";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+// import { OrbitControls } from "@react-three/drei";
 
 import Magician from "@/components/Game/models/Magician";
 import BigMagicCircle from "@/components/Game/models/BigMagicCircle";
@@ -10,6 +10,8 @@ import QuickstartButton from "@/components/Game/models/QuickstartButton";
 import DeckButton from "@/components/Game/models/DeckButton";
 import MypageButton from "@/components/Game/models/MypageButton";
 import FriendButton from "@/components/Game/models/FriendButton";
+// import BackgroundSpell from "@/components/Game/models/BackgroundSpell";
+import newSystem from "./TempToParticle";
 
 import styles from "./Home.module.css";
 
@@ -17,6 +19,9 @@ const Home = () => {
   // 기본 카메라 위치
   // Vector3 {x: 0, y: 3.061616997868383e-16, z: 5}
 
+  useEffect(() => {
+    console.log(newSystem);
+  });
   return (
     <div>
       <Canvas style={styles}>
@@ -50,8 +55,10 @@ const Home = () => {
           position={[2.3, 2.5, 0.1]}
           rotation={[Math.PI / 2, 0, Math.PI / 6]}
         />
-
-        {/* 여기에서 코드를 렌더링함 */}
+        {/* <BackgroundSpell
+          position={[-50, 20, -50]}
+          rotation={[0, Math.PI / 2, Math.PI / 2]}
+        /> */}
       </Canvas>
     </div>
   );

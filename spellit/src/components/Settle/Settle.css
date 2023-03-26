@@ -1,3 +1,11 @@
+.box {
+	width: 100wh;
+	height: 100vh;
+	background-image: url('~@/assets/settle/battle-background.png');
+	background-size: cover;
+}
+
+
 .hp-box {
     box-sizing: border-box;
 

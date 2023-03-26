@@ -7,7 +7,7 @@ export default function BigMagicCircle(props) {
   const { nodes, materials } = useGLTF("./models/bigmagiccircle.glb");
 
   const bigMagicCircleRef = useRef(null);
-	
+
   useFrame((state, delta) => {
     if (bigMagicCircleRef.current) {
       bigMagicCircleRef.current.rotation.y -= 0.0005;
@@ -20,10 +20,7 @@ export default function BigMagicCircle(props) {
         ref={bigMagicCircleRef}
         geometry={nodes.TestBigSpell.geometry}
         material={materials.TestBigSpell}
-        
       />
     </group>
   );
 }
-
-
