@@ -41,12 +41,7 @@ const Matching = () => {
       // dispatch(matchingActions.startGame())
       console.log('if문 안이야')
       navigate(`/game/${roomId}`)
-      // send({
-      //   event: 'readyTurn',
-      //   memberId: memberId,
-      //   roomId: roomId,
-      //   data: ''
-      // })
+     
     }
     console.log('if문 밖이야')
 
