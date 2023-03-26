@@ -5,6 +5,8 @@ import com.urs.spellit.game.DeckRepository;
 import com.urs.spellit.game.GameService;
 import com.urs.spellit.game.entity.DeckEntity;
 import com.urs.spellit.game.entity.GameCharacterEntity;
+import com.urs.spellit.member.model.dto.MemberRecordRequestDto;
+import com.urs.spellit.member.model.dto.MemberRecordResponseDto;
 import com.urs.spellit.member.model.dto.MemberResponseDto;
 import com.urs.spellit.member.model.entity.Member;
 import lombok.RequiredArgsConstructor;
@@ -48,12 +50,19 @@ public class MemberService {
         return deck;
     }
 
-    public GameCharacterEntity setMyCharacter(Long characterId) {
+    public GameCharacterEntity setMyCharacter(Long memberId, Long characterId) {
         GameCharacterEntity gameCharacterEntity=gameService.getCharacter(characterId); //캐릭터ID에 대응하는 개체 (ex. 곽춘배)
-        MemberResponseDto memberResponseDto = findMemberInfoById(SecurityUtil.getCurrentMemberId()); //멤버ID에 대응하는 맴버 response 개체(ex. 이재완)
-        Optional<Member> member=memberRepository.findByEmail(memberResponseDto.getEmail()); //멤버response 개체의 이메일로, 멤버레포의 멤버 접근
+        Optional<Member> member=memberRepository.findById(memberId); //id로 멤버레포의 멤버 찾음 (ex. 이재완)
         member.get().changeGameCharacter(gameCharacterEntity); //이재완의 gamecharacter = 곽춘배
         memberRepository.save(member.get());
         return gameCharacterEntity; //곽춘배 반환
+    }
+
+    public MemberRecordResponseDto updateRecord(MemberRecordRequestDto memberRecordRequestDto)
+    {
+        Optional<Member> member=memberRepository.findById(SecurityUtil.getCurrentMemberId());
+        member.get().changeRecord(memberRecordRequestDto);
+        memberRepository.save(member.get());
+        return MemberRecordResponseDto.of(member.get());
     }
 }

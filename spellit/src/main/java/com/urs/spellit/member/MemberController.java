@@ -3,6 +3,8 @@ package com.urs.spellit.member;
 import com.urs.spellit.common.util.SecurityUtil;
 import com.urs.spellit.game.entity.DeckEntity;
 import com.urs.spellit.game.entity.GameCharacterEntity;
+import com.urs.spellit.member.model.dto.MemberRecordRequestDto;
+import com.urs.spellit.member.model.dto.MemberRecordResponseDto;
 import com.urs.spellit.member.model.dto.MemberResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -39,10 +41,21 @@ public class MemberController {
         return ResponseEntity.ok(memberService.getUserDeck(SecurityUtil.getCurrentMemberId()));
     }
 
+/*    @PutMapping("/deck") //사용자 덱 정보 수정
+    public ResponseEntity<List<DeckEntity>> updateUserDeck(@RequestBody List<DeckEntity>)
+    {
+
+    }*/
+
     @PutMapping("/character") //캐릭터 선택
     public ResponseEntity<GameCharacterEntity> setMyCharacter(@RequestBody Long characterId)
     {
-        return ResponseEntity.ok(memberService.setMyCharacter(SecurityUtil.getCharacterId(characterId)));
+        return ResponseEntity.ok(memberService.setMyCharacter(SecurityUtil.getCurrentMemberId(),characterId));
     }
 
+    @PutMapping("/record") //전적 갱신
+    public ResponseEntity<MemberRecordResponseDto> updateRecord(@RequestBody MemberRecordRequestDto memberRecordRequestDto)
+    {
+        return ResponseEntity.ok(memberService.updateRecord(memberRecordRequestDto));
+    }
 }

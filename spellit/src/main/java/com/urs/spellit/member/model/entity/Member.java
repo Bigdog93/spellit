@@ -1,5 +1,6 @@
 package com.urs.spellit.member.model.entity;
 
+import com.urs.spellit.member.model.dto.MemberRecordRequestDto;
 import com.urs.spellit.security.auth.entity.Authority;
 import com.urs.spellit.common.model.BaseTimeEntity;
 import com.urs.spellit.game.entity.DeckEntity;
@@ -76,6 +77,18 @@ public class Member extends BaseTimeEntity {
     public void changeGameCharacter(GameCharacterEntity gameCharacter)
     {
         this.gameCharacterEntity=gameCharacter;
+    }
+    public void changeRecord(MemberRecordRequestDto memberRecordRequestDto)
+    {
+        if((this.exp+= memberRecordRequestDto.getPlusExp())>10000)
+        {
+            this.level+=1;
+            this.exp=0;
+        }
+        if(memberRecordRequestDto.isWon())
+            this.winCount++;
+
+        this.playCount++;
     }
 
 }

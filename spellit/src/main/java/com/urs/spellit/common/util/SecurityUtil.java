@@ -35,12 +35,5 @@ public class SecurityUtil {
         checkAuthentication(authentication);
         return email;
     }
-    public static Long getCharacterId(Long characterId)
-    {
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        checkAuthentication(authentication);
-
-        return characterId;
-    }
 
 }
