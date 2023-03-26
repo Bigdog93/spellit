@@ -6,6 +6,7 @@ import costReducer from './cost';
 import attackReducer from './attack';
 import playerReducer from './player';
 import roomReducer from './room';
+import defenseReducere from './defense'
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     cost: costReducer,
     attack: attackReducer,
     room: roomReducer,
+    defense: defenseReducere,
   },
 });
 

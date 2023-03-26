@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux"
 
+import { defenseActions } from "@/store/defense";
 interface TimerProps {
   onTime: boolean;
   handleTimer: () => void;
@@ -8,6 +10,8 @@ interface TimerProps {
 }
 
 const Timer = ({ onTime, handleTimer, isDone ,handleResult}: TimerProps) => {
+  const dispatch = useDispatch();
+
   // 초(sec) 상태를 관리하는 state
   const [sec, setSec] = useState<number>(10);
 
@@ -58,6 +62,8 @@ const Timer = ({ onTime, handleTimer, isDone ,handleResult}: TimerProps) => {
       // 시간이 끝났으므로 게임진행여부 false로
       handleTimer();
       handleResult()
+      console.log('endDefense 타이머 0됐을 때 실행되는 함수 in Timer.tsx')
+      dispatch(defenseActions.endDefense())
     }
     // eslint-disable-next-line
   }, [sec]);
