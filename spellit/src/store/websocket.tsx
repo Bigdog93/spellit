@@ -64,12 +64,9 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
           dispatch(matchingActions.connected())
           // room 정보 설정
           dispatch(roomActions.setRoom(info.roomInfo))
-
       } else if (type === 'loaded') {
         console.log('loaded 입니다.')
         dispatch(matchingActions.p2Loading())
-
-
       } else if (type === 'toReady') {
         console.log('toReady 입니다.')
 
@@ -106,6 +103,4 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
       {children}
     </WebSocketContext.Provider>
   );
-}
-
-// export const useConn = () => useContext(Context);
+};
