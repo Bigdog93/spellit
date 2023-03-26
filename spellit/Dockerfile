@@ -2,8 +2,6 @@ FROM nginx
 
 RUN mkdir /spellit
 
-RUN npm i
-
 WORKDIR /spellit
 
 RUN mkdir ./build
