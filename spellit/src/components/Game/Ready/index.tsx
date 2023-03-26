@@ -63,7 +63,8 @@ const Ready = () => {
   const confirmSkills = () => {
     console.log('확인');
     // console.log(selectedCards);
-    dispatch(attackActions.attackStart(selectedCards));
+    // dispatch(attackActions.attackStart(selectedCards));
+    dispatch(attackActions.p1DeckList(selectedCards));
     send({
       event: 'readyTurn',
       memberId: memberId,
