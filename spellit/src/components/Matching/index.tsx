@@ -40,12 +40,13 @@ const Matching = () => {
     if(p1Loading && p2Loading) {
       // dispatch(matchingActions.startGame())
       console.log('if문 안이야')
-      send({
-        event: 'readyTurn',
-        memberId: memberId,
-        data: ''
-      })
       navigate(`/game/${roomId}`)
+      // send({
+      //   event: 'readyTurn',
+      //   memberId: memberId,
+      //   roomId: roomId,
+      //   data: ''
+      // })
     }
     console.log('if문 밖이야')
 

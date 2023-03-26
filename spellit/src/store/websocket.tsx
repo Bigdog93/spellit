@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import store from "@/store/";
 import { RootState } from '@/store';
-import { playerActions } from "@/store/player"
+import { playerActions } from "@/store/player";
 import { matchingActions } from './matching';
-import { roomActions } from './room';
+import { roomActions } from "@/store/room";
 
 const WebSocketContext = createContext<any>(null);
 export { WebSocketContext };
