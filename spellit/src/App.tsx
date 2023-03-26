@@ -25,7 +25,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* <Route index element={<Login />}/> */}
-          { isLogged ? <Route index element={<Login />}/> : <Route index element={<Home />}/>}
+          { isLogged ? <Route index element={<Home />}/> : <Route index element={<Login />}/>}
           <Route path="home" element={<Home />} />
           <Route path="game/:roomId" element={<Game />} />
           <Route path="matching" element={<Matching />} />
