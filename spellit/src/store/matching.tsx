@@ -34,6 +34,7 @@ const matchingSlice = createSlice({
     },
     p1Loading(state) {
       console.log('p1Loading in store')
+      console.log(state.p1)
       state.p1Loading = true
     },
     p2Loading(state) {

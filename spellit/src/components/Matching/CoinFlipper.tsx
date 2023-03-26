@@ -19,7 +19,10 @@ function CoinFlipper(coin: coinType) {
 
   // 코인 앞뒤로 할당
   const order = () => {
-    if (!coin) {
+    console.log(coin)
+    console.log(typeof(coin))
+    
+    if (!(coin.coin)) {
       setFlips('head')
     } else {
       setFlips('tail')

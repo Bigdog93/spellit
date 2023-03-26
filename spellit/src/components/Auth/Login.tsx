@@ -40,7 +40,6 @@ const Login = () => {
       ).then((res) => {
         console.log('유저정보 가져오기 성공')
         console.log(res.data)
-        
         dispatch(userActions.setMyInfo(res.data))
       }).catch((err) => {
         console.log(err)
