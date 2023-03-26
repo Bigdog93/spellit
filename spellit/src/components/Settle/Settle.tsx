@@ -15,34 +15,39 @@ function Settle() {
     const navigate = useNavigate();
 
     // 주문 영창에 대한 처리된 데미지 값을 서버에서 받아서 이펙트 효과와 함께 데미지값으로 넘겨주기
-    const chooseCards = useSelector((state: RootState) => (state.attack.chooseCards));
+    const p1Deck = useSelector((state: RootState) => (state.attack.p1Deck));
     const defaultHP = useSelector((state: RootState) => (state.attack.defaultHp));
-    const firstHp = useSelector((state: RootState) => (state.attack.firstHp));
-    const secondHp = useSelector((state: RootState) => (state.attack.secondHp));
+
+    // const firstHp = useSelector((state: RootState) => (state.attack.firstHp));
+    // const secondHp = useSelector((state: RootState) => (state.attack.secondHp));
+
+    const p1Hp = useSelector((state: RootState) => (state.attack.p1Hp));
+    const p2Hp = useSelector((state: RootState) => (state.attack.p2Hp));
+
     
     // console.log(firstHp);
-    const damageStack = [150, 150, 100];
+    const damageStack = useSelector((state: RootState) => (state.attack.p1Damage));
     const [d, setD] = useState(0);
     
-    const firstHpStyle = {
-        width: `${firstHp}px`,
-        backgroundColor: firstHp > defaultHP*0.3 ? '#FFF500' : '#FF0000' ,
+    const p1HpStyle = {
+        width: `${p1Hp}px`,
+        backgroundColor: p1Hp > defaultHP*0.3 ? '#FFF500' : '#FF0000' ,
     }
-    const secondHpStyle = {
-        width: `${secondHp}px`,
-        backgroundColor: secondHp > defaultHP*0.3 ? '#FFF500' : '#FF0000' ,
+    const p2HpStyle = {
+        width: `${p2Hp}px`,
+        backgroundColor: p2Hp > defaultHP*0.3 ? '#FFF500' : '#FF0000' ,
     }
     
     // 데미지 정산
     // const hit = (damage: number) => {
-    //     // const effectList = [...chooseCards];
+    //     // const effectList = [...p1Deck];
     //     // 배열의 맨 처음 값을 pop
     //     // const effect = effectList.shift();
     //     // console.log(effect);
     //     console.log('이펙트 띄우기')
     //     // console.log(effect);
     //     console.log('d : ', d)
-    //     const hideEffect = document.querySelector(`.${chooseCards[d]}-${d}`);
+    //     const hideEffect = document.querySelector(`.${p1Deck[d]}-${d}`);
     //     // console.log(hideEffect);
     //     setTimeout(() => {
     //         hideEffect?.classList.add('hidden-effect');
@@ -50,8 +55,8 @@ function Settle() {
     //         dispatch(attackActions.secondHit(damage));
             
     //         // action 이후에 state값이 바로 변경되어 반영되지 않음,, 왜일까,,?
-    //         console.log('firstHp : '+ firstHp);
-    //         console.log('secondHP : '+ secondHp);
+    //         console.log('p1Hp : '+ p1Hp);
+    //         console.log('p2Hp : '+ p2Hp);
     //         setTimeout(() => {
     //             console.log('얍!')
     //             setD(d+1);
@@ -64,7 +69,7 @@ function Settle() {
         
         // 스킬 이펙트 숨기는 함수
         async function hideEffect () {
-            const hiddenEffect = document.querySelector(`.${chooseCards[d]}-${d}`);
+            const hiddenEffect = document.querySelector(`.${p1Deck[d]}-${d}`);
             setTimeout(() => {
                 hiddenEffect?.classList.add('hidden-effect');
             }, 2000);
@@ -89,12 +94,12 @@ function Settle() {
             console.log('이펙트 띄우기')
             console.log('d : ', d)
             setTimeout(() => {
-                dispatch(attackActions.firstHit(damage));
-                dispatch(attackActions.secondHit(damage));
+                dispatch(attackActions.p1Hit(damage));
+                // dispatch(attackActions.p2Hit(damage));
                 
                 // action 이후에 state값이 바로 변경되어 반영되지 않음,, 왜일까,,?
-                console.log('firstHp : '+ firstHp);
-                console.log('secondHP : '+ secondHp);
+                console.log('p1Hp : '+ p1Hp);
+                console.log('p2Hp : '+ p2Hp);
                 setTimeout(() => {
                     console.log('얍!')
                     setD(d+1);
@@ -102,10 +107,10 @@ function Settle() {
             }, 3000);
         }
         
-        if (d < chooseCards.length) {
-            if (firstHp <= damage) {
+        if (d < p1Deck.length) {
+            if (p1Hp <= damage) {
                 hideEffect();
-                hit(firstHp);
+                hit(p1Hp);
                 moveResult();
                 
             } else {
@@ -113,16 +118,16 @@ function Settle() {
                 hit(damage);
             }
         } else {
-            if (firstHp > 0) {
+            if (p1Hp > 0) {
                 moveReady();
             } else {
                 hideEffect();
-                hit(firstHp);
+                hit(p1Hp);
                 moveResult();
             }
         }
         
-        // if (d < chooseCards.length) {
+        // if (d < p1Deck.length) {
         //     if (firstHp <= damage) {
         //         hit(firstHp);
         //         setTimeout(() => {
@@ -151,27 +156,25 @@ function Settle() {
             <div className='settle-top-itmes'>
                 <div className='first-hp-box'>
                     <ProfileHp></ProfileHp>
-                    <div className="first-hp-bar" style={firstHpStyle}></div>
+                    <div className="first-hp-bar" style={p1HpStyle}></div>
                 </div>
                 <div className='second-hp-box'>
                     <ProfileHp></ProfileHp>
-                    <div className="second-hp-bar" style={secondHpStyle}></div>
+                    <div className="second-hp-bar" style={p2HpStyle}></div>
                 </div>
             </div>
             <div className='settle-bottom-items'>
                 <div style={{display: 'inline-flex'}}>
-                    <div>
-                        <span className='first-player-effects'>
-                            {chooseCards.map((card: string, index: number) => {
-                                return (
-                                <img className={`${card}-${index}`}
-                                style={{height: '150px', margin: '10px',}}
-                                key={index} 
-                                src={require(`../../assets/effect/${card}.png`)} 
-                                alt='' />)}
-                            )}
-                        </span>                    
-                    </div>
+                    <div className='first-player-effects'>
+                        {p1Deck.map((card: string, index: number) => {
+                            return (
+                            <img className={`${card}-${index}`}
+                            style={{height: '150px', margin: '10px',}}
+                            key={index} 
+                            src={require(`../../assets/effect/${card}.png`)} 
+                            alt='' />)}
+                        )}
+                    </div>                    
                     <img className='first-player' src={AK_attack} alt="" style={{width: '300px', height: '400px'}}/>
                 </div>
                 <div>
