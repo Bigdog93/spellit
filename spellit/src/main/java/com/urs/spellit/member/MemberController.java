@@ -1,6 +1,7 @@
 package com.urs.spellit.member;
 
 import com.urs.spellit.common.util.SecurityUtil;
+import com.urs.spellit.game.entity.CardEntity;
 import com.urs.spellit.game.entity.DeckEntity;
 import com.urs.spellit.game.entity.GameCharacterEntity;
 import com.urs.spellit.member.model.dto.MemberRecordRequestDto;
@@ -41,16 +42,16 @@ public class MemberController {
         return ResponseEntity.ok(memberService.getUserDeck(SecurityUtil.getCurrentMemberId()));
     }
 
-/*    @PutMapping("/deck") //사용자 덱 정보 수정
-    public ResponseEntity<List<DeckEntity>> updateUserDeck(@RequestBody List<DeckEntity>)
+    @PutMapping("/deck") //사용자 덱 설정
+    public ResponseEntity<List<CardEntity>> setUserDeck(@RequestBody List<CardEntity> cards)
     {
-
-    }*/
+        return ResponseEntity.ok(memberService.setUserDeck(cards));
+    }
 
     @PutMapping("/character") //캐릭터 선택
     public ResponseEntity<GameCharacterEntity> setMyCharacter(@RequestBody Long characterId)
     {
-        return ResponseEntity.ok(memberService.setMyCharacter(SecurityUtil.getCurrentMemberId(),characterId));
+        return ResponseEntity.ok(memberService.setMyCharacter(characterId));
     }
 
     @PutMapping("/record") //전적 갱신

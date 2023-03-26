@@ -3,6 +3,7 @@ package com.urs.spellit.member;
 import com.urs.spellit.common.util.SecurityUtil;
 import com.urs.spellit.game.DeckRepository;
 import com.urs.spellit.game.GameService;
+import com.urs.spellit.game.entity.CardEntity;
 import com.urs.spellit.game.entity.DeckEntity;
 import com.urs.spellit.game.entity.GameCharacterEntity;
 import com.urs.spellit.member.model.dto.MemberRecordRequestDto;
@@ -43,16 +44,16 @@ public class MemberService {
     }
 
     public List<DeckEntity> getUserDeck(Long memberId) {
-        List<DeckEntity> deck = deckRepository.findByMemberId(memberId);
+        List<DeckEntity> deck = deckRepository.findAllByMemberId(memberId);
         if(deck.isEmpty()) {
             throw new RuntimeException("덱 정보가 없습니다.");
         }
         return deck;
     }
 
-    public GameCharacterEntity setMyCharacter(Long memberId, Long characterId) {
+    public GameCharacterEntity setMyCharacter(Long characterId) {
         GameCharacterEntity gameCharacterEntity=gameService.getCharacter(characterId); //캐릭터ID에 대응하는 개체 (ex. 곽춘배)
-        Optional<Member> member=memberRepository.findById(memberId); //id로 멤버레포의 멤버 찾음 (ex. 이재완)
+        Optional<Member> member=memberRepository.findById(SecurityUtil.getCurrentMemberId()); //id로 멤버레포의 멤버 찾음 (ex. 이재완)
         member.get().changeGameCharacter(gameCharacterEntity); //이재완의 gamecharacter = 곽춘배
         memberRepository.save(member.get());
         return gameCharacterEntity; //곽춘배 반환
@@ -64,5 +65,14 @@ public class MemberService {
         member.get().changeRecord(memberRecordRequestDto);
         memberRepository.save(member.get());
         return MemberRecordResponseDto.of(member.get());
+    }
+
+    public List<CardEntity> setUserDeck(List<CardEntity> cards) {
+        Optional<Member> member=memberRepository.findById(SecurityUtil.getCurrentMemberId());
+        deckRepository.deleteAllByMemberId(SecurityUtil.getCurrentMemberId());
+
+        member.get().setUserDeck(member.get(),cards);
+        memberRepository.save(member.get());
+        return gameService.getUserDeck(member.get().getId());
     }
 }

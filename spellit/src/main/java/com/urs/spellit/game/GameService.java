@@ -25,7 +25,7 @@ public class GameService {
         return allCharacters;
     }
     public List<CardEntity> getUserDeck(long memberId) {
-        List<DeckEntity> deckEntities = deckRepository.findByMemberId(memberId);
+        List<DeckEntity> deckEntities = deckRepository.findAllByMemberId(memberId);
         List<CardEntity> deck = new ArrayList<>();
         for(DeckEntity d : deckEntities) {
             deck.add(d.getCard());

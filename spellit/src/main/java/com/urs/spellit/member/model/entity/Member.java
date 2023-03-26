@@ -1,10 +1,11 @@
 package com.urs.spellit.member.model.entity;
 
-import com.urs.spellit.member.model.dto.MemberRecordRequestDto;
-import com.urs.spellit.security.auth.entity.Authority;
 import com.urs.spellit.common.model.BaseTimeEntity;
+import com.urs.spellit.game.entity.CardEntity;
 import com.urs.spellit.game.entity.DeckEntity;
 import com.urs.spellit.game.entity.GameCharacterEntity;
+import com.urs.spellit.member.model.dto.MemberRecordRequestDto;
+import com.urs.spellit.security.auth.entity.Authority;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -89,6 +90,16 @@ public class Member extends BaseTimeEntity {
             this.winCount++;
 
         this.playCount++;
+    }
+    public void setUserDeck(Member member,List<CardEntity> deck)
+    {
+        this.deck=new ArrayList<>();
+        List<DeckEntity> deckList=new ArrayList<>();
+        for(int i=1;i<=this.deck.size();i++)
+        {
+            deckList.add(new DeckEntity(member,deck.get(i-1)));
+        }
+        this.deck=deckList;
     }
 
 }

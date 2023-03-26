@@ -8,5 +8,7 @@ import java.util.List;
 
 @Repository
 public interface DeckRepository extends JpaRepository<DeckEntity, Long> {
-    List<DeckEntity> findByMemberId(long memberId);
+    List<DeckEntity> findAllByMemberId(long memberId);
+
+    void deleteAllByMemberId(Long currentMemberId);
 }
