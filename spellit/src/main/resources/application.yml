@@ -65,7 +65,7 @@ jwt:
     expire-length: 1209600000
 
 # 환경변수
-#OPENVIDU_URL: https://j8d201.p.ssafy.io:8443/
+OPENVIDU_URL: https://j8d201.p.ssafy.io:8443/
 #OPENVIDU_URL: https://j8d201.p.ssafy.io/api/
-OPENVIDU_URL: http://j8d201.p.ssafy.io:5443/
+#OPENVIDU_URL: http://j8d201.p.ssafy.io:5443/
 OPENVIDU_SECRET: D201_SPELLIT
