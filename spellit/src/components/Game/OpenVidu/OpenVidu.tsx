@@ -36,6 +36,10 @@ const OpenViduVideo = () => {
     let [publisher, setPublisher] = useState<Publisher | undefined>(undefined);
     const [subscribers, setSubscribers] = useState<Array<StreamManager>>([]);
     const [token, setToken] = useState<string | null>(null);
+
+    
+    const myTurn = useSelector((state: RootState) => (state.attack.myTurn));
+
     // const [mute, setMute] = useState<boolean>(true);
     let currentVideoDevice: any = null;
     const onbeforeunload = (event :any) => {
@@ -128,6 +132,8 @@ const OpenViduVideo = () => {
         var currentVideoDeviceId = newPublisher.stream.getMediaStream().getAudioTracks()[0].getSettings().deviceId;
         currentVideoDevice = videoDevices.find(device => device.deviceId === currentVideoDeviceId);
 
+        // streamPlaying 이벤트가 발생하면(published 되면) 바로 뮤트 시켜버림!
+        // 그전에 하면 안먹히거나 영원히 뮤트됨..
         newPublisher.on("streamPlaying", () => {
             newPublisher?.publishAudio(false);
         })
@@ -204,8 +210,7 @@ const OpenViduVideo = () => {
         console.log("publisher***************** : " , publisher);
         // publisher?.publishAudio(mute);
         return () => {
-            window.addEventListener('beforeunload', onbeforeunload);
-            // leaveSession();
+            leaveSession();
             // componentDidMount();
             // componentWillUnmount();
         }
@@ -233,6 +238,16 @@ const OpenViduVideo = () => {
     function muteOff() {
         publisher?.publishAudio(true);
     }
+    useEffect(() => {
+        if (myTurn) {
+            muteOff();
+        } else {
+            muteOn();
+        }
+        return () => {
+
+        }
+    }, [myTurn])
 
     return (
         <>
