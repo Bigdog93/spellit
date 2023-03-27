@@ -47,10 +47,11 @@ public class MemberService {
                 .orElseThrow(()->new RuntimeException("유저 정보가 없습니다."));
     }
 
-    public List<DeckEntity> getUserDeck(Long memberId) {
-        List<DeckEntity> deck = deckRepository.findAllByMemberId(memberId);
-        if(deck.isEmpty()) {
-            throw new RuntimeException("덱 정보가 없습니다.");
+    public List<CardEntity> getUserDeck(Long memberId) {
+        List<DeckEntity> deckEntities = deckRepository.findAllByMemberId(memberId);
+        List<CardEntity> deck = new ArrayList<>();
+        for(DeckEntity d : deckEntities) {
+            deck.add(d.getCard());
         }
         return deck;
     }
@@ -86,7 +87,7 @@ public class MemberService {
                 throw new RuntimeException("존재하지 않는 카드입니다.");
             }
         }
-        //member.get().setUserDeck(member.get(),cards);
+
         member.get().setUserDeck(DeckEntity.toDeck(deckRepository,member.get(),cards));
         memberRepository.save(member.get());
         return gameService.getUserDeck(member.get().getId());

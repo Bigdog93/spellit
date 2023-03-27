@@ -210,7 +210,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 		}
 		Member member = memberOption.get();
 		PlayerDto player = PlayerDto.makePlayerDto(session, member);
-		player.setDeck(gameService.getUserDeck(memberId));
+		player.setDeck(memberService.getUserDeck(memberId));
 		return player;
 	}
 	public boolean isReady(boolean[] isReady, RoomInfo room, int nextTurn) {

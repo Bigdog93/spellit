@@ -1,7 +1,6 @@
 package com.urs.spellit.member.model.entity;
 
 import com.urs.spellit.common.model.BaseTimeEntity;
-import com.urs.spellit.game.entity.CardEntity;
 import com.urs.spellit.game.entity.DeckEntity;
 import com.urs.spellit.game.entity.GameCharacterEntity;
 import com.urs.spellit.member.model.dto.MemberRecordRequestDto;
@@ -91,16 +90,6 @@ public class Member extends BaseTimeEntity {
 
         this.playCount++;
     }
-    //public void setUserDeck(Member member,List<CardEntity> deck)
-    public void setUserDeck(List<DeckEntity> deckList)
-    {
-        /*this.deck=new ArrayList<>();
-        List<DeckEntity> deckList=new ArrayList<>();
-        for(int i=1;i<=this.deck.size();i++)
-        {
-            deckList.add(DeckEntity.toDeck(member,deck.get(i-1)));
-        }*/
-        this.deck=deckList;
-    }
+    public void setUserDeck(List<DeckEntity> deckList) {this.deck=deckList;}
 
 }
