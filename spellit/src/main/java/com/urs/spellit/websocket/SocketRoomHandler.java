@@ -175,15 +175,29 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 					}
 					break;
 				case "gameOver": // 게임 끝
-//					isReady[me.getIdx()] =true;
-//					if(isReady(isReady, room, 5)) {
-//						room.sendMessage(makeTextMsg("gameOver", infoMap));
-//					}
-					infoMap.put("winner", true);
-					other.getSession().sendMessage(makeTextMsg("gameOver", infoMap));
-					infoMap.put("winner", false);
-					me.getSession().sendMessage(makeTextMsg("gameOver", infoMap));
-
+					isReady[me.getIdx()] =true;
+					me.setHp(data.getAsJsonObject().get("hp").getAsInt());
+					if(isReady(isReady, room, 5)) {
+						if(players.get(0).getHp() <= 0 && players.get(1).getHp() <= 0) {
+							infoMap.put("result", "draw");
+							room.sendMessage(makeTextMsg("gameOver", infoMap));
+						}else if(players.get(0).getHp() > 0 && players.get(1).getHp() <= 0) {
+							infoMap.put("result", "win");
+							players.get(0).getSession().sendMessage(makeTextMsg("gameOver", infoMap));
+							infoMap.put("result", "loose");
+							players.get(1).getSession().sendMessage(makeTextMsg("gameOver", infoMap));
+						}else if(players.get(0).getHp() <= 0 && players.get(1).getHp() > 0) {
+							infoMap.put("result", "loose");
+							players.get(0).getSession().sendMessage(makeTextMsg("gameOver", infoMap));
+							infoMap.put("result", "win");
+							players.get(1).getSession().sendMessage(makeTextMsg("gameOver", infoMap));
+						}else {
+							room.setTurn(1);
+							infoMap.put("cost", room.getRandomCost());
+							room.nextLevel();
+							room.sendMessage(makeTextMsg("toReady", infoMap));
+						}
+					}
 					break;
 				case "friendRequest":
 					infoMap.put("memberId", memberId);

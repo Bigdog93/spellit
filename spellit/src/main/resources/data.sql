@@ -26,4 +26,25 @@ INSERT INTO game_character
 VALUES
 ("곽춘배", "CB", "", "", "", "", ""),
 ("키리카", "AK", "", "", "", "", ""),
-("루나", "LUNA", "", "", "", "", "")
+("루나", "LUNA", "", "", "", "", "");
+
+
+INSERT INTO `member`
+VALUES
+    (1,'2023-03-27 04:15:45.664440','2023-03-24 05:19:22.660811','ROLE_USER','test1@test.net',30,_binary '\0',0,'test1','$2a$10$DARx6nqJIOov4MCjn52bNOW/vAiEFvxscAUlzD6GxIr.UD.dEYatO',3,NULL,3,1),
+    (2,'2023-03-24 05:24:21.245228','2023-03-24 05:24:21.245228','ROLE_USER','test1@ssafy.com',0,_binary '\0',0,'테스트 마법사','$2a$10$JQwP1IIwoQfHsHPji4s6WuC55hVBH.VqTm7xJlyW.o6xMwFEpnHLy',0,NULL,0,1),
+    (3,'2023-03-24 05:24:50.991290','2023-03-24 05:24:50.991290','ROLE_USER','test2@ssafy.com',0,_binary '\0',0,'진평동 개발자','$2a$10$.x1V49DT75ADKt3YMFAHcuXfy93UJdk0jYSu3KoyYVCcs2Oq70yvm',0,NULL,0,1),
+    (4,'2023-03-26 17:54:52.600506','2023-03-24 08:34:33.138871','ROLE_USER','test2@test.net',0,_binary '\0',0,'test2','$2a$10$DsFgReVpmqI/rAkxh/ux5ecPH393QUn/RBwpfTfKA..DFsX67xUKe',0,NULL,0,1),
+    (5,'2023-03-24 08:45:17.282296','2023-03-24 08:45:17.282296','ROLE_USER','test3@test.net',0,_binary '\0',0,'test3','$2a$10$dwJuYJB3QbADjjCxLii/N.r64PLMb/lest8az3fgareYzvnp6gjEC',0,NULL,0,1),
+    (6,'2023-03-24 15:54:02.788136','2023-03-24 15:54:02.788136','ROLE_USER','ljc@ljc',0,_binary '\0',0,'','$2a$10$vLgJv0Dn18GDRhns/TOT3e4dS1ikTbaCxVGhUefDRZkUV03/Mb1xu',0,NULL,0,NULL),
+    (7,'2023-03-27 06:57:28.237902','2023-03-27 06:57:28.237902','ROLE_USER','hice95@nate.com',0,_binary '\0',0,'컨설턴트 ','$2a$10$xApy1PboL5HI/a0lkNtqhenmCQkCZapCI076O4GpDyBoT35GPaVfC',0,NULL,0,1);
+
+
+INSERT INTO `deck`
+VALUES
+    (7,4,4),
+    (8,5,4),
+    (9,6,4),
+    (10,6,1),
+    (11,1,1),
+    (12,4,1);
