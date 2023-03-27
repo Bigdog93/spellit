@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import type { PayloadAction } from '@reduxjs/toolkit'
+import type { PayloadAction } from '@reduxjs/toolkit'
+// import { useNavigate } from 'react-router-dom';
 
-import { WebSocketContext } from './websocket';
-import { useContext } from 'react';
 
 type initialMatchingType = {
   connected: boolean,
@@ -11,7 +10,10 @@ type initialMatchingType = {
   p2Loading: boolean,
   p1: [],
   p2: [],
+  p1Ready: boolean,
+  p2Ready: boolean,
 };
+
 const initialMatchingState: initialMatchingType = {
   connected: false, // 게임 상대 찾았는지 여부
   game: false,  // 게임을 시작할지 여부
@@ -19,7 +21,10 @@ const initialMatchingState: initialMatchingType = {
   p2Loading: false, // 상대 동전던지기 끝났는지 여부
   p1: [],
   p2: [],
+  p1Ready: false,   // 나 게임 준비 여부
+  p2Ready: false    // 상대 게임 준비 여부
 };
+
 
 const matchingSlice = createSlice({
   name: 'matching',
@@ -30,7 +35,8 @@ const matchingSlice = createSlice({
       state.connected = true
     },
     startGame(state) {
-      state.game = !state.game
+      state.game = !state.game;
+      // navigate('/attack');
     },
     p1Loading(state) {
       console.log('p1Loading in store')
@@ -39,6 +45,16 @@ const matchingSlice = createSlice({
     },
     p2Loading(state) {
       state.p2Loading = true
+      // navigate('/ready');
+    },
+    // p1 p2 준비에 대한 함수 체크필
+    p1Ready(state) {
+      state.p1Ready = true;
+      // dispatch(matchingActions.p2Ready());
+    },
+    p2Ready(state) {
+      state.p2Ready = true;
+      // dispatch(matchingActions.startGame());
     },
   },
 });

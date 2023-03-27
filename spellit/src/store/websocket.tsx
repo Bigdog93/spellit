@@ -6,6 +6,7 @@ import store from "@/store/";
 import { RootState } from '@/store';
 import { playerActions } from "@/store/player";
 import { matchingActions } from './matching';
+import { attackActions } from './attack';
 import { roomActions } from "@/store/room";
 import { gameActions } from './game';
 
@@ -71,6 +72,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
 
       } else if (type === 'loaded') {
         console.log('loaded 입니다.')
+        console.log(info);
         dispatch(matchingActions.p2Loading())
         // dispatch(gameActions.endReady())
 
@@ -86,6 +88,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
 
       } else if (type === 'otherSpell') {
         console.log('otherSpell 입니다.')
+        dispatch(attackActions.attackInfo(info.spell));
         
       } else if (type === 'combo') {
         console.log('combo 입니다.')

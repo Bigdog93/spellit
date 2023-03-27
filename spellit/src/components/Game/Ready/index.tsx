@@ -22,6 +22,7 @@ interface CardType {
   damage: number;
   attribute: number;
 }
+import { matchingActions } from "@/store/matching"
 
 const Ready = () => {
 	const { send } = useContext(WebSocketContext);
@@ -30,6 +31,9 @@ const Ready = () => {
 
   // 나의 덱 정보 가져오기
   const myCards = useSelector((state: RootState) => state.user.deck);
+
+  // const p1 = useSelector((state: RootState) => state.player.p1);
+  // const p2 = useSelector((state: RootState) => state.player.p2);
 
   // cost 부족할 때 나타는 shake 효과
   const [isShaking, setIsShaking] = useState(false);
@@ -72,12 +76,17 @@ const Ready = () => {
   const confirmSkills = () => {
     console.log('Skill 다 골랐고 확인버튼 누름');
     console.log(selectedCards)
+    console.log('확인');
+    // console.log(selectedCards);
+    // dispatch(attackActions.attackStart(selectedCards));
+    // dispatch(attackActions.p1DeckList(selectedCards));
     send({
       event: 'attackTurn',
       memberId: memberId,
       roomId: roomId,
       data: { cards : selectedCards }
     })
+
   }
   const attackTrun = useSelector((state:RootState)=> state.game.attackTurn)
   useEffect(()=> {

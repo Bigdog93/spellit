@@ -9,14 +9,14 @@ import Matching from "./components/Matching";
 import User from './components/User'
 import Ready from "@/components/Game/Ready"
 import Defence from '@/components/Game/Defense/Defense';
-import Attack from "@/components/Game/Attack/Attack";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 import OAuth from "./components/Auth/OAuth";
-import Settle from "./components/Settle/Settle";
+// import Settle from "./components/Settle/Settle";
 import Result from "./components/Game/Result";
 import Test from "./components/Game/OpenVidu";
 import OpenViduTest from "./components/Game/OpenVidu/OpenVidu";
+import Attack from "./components/Game/Attack";
 
 function App() {
   const isLogged = useSelector((state: RootState) => state.auth.isAuthenticated);
@@ -39,7 +39,7 @@ function App() {
           <Route path="join" element={<Signup/>}/>
           <Route path="test" element={<Test />} />
           <Route path="openviduTest" element={<OpenViduTest />}/>
-          <Route path="settle" element={<Settle/>}/>
+          {/* <Route path="settle" element={<Settle/>}/> */}
           <Route path="result" element={<Result/>}/>
         </Routes>
       </BrowserRouter>
