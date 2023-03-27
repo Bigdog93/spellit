@@ -7,6 +7,7 @@ import com.urs.spellit.member.model.entity.Member;
 import lombok.*;
 import org.springframework.web.socket.WebSocketSession;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -41,6 +42,8 @@ public class PlayerDto {
 				.play_count(member.getPlayCount())
 				.win_count(member.getWinCount())
 				.gameCharacterEntity(member.getGameCharacterEntity())
+				.deck(new ArrayList<>())
+				.selectedCards(new ArrayList<>())
 //				.deck(member.getDeck())
 				.build();
 	}
