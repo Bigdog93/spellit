@@ -57,6 +57,8 @@ public class Member extends BaseTimeEntity {
     @OneToMany(mappedBy = "member")
     private List<DeckEntity> deck = new ArrayList<>();
 
+    @OneToMany(mappedBy="member")
+    private List<FriendWaitEntity> friendWaitEntities=new ArrayList<>();
 
     @Column
     @ColumnDefault("false")
@@ -91,5 +93,5 @@ public class Member extends BaseTimeEntity {
         this.playCount++;
     }
     public void setUserDeck(List<DeckEntity> deckList) {this.deck=deckList;}
-
+    public void changeFriendWaitList(List<FriendWaitEntity> friendWaitEntities){this.friendWaitEntities=friendWaitEntities;}
 }

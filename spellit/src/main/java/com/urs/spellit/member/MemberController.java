@@ -6,6 +6,7 @@ import com.urs.spellit.game.entity.GameCharacterEntity;
 import com.urs.spellit.member.model.dto.MemberRecordRequestDto;
 import com.urs.spellit.member.model.dto.MemberRecordResponseDto;
 import com.urs.spellit.member.model.dto.MemberResponseDto;
+import com.urs.spellit.member.model.entity.FriendWaitEntity;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,4 +59,11 @@ public class MemberController {
     {
         return ResponseEntity.ok(memberService.updateRecord(memberRecordRequestDto));
     }
+
+    @PostMapping("/friend") //친구 추가 요청
+    public ResponseEntity<List<FriendWaitEntity>> addFriendWait(@RequestBody FriendWaitEntity friendWaitEntity)
+    {
+        return ResponseEntity.ok(memberService.addFriendWait(friendWaitEntity));
+    }
+
 }
