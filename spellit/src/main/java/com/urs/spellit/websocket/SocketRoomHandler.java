@@ -55,7 +55,9 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 		String event = myParser.getString("event", input);
 		long roomId = myParser.getLong("roomId", input);
 		long memberId = myParser.getLong("memberId", input);
+		String nickname = myParser.getString("nickname", input);
 		JsonElement data = input.get("data");
+		Object dataObj = myParser.getBackData(data);
 		logger.info("*************************data 값이다!! : " + data.toString());
 		Map<String, Object> infoMap = new HashMap<>();
 		if(event.equals("test")) {
@@ -166,8 +168,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 					break;
 				case "settleTurn": // 정산 차례
 					isReady[me.getIdx()] = true;
-					Object obj = myParser.getBackData(data);
-					me.setMyObj(obj);
+					me.setMyObj(dataObj);
 					if(isReady(isReady, room, 4)) {
 						players.get(0).getSession().sendMessage(makeTextMsg("settle", players.get(1).getMyObj()));
 						players.get(1).getSession().sendMessage(makeTextMsg("settle", players.get(0).getMyObj()));
@@ -178,6 +179,11 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 					if(isReady(isReady, room, 5)) {
 						room.sendMessage(makeTextMsg("gameOver", infoMap));
 					}
+					break;
+				case "friendRequest":
+					infoMap.put("memberId", memberId);
+					infoMap.put("nickname", nickname);
+					other.getSession().sendMessage(makeTextMsg("friendRequest", infoMap));
 					break;
 			}
 		}
