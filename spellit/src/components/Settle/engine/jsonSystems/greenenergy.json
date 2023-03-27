@@ -3,31 +3,50 @@
   "integrationType": "EULER",
   "emitters": [
     {
-      "id": "053560a0-cba5-11ed-aded-f17062516bfe",
+      "id": "a65b2890-cc52-11ed-8e42-efcdd6168845",
       "totalEmitTimes": null,
       "life": null,
-      "cache": { "totalEmitTimes": 0, "life": 0 },
+      "cache": {
+        "totalEmitTimes": 0,
+        "life": 0
+      },
       "rate": {
         "particlesMin": 1,
         "particlesMax": 5,
         "perSecondMin": 0.01,
         "perSecondMax": 0.02
       },
-      "position": { "x": 2, "y": 0, "z": 0 },
-      "rotation": { "x": 0, "y": 0, "z": 0 },
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 3,
+        "z": 0
+      },
       "initializers": [
         {
-          "id": "053560a1-cba5-11ed-aded-f17062516bfe",
+          "id": "a65b2891-cc52-11ed-8e42-efcdd6168845",
           "type": "Mass",
-          "properties": { "min": 2, "max": 2, "isEnabled": true }
+          "properties": {
+            "min": 30,
+            "max": 10,
+            "isEnabled": true
+          }
         },
         {
-          "id": "053560a2-cba5-11ed-aded-f17062516bfe",
+          "id": "a65b2892-cc52-11ed-8e42-efcdd6168845",
           "type": "Life",
-          "properties": { "min": 2, "max": 4, "isEnabled": true }
+          "properties": {
+            "min": 2,
+            "max": 4,
+            "isEnabled": true
+          }
         },
         {
-          "id": "053560a3-cba5-11ed-aded-f17062516bfe",
+          "id": "a65b2893-cc52-11ed-8e42-efcdd6168845",
           "type": "BodySprite",
           "properties": {
             "texture": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJkSURBVHjaxJeJbusgEEW94S1L//83X18M2MSuLd2pbqc4wZGqRLrKBsyZhQHny7Jk73xVL8xpVhWrcmiB5lX+6GJ5YgQ2owbAm8oIwH1VgKZUmGcRqKGGPgtEQQAzGR8hQ59fAmhJHSAagigJ4E7GPWRXOYC6owAd1JM6wDQPADyMWUqZRMqmAojHp1Vn6EQQEgUNMJLnUjMyJsM49wygBkAPw9dVFwXRkncCIIW3GRgoTQUZn6HxCMAFEFd8TwEQ78X4rHbILoAUmeT+RFG4UhQ6MiIAE4W/UsYFjuVjAIa2nIY4q1R0GFtQWG3E84lqw2GO2QOoCKBVu0BAPgDSU0eUDjjQenNkV/AW/pWChhpMTelo1a64AOKM30vk18GzTHXCNtI/Knz3DFBgsUqBGIjTInXRY1yA9xkVoqW5tVq3pDR9A0hfF5BSARmVnh7RMDCaIdcNgbPBkgzn1Bu+SfIEFSpSBmkxyrMicb0fAEuCZrWnN89veA/4XcakrPcjBWzkTuLjlbfTQPOlBhz+HwkqqPXmPQDdrQItxE1moGof1S74j/8txk8EHhTQrAE8qlwfqS5yukm1x/rAJ9Jiaa6nyATqD78aUVBhFo8b1V4DdTXdCW+IxA1zB4JhiOhZMEWO1HqnvdoHZ4FAMIhV9REF8FiUm0jsYPEJx/Fm/N8OhH90HI9YRHesWbXXZwAShU8qThe7H8YAuJmw5yOd989uRINKRTJAhoF8jbqrHKfeCYdIISZfSq26bk/K+yO3YvfKrVgiwQBHnwt8ynPB25+M8hceTt/ybPhnryJ78+tLgAEAuCFyiQgQB30AAAAASUVORK5CYII=",
@@ -35,31 +54,30 @@
           }
         },
         {
-          "id": "053560a4-cba5-11ed-aded-f17062516bfe",
+          "id": "a65b2894-cc52-11ed-8e42-efcdd6168845",
           "type": "Radius",
           "properties": {
-            "width": 3,
-            "height": 3,
-            "isEnabled": true,
-            "center": true
+            "width": 12,
+            "height": 4,
+            "isEnabled": true
           }
         },
         {
-          "id": "053560a5-cba5-11ed-aded-f17062516bfe",
+          "id": "a65b2895-cc52-11ed-8e42-efcdd6168845",
           "type": "RadialVelocity",
           "properties": {
             "radius": 40,
             "x": 0,
             "y": 0,
-            "z": 0,
-            "theta": 0,
+            "z": 1,
+            "theta": 30,
             "isEnabled": true
           }
         }
       ],
       "behaviours": [
         {
-          "id": "053560a6-cba5-11ed-aded-f17062516bfe",
+          "id": "a65b2896-cc52-11ed-8e42-efcdd6168845",
           "type": "Alpha",
           "properties": {
             "alphaA": 1,
@@ -69,27 +87,27 @@
           }
         },
         {
-          "id": "053560a7-cba5-11ed-aded-f17062516bfe",
+          "id": "a65b2897-cc52-11ed-8e42-efcdd6168845",
           "type": "Color",
           "properties": {
-            "colorA": "#9c0003",
-            "colorB": "#bd8b8b",
+            "colorA": "#00ef22",
+            "colorB": "#787ea0",
             "life": null,
             "easing": "easeLinear"
           }
         },
         {
-          "id": "053560a8-cba5-11ed-aded-f17062516bfe",
+          "id": "a65b2898-cc52-11ed-8e42-efcdd6168845",
           "type": "Scale",
           "properties": {
-            "scaleA": 1,
-            "scaleB": 0.7,
+            "scaleA": 0.4,
+            "scaleB": 0.1,
             "life": null,
             "easing": "easeLinear"
           }
         },
         {
-          "id": "053560a9-cba5-11ed-aded-f17062516bfe",
+          "id": "a65b2899-cc52-11ed-8e42-efcdd6168845",
           "type": "Force",
           "properties": {
             "fx": 0,
@@ -100,10 +118,10 @@
           }
         },
         {
-          "id": "053560aa-cba5-11ed-aded-f17062516bfe",
+          "id": "a65b289a-cc52-11ed-8e42-efcdd6168845",
           "type": "Rotate",
           "properties": {
-            "x": 0,
+            "x": 1,
             "y": 0,
             "z": 0,
             "life": null,
@@ -111,11 +129,11 @@
           }
         },
         {
-          "id": "053560ab-cba5-11ed-aded-f17062516bfe",
+          "id": "a65b4fa0-cc52-11ed-8e42-efcdd6168845",
           "type": "RandomDrift",
           "properties": {
             "driftX": 1,
-            "driftY": 1,
+            "driftY": 23,
             "driftZ": 4,
             "delay": 1,
             "life": null,
@@ -123,7 +141,7 @@
           }
         },
         {
-          "id": "053560ac-cba5-11ed-aded-f17062516bfe",
+          "id": "a65b4fa1-cc52-11ed-8e42-efcdd6168845",
           "type": "Spring",
           "properties": {
             "x": 1,
@@ -138,12 +156,12 @@
       ],
       "emitterBehaviours": [
         {
-          "id": "053560ad-cba5-11ed-aded-f17062516bfe",
+          "id": "a65b4fa2-cc52-11ed-8e42-efcdd6168845",
           "type": "Rotate",
           "properties": {
             "x": 0,
-            "y": 0,
-            "z": 180,
+            "y": 5,
+            "z": 0,
             "life": null,
             "easing": "easeLinear"
           }
