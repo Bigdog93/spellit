@@ -16,8 +16,8 @@ public class FriendWaitEntity {
     private Long id;
     @Column
     private String friendEmail;
-    @Column
-    private Long memberId;
+//    @Column
+//    private Long memberId;
 
     @ManyToOne
     @JoinColumn(name="member_id")
