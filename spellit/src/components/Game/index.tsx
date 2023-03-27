@@ -6,7 +6,7 @@ const Game = () => {
 
   return (
     <div>
-      <OpenViduVideo/>
+      {/* <OpenViduVideo/> */}
       <Ready/>
     </div>
   )

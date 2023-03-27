@@ -17,6 +17,7 @@ export { WebSocketContext };
 export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) => {
   // const webSocketUrl = `ws://localhost:8080/api/socket`
   const webSocketUrl = `wss://j8d201.p.ssafy.io/api/socket`
+  
   let ws = useRef<WebSocket | null>(null).current;
   let send = ws?.send;
   const dispatch = useDispatch();

@@ -11,9 +11,9 @@ type DeckType = {
   attribute : number,
 }
 
-type PlayerDeckType = {
+type PlayersDeckType = {
   isMine: boolean,
-  cards: DeckType,
+  card: DeckType,
 }
 
 type initialAttackType = {
@@ -21,7 +21,7 @@ type initialAttackType = {
   defaultHp: number,
   p1Hp: number,
   p2Hp : number,
-  playersDeck: PlayerDeckType[],
+  playersDeck: PlayersDeckType[],
   p1Deck: object[],
   p2Deck: object[],
   p1Damage: number[],
@@ -29,6 +29,7 @@ type initialAttackType = {
   onTimer: boolean,
   transcript: string,
   myTurn: boolean,
+  sec: number,
 }
 
 const initialAttack: initialAttackType = {
@@ -44,6 +45,7 @@ const initialAttack: initialAttackType = {
   onTimer: false,   // timer On / Off 유무
   transcript: "",   // 주문 영창 실시간 데이터
   myTurn: false,    // 본인 주문영창인지
+  sec: 0,           // 타이머
 };
 
 const attackSlice = createSlice({
@@ -80,15 +82,18 @@ const attackSlice = createSlice({
     p2Hit(state, action: PayloadAction<number>) {
       state.p2Hp = state.p2Hp - action.payload;
     },
-    onTimer(state, action: PayloadAction<boolean>) {
-      state.onTimer = action.payload;
+    onTimer(state) {
+      state.onTimer = !state.onTimer;
     },
     attackInfo(state, action: PayloadAction<string>) {
       state.transcript = action.payload;
     },
     myTurn(state, action: PayloadAction<boolean>) {
       state.myTurn = action.payload;
-    }
+    },
+    setSec(state, action: PayloadAction<number>) {
+      state.sec = action.payload;
+    }, 
   },
 });
 

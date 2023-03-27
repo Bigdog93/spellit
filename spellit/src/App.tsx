@@ -17,6 +17,7 @@ import Result from "./components/Game/Result";
 import Test from "./components/Game/OpenVidu";
 import OpenViduTest from "./components/Game/OpenVidu/OpenVidu";
 import Attack from "./components/Game/Attack";
+import Spell from "./components/Game/Attack/Spell";
 
 function App() {
   const isLogged = useSelector((state: RootState) => state.auth.isAuthenticated);
@@ -41,6 +42,7 @@ function App() {
           <Route path="openviduTest" element={<OpenViduTest />}/>
           {/* <Route path="settle" element={<Settle/>}/> */}
           <Route path="result" element={<Result/>}/>
+          <Route path="spell" element={<Spell/>}/>
         </Routes>
       </BrowserRouter>
     </WebSocketProvider>
