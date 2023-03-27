@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/";
 
 import ProfileHp from "../Items/ProfileHp";
 import Timer from "../Items/Timer";
-import HpBar from "../Items/HpBar";
 
 import './Attack.css'
 
 import SpellBox from "../../../assets/InGame/SpellBox.png";
 import SkillBar from "../../../assets/InGame/SkillBar.png";
+import { attackActions } from "@/store/attack";
+import { costActions } from "@/store/cost";
 
 interface Spell {
     name: string;
@@ -26,7 +27,7 @@ const wind3: Spell = {
 const fire1: Spell = {
   name: "fire1",
   content: "타올라라 불꽃 적을 태우는 탄환이 되어 날아라",
-  time: 2,
+  time: 5,
 };
 const wind1: Spell = {
   name: "wind1",
@@ -36,7 +37,7 @@ const wind1: Spell = {
 const ice1: Spell = {
   name: "ice1",
   content: "냉기여 휘몰아쳐라 빛을 삼키고 온기를 먹어치우며 이 땅을 내달려 모든 것이 얼어붙을 것이니",
-  time: 2,
+  time: 9,
 };
 const storm1: Spell = {
   name: "storm1",
@@ -55,9 +56,9 @@ const dark1: Spell = {
 };
 
 function Attack() {
-    const chooseCards = useSelector((state: RootState) => state.attack.chooseCards);
-    // console.log(chooseCards);
-    // console.log('왜렌더링이 계속 되냐고옹오ㅗ오오오오오')
+    const myDeckList = useSelector((state: RootState) => state.attack.p1Deck);
+    const dispatch = useDispatch();
+
     //@ts-ignore
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   
@@ -82,6 +83,12 @@ function Attack() {
 
     // 타이머 띄우기
     const [sec, setSec] = useState<number>(0);
+
+    // 주문영창 스킬 리스트
+    const [damageList, setDamageList] = useState<number[]>([]);
+
+    // 주문 영창 시 맞은 단어 갯수
+    // const [correct, setCorrect] = useState<number>(0);
 
     const SpellIt = async (selectSpell:Spell, idx:number) => {
       
@@ -121,6 +128,7 @@ function Attack() {
             }
             const percentEl = document.getElementById("percent") as HTMLDivElement;
             const correctPercent = Math.round((correct / spellLength) * 100);
+            console.log(correctPercent+'%')
             percentEl.innerText = `총 ${spellLength}개 중 ${correct}개 맞음 : ${correctPercent} %`;
         });
 
@@ -140,13 +148,26 @@ function Attack() {
             clearInterval(interval);
             console.log('SpeechRecognition end!')
             // class 속성 제거하기
+            let correct = 0;
             setTimeout(() => {
               for (let j=0; j<selectSpell.content.length; j++) {
                 const spellClass = document.getElementById(`spell-${j}`);
-                spellClass?.classList.remove(`${selectSpell.name}-correct`)
-                // console.log(selectSpell.name);
-                // console.log('옛다 제거함~')
+                if (spellClass?.classList.contains(`${selectSpell.name}-correct`)) {
+                  spellClass?.classList.remove(`${selectSpell.name}-correct`)
+                  correct++;
+                }
               }
+              // 하드코딩됨,,
+              // 주문 영창 후 맞은 개수만큼 데미지화 하기
+              // const damage = [(cnt / spellLength) * selectSpell.time * 30, 50, 100];
+              console.log('correct : '+correct)
+              const damage = (correct / spellLength) * selectSpell.time * 30;
+              console.log(damageList);
+              console.log([...damageList, damage]);
+              setDamageList([...damageList, damage]);
+              console.log('damageList : '+damageList);
+              const newDamageList = [...damageList, damage];
+              dispatch(attackActions.p1Damage(newDamageList));
               setIdx(idx+1);
             }, 500)
         }, selectSpell.time*1000); 
@@ -157,28 +178,28 @@ function Attack() {
     const [idx, setIdx] = useState(0);
     useEffect(() => {
       // console.log(idx);
-      if (fire1.name == chooseCards[idx]) {
+      if (fire1.name == myDeckList[idx]) {
           SpellIt(fire1, idx);
-        } else if (ice1.name == chooseCards[idx]) {
+        } else if (ice1.name == myDeckList[idx]) {
           SpellIt(ice1, idx);
-        } else if (wind1.name == chooseCards[idx]) {
+        } else if (wind1.name == myDeckList[idx]) {
           SpellIt(wind1, idx);
-        } else if (light1.name == chooseCards[idx]) {
+        } else if (light1.name == myDeckList[idx]) {
           SpellIt(light1, idx);
-        } else if (dark1.name == chooseCards[idx]) {
+        } else if (dark1.name == myDeckList[idx]) {
           SpellIt(dark1, idx);
-        } else if (wind3.name == chooseCards[idx]) {
+        } else if (wind3.name == myDeckList[idx]) {
           SpellIt(wind3, idx);
-        } else if (storm1.name == chooseCards[idx]) {
+        } else if (storm1.name == myDeckList[idx]) {
           SpellIt(storm1, idx);
         }
 
-        if (idx == chooseCards.length) {
+        if (idx == myDeckList.length) {
           navigate('/settle');
         }
         
         // 주문 삭제하기
-        // if (idx == chooseCards.length) {
+        // if (idx == myDeckList.length) {
         //   const spell = document.querySelectorAll('span')
         //   for (let i=0; i<spell.length; i++) {
         //     spell[i].remove()
@@ -191,18 +212,18 @@ function Attack() {
     }, [idx])
 
     const defaultHP = useSelector((state: RootState) => (state.attack.defaultHp));
-    const firstHp = useSelector((state: RootState) => (state.attack.firstHp));
-    const secondHp = useSelector((state: RootState) => (state.attack.secondHp));
+    const p1Hp = useSelector((state: RootState) => (state.attack.p1Hp));
+    const p2Hp = useSelector((state: RootState) => (state.attack.p2Hp));
     
-    // console.log(firstHp);
+    // console.log(p1Hp);
     
-    const firstHpStyle = {
-        width: `${firstHp}px`,
-        backgroundColor: firstHp > defaultHP/4 ? '#FFF500' : '#FF0000' ,
+    const p1HpStyle = {
+        width: `${p1Hp}px`,
+        backgroundColor: p1Hp > defaultHP/4 ? '#FFF500' : '#FF0000' ,
     }
-    const secondHpStyle = {
-        width: `${secondHp}px`,
-        backgroundColor: secondHp > defaultHP/4 ? '#FFF500' : '#FF0000' ,
+    const p2HpStyle = {
+        width: `${p2Hp}px`,
+        backgroundColor: p2Hp > defaultHP/4 ? '#FFF500' : '#FF0000' ,
     }
 
     return (
@@ -210,12 +231,12 @@ function Attack() {
           <div className="attack-top-items">
             <div className='first-hp-box'>
                 <ProfileHp></ProfileHp>
-                <div className="first-hp-bar" style={firstHpStyle}></div>
+                <div className="first-hp-bar" style={p1HpStyle}></div>
             </div>
             <Timer time={sec}></Timer>
             <div className='second-hp-box'>
                 <ProfileHp></ProfileHp>
-                <div className="second-hp-bar" style={secondHpStyle}></div>
+                <div className="second-hp-bar" style={p2HpStyle}></div>
             </div>
           </div>
 
@@ -226,12 +247,11 @@ function Attack() {
                 <img style={{ width: 800, height: 400}} src={SpellBox} alt="" />
                 <div id='origin'>{spanEl}</div>
             </div>
-            {/* <div className="words"></div> */}
 
             <div className="spell-bar-box">
               <img src={SkillBar} alt="" style={{width: '100%', height: '120px'}} />
               <div className="spells">
-                {chooseCards.map((card: string, index: number) => (
+                {myDeckList.map((card: string, index: number) => (
                   <img 
                     style={{height: '100px', margin: '10px'}}
                     key={index} 

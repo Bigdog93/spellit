@@ -1,5 +1,5 @@
 import { createContext, useRef } from 'react';
-import { costActions } from "@/store/cost"
+import cost, { costActions } from "@/store/cost"
 import { useDispatch, useSelector } from 'react-redux';
 
 import store from "@/store/";
@@ -7,6 +7,7 @@ import { RootState } from '@/store';
 import { playerActions } from "@/store/player";
 import { matchingActions } from './matching';
 import { roomActions } from "@/store/room";
+import { gameActions } from './game';
 
 const WebSocketContext = createContext<any>(null);
 export { WebSocketContext };
@@ -47,7 +48,8 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
       const info = content.info;
       if (type === 'test') {
         console.log('test입니다.')
-        dispatch(costActions.set(info.data));
+        // dispatch(costActions.set(info.data));
+        console.log(content);
         
       } else if (type === 'entQueue') {
         console.log('entQueue 입니다.')
@@ -66,14 +68,21 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
           dispatch(matchingActions.connected())
           // room 정보 설정
           dispatch(roomActions.setRoom(info.roomInfo))
+
       } else if (type === 'loaded') {
         console.log('loaded 입니다.')
         dispatch(matchingActions.p2Loading())
+        // dispatch(gameActions.endReady())
+
       } else if (type === 'toReady') {
         console.log('toReady 입니다.')
-
+        dispatch(gameActions.startReady())
+        dispatch(costActions.set(info.cost))
+        
       } else if (type === 'toAttack') {
         console.log('toAttack 입니다.')
+        dispatch(gameActions.endReady())
+        dispatch(gameActions.startAttack())
 
       } else if (type === 'otherSpell') {
         console.log('otherSpell 입니다.')
