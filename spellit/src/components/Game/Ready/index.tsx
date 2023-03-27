@@ -68,10 +68,6 @@ const Ready = () => {
     dispatch(costActions.add(card.cost));
   };
 
-  // 나의 덱 정보 저장
-  // store/user.tsx의 정보 업뎃 및 연동 필요
-  // 요소 명 수정해야할 수도 있음
-  const myCards = ['fire1', 'light1', 'ice1', 'wind1', 'dark1']
 
   const roomId = useSelector((state: RootState) => state.room.roomId);
   const memberId = useSelector((state: RootState) => state.user.id);
