@@ -19,6 +19,9 @@ const Home = () => {
   const toQuickStart = () => {
     navigate("/matching");
   };
+  const toDeck = () => {
+    navigate("/user");
+  }
 
   return (
     <div>
@@ -44,6 +47,7 @@ const Home = () => {
         <DeckButton
           position={[4.2, -1.5, 1.3]}
           rotation={[Math.PI / 2, 0, Math.PI / 6]}
+          onClick={toDeck}
         />
         <MypageButton
           position={[0.4, -1.5, -1]}

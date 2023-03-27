@@ -1,7 +1,8 @@
 import { useState, useContext, useEffect } from "react"
-// import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 
-// import { RootState } from "@/store/";
+import { userActions } from "@/store/user"
+import { RootState } from "@/store/";
 import API from "@/utils/API";
 
 import Cards from './Cards'
@@ -16,23 +17,25 @@ interface CardType {
   spell: string;
   title: string
 }
-interface CharacterType {
-  attack: string,
-  characterName: string,
-  englishName: string,
-  hurt: string,
-  id: string,
-  stan: string,
-  winner: string,
+type GameCharacterType = {
+  id : number,
+  characterName : string,
+  englishName : string,
+  stand : string,
+  hurt : string,
+  attack : string,
+  winner : string,
+  combo : string,
 }
 
 const User = () => {
-  // const memberId = useSelector((state: RootState) => state.user.id);
 
   const token = sessionStorage.getItem("token");
+
+  const dispatch = useDispatch();
   
   // 전체 캐릭터 목록
-  const [characters, setCharacters] = useState<Array<CharacterType>>([]);
+  const [characters, setCharacters] = useState<Array<GameCharacterType>>([]);
   useEffect(() => {
     API.get(
       'game/character',
@@ -48,19 +51,25 @@ const User = () => {
     
   // 내 캐릭터
   // const [character, setCharacter] = useState<CharacterType|null>(null);
-  const [character, setCharacter] = useState<CharacterType>({
-    attack: '',
-    characterName: '곽춘배',
-    englishName: 'LUNA',
-    hurt: '',
-    id: '',
-    stan: '',
-    winner: '',
-  });
-  
+  // const [character, setCharacter] = useState<CharacterType>({
+  //   attack: '',
+  //   characterName: '곽춘배',
+  //   englishName: 'LUNA',
+  //   hurt: '',
+  //   id: '',
+  //   stan: '',
+  //   winner: '',
+  // });
+  const character = useSelector((state: RootState) => state.user.gameCharacter);
+  console.log(character);
   // 캐릭터 선택했을 때
-  const selectCharacter = (res: CharacterType) => {
-    setCharacter(res)
+  const selectCharacter = (res: GameCharacterType) => {
+    // setCharacter(res)
+    dispatch(userActions.setCharacter(res));
+    /* API 요청 */
+    API.put('member/character',
+      { res },
+      { headers: { Authorization: `Bearer ${token}` } })
     console.log(character)
     console.log(res)
   }
@@ -84,7 +93,8 @@ const User = () => {
     }, [])
 
   // 내가 선택한 카드
-  const [deck, setDeck] = useState<Array<CardType>>([]);
+  // const [deck, setDeck] = useState<Array<CardType>>([]);
+  const deck = useSelector((state: RootState) => state.user.deck);
 
   
   // 카드 5장 채웠는데 더 선택하려고 할 때 나타나는 shake 효과
@@ -105,7 +115,8 @@ const User = () => {
     }
 
     if (!flag && deck.length < 5) {
-      setDeck([...deck, res])
+      // setDeck([...deck, res])
+      dispatch(userActions.addCard(res));
       console.log('cardseledted')
       console.log(deck)
     } else if (deck.length >= 5) {
@@ -115,7 +126,7 @@ const User = () => {
   
   // 선택한 카드 삭제
   const removeCard = (event: React.MouseEvent<HTMLDivElement>, index: number) => {
-    setDeck(deck.slice(0, index).concat(deck.slice(index + 1)));
+    dispatch(userActions.removeCard(index));
     navigator.vibrate(200);
   };
 
@@ -124,7 +135,7 @@ const User = () => {
   const switchHandler = () => { 
     console.log('btn click')
     setMode(!mode)
-   };
+  };
 
 
   return (
@@ -137,7 +148,7 @@ const User = () => {
       {/* <div className={isShaking ? `${style['shake']}}`  : style['card-select-container'] }> */}
         <div>
           <button onClick={switchHandler}>character</button>
-            <img src={require(`../../assets/character/${character.englishName}_portrait.png`)} alt="portrait" />
+            <img src={require(`../../assets/character/${character?.englishName}_portrait.png`)} alt="portrait" />
             {/* {character && <img src={require(`../../assets/character/${character.englishName}_portrait.png`)} alt="portrait" />} */}
         </div>
         {/* 선택된 카드 덱 */}

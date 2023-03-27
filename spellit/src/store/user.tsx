@@ -1,3 +1,4 @@
+import API from '@/utils/API';
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit' 
 
@@ -23,7 +24,7 @@ type GameCharacterType = {
 }
 
 type userInitialType = {
-  deck: Array<DeckType> | null,
+  deck: Array<DeckType>,
   email: string,
   exp: number,
   gameCharacter: GameCharacterType | null,
@@ -48,12 +49,12 @@ const userInitialState: userInitialType = {
   winCount: 0,
 }
 
-
+const token = sessionStorage.getItem("token");
 const userSlice = createSlice({
   name: 'index',
   initialState: userInitialState,
   reducers: {
-    setMyInfo(state, action:PayloadAction<userInitialType>) {
+    setMyInfo(state, action: PayloadAction<userInitialType>) {
       state.deck = action.payload.deck
       state.email = action.payload.email
       state.exp = action.payload.exp
@@ -63,8 +64,31 @@ const userSlice = createSlice({
       state.nickname = action.payload.nickname
       state.playCount = action.payload.playCount
       state.winCount = action.payload.winCount
-    }
-    
+    },
+    setDeck(state, action: PayloadAction<Array<DeckType>>) {
+      state.deck = action.payload
+      /* API 요청 */
+      API.post('member/deck',
+      state.deck,
+      { headers: { Authorization: `Bearer ${token}` } })
+    },
+    addCard(state, action: PayloadAction<DeckType>) {
+      state.deck?.push(action.payload)
+      /* API 요청 */
+      API.post('member/deck',
+      state.deck,
+      { headers: { Authorization: `Bearer ${token}` } })
+    },
+    removeCard(state, action: PayloadAction<number>) {
+      state.deck = state.deck.slice(0, action.payload).concat(state.deck.slice(action.payload + 1))
+      /* API 요청 */
+      API.post('member/deck',
+      state.deck,
+      { headers: { Authorization: `Bearer ${token}` } })
+    },
+    setCharacter(state, action: PayloadAction<GameCharacterType>) {
+      state.gameCharacter = action.payload;
+    },
   },
 });
 
