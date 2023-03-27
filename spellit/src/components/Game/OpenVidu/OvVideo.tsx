@@ -1,7 +1,6 @@
 import { useRef, useState, useContext, useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { Publisher, Session, StreamManager, Subscriber } from 'openvidu-browser';
-import { IProps } from '@/components/Test/openviduTest'
 
 const OvVideo = ({ streamManager } :{streamManager:StreamManager}) => {
     const video = useRef(HTMLVideoElement.prototype);
@@ -19,7 +18,7 @@ const OvVideo = ({ streamManager } :{streamManager:StreamManager}) => {
     
     return (
         <div>
-            <video autoPlay={true} ref={video}></video>
+            <audio autoPlay={true} ref={video}></audio>
         </div>
     )
 }
