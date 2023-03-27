@@ -8,6 +8,7 @@ import { WebSocketContext } from '@/store/websocket'
 import { RootState } from "@/store"
 import { costActions } from "@/store/cost"
 import { attackActions } from "@/store/attack"
+import { matchingActions } from "@/store/matching"
 
 import ConfirmBtn from '../../../assets/ui/ReadyConfirmBtn.png'
 import Frame from '../../../assets/ui/Frame.png'
@@ -22,7 +23,6 @@ interface CardType {
   damage: number;
   attribute: number;
 }
-import { matchingActions } from "@/store/matching"
 
 const Ready = () => {
 	const { send } = useContext(WebSocketContext);
