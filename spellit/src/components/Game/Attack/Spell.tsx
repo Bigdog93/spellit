@@ -65,23 +65,22 @@ const Spell = (props: any) => {
     
 
     const navigate = useNavigate();
-    const [idx, setIdx] = useState(0);
+    // const [idx, setIdx] = useState(0);
 
-    useEffect(() => {
-      console.log('myturn 여부 : ', myTurn);
-      console.log('spell idx: ', idx);
-      if (idx >= playersDeckList.length) {
-        navigate('/ready');
-      }
+    // useEffect(() => {
+    //   console.log('myturn 여부 : ', myTurn);
+      // console.log('spell idx: ', idx);
+      // if (idx >= playersDeckList.length) {
+      //   navigate('/ready');
+      // }
 
-      if (myTurn) {
-        MyTurn(playersDeckList[idx].card);
-        // sendSpell(transcript);
-        setIdx(idx+1);
-      } else {
-        
-        setIdx(idx+1);
-      }
+      // if (myTurn) {
+      //   MyTurn(playersDeckList[idx].card);
+      //   // sendSpell(transcript);
+      //   setIdx(idx+1);
+      // } else {
+      //   setIdx(idx+1);
+      // }
 
       // if (idx == playersDeckList.length) {
       //   navigate('/settle');
@@ -98,7 +97,7 @@ const Spell = (props: any) => {
         //   percent.remove()
 
         // }
-    }, [idx])
+    // }, [idx])
 
     const defaultHP = useSelector((state: RootState) => (state.attack.defaultHp));
     const p1Hp = useSelector((state: RootState) => (state.attack.p1Hp));

@@ -7,6 +7,21 @@ import { attackActions } from "@/store/attack";
 import  Spell from "./Spell";
 import Character from "./Character";
 
+type SelectCardsType = {
+    id : number,
+    code : string,
+    title : string,
+    spell : string,
+    cost : number,
+    damage : number,
+    attribute : number,
+}
+
+type PlayersDeckType = {
+    isMine: boolean,
+    card: SelectCardsType,
+}
+
 function Attack() {
     const [idx, setIdx] = useState(0);
     const dispatch = useDispatch();
@@ -22,30 +37,36 @@ function Attack() {
 
     const playersDeckList = useSelector((state: RootState) => (state.attack.playersDeck));
 
-    const cardInfo = playersDeckList[idx]
+    const [cardInfo, setCardInfo] = useState<PlayersDeckType>(playersDeckList[idx])
     console.log('myTurn 유무 : ', myTurn);
     console.log('idx : ', idx);
     console.log('cardInfo : ', cardInfo);
 
     useEffect(() => {
         console.log('useEffect 문 들어옴')
-        if (idx >= playersDeckList.length) {
-            console.log('idx 다 돌았다! ready로 이동!')
-            navigate('/ready');
-        }
+        // if (idx >= playersDeckList.length) {
+        //     console.log('idx 다 돌았다! ready로 이동!')
+        //     navigate('/ready');
+        // }
         
         if (playersDeckList[idx].isMine) {
             console.log('여긴 내가 선공!');
             dispatch(attackActions.myTurn(true));
-            // Spell(cardInfo)
+            setCardInfo(cardInfo);
             // navigate('/Spell')
         } else {
             console.log('아 후공이닷,,');
             dispatch(attackActions.myTurn(false));
-            // Spell(cardInfo)
+            setCardInfo(cardInfo);
             // navigate('/Spell')
         }
-        setIdx(idx+1);
+        
+        if (idx === playersDeckList.length-1) {
+            console.log('idx 다 돌았다! ready로 이동!')
+            navigate('/ready');
+        } else {
+            setIdx(idx+1);
+        }
 
     }, [idx])
     

@@ -1,6 +1,6 @@
 import { attackActions } from '@/store/attack';
 import { RootState } from "@/store/";
-import react, { useState, useContext } from 'react';
+import react, { useState, useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { WebSocketContext } from "@/store/websocket";
@@ -53,7 +53,7 @@ const MyTurn = (props: any) => {
     // 주문영창 스킬 리스트
     const [damageList, setDamageList] = useState<number[]>([]);
 
-    const selectSpell = props.cardInfo.card;
+    const selectSpell = props.selectSpell;
     //@ts-ignore
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   
@@ -87,7 +87,12 @@ const MyTurn = (props: any) => {
         const newSpanEl = <span id={spanClassName}>{selectSpell.spell[i]}</span>; // spanEl에 id 값 넣어주기
         spanList.push(newSpanEl);
     }
-    setSpanEl(spanList);
+    useEffect(() => {
+      setSpanEl(spanList);
+      return () => {
+          
+      }
+    }, [selectSpell])
 
     const trimText = selectSpell.spell.replaceAll(" ", ""); // 띄어쓰기 제거한 주문
     // console.log(trimText);
