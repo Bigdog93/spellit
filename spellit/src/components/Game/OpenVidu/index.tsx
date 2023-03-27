@@ -1,5 +1,5 @@
-import Chatting from "@/components/Test/Chatting";
-import TextInputBox from "@/components/Test/TextInputBox";
+import Chatting from "../../Test/Chatting";
+import TextInputBox from "../../Test/TextInputBox";
 // import WebsocektProvider from '../../utils/WebsocektProvider'
 import OpenViduVideo from '@/components/Game/OpenVidu/OpenVidu'
 // import { OpenviduProvider } from '@/store/openvidu'
