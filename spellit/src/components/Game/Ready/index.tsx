@@ -73,12 +73,14 @@ const Ready = () => {
       event: 'readyTurn',
       memberId: memberId,
       roomId: roomId,
-      data: {
-        // 선택한 카드 정보와 선후공 순서를 보내줌
-        selectedCards: selectedCards,
-        isFirst: p1?.isFirst,
-      }
+      // data: {
+      //   // 선택한 카드 정보와 선후공 순서를 보내줌
+      //   selectedCards: selectedCards,
+      //   isFirst: p1?.isFirst,
+      // }
+      data: '',
     })
+    console.log()
     dispatch(matchingActions.p1Ready());
     // dispatch(matchingActions.startGame());
     // navigate("/attack");

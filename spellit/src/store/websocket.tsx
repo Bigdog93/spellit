@@ -68,10 +68,11 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
           dispatch(roomActions.setRoom(info.roomInfo))
       } else if (type === 'loaded') {
         console.log('loaded 입니다.')
+        console.log(info);
         dispatch(matchingActions.p2Loading())
       } else if (type === 'toReady') {
         console.log('toReady 입니다.')
-
+        console.log(info);
         // p1 p2 모두 준비 되면 체크필
         if (info.toReady) {
           dispatch(matchingActions.p2Ready())
