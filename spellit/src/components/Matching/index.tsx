@@ -9,6 +9,7 @@ import { RootState } from "@/store/";
 import './index.css'
 import Versus from "./Versus"
 import Loading from "./Loading"
+import { Root } from "@react-three/fiber/dist/declarations/src/core/renderer";
 
 const Matching = () => {
   const navigate = useNavigate();
@@ -31,20 +32,19 @@ const Matching = () => {
   }, []);
 
   
-  const p1Loading = useSelector((state: RootState) => state.matching.p1Loading);
-  const p2Loading = useSelector((state: RootState) => state.matching.p2Loading);
+  // const p1Loading = useSelector((state: RootState) => state.matching.p1Loading);
+  // const p2Loading = useSelector((state: RootState) => state.matching.p2Loading);
+  const readyTurn = useSelector((state: RootState) => state.game.readyTurn)
   const roomId = useSelector((state: RootState) => state.room.roomId);
   // p1, p2 모두 동전 던지기가 끝났을 때 stored의 game 업뎃
   useEffect(() => {
-    if(p1Loading && p2Loading) {
-      // dispatch(matchingActions.startGame())
-      console.log('if문 안이야')
+    console.log('toReady에 실행되는 useEffect')
+    if(readyTurn) {
+      console.log('readyTurn 시작이야')
       navigate(`/game/${roomId}`)
-     
     }
-    console.log('if문 밖이야')
 
-  }, [p1Loading, p2Loading, navigate]);
+  }, [readyTurn, navigate]);
 
   
   return (
