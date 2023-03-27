@@ -1,36 +1,49 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-type attackInfoType = {
-  transcript: string,
-  selectSpell: string,
+type DeckType = {
+  id : number,
+  code : string,
+  title : string,
+  spell : string,
+  cost : number,
+  damage : number,
+  attribute : number,
+}
+
+type PlayerDeckType = {
+  isMine: boolean,
+  cards: DeckType,
 }
 
 type initialAttackType = {
+  startGame: boolean,
   defaultHp: number,
   p1Hp: number,
   p2Hp : number,
-  p1Deck: string[],
-  p2Deck: string[],
+  playersDeck: PlayerDeckType[],
+  p1Deck: object[],
+  p2Deck: object[],
   p1Damage: number[],
   p2Damage: number[],
   onTimer: boolean,
-  attackInfo: attackInfoType,
+  transcript: string,
+  myTurn: boolean,
 }
 
 const initialAttack: initialAttackType = {
+  startGame: false,
   defaultHp: 385,   // hp 초기값
   p1Hp: 385,        // 남은 p1 hp
   p2Hp: 385,        // 남은 p2 hp
+  playersDeck: [],  // 플레이어의 카드 선택 정보가 담긴 리스트
   p1Deck: [],       // p1 선택한 덱 리스트
   p2Deck: [],       // p2 선택한 덱 리스트
   p1Damage: [],     // p1 영창 후 각 주문의 맞은 단어에 대한 데미지
   p2Damage: [],     // p2 영창 후 각 주문의 맞은 단어에 대한 데미지
   onTimer: false,   // timer On / Off 유무
-  attackInfo: {     // 주문 영창시 상대에게 나의 영창 상황을 보낼 데이터
-    transcript: "",
-    selectSpell: "",
-  }
+  transcript: "",   // 주문 영창 실시간 데이터
+  myTurn: false,    // 본인 주문영창인지
 };
 
 const attackSlice = createSlice({
@@ -43,10 +56,16 @@ const attackSlice = createSlice({
     // checkP2Hp(state, action: PayloadAction<number>) {
     //   state.p2Hp = action.payload;
     // },
-    p1DeckList(state, action: PayloadAction<string[]>) {
+    startGame(state) {
+      state.startGame = true;
+    },
+    playersDeckList(state, action: PayloadAction<[]>) {
+      state.playersDeck = action.payload;
+    },
+    p1DeckList(state, action: PayloadAction<object[]>) {
       state.p1Deck = action.payload;
     },
-    p2DeckList(state, action: PayloadAction<string[]>) {
+    p2DeckList(state, action: PayloadAction<object[]>) {
       state.p2Deck = action.payload;
     },
     p1Damage(state, action: PayloadAction<number[]>) {
@@ -64,9 +83,12 @@ const attackSlice = createSlice({
     onTimer(state, action: PayloadAction<boolean>) {
       state.onTimer = action.payload;
     },
-    attackInfo(state, action: PayloadAction<attackInfoType>) {
-      state.attackInfo = action.payload;
+    attackInfo(state, action: PayloadAction<string>) {
+      state.transcript = action.payload;
     },
+    myTurn(state, action: PayloadAction<boolean>) {
+      state.myTurn = action.payload;
+    }
   },
 });
 

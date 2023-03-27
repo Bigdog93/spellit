@@ -6,6 +6,7 @@ import store from "@/store/";
 import { RootState } from '@/store';
 import { playerActions } from "@/store/player";
 import { matchingActions } from './matching';
+import { attackActions } from './attack';
 import { roomActions } from "@/store/room";
 
 const WebSocketContext = createContext<any>(null);
@@ -80,9 +81,25 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
 
       } else if (type === 'toAttack') {
         console.log('toAttack 입니다.')
+        dispatch(attackActions.playersDeckList(info.attackCards));
+
+        // let p1AttackCards = [];
+        // let p2AttackCards = [];
+        // for (let i=0; i<info.attackCards.length; i++) {
+        //   if (info.attackCards[i].isMine === true) {
+        //     p1AttackCards.push(info.attackCards[i].card);
+        //   } else {
+        //     p2AttackCards.push(info.attackCards[i].card);
+        //   }
+        // }
+        // dispatch(attackActions.p1DeckList(p1AttackCards));
+        // dispatch(attackActions.p2DeckList(p2AttackCards));
+
+        dispatch(attackActions.startGame());
 
       } else if (type === 'otherSpell') {
         console.log('otherSpell 입니다.')
+        dispatch(attackActions.attackInfo(info.spell));
         
       } else if (type === 'combo') {
         console.log('combo 입니다.')
