@@ -10,6 +10,7 @@ import com.urs.spellit.game.entity.GameCharacterEntity;
 import com.urs.spellit.member.model.dto.MemberRecordRequestDto;
 import com.urs.spellit.member.model.dto.MemberRecordResponseDto;
 import com.urs.spellit.member.model.dto.MemberResponseDto;
+import com.urs.spellit.member.model.entity.FriendWaitEntity;
 import com.urs.spellit.member.model.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -29,6 +30,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final DeckRepository deckRepository;
     private final CardRepository cardRepository;
+    private final FriendWaitRepository friendWaitRepository;
 
     public MemberResponseDto findMemberInfoById(Long memberId)
     {
@@ -91,5 +93,23 @@ public class MemberService {
         member.get().setUserDeck(DeckEntity.toDeck(deckRepository,member.get(),cards));
         memberRepository.save(member.get());
         return this.getUserDeck(member.get().getId());
+    }
+
+    public List<FriendWaitEntity> addFriendWait(FriendWaitEntity friendEntity) {
+        Optional<Member> member=memberRepository.findByEmail(SecurityUtil.getAnotherMemberEmail(friendEntity.getFriendEmail()));
+        List<FriendWaitEntity> friendWaitEntities=friendWaitRepository.findAllByFriendEmail(member.get().getEmail());
+
+        for(FriendWaitEntity friendWaitEntity : friendWaitEntities)
+        {
+            if(friendEntity.getFriendEmail().equals(friendWaitEntity.getFriendEmail()))
+                throw new RuntimeException("이미 친구요청을 보낸 상대입니다.");
+        }
+
+        friendWaitEntities.add(friendEntity);
+        member.get().changeFriendWaitList(friendWaitEntities);
+        friendWaitRepository.save(friendEntity);
+        memberRepository.save(member.get());
+
+        return friendWaitEntities;
     }
 }
