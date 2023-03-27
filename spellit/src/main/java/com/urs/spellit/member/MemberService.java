@@ -37,7 +37,7 @@ public class MemberService {
             throw new RuntimeException("로그인 유저 정보가 없습니다.");
         }
         MemberResponseDto member = MemberResponseDto.of(optional.get());
-        member.setDeck(gameService.getUserDeck(memberId));
+        member.setDeck(this.getUserDeck(memberId));
         return member;
     }
     public MemberResponseDto findMemberInfoByEmail(String email)
@@ -90,6 +90,6 @@ public class MemberService {
 
         member.get().setUserDeck(DeckEntity.toDeck(deckRepository,member.get(),cards));
         memberRepository.save(member.get());
-        return gameService.getUserDeck(member.get().getId());
+        return this.getUserDeck(member.get().getId());
     }
 }
