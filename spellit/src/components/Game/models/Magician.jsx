@@ -23,6 +23,7 @@ export default function Magician(props) {
 
   return (
     <group {...props} dispose={null} scale={[5, 5, 5]} ref={magicianRef}>
+    {/* <group {...props} dispose={null}  ref={magicianRef}> */}
       <mesh
         geometry={nodes.magician.geometry}
         material={materials.magician}
