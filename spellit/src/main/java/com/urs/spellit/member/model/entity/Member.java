@@ -1,9 +1,10 @@
 package com.urs.spellit.member.model.entity;
 
-import com.urs.spellit.security.auth.entity.Authority;
 import com.urs.spellit.common.model.BaseTimeEntity;
 import com.urs.spellit.game.entity.DeckEntity;
 import com.urs.spellit.game.entity.GameCharacterEntity;
+import com.urs.spellit.member.model.dto.MemberRecordRequestDto;
+import com.urs.spellit.security.auth.entity.Authority;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -52,6 +53,7 @@ public class Member extends BaseTimeEntity {
     @JoinColumn(name = "character_id")
     private GameCharacterEntity gameCharacterEntity;
 
+
     @OneToMany(mappedBy = "member")
     private List<DeckEntity> deck = new ArrayList<>();
 
@@ -76,5 +78,18 @@ public class Member extends BaseTimeEntity {
     {
         this.gameCharacterEntity=gameCharacter;
     }
+    public void changeRecord(MemberRecordRequestDto memberRecordRequestDto)
+    {
+        if((this.exp+= memberRecordRequestDto.getPlusExp())>10000)
+        {
+            this.level+=1;
+            this.exp=0;
+        }
+        if(memberRecordRequestDto.isWon())
+            this.winCount++;
+
+        this.playCount++;
+    }
+    public void setUserDeck(List<DeckEntity> deckList) {this.deck=deckList;}
 
 }

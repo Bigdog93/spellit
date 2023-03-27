@@ -1,8 +1,10 @@
 package com.urs.spellit.member;
 
 import com.urs.spellit.common.util.SecurityUtil;
-import com.urs.spellit.game.entity.DeckEntity;
+import com.urs.spellit.game.entity.CardEntity;
 import com.urs.spellit.game.entity.GameCharacterEntity;
+import com.urs.spellit.member.model.dto.MemberRecordRequestDto;
+import com.urs.spellit.member.model.dto.MemberRecordResponseDto;
 import com.urs.spellit.member.model.dto.MemberResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -34,15 +36,26 @@ public class MemberController {
     }
 
     @GetMapping("/deck") //사용자 덱 정보 요청
-    public ResponseEntity<List<DeckEntity>> getUserDeck()
+    public ResponseEntity<List<CardEntity>> getUserDeck()
     {
         return ResponseEntity.ok(memberService.getUserDeck(SecurityUtil.getCurrentMemberId()));
     }
 
-    @PutMapping("/character") //캐릭터 선택
-    public ResponseEntity<GameCharacterEntity> setMyCharacter(@RequestBody Long characterId)
+    @PostMapping("/deck") //사용자 덱 설정
+    public ResponseEntity<List<CardEntity>> setUserDeck(@RequestBody List<CardEntity> cardEntities)
     {
-        return ResponseEntity.ok(memberService.setMyCharacter(SecurityUtil.getCharacterId(characterId)));
+        return ResponseEntity.ok(memberService.setUserDeck(cardEntities));
     }
 
+    @PutMapping("/character") //캐릭터 선택
+    public ResponseEntity<GameCharacterEntity> setMyCharacter(@RequestBody GameCharacterEntity gameCharacterEntity)
+    {
+        return ResponseEntity.ok(memberService.setMyCharacter(gameCharacterEntity));
+    }
+
+    @PutMapping("/record") //전적 갱신
+    public ResponseEntity<MemberRecordResponseDto> updateRecord(@RequestBody MemberRecordRequestDto memberRecordRequestDto)
+    {
+        return ResponseEntity.ok(memberService.updateRecord(memberRecordRequestDto));
+    }
 }

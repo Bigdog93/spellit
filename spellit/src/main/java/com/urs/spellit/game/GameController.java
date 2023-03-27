@@ -1,11 +1,9 @@
 package com.urs.spellit.game;
 
-import com.urs.spellit.game.dto.CardResponseEntity;
 import com.urs.spellit.game.entity.CardEntity;
 import com.urs.spellit.game.entity.GameCharacterEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
