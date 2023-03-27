@@ -175,10 +175,15 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 					}
 					break;
 				case "gameOver": // 게임 끝
-					isReady[me.getIdx()] =true;
-					if(isReady(isReady, room, 5)) {
-						room.sendMessage(makeTextMsg("gameOver", infoMap));
-					}
+//					isReady[me.getIdx()] =true;
+//					if(isReady(isReady, room, 5)) {
+//						room.sendMessage(makeTextMsg("gameOver", infoMap));
+//					}
+					infoMap.put("winner", true);
+					other.getSession().sendMessage(makeTextMsg("gameOver", infoMap));
+					infoMap.put("winner", false);
+					me.getSession().sendMessage(makeTextMsg("gameOver", infoMap));
+
 					break;
 				case "friendRequest":
 					infoMap.put("memberId", memberId);
