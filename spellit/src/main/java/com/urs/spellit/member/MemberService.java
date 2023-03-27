@@ -96,19 +96,20 @@ public class MemberService {
     }
 
     public List<FriendWaitEntity> addFriendWait(FriendWaitEntity friendEntity) {
-        Optional<Member> member=memberRepository.findByEmail(SecurityUtil.getAnotherMemberEmail(friendEntity.getFriendEmail()));
-        List<FriendWaitEntity> friendWaitEntities=friendWaitRepository.findAllByFriendEmail(member.get().getEmail());
+        //Optional<Member> friendInfo=memberRepository.findByEmail(SecurityUtil.getAnotherMemberEmail(friendEntity.getFriendEmail()));
+        Optional<Member> myInfo=memberRepository.findById(SecurityUtil.getCurrentMemberId());
+        List<FriendWaitEntity> friendWaitEntities=friendWaitRepository.findAllByMemberId(myInfo.get().getId());
 
         for(FriendWaitEntity friendWaitEntity : friendWaitEntities)
         {
             if(friendEntity.getFriendEmail().equals(friendWaitEntity.getFriendEmail()))
                 throw new RuntimeException("이미 친구요청을 보낸 상대입니다.");
         }
-
+        friendEntity.setMember(myInfo.get());
         friendWaitEntities.add(friendEntity);
-        member.get().changeFriendWaitList(friendWaitEntities);
+        myInfo.get().changeFriendWaitList(friendWaitEntities);
         friendWaitRepository.save(friendEntity);
-        memberRepository.save(member.get());
+        //memberRepository.save(myInfo.get());
 
         return friendWaitEntities;
     }
