@@ -1,10 +1,13 @@
 
 
 import { useState, useRef } from "react";
-import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { MathUtils } from "three";
+import { useGLTF } from "@react-three/drei";
 
+import { RootState } from "@/store/";
 
 export default function MypageButton(props) {
   const { nodes, materials } = useGLTF("./models/mypagebutton.glb");
@@ -22,8 +25,17 @@ export default function MypageButton(props) {
     myPageRef.current.position.setY(y);
   });
 
+  // 페이지 이동
+  const navigate = useNavigate();
+
+  const id = useSelector((state: RootState) => {state.user.id})
+
+  const toMypage = () => {
+    navigate(`/profile/${id}`)
+  }
+
   return (
-    <group {...props} dispose={null} scale={[1.5, 1.5, 1.5]}>
+    <group {...props} dispose={null} scale={[1.5, 1.5, 1.5]} onClick={toMypage}>
 			
       <mesh
         ref={myPageRef}
