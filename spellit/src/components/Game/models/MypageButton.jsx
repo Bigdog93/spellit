@@ -4,6 +4,8 @@ import { useState, useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { MathUtils } from "three";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 
 export default function MypageButton(props) {
@@ -22,8 +24,14 @@ export default function MypageButton(props) {
     myPageRef.current.position.setY(y);
   });
 
+  const navigate = useNavigate();
+  const id = useSelector((state) => state.user.id);
+  const toMyPage = () => {
+    navigate(`/profile/${id}`)
+  };
+
   return (
-    <group {...props} dispose={null} scale={[1.5, 1.5, 1.5]}>
+    <group {...props} dispose={null} scale={[1.5, 1.5, 1.5]} onClick={toMyPage}>
 			
       <mesh
         ref={myPageRef}

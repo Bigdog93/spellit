@@ -18,6 +18,7 @@ import Test from "./components/Test";
 import OpenViduTest from "./components/Game/OpenVidu/OpenVidu";
 import Attack from "./components/Game/Attack";
 import Spell from "./components/Game/Attack/Spell";
+import Profile from "./components/Profile";
 
 // 임시
 import SKills from "@/components/Settle/SKills";
@@ -53,6 +54,7 @@ function App() {
           <Route path="result" element={<Result />} />
           <Route path="spell" element={<Spell />} />
           <Route path="skills" element={<SKills />} />
+          <Route path="profile/:id" element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </WebSocketProvider>
