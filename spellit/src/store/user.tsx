@@ -33,6 +33,8 @@ type userInitialType = {
   nickname: string,
   playCount: number,
   winCount: number,
+  looseCount: number,
+  drawCount: number,
 }
 
 // type userInitialType = userInfo
@@ -47,6 +49,8 @@ const userInitialState: userInitialType = {
   nickname: '',
   playCount: 0,
   winCount: 0,
+  looseCount: 0,
+  drawCount: 0
 }
 
 const token = sessionStorage.getItem("token");
@@ -64,6 +68,8 @@ const userSlice = createSlice({
       state.nickname = action.payload.nickname
       state.playCount = action.payload.playCount
       state.winCount = action.payload.winCount
+      state.looseCount = action.payload.looseCount
+      state.drawCount = action.payload.drawCount
     },
     setDeck(state, action: PayloadAction<Array<DeckType>>) {
       state.deck = action.payload

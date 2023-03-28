@@ -1,160 +1,129 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store/";
-import { WebSocketContext } from "@/store/websocket";
-
-import ProfileHp from "../Items/ProfileHp";
-import Timer from "../Items/Timer";
+import { useState, useEffect, useRef } from "react";
+import { AttackType, CardType } from '@/utils/Types'
 
 import './Spell.css'
-
-import SpellBox from "../../../assets/InGame/SpellBox.png";
-import SkillBar from "../../../assets/InGame/SkillBar.png";
-import { attackActions } from "@/store/attack";
-import { costActions } from "@/store/cost";
-import player from "@/store/player";
-import MyTurn from "./MyTurn";
-import YourTurn from "./YourTurn";
+import Timer from "@/components/Game/Items/Timer";
 
 
-const Spell = (props: any) => {
-    const dispatch = useDispatch();
-    
-    const selectSpell = props.cardInfo.card;
-    console.log('selectSpell : ', selectSpell);
-    
-    // const { send } = useContext(WebSocketContext);
-    
-    // const memberId = useSelector((state: RootState) => state.user.id);
-    // const roomId = useSelector((state: RootState) => state.room.roomId);
+interface Spell {
+    name: string;
+    content: string;
+    time: number;
+}
 
-    // 타이머 띄우기
-    // const [sec, setSec] = useState<number>(0);
-    // const sec = useSelector((state: RootState) => (state.attack))
-    const sec = useSelector((state: RootState) => (state.attack.sec));
+const Spell = ({attack}: {attack: AttackType}) => {
+  console.log('attack ',attack)
+  console.log('spell ',attack.card.spell)
+  
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-    // 타이머 사용 유무
-    // const [onTimer, setOnTimer] = useState<boolean>(false);
-    const onTimer = useSelector((state: RootState) => (state.attack.onTimer));
+  // 인스턴스 생성
+  const recognition = new SpeechRecognition();
 
-    // 주문영창 스킬 리스트
-    // const [damageList, setDamageList] = useState<number[]>([]);
+  // true면 말을 실시간으로 출력 false면 말을 마친 후에 출력
+  recognition.interimResults = true;
+  // 값이 없으면 HTML의 <html lang="en">을 참고합니다. ko-KR, en-US
+  recognition.lang = "ko-KR";
+  // true means continuous, and false means not continuous (single result each time.)
+  // true면 음성 인식이 안 끝나고 계속 됩니다.
+  recognition.continuous = true;
+  // 숫자가 작을수록 발음대로 적고, 크면 문장의 적합도에 따라 알맞은 단어로 대체합니다.
+  // maxAlternatives가 크면 이상한 단어도 문장에 적합하게 알아서 수정합니다.
+  recognition.maxAlternatives = 0;
 
-    // const sendSpell = (transcript: string) => {
-    //   send({
-    //     event: 'spell',
-    //     roomId: roomId,
-    //     memberId: memberId,
-    //     data: transcript,
-    //   })
-    // };
+  const [spanEl, setSpanEl] = useState<JSX.Element[]>([]);
+  const reg = /[~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/ ]/gim;
 
-    const myTurn = useSelector((state: RootState) => (state.attack.myTurn));
-    const playersDeckList = useSelector((state: RootState) => (state.attack.playersDeck));
 
-    // const myDeckList = useSelector((state: RootState) => state.attack.p1Deck);
-    // const otherDeckList = useSelector((state: RootState) => (state.attack.p2Deck));
+  const spanList: JSX.Element[] = [];
 
-    // const [spanEl, setSpanEl] = useState<JSX.Element[]>([]);
-    // const reg = /[~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/ ]/gim;
+  // 타이머 띄우기
+  const [sec, setSec] = useState<number>(0);
 
-    // const spanList: JSX.Element[] = [];
-    
-    const transcript = useSelector((state: RootState) => (state.attack.transcript));
-    
-
-    const navigate = useNavigate();
-    // const [idx, setIdx] = useState(0);
-
-    // useEffect(() => {
-    //   console.log('myturn 여부 : ', myTurn);
-      // console.log('spell idx: ', idx);
-      // if (idx >= playersDeckList.length) {
-      //   navigate('/ready');
-      // }
-
-      // if (myTurn) {
-      //   MyTurn(playersDeckList[idx].card);
-      //   // sendSpell(transcript);
-      //   setIdx(idx+1);
-      // } else {
-      //   setIdx(idx+1);
-      // }
-
-      // if (idx == playersDeckList.length) {
-      //   navigate('/settle');
-      // }
-        
-        // 주문 삭제하기
-        // if (idx == myDeckList.length) {
-        //   const spell = document.querySelectorAll('span')
-        //   for (let i=0; i<spell.length; i++) {
-        //     spell[i].remove()
-        //   }
-          
-        //   const percent = document.querySelector("percent") as HTMLDivElement;
-        //   percent.remove()
-
-        // }
-    // }, [idx])
-
-    const defaultHP = useSelector((state: RootState) => (state.attack.defaultHp));
-    const p1Hp = useSelector((state: RootState) => (state.attack.p1Hp));
-    const p2Hp = useSelector((state: RootState) => (state.attack.p2Hp));
-    
-    // console.log(p1Hp);
-    
-    const p1HpStyle = {
-        width: `${p1Hp}px`,
-        backgroundColor: p1Hp > defaultHP/4 ? '#FFF500' : '#FF0000' ,
+  // 주문 버튼 클릭시 음성 인식 시작
+  const handleClick = (attack: AttackType) => {
+    const isMine = attack.isMine
+    const card = attack.card
+    let spellLength = 0; // 띄어쓰기 제거한 주문의 길이
+    for (let i = 0; i < card.spell.length; i++) {
+        if (!card.spell[i].match(reg)) {
+        spellLength++;
+        }
+        let spanClassName = `spell`;
+        if (card.spell[i] != " ") {
+        spanClassName = `spell-${spellLength - 1}`;
+        }
+        const newSpanEl = <span id={spanClassName}>{card.spell[i]}</span>; // spanEl에 id 값 넣어주기
+        spanList.push(newSpanEl);
     }
-    const p2HpStyle = {
-        width: `${p2Hp}px`,
-        backgroundColor: p2Hp > defaultHP/4 ? '#FFF500' : '#FF0000' ,
-    }
+    setSpanEl(spanList);
 
-    return (
-        <div className="attack-bg">
-          <div className="attack-top-items">
-            <div className='first-hp-box'>
-                <ProfileHp></ProfileHp>
-                <div className="first-hp-bar" style={p1HpStyle}></div>
-            </div>
-            <Timer time={sec}></Timer>
-            <div className='second-hp-box'>
-                <ProfileHp></ProfileHp>
-                <div className="second-hp-bar" style={p2HpStyle}></div>
-            </div>
-          </div>
+    const trimText = card.spell.replaceAll(" ", ""); // 띄어쓰기 제거한 주문
+    // console.log(trimText);
 
-          <div id="percent"></div>
+    recognition.addEventListener("result", (e) => {
+        console.log("말하는 중이잖아요?");
+        let transcript = e.results[0][0].transcript; // 인식된 음성 글자
+        transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
+        console.log(transcript);
 
-          
-          <div className="attack-bottom-itmes">
-            <div className="SpellBox">
-                <img style={{ width: 800, height: 400}} src={SpellBox} alt="" />
-                {myTurn ? <MyTurn selectSpell={selectSpell}></MyTurn> : <YourTurn selectSpell={selectSpell}></YourTurn>}
-                {/* <div id='origin'>{spanEl}</div> */}
-            </div>
+        let correct = 0;
+        console.log("------------------------------------------------");
+        for (let i = 0; i < transcript.length; i++) {
+            if (transcript[i] == trimText[i]) {
+                const element = document.getElementById(`spell-${i}`);
 
-            <div className="spell-bar-box">
-              <img src={SkillBar} alt="" style={{width: '100%', height: '120px'}} />
-              <div className="spells">
-                {playersDeckList.map((c: any, index: number) => (
-                  <img 
-                    style={{height: '100px', margin: '10px'}}
-                    key={index} 
-                    src={require(`../../../assets/card/icon/${c.card?.code}.png`)} 
-                    alt={c.card.code}
-                  ></img>
-                ))}
-              </div>
-            </div>
+                const correctColor = `${card.code}-correct`;
+                element?.classList.add(correctColor);
+                correct++;
+            }
+        }
+        const percentEl = document.getElementById("percent") as HTMLDivElement;
+        const correctPercent = Math.round((correct / spellLength) * 100);
+        percentEl.innerText = `총 ${spellLength}개 중 ${correct}개 맞음 : ${correctPercent} %`;
+    });
 
-          </div>
+    // 음성 인식 시작
+    recognition.start();
+    setSec(card.cost);
+    console.log('SpeechRecognition start!')
+
+    // 타이머
+    const interval = setInterval(() => {
+        setSec(prevSec => prevSec - 1);
+    }, 1000)
+    
+    // 주문 제한 시간 흐른 후 음성인식 종료
+    setTimeout(() => {
+        recognition.stop();
+        clearInterval(interval);
+        console.log('SpeechRecognition end!')
+    }, card.cost*1000);
+  };
+
+  useEffect(()=>{
+    handleClick(attack)
+  }, [])
+  
+  return (
+      <>
+        <Timer time={sec}></Timer>
+        {/* <button onClick={() => {handleClick(sparkSpell)}}>뇌전의 창</button>
+        <button onClick={() => {handleClick(iceSpell)}}>영원의 동토</button>
+        <button onClick={() => {handleClick(stormSpell)}}>남양의 폭풍</button>
+        <button onClick={() => {handleClick(fireSpell)}}>화염탄</button>
+        <button onClick={() => {handleClick(lightSpell)}}>멸마의 성휘</button>
+        <button onClick={() => {handleClick(darkSpell)}}>무광의 심연</button>
+        <button onClick={() => {handleClick(windSpell)}}>풍화의 검</button>
+        <br /> */}
+        <div className="SpellBox">
+            <img style={{ width: 800, height: 400}} src="assets/InGame/SpellBox.png" alt="" />
+            <div id='origin'>{spanEl}</div>
         </div>
-    )
+        <div className="words"></div>
+        <div id="percent"></div>
+      </>
+  )
 }
 
 export default Spell;

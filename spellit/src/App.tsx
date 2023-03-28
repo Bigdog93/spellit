@@ -17,8 +17,8 @@ import Result from "./components/Game/Result";
 import Test from "./components/Test";
 import OpenViduTest from "./components/Game/OpenVidu/OpenVidu";
 import Attack from "./components/Game/Attack";
-import Spell from "./components/Game/Attack/Spell";
-
+// import Spell from "./components/Game/Attack/Spell";
+import STT from "./components/Test/STT";
 // 임시
 import SKills from "@/components/Settle/SKills";
 
@@ -51,8 +51,9 @@ function App() {
           <Route path="openviduTest" element={<OpenViduTest />} />
           <Route path="settle" element={<Settle />} />
           <Route path="result" element={<Result />} />
-          <Route path="spell" element={<Spell />} />
+          {/* <Route path="spell" element={<Spell />} /> */}
           <Route path="skills" element={<SKills />} />
+          <Route path="stt" element={<STT />} />
         </Routes>
       </BrowserRouter>
     </WebSocketProvider>
