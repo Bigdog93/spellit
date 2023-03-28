@@ -3,7 +3,7 @@ import io
 from flask_cors import CORS, cross_origin
 from flask import Flask, jsonify, request  # 서버 구현을 위한 Flask 객체 import
 from flask_restx import Api, Resource  # Api 구현을 위한 Api 객체 import
-import soundfile
+# import soundfile
 import predict_torch_img as pti
 
 
@@ -67,5 +67,5 @@ class VoiceTest(Resource):
 
 if __name__ == "__main__":
     print("앱 실행 전")
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='localhost', port=5000)
     print("앱 실행 후")
