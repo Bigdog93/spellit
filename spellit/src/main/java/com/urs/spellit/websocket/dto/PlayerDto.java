@@ -25,6 +25,7 @@ public class PlayerDto {
 	private int winCount;
 	private int looseCount;
 	private int drawCount;
+	private String profileMsg;
 	private int cost;
 	// 추후 추가 예정
 	private GameCharacterEntity gameCharacterEntity;
@@ -46,6 +47,7 @@ public class PlayerDto {
 				.looseCount(member.getLooseCount())
 				.drawCount(member.getDrawCount())
 				.gameCharacterEntity(member.getGameCharacterEntity())
+				.profileMsg(member.getProfileMsg())
 				.deck(new ArrayList<>())
 				.selectedCards(new ArrayList<>())
 //				.deck(member.getDeck())

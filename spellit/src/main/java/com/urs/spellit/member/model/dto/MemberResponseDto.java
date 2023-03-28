@@ -22,6 +22,7 @@ public class MemberResponseDto {
     private int winCount;
     private int looseCount;
     private int drawCount;
+    private String profileMsg;
     private GameCharacterEntity gameCharacter;
     private List<CardEntity> deck;
     private Boolean isOnline;
@@ -37,6 +38,7 @@ public class MemberResponseDto {
                 .winCount(member.getWinCount())
                 .looseCount(member.getLooseCount())
                 .drawCount(member.getDrawCount())
+                .profileMsg(member.getProfileMsg())
                 .gameCharacter(member.getGameCharacterEntity())
                 .isOnline(member.getIsOnline())
                 .build();
