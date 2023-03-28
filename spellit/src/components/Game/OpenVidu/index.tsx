@@ -4,7 +4,7 @@ import TextInputBox from "../../Test/TextInputBox";
 import OpenViduVideo from '@/components/Game/OpenVidu/OpenVidu'
 // import { OpenviduProvider } from '@/store/openvidu'
 
-const OpenViduTest = () => {
+const OpenVidu = () => {
   return (
     <div>
       {/* <WebsocektProvider> */}
@@ -17,4 +17,4 @@ const OpenViduTest = () => {
     </div>
   )
 };
-export default OpenViduTest;
+export default OpenVidu;
