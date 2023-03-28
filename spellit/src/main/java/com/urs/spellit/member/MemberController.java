@@ -57,10 +57,15 @@ public class MemberController {
         return ResponseEntity.ok(memberService.updateRecord(memberRecordRequestDto));
     }
 
-    @PostMapping("/friend") //친구 추가 요청
+    @PostMapping("/friend/ask") //친구 신청
     public ResponseEntity<FriendWaitResponseDto> addFriendWait(@RequestBody FriendWaitRequestDto friendWaitRequestDto)
     {
         return ResponseEntity.ok(memberService.addFriendWait(friendWaitRequestDto));
     }
 
+    @PostMapping("/friend/accept") //친구 수락
+    public ResponseEntity<List<FriendResponseDto>> addFriend(@RequestBody FriendRequestDto friendRequestDto)
+    {
+        return ResponseEntity.ok(memberService.addFriend(friendRequestDto));
+    }
 }

@@ -60,6 +60,9 @@ public class Member extends BaseTimeEntity {
     @OneToMany(mappedBy="member")
     private List<FriendWaitEntity> friendWaitEntities=new ArrayList<>();
 
+    @OneToMany(mappedBy="member")
+    private List<Friend> friends=new ArrayList<>();
+
     @Column
     @ColumnDefault("false")
     private Boolean isOnline;

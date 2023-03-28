@@ -3,6 +3,7 @@ package com.urs.spellit.member.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name="friend_wait")
 @Data
@@ -34,5 +35,16 @@ public class FriendWaitEntity {
                 .member(friend)
                 .build();
 
+    }
+    public static FriendWaitEntity checkExistsInWaitList(List<FriendWaitEntity> friendWaitList, Long memberId)
+    {
+        for(FriendWaitEntity WaitFriend : friendWaitList)
+        {
+            if(WaitFriend.getFriendId()==memberId)
+            {
+                return WaitFriend;
+            }
+        }
+        return null;
     }
 }
