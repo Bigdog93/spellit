@@ -1,83 +1,97 @@
-.settle-bg {
-    height: 100vh;
-    background: url(../../assets/InGame/BgImg.png) no-repeat center;
-    background-size: cover;
-
-    /* padding-left: 5px;
-    padding-right: 5px; */
+.box {
+  width: 100wh;
+  height: 100vh;
+  background-image: url("~@/assets/settle/battle-background.png");
+  background-size: cover;
+  position: relative;
 }
-
-.settle-top-itmes {
-    display: flex;
-    justify-content: space-between;
-
-    min-width: 1000px;
+.box2 {
+  width: 100wh;
+  height: 100vh;
+  background-image: url("~@/assets/settle/battle-background.png");
+  background-size: cover;
+  position: relative;
+  animation: shakebg 0.2s infinite;
+  animation-delay: 2s;
 }
-
-.first-hp-box, .second-hp-box {
-    position: relative;
-    display: inline-block;
-    /* margin: 10px; */
-}
-
-.first-hp-bar, .second-hp-bar {
-    /* visibility: hidden; */
-    box-sizing: border-box;
-    display: flex;
-    position: absolute;
-
-    height: 45px;
-    top: 38px;
-    left: 118px;
-
-    background: #FFF500;
-    border: 1px solid #FFFFFF;
-    box-shadow: 0px 0px 6px rgba(255, 255, 255, 0.8);
-    border-radius: 11px;
-}
-
-/* .first-hp-bar {
-    left: 7px;
-}
-
-.second-hp-bar {
-    right: 7px;
-} */
-
-.settle-bottom-items {
-    display: flex;
-    justify-content: space-between;
-}
-
-.first-player, .second-player {
-    /* margin: 100px; */
-    position: relative;
-    animation-name: player-move-up-down;
-    animation-duration: 2.5s;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
+@keyframes shakebg {
+  0% {
+    left: 0;
   }
-  
-@keyframes player-move-up-down {
-    0% {top: 0;}
-    50% {top: 30px;}
-    100% {top: 0;}
+  25% {
+    left: -3px;
+  }
+  50% {
+    left: 0;
+  }
+  75% {
+    left: 3px;
+  }
+  100% {
+    left: 0;
+  }
 }
 
-.first-player img {
-    position: relative;
-    animation-name: effect-move-up-down;
-    animation-duration: 1.5s;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
+.cha1 {
+  position: absolute;
+  height: 450px;
+
+  top: 400px;
+  left: 180px;
 }
 
-@keyframes effect-move-up-down {
-    0% {top: 0;}
-    50% {top: 20px;}
-    100% {top: 0;}
+.cha2 {
+  position: absolute;
+  height: 450px;
+  top: 400px;
+  right: 180px;
+}
+.cha2-shake {
+  position: absolute;
+  height: 450px;
+  top: 400px;
+  right: 180px;
+  animation: shakecha 2s, blink-effect 1s step-end 3;
+  filter: brightness(20%);
 }
 
-.hidden-effect {
-    visibility: hidden;
+@keyframes shakecha {
+  2% {
+    transform: translateX(40px);
+  }
+
+  8% {
+    transform: translateX(0px);
+  }
+  11% {
+    transform: translateX(110px);
+  }
+  /* 17% {
+		transform:translateX(110px);
+	} */
+
+  60% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes blink-effect {
+  50% {
+    opacity: 0;
+  }
+}
+
+.hp-box {
+  box-sizing: border-box;
+
+  /* position: absolute; */
+  width: 476px;
+  height: 57px;
+  left: 166px;
+  top: 58px;
+
+  background: #fff500;
+  border: 1.3px solid #ffffff;
+  box-shadow: 0px 0px 6px rgba(255, 255, 255, 0.8);
+  border-radius: 14px;
 }

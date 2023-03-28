@@ -1,5 +1,3 @@
-
-
 import * as THREE from "three";
 import Nebula, { SpriteRenderer } from "three-nebula";
 
@@ -22,5 +20,5 @@ class NebulaEngine {
     return loaded.addRenderer(nebulaRenderer);
   }
 }
-
+// eslint-disable-next-line
 export default new NebulaEngine();

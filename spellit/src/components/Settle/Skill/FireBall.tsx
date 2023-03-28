@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Vector3 } from "three";
-import * as THREE from "three";
 import NebulaEngine, {
   NebulaSystem,
 } from "@/components/Settle/engine/NebulaEngine";
@@ -17,7 +16,6 @@ const FireBallWrapper: React.FC<Props> = ({
   handleButton,
   handleDone,
 }: Props) => {
-  const cameraRef = useRef<THREE.PerspectiveCamera>(null);
   const { scene, camera } = useThree();
   const [particleSystem, setParticleSystem] = useState<NebulaSystem | null>();
   const [currentPosition, setCurrentPosition] = useState(new Vector3(0, 7, 0));

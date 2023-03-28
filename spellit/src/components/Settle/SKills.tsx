@@ -2,15 +2,16 @@ import { useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 // import { OrbitControls } from "@react-three/drei";
 
-import "./Settle.css";
+import "./Skills.css";
 // import FireBall from "@//components/Settle/Skill/FireBall";
 import FireBall from "@/components/Settle/Skill/FireBall";
 // import Thunder from "./Skill/Thunder";
 // import Smoke from "./Skill/Smoke";
-import RUNA_attack from "@/assets/character/RUNA_attack.png";
-import SpellBar from "../Game/Items/SpellBar";
+// import SpellBar from "../Game/Items/SpellBar";
 
-function Settle() {
+import LUNA_attack from "@/assets/character/LUNA_attack.png";
+
+function Skills() {
   const [isMoving, setIsMoving] = useState<boolean>(false);
   const [isDone, setIsDone] = useState<boolean>(false);
 
@@ -59,7 +60,7 @@ function Settle() {
         audio2.currentTime = 0;
       }
     };
-  }, [isMoving]);
+  }, [isMoving, isDone]);
 
   const attacked = isDone ? "cha2-shake" : "cha2";
   const back = isMoving ? "box2" : "box";
@@ -68,8 +69,8 @@ function Settle() {
       <div className={back}>
         <button onClick={handleButton}>button</button>
         {/* key를 바꾸면 강제로 재렌더링 되면서 잔상이 사라짐, but 비효율적일 수 있음 */}
-        <img className="cha1" src={RUNA_attack} alt="" />
-        <img className={attacked} src={RUNA_attack} alt="" />
+        <img className="cha1" src={LUNA_attack} alt="" />
+        <img className={attacked} src={LUNA_attack} alt="" />
         <Canvas key={isMoving.toString()}>
           {/* <OrbitControls /> */}
           {isMoving && (
@@ -85,4 +86,4 @@ function Settle() {
   );
 }
 
-export default Settle;
+export default Skills;

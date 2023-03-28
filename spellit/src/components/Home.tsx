@@ -1,5 +1,5 @@
 // import * as THREE from "three";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 // import { OrbitControls } from "@react-three/drei";
 
