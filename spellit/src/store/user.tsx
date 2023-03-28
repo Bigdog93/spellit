@@ -1,16 +1,7 @@
 import API from '@/utils/API';
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit' 
-
-type DeckType = {
-  id : number,
-  code : string,
-  title : string,
-  spell : string,
-  cost : number,
-  damage : number,
-  attribute : number,
-}
+import { DeckType } from '@/utils/Types'
 
 type GameCharacterType = {
   id : number,
@@ -33,6 +24,9 @@ type userInitialType = {
   nickname: string,
   playCount: number,
   winCount: number,
+  looseCount: number,
+  drawCount: number,
+  isOnline: boolean,
 }
 
 // type userInitialType = userInfo
@@ -47,6 +41,9 @@ const userInitialState: userInitialType = {
   nickname: '',
   playCount: 0,
   winCount: 0,
+  looseCount: 0,
+  drawCount: 0,
+  isOnline: false,
 }
 
 const token = sessionStorage.getItem("token");
@@ -64,6 +61,7 @@ const userSlice = createSlice({
       state.nickname = action.payload.nickname
       state.playCount = action.payload.playCount
       state.winCount = action.payload.winCount
+      state.isOnline = action.payload.isOnline
     },
     setDeck(state, action: PayloadAction<Array<DeckType>>) {
       state.deck = action.payload

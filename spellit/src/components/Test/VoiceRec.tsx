@@ -81,7 +81,7 @@ const VoiceRec = () => {
 
         
 
-        fetch("http://localhost:5000/voicetest", {
+        fetch("https://j8d201.p.ssafy.io:5001/voicetest", {
             method: "POST",
             headers : {},
             body : fd
