@@ -10,7 +10,7 @@ function Timer(props:Time) {
     return (
         <>
             <div id="TimerBox">
-                <img src={TimerImg} alt="" />
+                <img src={TimerImg} alt="" style={{width: '40px', height: '45px'}} />
                 <h1>{props.time}</h1>
             </div>
         </>
