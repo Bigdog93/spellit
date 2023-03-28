@@ -11,14 +11,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class FriendWaitResponseDto {
-    private Long friendId;
-    private Long memberId;
+    private Long askMemberId;
+    private Long receiveMemberId;
 
     public static FriendWaitResponseDto toResponse(FriendWaitEntity friendWaitEntity)
     {
         return FriendWaitResponseDto.builder()
-                .friendId(friendWaitEntity.getFriendId())
-                .memberId(friendWaitEntity.getMember().getId())
+                .askMemberId(friendWaitEntity.getFriendId())
+                .receiveMemberId(friendWaitEntity.getMember().getId())
                 .build();
     }
 
