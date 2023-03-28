@@ -33,11 +33,10 @@ const OpenViduVideo = () => {
     const [OV, setOV] = useState<OpenVidu | null>(new OpenVidu());
     const [session, setSession] = useState<Session | undefined>(OV?.initSession());
     const [mainStreamManager, setMainStreamManager] = useState<Publisher | undefined>(undefined) // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
-    let [publisher, setPublisher] = useState<Publisher | undefined>(undefined);
+    const [publisher, setPublisher] = useState<Publisher | undefined>(undefined);
     const [subscribers, setSubscribers] = useState<Array<StreamManager>>([]);
     const [token, setToken] = useState<string | null>(null);
-
-    
+    const { send } = useContext(WebSocketContext);
     const myTurn = useSelector((state: RootState) => (state.attack.myTurn));
 
     // const [mute, setMute] = useState<boolean>(true);
@@ -221,7 +220,6 @@ const OpenViduVideo = () => {
         console.log(publisher);
         console.log(mainStreamManager);
     }
-    const { send } = useContext(WebSocketContext);
     function testFunction() {
         send({
             event: 'test',
@@ -255,8 +253,8 @@ const OpenViduVideo = () => {
             {/* <button onClick={joinSession}>joinSession</button> */}
             {/* <button onClick={showSubs}>showSubs</button> */}
             {/* <button onClick={testFunction}>testFunction</button> */}
-            {/* <button onClick={muteOn}>muteOn</button> */}
-            {/* <button onClick={muteOff}>muteOff</button> */}
+            <button onClick={muteOn}>muteOn</button>
+            <button onClick={muteOff}>muteOff</button>
             {subscribers.map((sub:any, idx:number) => {
                 return (
                     <div key={idx}>
