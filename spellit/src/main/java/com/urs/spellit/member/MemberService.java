@@ -95,26 +95,27 @@ public class MemberService {
     }
 
     public FriendWaitResponseDto addFriendWait(FriendWaitRequestDto friendWaitRequestDto) {
-        Optional<Member> myInfo=memberRepository.findById(SecurityUtil.getCurrentMemberId()); //나
-        List<FriendWaitEntity> friendWaitEntities=friendWaitRepository.findAllByMemberId(myInfo.get().getId()); //현재 친구대기 리스트
+        Long friendId=friendWaitRequestDto.getFriendId(); //친구Id
+        String friendEmail=memberRepository.findById(friendId).get().getEmail(); //친구Email
+        Member member=memberRepository.findById(SecurityUtil.getCurrentMemberId()).get(); //나
+        Member friend=memberRepository.findById(friendId).get(); //친구
 
-        if(friendWaitRequestDto.getFriendId()==myInfo.get().getId())
+        List<FriendWaitEntity> friendWaitEntities=friendWaitRepository.findAllByMemberId(friendId); //상대의 친구대기 리스트
+
+        if(friendId==member.getId())
             throw new RuntimeException(("나에게 친구요청을 보낼 수 없습니다."));
 
         for(FriendWaitEntity friendWaitEntity : friendWaitEntities)
         {
-            if(friendWaitRequestDto.getFriendId()==friendWaitEntity.getFriendId()) //현재 친구 대기 리스트에 이미 있음
+            if(member.getId()==friendWaitEntity.getFriendId()) //내가 이미 상대의 친구 대기 리스트에 있음
                 throw new RuntimeException("이미 친구요청을 보낸 상대입니다.");
         }
 
         //친구 대기 리스트에 없음//
-        Long friendId=friendWaitRequestDto.getFriendId(); //친구Id
-        String friendEmail=memberRepository.findById(friendId).get().getEmail(); //친구Email
-        Member member=myInfo.get(); //나
 
-        FriendWaitEntity friendWaitEntity=FriendWaitEntity.toBuild(friendId,friendEmail,member); //친구 대기 객체 생성
-        friendWaitEntities.add(friendWaitEntity); //친구 대기 리스트에 추가
-        myInfo.get().changeFriendWaitList(friendWaitEntities);
+        FriendWaitEntity friendWaitEntity=FriendWaitEntity.toBuild(member.getId(), member.getEmail(), friend); //나 대기 객체 생성
+        friendWaitEntities.add(friendWaitEntity); //상대의 친구 대기 리스트에 나를 추가
+        friend.changeFriendWaitList(friendWaitEntities);
         friendWaitRepository.save(friendWaitEntity); //친구 대기 리스트 저장
 
         return FriendWaitResponseDto.toResponse(friendWaitEntity); //친구Id, 내 Id 반환

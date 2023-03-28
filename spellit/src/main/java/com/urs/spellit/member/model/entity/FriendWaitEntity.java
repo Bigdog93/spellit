@@ -26,12 +26,12 @@ public class FriendWaitEntity {
     @NonNull
     private Member member;
 
-    public static FriendWaitEntity toBuild(Long friendId, String friendEmail, Member member)
+    public static FriendWaitEntity toBuild(Long myId, String myEmail, Member friend)
     {
         return FriendWaitEntity.builder()
-                .friendId(friendId)
-                .friendEmail(friendEmail)
-                .member(member)
+                .friendId(myId)
+                .friendEmail(myEmail)
+                .member(friend)
                 .build();
 
     }
