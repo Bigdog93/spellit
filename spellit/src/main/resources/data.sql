@@ -23,11 +23,11 @@ VALUES
     (14,"dark2", "탐닉의 심연", "끌어당겨라 ,집어삼켜라, 빛을 질투하는 어둠이여, 게걸스럽게 탐하여 모든것을 빼앗아라", 9, 230, 5);
 
 INSERT IGNORE INTO game_character
-(character_name, english_name, stand, hurt, attack, winner, combo)
+(character_id,character_name, english_name, stand, hurt, attack, winner, combo)
 VALUES
-("곽춘배", "CB", "", "", "", "", ""),
-("키리카", "AK", "", "", "", "", ""),
-("루나", "LUNA", "", "", "", "", "");
+(1,"곽춘배", "CB", "", "", "", "", ""),
+(2,"키리카", "AK", "", "", "", "", ""),
+(3,"루나", "LUNA", "", "", "", "", "");
 -- <<<<<<< HEAD
 --
 --
@@ -76,12 +76,12 @@ VALUES
 -- (6,'2023-03-27 13:13:57.399962','2023-03-27 13:13:57.399962','ROLE_USER','test3@test.net'	0,0,0,'제발돼라','$2a$10$ixdLVUAxjWM3vot.YX/p4OO9xjwMKmVdXHMlv8yduBMqQacVH4TWC',0, ,0,1);
 
 --
--- INSERT IGNORE INTO `deck`
--- VALUES
---     (7,4,4),
---     (8,5,4),
---     (9,6,4),
---     (10,6,1),
---     (11,1,1),
---     (12,4,1);
+INSERT IGNORE INTO `deck`
+VALUES
+    (1,4,2),
+    (2,5,2),
+    (3,6,2),
+    (4,6,1),
+    (5,1,1),
+    (6,4,1);
 -->>>>>>> feature/be/user_crud
