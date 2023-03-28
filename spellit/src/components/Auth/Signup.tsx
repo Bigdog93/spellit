@@ -1,18 +1,14 @@
 import { useState, FormEvent, ChangeEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-
-import { userActions } from '@/store/user'
+import API from "@/utils/API"
 
 import './Login.css'
-import API from "@/utils/API"
 import kakao from '../../assets/ui/kakao_login_medium_narrow.png'
 
 
 const Signup = () => {
 
   const navigate = useNavigate()
-  const dispatch = useDispatch
 
   const [email, setEmail] = useState('')
   const [password1, setPassword1] = useState('')
@@ -23,9 +19,12 @@ const Signup = () => {
   const [startSpell, setStartSpell] = useState('')
 
 
+
+
+
   const emailChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value)
-    console.log(email)
+    // console.log(email)
   }
   const password1ChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword1(event.target.value)
@@ -47,46 +46,39 @@ const Signup = () => {
       console.log('worng pw')
     }
   }
-
-  const signupHandler = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log('회원가입 시작')
-    // 회원가입
-    API.post<any>(
-      "auth/signup", 
+  const signupHandler = () => {
+    // const body : SignupInfo = {'email': email, 'password': password1, 'nickname': nickname, 'startSpell': startSpell}
+    const response = API.post<any>(
+      "member/join", 
       {'email': email, 'password': password1, 'nickname': nickname, 'startSpell': startSpell}, 
-    ).then((res) => {
-      console.log('회원가입 성공')
-      console.log(res.data)
-      // // 로그인
-      // API.post<any>(
-      //   "auth/login", 
-      //   {'email': email, 'password': password1}, 
-      // ).then((res) => {
-      //   console.log(res)
-      //   const token = res.data.accessToken
-      //   sessionStorage.setItem("token", token);
-      //   // 내 정보 가져와서 store/user에 저장
-      //   API.get<any>(
-      //     "member/info", 
-      //     { headers: { Authorization: `Bearer ${token}` } }
-      //   ).then((res) => {
-      //     console.log('유저정보 가져오기 성공')
-      //     console.log(res.data)
-      //     dispatch(userActions.setMyInfo(res.data))
-      //   }).catch((err) => {
-      //     console.log(err)
-      //   })
-      //   navigate('/home')
-      // }).catch((err) => {
-      //   console.log(err)
-      // })
-    }).catch((err) => {
-      console.log(err)
-    })
-    
+      // {headers: {
+      //   Authorization: sessionStorage.getItem('token')
+      // }}
+    ).then((response) => {
+      console.log(response)
+      console.log(response.data)
+
+    }
+
+    );
+    return response;
   };
 
+  const submitHandler = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log('signup btn')
+    const signup = signupHandler
+    console.log(signup)
+    // if(login) {
+    //   console.log('hello')
+    // }
+    // const expenseData = {
+    //   title: enteredTitle,
+    //   amount: enteredAmount,
+    //   date: new Date(enteredDate),
+    // };
+
+  };
   
   const toLogin = () => {
    navigate('/login')
@@ -95,7 +87,7 @@ const Signup = () => {
   return (
     <div className='auth-bg'>
       <div className="login-box">
-        <form action="submit" className="login-form" onSubmit={signupHandler}>
+        <form action="submit" className="login-form" onSubmit={submitHandler}>
           <div>
             <label htmlFor="">EMAIL</label>
             <br />

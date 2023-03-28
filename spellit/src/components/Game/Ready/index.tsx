@@ -1,39 +1,21 @@
-import { useState, useContext, useEffect } from "react"
+import { useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from "react-router-dom"
-
 import './index.css'
 
-import { WebSocketContext } from '@/store/websocket'
 import { RootState } from "@/store"
 import { costActions } from "@/store/cost"
 import { attackActions } from "@/store/attack"
-import { matchingActions } from "@/store/matching"
 
 import ConfirmBtn from '../../../assets/ui/ReadyConfirmBtn.png'
 import Frame from '../../../assets/ui/Frame.png'
-import { State } from "howler"
-
-interface CardType {
-  id: number;
-  code: string;
-  title: string
-  spell: string;
-  cost: number;
-  damage: number;
-  attribute: number;
-}
 
 const Ready = () => {
-	const { send } = useContext(WebSocketContext);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  // 나의 덱 정보 가져오기
-  const myCards = useSelector((state: RootState) => state.user.deck);
-
-  // const p1 = useSelector((state: RootState) => state.player.p1);
-  // const p2 = useSelector((state: RootState) => state.player.p2);
+  // 나의 덱 정보 저장
+  // store/user.tsx의 정보 업뎃 및 연동 필요
+  // 요소 명 수정해야할 수도 있음
+  const myCards = ['fire1', 'light1', 'ice1', 'wind1', 'dark1']
 
   // cost 부족할 때 나타는 shake 효과
   const [isShaking, setIsShaking] = useState(false);
@@ -44,79 +26,72 @@ const Ready = () => {
   }
   
   // 선택된 카드 리스트
-  const [selectedCards, setSelectedCards] = useState<Array<CardType>>([])
-  
+  const [selectedCards, setselectedCard] = useState<string[]>([]);
+
   // 카드 선택
-  const selectCard = (card: CardType) => {
-    console.log(card)
-    if(currentCost-card.cost < 0) {
+  const selectCard = (event: React.MouseEvent<HTMLImageElement>) => {
+    if(cost-10 < 0) {
       shake()
     } else{
-      setSelectedCards([
+      setselectedCard([
         ...selectedCards,
-        card
+        event.currentTarget.alt
       ])
-      dispatch(costActions.sub(card.cost))
-      
+      subCost()
     }
   };
 
   // 선택한 카드 삭제
-  const removeCard = (card: CardType, index: number) => {
-    setSelectedCards(selectedCards.slice(0, index).concat(selectedCards.slice(index + 1)));
+  const removeCard = (event: React.MouseEvent<HTMLImageElement>, index: number) => {
+    console.log(event)
+    console.log(event.currentTarget)
+    setselectedCard(selectedCards.slice(0, index).concat(selectedCards.slice(index + 1)));
     navigator.vibrate(200);
-    dispatch(costActions.add(card.cost));
+    addCost()
   };
 
-
-  const roomId = useSelector((state: RootState) => state.room.roomId);
-  const memberId = useSelector((state: RootState) => state.user.id);
-  
+  const dispatch = useDispatch();
   // skill 확정
+  // 수정 필
+
+  const navigate = useNavigate();
   const confirmSkills = () => {
-    console.log('Skill 다 골랐고 확인버튼 누름');
-    console.log(selectedCards)
     console.log('확인');
     // console.log(selectedCards);
-    // dispatch(attackActions.attackStart(selectedCards));
-    // dispatch(attackActions.p1DeckList(selectedCards));
-    send({
-      event: 'attackTurn',
-      memberId: memberId,
-      roomId: roomId,
-      data: { cards : selectedCards }
-    })
-
+    dispatch(attackActions.attackStart(selectedCards));
+    navigate("/attack");
   }
-  const attackTrun = useSelector((state:RootState)=> state.game.attackTurn)
-  useEffect(()=> {
-    if(attackTrun){
-      navigate("/attack");
-    }
-  }, [attackTrun, navigate])
 
   // cost + or -
   // 카드에 따른 cost 수정 필
   // maxCost 수정 필
-  const currentCost = useSelector((state: RootState) => state.cost.currentCost);
-  const maxCost = useSelector((state: RootState) => state.cost.maxCost);
+  const cost = useSelector((state: RootState) => state.cost.cost);
+  const maxCost = 30
 
+  // const dispatch = useDispatch();
+
+  const addCost = () => {
+    dispatch(costActions.add(10))
+  }
+  const subCost = () => {
+    dispatch(costActions.sub(10))
+  }
   return (
     <div>
       <div className="flex-container">
         <div className="cost">
           <div>COST</div>
-          { currentCost }/{ maxCost }
+          { cost }/{ maxCost }
         </div>
         <div className={isShaking ? "shake selectedCardBox" : "selectedCardBox"}>
           <img src={Frame} alt="frame"/>
           <div className="selectedCard">
-            {selectedCards.map((card: CardType, index: number) => (
+            {selectedCards.map((card: string, index: number) => (
               <img 
                 key={index} 
-                src={require(`../../../assets/card/icon/${card.code}.png`)} 
-                alt={card.code}
-                onClick={(event) => removeCard(card, index)}
+                src={require(`../../../assets/card/icon/${card}.png`)} 
+                alt={card}
+                onClick={(event) => removeCard(event, index)}
               ></img>
             ))}
           </div>
@@ -126,13 +101,13 @@ const Ready = () => {
 
       
       <div className="cards">
-        {myCards?.map((card, index) => (
+        {myCards.map((card, index) => (
           <img 
             key={index} 
-            src={require(`../../../assets/card/front/${card.code}.png`)} 
-            alt={card.code} 
+            src={require(`../../../assets/card/front/${card}.png`)} 
+            alt={card} 
             className="mycard" 
-            onClick={(e) => selectCard(card)}
+            onClick={selectCard}
           ></img>
         ))}
       </div>

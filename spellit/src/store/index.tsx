@@ -1,26 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './auth';
 import useReducer from './user';
-import matchingReducer from './matching';
+import sessionReduser from './session';
 import costReducer from './cost';
 import attackReducer from './attack';
-import playerReducer from './player';
-import roomReducer from './room';
-import defenseReducere from './defense'
-import gameReducer from './game'
+
 
 const store = configureStore({
   reducer: {
     auth: authReducer, 
     user: useReducer, 
-    matching: matchingReducer,
-    player: playerReducer,
+    // session: sessionReducer, 
     cost: costReducer,
-    attack: attackReducer,
-    room: roomReducer,
-    defense: defenseReducere,
-    game: gameReducer,
-  },
+    chooseCards: attackReducer },
 });
 
 export default store;
