@@ -6,6 +6,7 @@
   border-radius: 10px;
   perspective: 1000px;
   margin: 100px auto;
+  padding: 1rem;
 }
 
 .flip-inner-container {

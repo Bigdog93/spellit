@@ -81,6 +81,7 @@ const userSlice = createSlice({
     },
     removeCard(state, action: PayloadAction<number>) {
       state.deck = state.deck.slice(0, action.payload).concat(state.deck.slice(action.payload + 1))
+      console.log(state.deck)
       /* API 요청 */
       API.post('member/deck',
       state.deck,

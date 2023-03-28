@@ -21,11 +21,11 @@ const Characters = ({characters, selectCharacter}: PropsType) => {
   }
  
   return (
-    <div className={`${style.items}`}>
+    <div className={`${style.characterItems}`}>
       { characters.map((character: GameCharacterType, index: number) => (
         <div onClick={(e) => onSelectCharacter(character)}>
           {/* {character.characterName} */}
-          <img src={require(`../../assets/character/${character.englishName}_card.png`)} alt="" />
+          <img className={`${style.characterImg}`} src={require(`../../assets/character/${character.englishName}_card.png`)} alt="" />
           {/* <Card key={index} card={card.code}/> */}
         </div>
       ))}

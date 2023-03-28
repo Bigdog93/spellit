@@ -50,18 +50,8 @@ const User = () => {
   }, [])
     
   // 내 캐릭터
-  // const [character, setCharacter] = useState<CharacterType|null>(null);
-  // const [character, setCharacter] = useState<CharacterType>({
-  //   attack: '',
-  //   characterName: '곽춘배',
-  //   englishName: 'LUNA',
-  //   hurt: '',
-  //   id: '',
-  //   stan: '',
-  //   winner: '',
-  // });
   const character = useSelector((state: RootState) => state.user.gameCharacter);
-  console.log(character);
+
   // 캐릭터 선택했을 때
   const selectCharacter = (res: GameCharacterType) => {
     // setCharacter(res)
@@ -77,6 +67,10 @@ const User = () => {
 
 
 
+  // 내가 선택한 카드
+  // const [deck, setDeck] = useState<Array<CardType>>([]);
+  const deck = useSelector((state: RootState) => state.user.deck);
+
   // 전체 카드 목록
   const [cards, setCards] = useState<Array<CardType>>([]);
   useEffect(() => {
@@ -91,11 +85,6 @@ const User = () => {
       }).catch((err) => console.log(err))
       return () => {}
     }, [])
-
-  // 내가 선택한 카드
-  // const [deck, setDeck] = useState<Array<CardType>>([]);
-  const deck = useSelector((state: RootState) => state.user.deck);
-
   
   // 카드 5장 채웠는데 더 선택하려고 할 때 나타나는 shake 효과
   const [isShaking, setIsShaking] = useState(false);
@@ -140,30 +129,56 @@ const User = () => {
 
   return (
     <div className={`${style.bg}`}>
-      { !mode &&<div className={`${style.items}`}>
+      { !mode &&<div className={`${style.cardItems}`}>
         <Cards cards={cards} selectCard={selectCard}/>
       </div>}
 
-      <div className={isShaking ? `${style.shake}`  : `${style.cardselectcontainer}`}>
-      {/* <div className={isShaking ? `${style['shake']}}`  : style['card-select-container'] }> */}
-        <div>
-          <button onClick={switchHandler}>character</button>
-            <img src={require(`../../assets/character/${character?.englishName}_portrait.png`)} alt="portrait" />
-            {/* {character && <img src={require(`../../assets/character/${character.englishName}_portrait.png`)} alt="portrait" />} */}
-        </div>
-        {/* 선택된 카드 덱 */}
-        <div 
-          className={`${style.cardselect}`}
-        >
-          {deck.map((item: CardType, index: number) => (
-           <div
-            key={index}
-            onClick={(event) => removeCard(event, index)}
-           >{item.title}</div>
-          ))}
+      <div className={`${style.sidebar}`}>
+        {/* 선택된 캐릭터 */}
+        <div className={isShaking ? `${style.shake}`  : `${style.cardselectcontainer}`}>
+          <div className={`${style.selectedCharacter}`}>
+            <button className={`${style.deckBtn}`} disabled={mode}>
+              <img 
+                src={require(`../../assets/character/${character?.englishName}_portrait.png`)} 
+                alt="portrait" 
+                onClick={switchHandler}
+              />
+              </button>
+          </div>
+
+
+          {/* 선택된 카드 덱 */}
+          <div className={`${style.selectedCards}`} >
+            <br />
+            <div className={`${style.myDeckTittle}`}>
+              <div className={`${style.myDeck}`}>
+                <br />
+                My Deck
+              </div>
+              <button className={`${style.deckBtn} ${style.myDeckSettingBtn}`} disabled={!mode}>
+              {/* <button disabled={!mode}> */}
+                <img 
+                  src={require('../../assets/ui/setting.png')}
+                  alt="setting"
+                  // className={`${style.myDeckSettingBtn}`}
+                  onClick={switchHandler}
+                />
+              </button>
+            </div>
+            <br />
+            <hr />
+            {deck.map((item: CardType, index: number) => (
+              <div>
+                <div
+                  key={index}
+                  onClick={(event) => removeCard(event, index)}
+                >{item.title}</div>
+                <hr />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-
       { mode && <div className={`${style.items}`}>
         <Characters characters={characters} selectCharacter={selectCharacter}/>
       </div>}
