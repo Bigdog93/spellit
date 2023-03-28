@@ -6,7 +6,7 @@ import { RootState } from "./store";
 import Home from "./components/Home";
 import Game from "./components/Game";
 import Matching from "./components/Matching";
-import User from "./components/User";
+import Deck from "./components/User";
 import Ready from "@/components/Game/Ready";
 import Defence from "@/components/Game/Defense/Defense";
 import Login from "./components/Auth/Login";
@@ -40,7 +40,7 @@ function App() {
           <Route path="home" element={<Home />} />
           <Route path="game/:roomId" element={<Game />} />
           <Route path="matching" element={<Matching />} />
-          <Route path="user" element={<User />} />
+          <Route path="deck" element={<Deck />} />
           <Route path="ready" element={<Ready />} />
           <Route path="defense" element={<Defence />} />
           <Route path="attack" element={<Attack />} />

@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { MathUtils } from "three";
+import { useNavigate } from "react-router-dom";
 
 export default function DeckButton(props) {
   const { nodes, materials } = useGLTF("./models/deckbutton.glb");
@@ -19,8 +20,14 @@ export default function DeckButton(props) {
     deckRef.current.position.setY(y);
   });
 
+  // onClick 이동
+  const navigate = useNavigate();
+  const toDeck = () => {
+    navigate('/deck')
+  }
+
   return (
-    <group {...props} dispose={null} scale={[1.5, 1.5, 1.5]}>
+    <group {...props} dispose={null} scale={[1.5, 1.5, 1.5]} onClick={toDeck}>
       <mesh
 				ref={deckRef}
         geometry={nodes.Group_88.geometry}
