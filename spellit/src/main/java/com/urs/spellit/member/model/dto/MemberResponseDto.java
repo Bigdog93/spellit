@@ -20,8 +20,11 @@ public class MemberResponseDto {
     private int exp;
     private int playCount;
     private int winCount;
+    private int looseCount;
+    private int drawCount;
     private GameCharacterEntity gameCharacter;
     private List<CardEntity> deck;
+    private Boolean isOnline;
 
 
     public static MemberResponseDto of(Member member) {
@@ -32,7 +35,10 @@ public class MemberResponseDto {
                 .exp(member.getExp())
                 .playCount(member.getPlayCount())
                 .winCount(member.getWinCount())
+                .looseCount(member.getLooseCount())
+                .drawCount(member.getDrawCount())
                 .gameCharacter(member.getGameCharacterEntity())
+                .isOnline(member.getIsOnline())
                 .build();
     }
 

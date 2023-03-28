@@ -21,8 +21,10 @@ public class PlayerDto {
 	private long memberId;
 	private int hp;
 	private String nickname;
-	private int play_count;
-	private int win_count;
+	private int playCount;
+	private int winCount;
+	private int looseCount;
+	private int drawCount;
 	private int cost;
 	// 추후 추가 예정
 	private GameCharacterEntity gameCharacterEntity;
@@ -39,8 +41,10 @@ public class PlayerDto {
 				.memberId(member.getId())
 				.hp(600)
 				.nickname(member.getNickname())
-				.play_count(member.getPlayCount())
-				.win_count(member.getWinCount())
+				.playCount(member.getPlayCount())
+				.winCount(member.getWinCount())
+				.looseCount(member.getLooseCount())
+				.drawCount(member.getDrawCount())
 				.gameCharacterEntity(member.getGameCharacterEntity())
 				.deck(new ArrayList<>())
 				.selectedCards(new ArrayList<>())

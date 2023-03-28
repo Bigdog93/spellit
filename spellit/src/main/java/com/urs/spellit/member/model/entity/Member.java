@@ -46,6 +46,12 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     @ColumnDefault("0")
     private int winCount;
+    @Column(nullable = false)
+    @ColumnDefault("0")
+    private int looseCount;
+    @Column(nullable = false)
+    @ColumnDefault("0")
+    private int drawCount;
     @Column
     private String profileMsg;
 
