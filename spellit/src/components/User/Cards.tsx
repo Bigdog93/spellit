@@ -22,7 +22,7 @@ const Cards = ({cards, selectCard}: PropsType) => {
   }
  
   return (
-    <div className={`${style.items}`}>
+    <div className={`${style.cardItems}`}>
       { cards.map((card: CardType, index: number) => (
         <div onClick={(e) => onSelectCard(card)}>
           <Card key={index} card={card.code}/>
