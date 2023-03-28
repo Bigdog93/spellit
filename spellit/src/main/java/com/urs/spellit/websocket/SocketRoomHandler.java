@@ -71,7 +71,9 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 		}
 //		 각 이벤트에 따라 if문을 실행해 줘요
 		/* 빠른 매치 눌렀을 때*/
-		if(event.equals("matchStart")) {
+		if(event.equals("login")) {
+			memberService.playerOnline(memberId);
+		}else if(event.equals("matchStart")) {
 			PlayerDto player = getPlayerByMemberId(session, memberId);
 			logger.info("player : " + player.getNickname());
 			/*--- 대기열 사람 없으면 대기열 큐에 집어넣음 ---*/
@@ -212,7 +214,10 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
 		System.out.println("누군가 소켓이 끊어짐");
 		// 끊어진 세션 쫓아내고 방폭하고 남은 사람 가져오기
-		PlayerDto remainPlayer = roomManager.dropSession(session);
+		PlayerDto[] players = roomManager.dropSession(session);
+		PlayerDto leavePlayer = players[0];
+		PlayerDto remainPlayer = players[1];
+		memberService.playerOffline(leavePlayer.getMemberId());
 		if(remainPlayer != null) { // 플레이 중인 사람이었다면
 			remainPlayer.getSession().sendMessage(makeTextMsg("otherDrop", null)); // 너 상대 나갔다고 알려줘요
 		}

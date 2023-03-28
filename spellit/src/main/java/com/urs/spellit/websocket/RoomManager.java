@@ -38,7 +38,7 @@ public class RoomManager {
         roomMap.remove(roomId);
     }
 
-    public PlayerDto dropSession(WebSocketSession session) {
+    public PlayerDto[] dropSession(WebSocketSession session) {
         for(RoomInfo room : roomMap.values()) {
             for(PlayerDto p : room.getPlayerList()) {
                 if(p.getSession().equals(session)) {
@@ -46,7 +46,7 @@ public class RoomManager {
                     PlayerDto remainPlayer = room.getPlayerList().remove(0);
                     clearRoom(room.getRoomId());
                     room = null;
-                    return remainPlayer;
+                    return new PlayerDto[]{p, remainPlayer};
                 }
             }
         }
