@@ -45,7 +45,6 @@ resampy==0.4.2
 scikit-learn==1.2.2
 scipy==1.10.1
 six==1.16.0
-sklearn==0.0.post1
 soundfile==0.12.1
 soxr==0.3.4
 threadpoolctl==3.1.0

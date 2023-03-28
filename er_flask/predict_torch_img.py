@@ -116,6 +116,6 @@ class Predictor(object):
 def getPredictor():
     return Predictor(model)
 
-file = './predict_audio/' + os.listdir('./predict_audio')[0]
-predictor = Predictor(model)
-predictor.predict(file)
+# file = './predict_audio/' + os.listdir('./predict_audio')[0]
+# predictor = Predictor(model)
+# predictor.predict(file)
