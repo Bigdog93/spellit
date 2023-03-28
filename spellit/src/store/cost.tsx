@@ -2,23 +2,21 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 const initialCostState = {
-  currentCost: 0,
-  maxCost: 0
+  cost: 30,
 };
 
 const costSlice = createSlice({
   name: 'cost',
   initialState: initialCostState,
   reducers: {
-    set(state, action: PayloadAction<number>) {
-      state.currentCost += action.payload;
-      state.maxCost = state.currentCost
+    set(cost, action: PayloadAction<number>) {
+      cost.cost = action.payload;
     },
-    add(state, action: PayloadAction<number>) {
-      state.currentCost += action.payload;
+    add(cost, action: PayloadAction<number>) {
+      cost.cost += action.payload;
     },
-    sub(state, action: PayloadAction<number>) {
-      state.currentCost -= action.payload;
+    sub(cost, action: PayloadAction<number>) {
+      cost.cost -= action.payload;
     },
   },
 });

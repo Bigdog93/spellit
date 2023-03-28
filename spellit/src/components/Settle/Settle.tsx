@@ -1,10 +1,4 @@
-import react, {useState, useEffect} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { attackActions } from '@/store/attack';
-import { RootState } from "@/store/";
-
-import ProfileHp from '../Game/Items/ProfileHp';
+import React from "react";
 
 import "./Settle.css";
 import LUNA_attack from '../../assets/character/LUNA_attack.png';

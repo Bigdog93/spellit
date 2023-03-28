@@ -1,57 +1,78 @@
-import { useContext, useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react"
 
-import { WebSocketContext } from '@/store/websocket'
-import { RootState } from "@/store/";
-// import { matchingActions } from "@/store/matching";
+import Coin from './CoinFlipper'
+// import soundEffect from '../../utils/SoundEffect';
 
 import './index.css'
-import Versus from "./Versus"
-import Loading from "./Loading"
-import { Root } from "@react-three/fiber/dist/declarations/src/core/renderer";
+import MatchFrame_blue from '../../assets/ui/match-frame-blue.png'
+import MatchFrame_red from '../../assets/ui/match-frame-red.png'
+import VS from '../../assets/ui/VS.png'
+import Agnes from '../../assets/character/Agnes_temp.png'
+import Emilia from '../../assets/character/Emilia_temp.png'
+// import mp3 from '../../assets/bgm/RecalloftheShadows.mp3'
 
 const Matching = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const { send } = useContext(WebSocketContext);
-
-  const connected = useSelector((state: RootState) => state.matching.connected);
-  const memberId = useSelector((state: RootState) => state.user.id);
-
-  useEffect(() => {
-    console.log(memberId)
-    send({
-      event: 'matchStart',
-			memberId: memberId,
-      data: ''
-		})
-    return () => {
-    }
-  }, []);
-
   
-  // const p1Loading = useSelector((state: RootState) => state.matching.p1Loading);
-  // const p2Loading = useSelector((state: RootState) => state.matching.p2Loading);
-  const readyTurn = useSelector((state: RootState) => state.game.readyTurn)
-  const roomId = useSelector((state: RootState) => state.room.roomId);
-  // p1, p2 모두 동전 던지기가 끝났을 때 stored의 game 업뎃
-  useEffect(() => {
-    console.log('toReady에 실행되는 useEffect')
-    if(readyTurn) {
-      console.log('readyTurn 시작이야')
-      navigate(`/game/${roomId}`)
-    }
+  // const se = soundEffect(mp3, 2);
 
-  }, [readyTurn, navigate]);
+  // se.play();
 
+  const [coin, setCoin] = useState(false);
+
+  const coinHandler = () => {
+    setCoin(true)
+  }
   
+  window.setTimeout(coinHandler, 3000)
+
+  const [nickname, setNickname] = useState('인의동 대마법사');
+  const [winCount, setwinCount] = useState(234);
+  const [message, setMessage] = useState('11연뽑해서 뭐/뭐/뭐/뭐 득했는데 우각하기 귀찮다');
+
   return (
     <div>
-      {memberId}
-      { !connected && <Loading/> }
-      { connected && <Versus/> }
+      <div className="flex-container">
+        <div className="player">
+          <img src={Agnes} alt="1P-character"/>
+          <div className="player-info">
+            <img src={MatchFrame_red} alt="1P"/>
+            <div className="player1">
+              <div className="upper-info">
+                <div>
+                  { winCount }승
+                </div>
+                <div>
+                  { nickname }
+                </div>
+              </div>
+              { message }
+            </div>
+          </div>
+        </div>
+
+        <img src={VS} alt="vs" className="vs"/>
+
+        <div className="player">
+          <img src={Emilia} alt="2P-character"/>
+          <div className="player-info">
+            <img src={MatchFrame_blue} alt="2P"/>
+            <div className="player2">
+              <div className="upper-info">
+                <div>
+                  { nickname }
+                </div>
+                <div>
+                  { winCount }승
+                </div>
+              </div>
+              { message }
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="coin-flipper">
+        {coin && <Coin />}
+      </div>
     </div>
   )
   }

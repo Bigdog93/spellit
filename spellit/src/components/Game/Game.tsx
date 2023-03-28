@@ -1,10 +1,9 @@
-import Attack from "./Attack";
-
+import Attack from "./Attack/Attack";
 
 function Game() {
   return (
     <>
-      <Attack/>
+      <Attack></Attack>
     </>
   )
 }
