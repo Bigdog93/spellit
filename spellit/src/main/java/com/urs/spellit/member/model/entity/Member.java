@@ -62,7 +62,13 @@ public class Member extends BaseTimeEntity {
 
     @Column
     @ColumnDefault("false")
+    private Boolean isOnline;
+
+    @Column
+    @ColumnDefault("false")
     private Boolean isDeleted;
+
+
 
     @Enumerated(EnumType.STRING)
     private Authority authority;

@@ -29,8 +29,8 @@ VALUES
 (2,"키리카", "AK", "", "", "", "", ""),
 (3,"루나", "LUNA", "", "", "", "", "");
 
-INSERT IGNORE INTO `member` (`member_id`,`mod_dt`,`reg_dt`,`authority`,`email`,`exp`,`is_deleted`,`level`,`nickname`,`password`,`play_count`,`profile_msg`,`win_count`,`character_id`) VALUES (1,'2023-03-28 03:54:19.863820','2023-03-28 00:50:29.921532','ROLE_USER','aaa@aaa',0,'0',0,'aaa','$2a$10$jztRRiiepvYOpPq6dcf.O.9oqQxNTfw2rP7jw5BDZD7j59dV4KrbG',0,NULL,0,1);
-INSERT IGNORE INTO `member` (`member_id`,`mod_dt`,`reg_dt`,`authority`,`email`,`exp`,`is_deleted`,`level`,`nickname`,`password`,`play_count`,`profile_msg`,`win_count`,`character_id`) VALUES (2,'2023-03-28 00:51:01.170529','2023-03-28 00:51:01.170529','ROLE_USER','bbb@bbb',0,'0',0,'bbb','$2a$10$aiNY1GqapceXdCHUfOw3YOtLcfsL3t2wCq43Ii1DRx4ubKRZi3Tg2',0,NULL,0,1);
+INSERT IGNORE INTO `member` (`member_id`,`mod_dt`,`reg_dt`,`authority`,`email`,`exp`,`is_deleted`,`is_online`,`level`,`nickname`,`password`,`play_count`,`profile_msg`,`win_count`,`character_id`) VALUES (1,'2023-03-28 03:54:19.863820','2023-03-28 00:50:29.921532','ROLE_USER','aaa@aaa',0,'0','0',0,'aaa','$2a$10$jztRRiiepvYOpPq6dcf.O.9oqQxNTfw2rP7jw5BDZD7j59dV4KrbG',0,NULL,0,1);
+INSERT IGNORE INTO `member` (`member_id`,`mod_dt`,`reg_dt`,`authority`,`email`,`exp`,`is_deleted`,`is_online`,`level`,`nickname`,`password`,`play_count`,`profile_msg`,`win_count`,`character_id`) VALUES (2,'2023-03-28 00:51:01.170529','2023-03-28 00:51:01.170529','ROLE_USER','bbb@bbb',0,'0','0',0,'bbb','$2a$10$aiNY1GqapceXdCHUfOw3YOtLcfsL3t2wCq43Ii1DRx4ubKRZi3Tg2',0,NULL,0,1);
 
 INSERT IGNORE INTO `deck`
 VALUES

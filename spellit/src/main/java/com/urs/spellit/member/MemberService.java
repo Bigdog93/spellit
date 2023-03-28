@@ -10,6 +10,7 @@ import com.urs.spellit.game.entity.GameCharacterEntity;
 import com.urs.spellit.member.model.dto.*;
 import com.urs.spellit.member.model.entity.FriendWaitEntity;
 import com.urs.spellit.member.model.entity.Member;
+import com.urs.spellit.websocket.dto.PlayerDto;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -119,5 +120,21 @@ public class MemberService {
         friendWaitRepository.save(friendWaitEntity); //친구 대기 리스트 저장
 
         return FriendWaitResponseDto.toResponse(friendWaitEntity); //친구Id, 내 Id 반환
+    }
+
+    public void playerOnline(long memberId) {
+        Optional<Member> playerOpt = memberRepository.findById(memberId);
+        if(playerOpt.isEmpty()) return;
+        Member player = playerOpt.get();
+        player.setIsOnline(true);
+        memberRepository.save(player);
+    }
+
+    public void playerOffline(long memberId) {
+        Optional<Member> playerOpt = memberRepository.findById(memberId);
+        if(playerOpt.isEmpty()) return;
+        Member player = playerOpt.get();
+        player.setIsOnline(false);
+        memberRepository.save(player);
     }
 }
