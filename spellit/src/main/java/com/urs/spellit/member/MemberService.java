@@ -8,6 +8,7 @@ import com.urs.spellit.game.entity.CardEntity;
 import com.urs.spellit.game.entity.DeckEntity;
 import com.urs.spellit.game.entity.GameCharacterEntity;
 import com.urs.spellit.member.model.dto.*;
+import com.urs.spellit.member.model.entity.Friend;
 import com.urs.spellit.member.model.entity.FriendWaitEntity;
 import com.urs.spellit.member.model.entity.Member;
 import com.urs.spellit.websocket.dto.PlayerDto;
@@ -30,6 +31,7 @@ public class MemberService {
     private final DeckRepository deckRepository;
     private final CardRepository cardRepository;
     private final FriendWaitRepository friendWaitRepository;
+    private final FriendRepository friendRepository;
 
     public MemberResponseDto findMemberInfoById(Long memberId)
     {
@@ -96,9 +98,8 @@ public class MemberService {
     }
 
     public FriendWaitResponseDto addFriendWait(FriendWaitRequestDto friendWaitRequestDto) {
-        Long friendId=friendWaitRequestDto.getFriendId(); //친구Id
-        String friendEmail=memberRepository.findById(friendId).get().getEmail(); //친구Email
         Member member=memberRepository.findById(SecurityUtil.getCurrentMemberId()).get(); //나
+        Long friendId=friendWaitRequestDto.getFriendId(); //친구Id
         Member friend=memberRepository.findById(friendId).get(); //친구
 
         List<FriendWaitEntity> friendWaitEntities=friendWaitRepository.findAllByMemberId(friendId); //상대의 친구대기 리스트
@@ -120,6 +121,56 @@ public class MemberService {
         friendWaitRepository.save(friendWaitEntity); //친구 대기 리스트 저장
 
         return FriendWaitResponseDto.toResponse(friendWaitEntity); //친구Id, 내 Id 반환
+    }
+
+    public List<FriendResponseDto> addFriend(FriendRequestDto friendRequestDto)
+    {
+        Long myId=SecurityUtil.getCurrentMemberId();
+        Long friendId=friendRequestDto.getFriendId();
+
+        Member me=(memberRepository.findById(myId)).get();
+        Member friend=(memberRepository.findById(friendId)).get();
+
+        String myEmail=me.getEmail();
+        String friendEmail=friend.getEmail();
+
+        List<Friend> myFriends=me.getFriends();
+        List<Friend> Friends=friend.getFriends();
+
+        ///이미 친구인지 확인///
+        for(Friend myFriend : myFriends)
+        {
+            if(myFriend.getFriendId()==friendId)
+                throw new RuntimeException("이미 친구입니다.");
+        }
+
+        ///내 친구 대기 리스트에서 상대 삭제///
+        List<FriendWaitEntity> myFriendWaitList=me.getFriendWaitEntities(); //내 친구대기 리스트
+        FriendWaitEntity friendWait=FriendWaitEntity.checkExistsInWaitList(myFriendWaitList,friendId); //내 친구대기 리스트에 상대가 존재하는지 확인
+        if(friendWait!=null) //존재
+            myFriendWaitList.remove(friendWait); //내 친구 대기 리스트에서 상대를 삭제
+        else //존재X
+            throw new RuntimeException("내 친구 대기 리스트에 상대가 존재하지 않습니다.");
+
+        ///상대의 친구대기 리스트에 내가 있으면 나를 삭제///
+        List<FriendWaitEntity> friendFriendWaitList=friend.getFriendWaitEntities(); //상대의 친구대기 리스트
+        FriendWaitEntity meWait=FriendWaitEntity.checkExistsInWaitList(friendFriendWaitList,myId); //상대의 친구대기 리스트에 내가 존재하는지 확인
+        if(meWait!=null) //존재
+            friendFriendWaitList.remove(meWait); //상대의 친구 대기 리스트에서 나를 삭제
+
+        ///내 친구 리스트에 상대 추가///
+        Friend addFriend=Friend.toBuild(friendId,friendEmail,friend);
+        myFriends.add(addFriend);
+        me.setFriends(myFriends);
+        memberRepository.save(me);
+        
+        ///상대의 친구 리스트에 나 추가///
+        Friend addMe=Friend.toBuild(myId,myEmail,me);
+        Friends.add(addMe);
+        friend.setFriends(Friends);
+        memberRepository.save(friend);
+
+        return FriendResponseDto.toResponse(addFriend,addMe);
     }
 
     public void playerOnline(long memberId) {
