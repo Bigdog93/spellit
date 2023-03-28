@@ -40,12 +40,13 @@ public class MemberService {
         member.setDeck(this.getUserDeck(memberId));
         return member;
     }
-    public MemberResponseDto findMemberInfoByEmail(String email)
+    /*public MemberResponseDto findMemberInfoByEmail(String email)
     {
         return memberRepository.findByEmail(email)
                 .map(MemberResponseDto::of)
                 .orElseThrow(()->new RuntimeException("유저 정보가 없습니다."));
-    }
+    }*/
+
 
     public List<CardEntity> getUserDeck(Long memberId) {
         List<DeckEntity> deckEntities = deckRepository.findAllByMemberId(memberId);
@@ -97,16 +98,18 @@ public class MemberService {
         Optional<Member> myInfo=memberRepository.findById(SecurityUtil.getCurrentMemberId()); //나
         List<FriendWaitEntity> friendWaitEntities=friendWaitRepository.findAllByMemberId(myInfo.get().getId()); //현재 친구대기 리스트
 
+        if(friendWaitRequestDto.getFriendId()==myInfo.get().getId())
+            throw new RuntimeException(("나에게 친구요청을 보낼 수 없습니다."));
+
         for(FriendWaitEntity friendWaitEntity : friendWaitEntities)
         {
-            if(friendWaitRequestDto.getFriendEmail().equals(friendWaitEntity.getFriendEmail())) //현재 친구 대기 리스트에 이미 있음
+            if(friendWaitRequestDto.getFriendId()==friendWaitEntity.getFriendId()) //현재 친구 대기 리스트에 이미 있음
                 throw new RuntimeException("이미 친구요청을 보낸 상대입니다.");
         }
 
         //친구 대기 리스트에 없음//
-
-        Long friendId=memberRepository.findByEmail(friendWaitRequestDto.getFriendEmail()).get().getId(); //친구Id
-        String friendEmail=friendWaitRequestDto.getFriendEmail(); //친구Email
+        Long friendId=friendWaitRequestDto.getFriendId(); //친구Id
+        String friendEmail=memberRepository.findById(friendId).get().getEmail(); //친구Email
         Member member=myInfo.get(); //나
 
         FriendWaitEntity friendWaitEntity=FriendWaitEntity.toBuild(friendId,friendEmail,member); //친구 대기 객체 생성

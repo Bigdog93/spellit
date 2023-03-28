@@ -29,11 +29,16 @@ public class SecurityUtil {
         return Long.parseLong(authentication.getName());
     }
 
-    public static String getAnotherMemberEmail(String email)
+    /*public static String getAnotherMemberEmail(String email)
     {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         checkAuthentication(authentication);
         return email;
-    }
+    }*/
 
+    public static Long getAnotherMemberId(Long userId) {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        checkAuthentication(authentication);
+        return userId;
+    }
 }

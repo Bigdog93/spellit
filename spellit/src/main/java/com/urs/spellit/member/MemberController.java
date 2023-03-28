@@ -28,9 +28,9 @@ public class MemberController {
     }
 
     @GetMapping("/info/{userid}") //타 사용자 정보 요청
-    public ResponseEntity<MemberResponseDto> findMemberInfoByEmail(@PathVariable("userid") String email)
+    public ResponseEntity<MemberResponseDto> findAnotherMemberInfoById(@PathVariable("userid") Long userId)
     {
-        return ResponseEntity.ok(memberService.findMemberInfoByEmail(SecurityUtil.getAnotherMemberEmail(email)));
+        return ResponseEntity.ok(memberService.findMemberInfoById(SecurityUtil.getAnotherMemberId(userId)));
     }
 
     @GetMapping("/deck") //사용자 덱 정보 요청
