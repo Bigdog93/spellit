@@ -28,54 +28,10 @@ VALUES
 (1,"곽춘배", "CB", "", "", "", "", ""),
 (2,"키리카", "AK", "", "", "", "", ""),
 (3,"루나", "LUNA", "", "", "", "", "");
--- <<<<<<< HEAD
---
---
--- INSERT INTO `member`
--- (member_id, mod_dt, reg_dt, email, exp, is_deleted, level, nickname, password, play_count, profile_msg, win_count, character_id)
--- VALUES
---     (1,'2023-03-27 04:15:45.664440','2023-03-24 05:19:22.660811','test1@test.net',30,_binary '\0',0,'test1','$2a$10$DARx6nqJIOov4MCjn52bNOW/vAiEFvxscAUlzD6GxIr.UD.dEYatO',3,'나다 이자식아',3,1),
---     (2,'2023-03-24 05:24:21.245228','2023-03-24 05:24:21.245228','test1@ssafy.com',0,_binary '\0',0,'테스트 마법사','$2a$10$JQwP1IIwoQfHsHPji4s6WuC55hVBH.VqTm7xJlyW.o6xMwFEpnHLy',0,'ㅇㅇ',0,2),
---     (3,'2023-03-24 05:24:50.991290','2023-03-24 05:24:50.991290','test2@ssafy.com',0,_binary '\0',0,'진평동 개발자','$2a$10$.x1V49DT75ADKt3YMFAHcuXfy93UJdk0jYSu3KoyYVCcs2Oq70yvm',0,'NULL',0,3),
---     (4,'2023-03-26 17:54:52.600506','2023-03-24 08:34:33.138871','test2@test.net',0,_binary '\0',0,'test2','$2a$10$DsFgReVpmqI/rAkxh/ux5ecPH393QUn/RBwpfTfKA..DFsX67xUKe',0,'하이염 님 이제 D짐',0,1),
---     (5,'2023-03-24 08:45:17.282296','2023-03-24 08:45:17.282296','test3@test.net',0,_binary '\0',0,'test3','$2a$10$dwJuYJB3QbADjjCxLii/N.r64PLMb/lest8az3fgareYzvnp6gjEC',0,'마법의 향연',0,2),
---     (6,'2023-03-24 15:54:02.788136','2023-03-24 15:54:02.788136','ljc@ljc',0,_binary '\0',0,'','$2a$10$vLgJv0Dn18GDRhns/TOT3e4dS1ikTbaCxVGhUefDRZkUV03/Mb1xu',0,'오늘 헤어졌어요',0,3),
---     (7,'2023-03-27 06:57:28.237902','2023-03-27 06:57:28.237902','hice95@nate.com',0,_binary '\0',0,'컨설턴트 ','$2a$10$xApy1PboL5HI/a0lkNtqhenmCQkCZapCI076O4GpDyBoT35GPaVfC',0,'ㅇㅇ',0,1);
---
---
--- INSERT INTO `deck`
--- (deck_id, card_id, member_id)
--- VALUES
---     (7,1,4),
---     (8,4,4),
---     (9,6,4),
---     (10, 11, 4),
---     (11, 13, 4),
---     (12,1,1),
---     (13,4,1),
---     (14,6,1),
---     (15, 11, 1),
---     (16, 13, 1);
--- =======
---
---
--- INSERT INTO `member`
--- (member_id, mod_dt, reg_dt,email, exp, is_deleted, level, nickname, password, play_count, profile_msg, win_count, character_id)
--- VALUES
---     (1,'2023-03-27 04:15:45.664440','2023-03-24 05:19:22.660811', 'test1@test.net',30,_binary '\0',0,'test1','$2a$10$DARx6nqJIOov4MCjn52bNOW/vAiEFvxscAUlzD6GxIr.UD.dEYatO',3,'나다 이자식아',3,1),
---     (2,'2023-03-24 05:24:21.245228','2023-03-24 05:24:21.245228','test1@ssafy.com',0,_binary '\0',0,'테스트 마법사','$2a$10$JQwP1IIwoQfHsHPji4s6WuC55hVBH.VqTm7xJlyW.o6xMwFEpnHLy',0,'ㅇㅇ',0,2),
---     (3,'2023-03-24 05:24:50.991290','2023-03-24 05:24:50.991290','test2@ssafy.com',0,_binary '\0',0,'진평동 개발자','$2a$10$.x1V49DT75ADKt3YMFAHcuXfy93UJdk0jYSu3KoyYVCcs2Oq70yvm',0,'NULL',0,3),
---     (4,'2023-03-26 17:54:52.600506','2023-03-24 08:34:33.138871','test2@test.net',0,_binary '\0',0,'test2','$2a$10$DsFgReVpmqI/rAkxh/ux5ecPH393QUn/RBwpfTfKA..DFsX67xUKe',0,'하이염 님 이제 D짐',0,1),
---     (5,'2023-03-24 08:45:17.282296','2023-03-24 08:45:17.282296','test3@test.net',0,_binary '\0',0,'test3','$2a$10$dwJuYJB3QbADjjCxLii/N.r64PLMb/lest8az3fgareYzvnp6gjEC',0,'마법의 향연',0,2),
---     (6,'2023-03-24 15:54:02.788136','2023-03-24 15:54:02.788136','ljc@ljc',0,_binary '\0',0,'','$2a$10$vLgJv0Dn18GDRhns/TOT3e4dS1ikTbaCxVGhUefDRZkUV03/Mb1xu',0,'오늘 헤어졌어요',0,3),
---     (7,'2023-03-27 06:57:28.237902','2023-03-27 06:57:28.237902','hice95@nate.com',0,_binary '\0',0,'컨설턴트 ','$2a$10$xApy1PboL5HI/a0lkNtqhenmCQkCZapCI076O4GpDyBoT35GPaVfC',0,'ㅇㅇ',0,1);
--- (1,'2023-03-27 13:09:47.755023','2023-03-27 13:09:47.755023','ROLE_USER',	'test1@test.net',0,0,0,'111','$2a$10$.U03GITUonUrNZmTLB5S2euvPkujMPRqKK9sanR5kMbzwGiYW8jeK',0,,0,1),
--- (3,'2023-03-27 13:10:01.763569','2023-03-27 13:10:01.763569','ROLE_USER','test2@test.net',0,0,0,'222','$2a$10$IIoSlMj1JMiRp3P4QbphnO8yd83ONQ9pnTMdvxIN0x59RipTn1SwC',0, ,0,1),
--- (4,'2023-03-27 13:10:56.003339','2023-03-27 13:10:56.003339','ROLE_USER','lce511@naver.com',0,0,0,'채니','$2a$10$nhmo4G6kqJ1Ii/XNJBQBAe.hqvoP8LSPjqot9QU.ADcu697m0Vv2m',0,	,0,1),
--- (5,'2023-03-27 13:11:39.437314','2023-03-27 13:11:39.437314','ROLE_USER','lce511@gmail.com',0,0,0,'이이채은','$2a$10$F9Bl0bV0IQ6v5rFOyCQ.d.ecl4XAGwy8.2DE5HGKhb4IHl6oNVvTq',0,	,0,1),
--- (6,'2023-03-27 13:13:57.399962','2023-03-27 13:13:57.399962','ROLE_USER','test3@test.net'	0,0,0,'제발돼라','$2a$10$ixdLVUAxjWM3vot.YX/p4OO9xjwMKmVdXHMlv8yduBMqQacVH4TWC',0, ,0,1);
 
---
+INSERT IGNORE INTO `member` (`member_id`,`mod_dt`,`reg_dt`,`authority`,`email`,`exp`,`is_deleted`,`level`,`nickname`,`password`,`play_count`,`profile_msg`,`win_count`,`character_id`) VALUES (1,'2023-03-28 03:54:19.863820','2023-03-28 00:50:29.921532','ROLE_USER','aaa@aaa',0,'0',0,'aaa','$2a$10$jztRRiiepvYOpPq6dcf.O.9oqQxNTfw2rP7jw5BDZD7j59dV4KrbG',0,NULL,0,1);
+INSERT IGNORE INTO `member` (`member_id`,`mod_dt`,`reg_dt`,`authority`,`email`,`exp`,`is_deleted`,`level`,`nickname`,`password`,`play_count`,`profile_msg`,`win_count`,`character_id`) VALUES (2,'2023-03-28 00:51:01.170529','2023-03-28 00:51:01.170529','ROLE_USER','bbb@bbb',0,'0',0,'bbb','$2a$10$aiNY1GqapceXdCHUfOw3YOtLcfsL3t2wCq43Ii1DRx4ubKRZi3Tg2',0,NULL,0,1);
+
 INSERT IGNORE INTO `deck`
 VALUES
     (1,4,2),
@@ -84,4 +40,4 @@ VALUES
     (4,6,1),
     (5,1,1),
     (6,4,1);
--->>>>>>> feature/be/user_crud
+

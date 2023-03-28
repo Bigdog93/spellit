@@ -1,14 +1,8 @@
 package com.urs.spellit.member.model.entity;
 
-import com.urs.spellit.game.DeckRepository;
-import com.urs.spellit.game.entity.CardEntity;
-import com.urs.spellit.game.entity.DeckEntity;
-import com.urs.spellit.member.FriendWaitRepository;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity(name="friend_wait")
 @Data
@@ -16,11 +10,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
+@ToString
 public class FriendWaitEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
+    @Column
+    private Long friendId;
     @Column
     private String friendEmail;
 
@@ -29,4 +26,13 @@ public class FriendWaitEntity {
     @NonNull
     private Member member;
 
+    public static FriendWaitEntity toBuild(Long friendId, String friendEmail, Member member)
+    {
+        return FriendWaitEntity.builder()
+                .friendId(friendId)
+                .friendEmail(friendEmail)
+                .member(member)
+                .build();
+
+    }
 }

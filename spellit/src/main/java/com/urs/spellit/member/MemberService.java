@@ -7,9 +7,7 @@ import com.urs.spellit.game.GameService;
 import com.urs.spellit.game.entity.CardEntity;
 import com.urs.spellit.game.entity.DeckEntity;
 import com.urs.spellit.game.entity.GameCharacterEntity;
-import com.urs.spellit.member.model.dto.MemberRecordRequestDto;
-import com.urs.spellit.member.model.dto.MemberRecordResponseDto;
-import com.urs.spellit.member.model.dto.MemberResponseDto;
+import com.urs.spellit.member.model.dto.*;
 import com.urs.spellit.member.model.entity.FriendWaitEntity;
 import com.urs.spellit.member.model.entity.Member;
 import lombok.RequiredArgsConstructor;
@@ -95,22 +93,27 @@ public class MemberService {
         return this.getUserDeck(member.get().getId());
     }
 
-    public List<FriendWaitEntity> addFriendWait(FriendWaitEntity friendEntity) {
-        //Optional<Member> friendInfo=memberRepository.findByEmail(SecurityUtil.getAnotherMemberEmail(friendEntity.getFriendEmail()));
-        Optional<Member> myInfo=memberRepository.findById(SecurityUtil.getCurrentMemberId());
-        List<FriendWaitEntity> friendWaitEntities=friendWaitRepository.findAllByMemberId(myInfo.get().getId());
+    public FriendWaitResponseDto addFriendWait(FriendWaitRequestDto friendWaitRequestDto) {
+        Optional<Member> myInfo=memberRepository.findById(SecurityUtil.getCurrentMemberId()); //나
+        List<FriendWaitEntity> friendWaitEntities=friendWaitRepository.findAllByMemberId(myInfo.get().getId()); //현재 친구대기 리스트
 
         for(FriendWaitEntity friendWaitEntity : friendWaitEntities)
         {
-            if(friendEntity.getFriendEmail().equals(friendWaitEntity.getFriendEmail()))
+            if(friendWaitRequestDto.getFriendEmail().equals(friendWaitEntity.getFriendEmail())) //현재 친구 대기 리스트에 이미 있음
                 throw new RuntimeException("이미 친구요청을 보낸 상대입니다.");
         }
-        friendEntity.setMember(myInfo.get());
-        friendWaitEntities.add(friendEntity);
-        myInfo.get().changeFriendWaitList(friendWaitEntities);
-        friendWaitRepository.save(friendEntity);
-        //memberRepository.save(myInfo.get());
 
-        return friendWaitEntities;
+        //친구 대기 리스트에 없음//
+
+        Long friendId=memberRepository.findByEmail(friendWaitRequestDto.getFriendEmail()).get().getId(); //친구Id
+        String friendEmail=friendWaitRequestDto.getFriendEmail(); //친구Email
+        Member member=myInfo.get(); //나
+
+        FriendWaitEntity friendWaitEntity=FriendWaitEntity.toBuild(friendId,friendEmail,member); //친구 대기 객체 생성
+        friendWaitEntities.add(friendWaitEntity); //친구 대기 리스트에 추가
+        myInfo.get().changeFriendWaitList(friendWaitEntities);
+        friendWaitRepository.save(friendWaitEntity); //친구 대기 리스트 저장
+
+        return FriendWaitResponseDto.toResponse(friendWaitEntity); //친구Id, 내 Id 반환
     }
 }
