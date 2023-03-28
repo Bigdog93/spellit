@@ -1,4 +1,5 @@
 import style from './index.module.css'
+
 type GameCharacterType = {
   id : number,
   characterName : string,

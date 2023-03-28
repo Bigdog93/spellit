@@ -129,15 +129,16 @@ const User = () => {
 
   return (
     <div className={`${style.bg}`}>
-      { !mode &&<div className={`${style.cardItems}`}>
+      {/* { !mode &&  <Cards cards={cards} selectCard={selectCard}/>} */}
+      { !mode && <div className={`${style.cardsContainer}`}>
         <Cards cards={cards} selectCard={selectCard}/>
       </div>}
 
       <div className={`${style.sidebar}`}>
         {/* 선택된 캐릭터 */}
-        <div className={isShaking ? `${style.shake}`  : `${style.cardselectcontainer}`}>
+        {/* <div className={isShaking ? `${style.shake}`  : `${style.cardselectcontainer}`}> */}
           <div className={`${style.selectedCharacter}`}>
-            <button className={`${style.deckBtn}`} disabled={mode}>
+            <button className={`${style.deckBtn} ${style.characterkBtn}`} disabled={mode}>
               <img 
                 src={require(`../../assets/character/${character?.englishName}_portrait.png`)} 
                 alt="portrait" 
@@ -148,15 +149,14 @@ const User = () => {
 
 
           {/* 선택된 카드 덱 */}
+        <div className={isShaking ? `${style.shake}`  : `${style.cardselectcontainer}`}>
           <div className={`${style.selectedCards}`} >
             <br />
             <div className={`${style.myDeckTittle}`}>
               <div className={`${style.myDeck}`}>
-                <br />
                 My Deck
               </div>
               <button className={`${style.deckBtn} ${style.myDeckSettingBtn}`} disabled={!mode}>
-              {/* <button disabled={!mode}> */}
                 <img 
                   src={require('../../assets/ui/setting.png')}
                   alt="setting"

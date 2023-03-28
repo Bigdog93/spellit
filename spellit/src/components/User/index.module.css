@@ -2,14 +2,28 @@
   background-color: transparent;
   border: 0;
 }
+
 .deckBtn img{
+  width: 30px;
+  display: flex;
+  justify-content: center;
+}
+.characterkBtn {
+  background-color: transparent;
+  border: 0;
+}
+.characterkBtn img{
   width: 20vw;
   display: flex;
   justify-content: center;
 }
 .sidebar{
+  width: 30vw;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  /* vertical-align: middle; */
 }
 .deckBtn:hover {
   cursor: pointer;
@@ -33,9 +47,21 @@
   background-color: rgba(47, 55, 75, 0.8);
   height: 100vh;
   width: 75vw;
-  display: flex;
+  display: grid;
+  grid-template-rows: repeat(auto-fill, minmax(400px, auto));
+  grid-template-columns: repeat(auto-fill, minmax(300px, auto));
+  align-items: center;
+  justify-items: center;
+  /* display: flex;
   flex-wrap: wrap;
-  overflow: scroll
+  gap: 1rem; */
+  overflow: scroll;
+  /* align-items: center; */
+}
+.cardsContainer {
+  height: 100vh;
+  width: 75vw;
+  text-align: center;
 }
 .cardItems::-webkit-scrollbar {
   display: none;
@@ -47,6 +73,7 @@
   width: 75vw;
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 .characterImg{
   height: 60vh;
@@ -104,3 +131,10 @@
 .shake {
   animation: shake 0.5s;
 }
+
+
+.cardContainer {
+  /* margin: 100px auto; */
+  padding: 1rem;
+}
+
