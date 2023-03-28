@@ -87,7 +87,7 @@ export default function QuickstartButton(
   const toQuickStart = () => {
     setIsQuick(!isQuick);
     setTimeout(() => {
-      navigate("/settle");
+      navigate("/matching");
     }, 4000);
   };
 
