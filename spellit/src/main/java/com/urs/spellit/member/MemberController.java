@@ -33,6 +33,17 @@ public class MemberController {
         return ResponseEntity.ok(memberService.findMemberInfoById(SecurityUtil.getAnotherMemberId(userId)));
     }
 
+    @PutMapping("/info")
+    public ResponseEntity<Object> updateMemberInfoById(@RequestBody MemberUpdateRequestDto murDto) {
+        int res = memberService.updateMemberInfoById(murDto);
+        if(res == 0) {
+            return ResponseEntity.badRequest().build();
+        }else if(res == 2) {
+            return ResponseEntity.internalServerError().build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/deck") //사용자 덱 정보 요청
     public ResponseEntity<List<CardEntity>> getUserDeck()
     {
