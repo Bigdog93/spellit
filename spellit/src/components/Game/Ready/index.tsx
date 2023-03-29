@@ -98,7 +98,7 @@ const Ready = () => {
   return (
     <div>
       <div>
-        {otherReady && <div>상대방의 준비가 끝났습니다. 서둘러주세요.</div>}
+        {otherReady && <div>상대방의 준비가 끝났습니다. 서둘러주세요</div>}
         {(!otherReady && confirm) && <div>상대방이 카드를 고르는 중입니다. 조금만 기다려주세요.</div>}
         {(!otherReady && !confirm) && <div>상대방도 카드를 고르는 중입니다.</div>}
         {/* {(!otherReady && confirm) ? (
