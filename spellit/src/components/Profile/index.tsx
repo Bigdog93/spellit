@@ -89,14 +89,12 @@ const Profile = () => {
         <div className={`${style.userRecord}`}>
           <div className={`${style.playCount}`}>
             <img className={`${style.playCountUp}`} src={playCountUp} alt='playCountUp.svg' />
-            {/* <div className={`${style.bigNumber}`}>{user.playCount}</div> */}
-            <div className={`${style.bigSize}`}>133</div>
+            <div className={`${style.bigNumber}`}>{user.playCount}</div>
             <div>플레이한 게임</div>
             <img className={`${style.playCountDown}`} src={playCountDown} alt='playCountDown.svg' />
           </div>
           <div className={`${style.winRateDiv}`}>
-            {/* <div>{user.winCount / user.playCount === 0 ? 1 : user.playCount}</div> */}
-            <div className={`${style.midSize}`}>54.6</div>
+            <div>{user.winCount / user.playCount === 0 ? 1 : user.playCount}</div>
             <div>승률</div>
           </div>
           <div className={`${style.winCountDiv}`}>
