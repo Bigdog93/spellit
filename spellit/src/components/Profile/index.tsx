@@ -8,7 +8,7 @@ import playCountUp from '../../assets/profile/playCountUp.svg'
 import playCountDown from '../../assets/profile/playCountDown.svg'
 import editBtnImg from '@/assets/profile/editBtn.svg'
 
-import style from './index.module.css'
+import style from '@/components/Profile/index.module.css'
 import Card from './Card';
 import Modal from './Modal';
 
@@ -38,6 +38,7 @@ const Profile = () => {
   const [hoveredCard, setHoveredCard] = useState<DeckType>(user.deck[0])
 
   const [openModalFlag, setOpenModalFlag] = useState<boolean>(false);
+  const [modifyPassword, setModifyPassword] = useState<boolean>(false);
 
   const [modProp, setModProp] = useState<string>('');
 
@@ -75,9 +76,9 @@ const Profile = () => {
   }
 
   return (
-    <>
-    <div className={`${style.bg}`}>
-      <div className={`${style.sidebar}`}>
+    <div>
+      <div className={`${style.bg}`}>
+        !modifyPassword && <div className={`${style.sidebar}`}>
         <div className={`${style.selectedCharacter}`}>
             <button className={`${style.deckBtn} ${style.characterkBtn}`}>
             {user.gameCharacter && <img
@@ -178,7 +179,7 @@ const Profile = () => {
       </div>
       </div>
       {openModalFlag && <Modal closeModal={closeModal} user={user} modProp={modProp} modifyMyInfo={modifyMyInfo}></Modal>}
-      </>
+      </div>
   )
 };
 export default Profile;
