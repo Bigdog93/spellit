@@ -9,25 +9,33 @@ import { attackActions1 } from "@/store/attack1";
 import Timer from "../Items/Timer";
 import  Spell from "./Spell";
 import Character from "./Character";
+import { gameActions } from "@/store/game";
 
 
 
 const Attack = () => {
-    const attacks = useSelector((state: RootState) => (state.attack1.attacks))
-    const [idx, setIdx] = useState(0)
+  const dispatch = useDispatch();
+  const attacks = useSelector((state: RootState) => (state.attack1.attacks));
+  const idx = useSelector((state: RootState) => (state.attack1.idx));
 
-    console.log(attacks)
-    console.log(idx)
-    return (
+  useEffect(() => {
+    if(idx === attacks!.length){
+      dispatch(gameActions.endAttack())
+    }
+  }, [idx, dispatch])
+
+  console.log(attacks)
+  console.log(idx)
+  return (
+    <div>
+      {attacks && (
         <div>
-          {attacks && (
-            <div>
-              <Timer time={attacks[idx].card.cost}/>
-              <Spell attack={attacks[idx]}/>
-            </div>
-          )}
+          <Timer time={attacks[idx].card.cost}/>
+          <Spell attack={attacks[idx]}/>
         </div>
-    )
+      )}
+    </div>
+  )
 }
 
 export default Attack;

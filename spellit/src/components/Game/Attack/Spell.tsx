@@ -1,5 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useContext } from "react";
 import { AttackType, CardType } from '@/utils/Types'
+import { useSelector } from "react-redux";
+
+import { RootState } from '@/store'
+import { WebSocketContext } from '@/store/websocket'
 
 import './Spell.css'
 import Timer from "@/components/Game/Items/Timer";
@@ -12,6 +16,10 @@ interface Spell {
 }
 
 const Spell = ({attack}: {attack: AttackType}) => {
+  const { send } = useContext(WebSocketContext);
+  const roomId = useSelector((state: RootState) => state.room.roomId)
+  const memberId = useSelector((state: RootState) => state.user.id)
+
   console.log('attack ',attack)
   console.log('spell ',attack.card.spell)
   
@@ -63,9 +71,24 @@ const Spell = ({attack}: {attack: AttackType}) => {
 
     recognition.addEventListener("result", (e) => {
         console.log("말하는 중이잖아요?");
+        console.log(e)
         let transcript = e.results[0][0].transcript; // 인식된 음성 글자
         transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
         console.log(transcript);
+        if (isMine){
+          // let transcript = e.results[0][0].transcript; // 인식된 음성 글자
+          // transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
+          // console.log(transcript);
+          send({
+            event: 'spell',
+            roomId: roomId,
+            memberId: memberId,
+            data:  transcript,
+          })
+        } else {
+
+
+        }
 
         let correct = 0;
         console.log("------------------------------------------------");
@@ -104,7 +127,7 @@ const Spell = ({attack}: {attack: AttackType}) => {
   useEffect(()=>{
     handleClick(attack)
   }, [])
-  
+
   return (
       <>
         <Timer time={sec}></Timer>
