@@ -68,4 +68,12 @@ public class MemberController {
     {
         return ResponseEntity.ok(memberService.addFriend(friendRequestDto));
     }
+
+
+    // 로그인2(목소리)
+    @PostMapping("/voicelogin")
+    public ResponseEntity<Member> voiceLoginCheck(@RequestBody MemberVoiceLoginCheckDto loginCheckDto){
+        return ResponseEntity.ok
+
+    }
 }
