@@ -85,9 +85,9 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
       } else if (type === 'toAttack') {
         console.log('toAttack 입니다.')
         dispatch(gameActions.endReady())
+        dispatch(attackActions.playersDeckList(info.attackCards));
         dispatch(gameActions.startAttack())
 
-        dispatch(attackActions.playersDeckList(info.attackCards));
 
       } else if (type === 'otherSpell') {
         console.log('otherSpell 입니다.')
