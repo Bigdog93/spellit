@@ -11,7 +11,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-@AllArgsConstructor
 public class Friend {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
