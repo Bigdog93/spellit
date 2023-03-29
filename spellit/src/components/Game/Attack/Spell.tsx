@@ -7,8 +7,7 @@ import { WebSocketContext } from '@/store/websocket'
 
 import './Spell.css'
 import Timer from "@/components/Game/Items/Timer";
-import { attackActions1 } from "@/store/attack1";
-
+import { gameActions } from "@/store/game";
 
 interface Spell {
     name: string;
@@ -24,8 +23,8 @@ const Spell = ({attack}: {attack: AttackType}) => {
   const memberId = useSelector((state: RootState) => state.user.id)
 
 
-  console.log('attack ',attack)
-  console.log('spell ',attack.card.spell)
+  console.log('attack ', attack)
+  console.log('spell ', attack.card.spell)
   
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -50,7 +49,7 @@ const Spell = ({attack}: {attack: AttackType}) => {
   const spanList: JSX.Element[] = [];
 
   // 타이머 띄우기
-  // const [sec, setSec] = useState<number>(0);
+  const [sec, setSec] = useState<number>(0);
 
   // 주문 버튼 클릭시 음성 인식 시작
   const handleClick = (attack: AttackType) => {
@@ -89,9 +88,9 @@ const Spell = ({attack}: {attack: AttackType}) => {
             memberId: memberId,
             data:  transcript,
           })
+          console.log(transcript)
         } else {
-
-
+          console.log('isMine은 false다.')
         }
 
         let correct = 0;
@@ -112,20 +111,21 @@ const Spell = ({attack}: {attack: AttackType}) => {
 
     // 음성 인식 시작
     recognition.start();
-    // setSec(card.cost);
+    setSec(card.cost);
     console.log('SpeechRecognition start!')
 
     // 타이머
-    // const interval = setInterval(() => {
-    //     setSec(prevSec => prevSec - 1);
-    // }, 1000)
+    const interval = setInterval(() => {
+        setSec(sec - 1);
+    }, 1000)
     
     // 주문 제한 시간 흐른 후 음성인식 종료
     setTimeout(() => {
         recognition.stop();
-        // clearInterval(interval);
+        clearInterval(interval);
         console.log('SpeechRecognition end!')
-        dispatch(attackActions1.setIdx())
+        dispatch(gameActions.setIdx())
+
     }, card.cost*1000);
     
   };
@@ -137,7 +137,7 @@ const Spell = ({attack}: {attack: AttackType}) => {
 
   return (
       <>
-        {/* <Timer time={sec}></Timer> */}
+        <Timer time={sec}></Timer>
         {/* <button onClick={() => {handleClick(sparkSpell)}}>뇌전의 창</button>
         <button onClick={() => {handleClick(iceSpell)}}>영원의 동토</button>
         <button onClick={() => {handleClick(stormSpell)}}>남양의 폭풍</button>
@@ -147,8 +147,8 @@ const Spell = ({attack}: {attack: AttackType}) => {
         <button onClick={() => {handleClick(windSpell)}}>풍화의 검</button>
         <br /> */}
         <div className="SpellBox">
-            <img style={{ width: 800, height: 400}} src="assets/InGame/SpellBox.png" alt="" />
-            <div id='origin'>{spanEl}</div>
+          <img style={{ width: 800, height: 400}} src="assets/InGame/SpellBox.png" alt="" />
+          <div id='origin'>{spanEl}</div>
         </div>
         <div className="words"></div>
         <div id="percent"></div>

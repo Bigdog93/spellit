@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { RootState } from "@/store/";
-import { attackActions1 } from "@/store/attack1";
 
 import Timer from "../Items/Timer";
 import  Spell from "./Spell";
 import Character from "./Character";
 import { gameActions } from "@/store/game";
+import attack from "@/store/attack";
 
 
 
@@ -18,13 +18,15 @@ const Attack = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const attacks = useSelector((state: RootState) => (state.attack1.attacks));
-  const idx = useSelector((state: RootState) => (state.attack1.idx));
-
+  const attacks = useSelector((state: RootState) => (state.game.attacks));
+  const idx = useSelector((state: RootState) => (state.game.idx));
+  const attackTurn = useSelector((state: RootState) => (state.game.attackTurn));
   useEffect(() => {
-    if(idx === attacks!.length){
-      dispatch(gameActions.endAttack())
-      navigate('/defense')
+    if (!attackTurn) {
+      if(idx === attacks!.length){
+        dispatch(gameActions.endAttack())
+        navigate('/defense')
+      }
     }
   }, [idx, dispatch])
   // const temp = attacks[idx].card.cost
