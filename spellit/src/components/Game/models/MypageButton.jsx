@@ -28,7 +28,7 @@ export default function MypageButton(props) {
   // 페이지 이동
   const navigate = useNavigate();
 
-  const id = useSelector((state: RootState) => {state.user.id})
+  const id = useSelector((state) => state.user.id)
 
   const toMypage = () => {
     navigate(`/profile/${id}`)
