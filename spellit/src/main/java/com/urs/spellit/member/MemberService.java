@@ -225,4 +225,19 @@ public class MemberService {
         player.setIsOnline(false);
         memberRepository.save(player);
     }
+
+    public int updateMemberInfoById(MemberUpdateRequestDto murDto) {
+        Optional<Member> memberOpt = memberRepository.findById(SecurityUtil.getCurrentMemberId());
+        if(memberOpt.isEmpty()) return 0;
+        try {
+            Member member = memberOpt.get();
+            member.setNickname(murDto.getNickname());
+            member.setProfileMsg(murDto.getProfileMsg());
+            memberRepository.save(member);
+            return 1;
+        }catch(Exception e) {
+            e.printStackTrace();
+            return 2;
+        }
+    }
 }
