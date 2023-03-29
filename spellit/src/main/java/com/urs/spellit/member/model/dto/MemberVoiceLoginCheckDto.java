@@ -10,8 +10,8 @@ public class MemberVoiceLoginCheckDto {
     private String startSpell;
 
 
-    public static MemberVoiceLoginCheckDto of(){
-
-    }
+//    public static MemberVoiceLoginCheckDto of(){
+//
+//    }
 
 }

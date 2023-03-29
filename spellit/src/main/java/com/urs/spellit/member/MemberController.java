@@ -71,9 +71,9 @@ public class MemberController {
 
 
     // 로그인2(목소리)
-    @PostMapping("/voicelogin")
-    public ResponseEntity<Member> voiceLoginCheck(@RequestBody MemberVoiceLoginCheckDto loginCheckDto){
-        return ResponseEntity.ok
-
-    }
+//    @PostMapping("/voicelogin")
+//    public ResponseEntity<Member> voiceLoginCheck(@RequestBody MemberVoiceLoginCheckDto loginCheckDto){
+//        return ResponseEntity.ok()
+//
+//    }
 }
