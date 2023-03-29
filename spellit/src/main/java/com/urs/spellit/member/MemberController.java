@@ -75,6 +75,12 @@ public class MemberController {
         return ResponseEntity.ok(memberService.getFriendList());
     }
 
+    @DeleteMapping("/friend/delete/{userId}") //친구삭제
+    public ResponseEntity<Boolean> deleteFriend(@PathVariable("userId") Long friendId )
+    {
+        return ResponseEntity.ok(memberService.deleteFriend(friendId));
+    }
+
 
 
     // 로그인2(목소리)

@@ -32,14 +32,22 @@ public class AuthService {
 
     @Transactional
     public MemberResponseDto signup(MemberRequestDto memberRequestDto) {
-        if (memberRepository.existsByEmail(memberRequestDto.getEmail())) {
-            throw new RuntimeException("이미 가입되어 있는 유저입니다");
-        }
 
         Member member = memberRequestDto.toMember(passwordEncoder);
-        //member.setGameCharacterEntity(new GameCharacterEntity(1L,"곽춘배","CB"));
         member.setGameCharacterEntity(gameService.getCharacter(1L));
         return MemberResponseDto.of(memberRepository.save(member));
+    }
+
+    @Transactional
+    public Boolean checkEmailDuplicate(MemberRequestDto memberRequestDto)
+    {
+        return !memberRepository.existsByEmail(memberRequestDto.getEmail());
+    }
+
+    @Transactional
+    public Boolean checkNickNameDuplicate(MemberRequestDto memberRequestDto)
+    {
+        return !memberRepository.existsByNickname(memberRequestDto.getNickname());
     }
 
     @Transactional
