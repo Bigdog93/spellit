@@ -129,7 +129,7 @@ const Profile = () => {
             <div className={`${style.deckDiv}`}>
               {/* 반복문 카드 뿌리기 */}
               { user.deck.map((card: DeckType, index: number) => (
-                <div onMouseOver={(e) => cardInfo(card)} className={`${style.cardContainer}`}>
+                <div key={index} onMouseOver={(e) => cardInfo(card)} className={`${style.cardContainer}`}>
                   <Card key={index} card={card.code}/>
                 </div>
               ))}
