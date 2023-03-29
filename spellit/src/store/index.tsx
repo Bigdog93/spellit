@@ -4,6 +4,7 @@ import useReducer from './user';
 import matchingReducer from './matching';
 import costReducer from './cost';
 import attackReducer from './attack';
+import attackReducer1 from './attack1';
 import playerReducer from './player';
 import roomReducer from './room';
 import defenseReducere from './defense'
@@ -17,6 +18,7 @@ const store = configureStore({
     player: playerReducer,
     cost: costReducer,
     attack: attackReducer,
+    attack1: attackReducer1,
     room: roomReducer,
     defense: defenseReducere,
     game: gameReducer,

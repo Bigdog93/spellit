@@ -62,6 +62,8 @@ const userSlice = createSlice({
       state.playCount = action.payload.playCount
       state.winCount = action.payload.winCount
       state.isOnline = action.payload.isOnline
+      state.looseCount = action.payload.looseCount
+      state.drawCount = action.payload.drawCount
     },
     setDeck(state, action: PayloadAction<Array<DeckType>>) {
       state.deck = action.payload
