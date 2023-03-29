@@ -23,7 +23,7 @@ public class Friend {
     private String friendEmail;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name="member_id")
     @NonNull
     private Member member;
 

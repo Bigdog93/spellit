@@ -11,7 +11,6 @@ import com.urs.spellit.member.model.dto.*;
 import com.urs.spellit.member.model.entity.Friend;
 import com.urs.spellit.member.model.entity.FriendWaitEntity;
 import com.urs.spellit.member.model.entity.Member;
-import com.urs.spellit.websocket.dto.PlayerDto;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -136,6 +135,10 @@ public class MemberService {
 
         List<Friend> myFriends=me.getFriends();
         List<Friend> Friends=friend.getFriends();
+
+        ///입력값이 나인지 확인///
+        if(friendId==myId)
+            throw new RuntimeException(("나를 친구로 추가할 수 없습니다."));
 
         ///이미 친구인지 확인///
         for(Friend myFriend : myFriends)
