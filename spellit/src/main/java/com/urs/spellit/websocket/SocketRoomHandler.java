@@ -152,6 +152,8 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 							}
 						}
 						players.get(1).getSession().sendMessage(makeTextMsg("toAttack", infoMap));
+					}else {
+						other.getSession().sendMessage(makeTextMsg("otherReady", infoMap));
 					}
 					break;
 				case "spell": // 주문 외우면 외운 주문 상대에게
