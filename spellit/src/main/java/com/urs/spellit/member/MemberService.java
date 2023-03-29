@@ -96,6 +96,7 @@ public class MemberService {
         return this.getUserDeck(member.get().getId());
     }
 
+    //친구 요청을 하는 입장
     public FriendWaitResponseDto addFriendWait(FriendWaitRequestDto friendWaitRequestDto) {
         Member member=memberRepository.findById(SecurityUtil.getCurrentMemberId()).get(); //나
         Long friendId=friendWaitRequestDto.getFriendId(); //친구Id
@@ -122,6 +123,7 @@ public class MemberService {
         return FriendWaitResponseDto.toResponse(friendWaitEntity); //친구Id, 내 Id 반환
     }
 
+    //친구 수락을 하는 입장 (전제: 나의 친구대기창에 상대가 있음)
     public List<FriendResponseDto> addFriend(FriendRequestDto friendRequestDto)
     {
         Long myId=SecurityUtil.getCurrentMemberId();
@@ -151,7 +153,7 @@ public class MemberService {
         List<FriendWaitEntity> myFriendWaitList=me.getFriendWaitEntities(); //내 친구대기 리스트
         FriendWaitEntity friendWait=FriendWaitEntity.checkExistsInWaitList(myFriendWaitList,friendId); //내 친구대기 리스트에 상대가 존재하는지 확인
         if(friendWait!=null) //존재
-            myFriendWaitList.remove(friendWait); //내 친구 대기 리스트에서 상대를 삭제
+            friendWaitRepository.delete(friendWait); //내 친구 대기 리스트에서 상대를 삭제
         else //존재X
             throw new RuntimeException("내 친구 대기 리스트에 상대가 존재하지 않습니다.");
 
@@ -159,19 +161,19 @@ public class MemberService {
         List<FriendWaitEntity> friendFriendWaitList=friend.getFriendWaitEntities(); //상대의 친구대기 리스트
         FriendWaitEntity meWait=FriendWaitEntity.checkExistsInWaitList(friendFriendWaitList,myId); //상대의 친구대기 리스트에 내가 존재하는지 확인
         if(meWait!=null) //존재
-            friendFriendWaitList.remove(meWait); //상대의 친구 대기 리스트에서 나를 삭제
+            friendWaitRepository.delete(meWait); //상대의 친구 대기 리스트에서 나를 삭제
 
         ///내 친구 리스트에 상대 추가///
-        Friend addFriend=Friend.toBuild(friendId,friendEmail,friend);
+        Friend addFriend=Friend.toBuild(friendId,friendEmail,me);
         myFriends.add(addFriend);
         me.setFriends(myFriends);
-        memberRepository.save(me);
+        friendRepository.save(addFriend);
         
         ///상대의 친구 리스트에 나 추가///
-        Friend addMe=Friend.toBuild(myId,myEmail,me);
+        Friend addMe=Friend.toBuild(myId,myEmail,friend);
         Friends.add(addMe);
         friend.setFriends(Friends);
-        memberRepository.save(friend);
+        friendRepository.save(addMe);
 
         return FriendResponseDto.toResponse(addFriend,addMe);
     }

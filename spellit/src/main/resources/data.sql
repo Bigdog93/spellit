@@ -49,3 +49,6 @@ VALUES
     (5,1,1),
     (6,4,1);
 
+INSERT IGNORE INTO `friend_wait`
+values
+(1,'aaa@aaa',1,2);
