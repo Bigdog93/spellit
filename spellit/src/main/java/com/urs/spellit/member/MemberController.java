@@ -69,6 +69,13 @@ public class MemberController {
         return ResponseEntity.ok(memberService.addFriend(friendRequestDto));
     }
 
+    @GetMapping("/friend/list") //내 친구 목록
+    public ResponseEntity<List<FriendResponseDto>> getFriendList()
+    {
+        return ResponseEntity.ok(memberService.getFriendList());
+    }
+
+
 
     // 로그인2(목소리)
 //    @PostMapping("/voicelogin")

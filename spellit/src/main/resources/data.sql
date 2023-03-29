@@ -1,8 +1,4 @@
 -- -- 기본적으로 넣어줄 Data Set, 프로젝트 빌드 시 실행됨
--- -- INSERT INTO items
--- -- (description, img_path, name, price, for_runner)
--- -- VALUES
--- --     ("자신의 위치를 드러내지 않고 가장 가까운 추노꾼의 위치를 확인할 수 있다.", "item/item1.png", "천리안", 1500, 1),
 
 INSERT IGNORE INTO card
 (card_id,code, title, spell, cost, damage, attribute)
@@ -29,9 +25,6 @@ VALUES
 (2,"키리카", "AK", "", "", "", "", ""),
 (3,"루나", "LUNA", "", "", "", "", "");
 
--- INSERT IGNORE INTO `member`
---     (`member_id`,`mod_dt`,`reg_dt`,`authority`,`email`,`exp`,`is_deleted`,`is_online`,`level`,`nickname`,`password`,`play_count`,`profile_msg`,`win_count`,`loose_count`,`draw_count`,`character_id`) VALUES (1,'2023-03-28 03:54:19.863820','2023-03-28 00:50:29.921532','ROLE_USER','aaa@aaa',0,'0','0',0,'aaa','$2a$10$jztRRiiepvYOpPq6dcf.O.9oqQxNTfw2rP7jw5BDZD7j59dV4KrbG',0,NULL,0,0,0,1);
--- INSERT IGNORE INTO `member` (`member_id`,`mod_dt`,`reg_dt`,`authority`,`email`,`exp`,`is_deleted`,`is_online`,`level`,`nickname`,`password`,`play_count`,`profile_msg`,`win_count`,`loose_count`,`draw_count`,`character_id`) VALUES (2,'2023-03-28 00:51:01.170529','2023-03-28 00:51:01.170529','ROLE_USER','bbb@bbb',0,'0','0',0,'bbb','$2a$10$aiNY1GqapceXdCHUfOw3YOtLcfsL3t2wCq43Ii1DRx4ubKRZi3Tg2',0,NULL,0,0,0,1);
 
 INSERT IGNORE INTO `member` (`member_id`,`mod_dt`,`reg_dt`,`authority`,`email`,`exp`,`is_deleted`,`is_online`,`level`,`nickname`,`password`,`play_count`,`profile_msg`,`win_count`,`character_id`,`draw_count`,`loose_count`,`start_spell`) VALUES (1,'2023-03-29 04:07:15.873543','2023-03-28 00:50:29.921532','ROLE_USER','aaa@aaa',0,'1','0',0,'인의동 대마법사','$2a$10$jztRRiiepvYOpPq6dcf.O.9oqQxNTfw2rP7jw5BDZD7j59dV4KrbG',0,'11연뽑해서 뭐/뭐/뭐/뭐 득했는데 우각하기 귀찮다',0,1,0,0,'0');
 INSERT IGNORE INTO `member` (`member_id`,`mod_dt`,`reg_dt`,`authority`,`email`,`exp`,`is_deleted`,`is_online`,`level`,`nickname`,`password`,`play_count`,`profile_msg`,`win_count`,`character_id`,`draw_count`,`loose_count`,`start_spell`) VALUES (2,'2023-03-28 06:29:13.101507','2023-03-28 00:51:01.170529','ROLE_USER','bbb@bbb',0,'1','0',0,'bbb','$2a$10$aiNY1GqapceXdCHUfOw3YOtLcfsL3t2wCq43Ii1DRx4ubKRZi3Tg2',0,NULL,0,1,0,0,'0');
@@ -52,3 +45,8 @@ VALUES
 INSERT IGNORE INTO `friend_wait`
 values
 (1,'aaa@aaa',1,2);
+
+INSERT IGNORE INTO `friend`
+values
+(1,'lkc2',4,1),
+(2,'aaa@aaa',1,4);

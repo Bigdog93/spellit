@@ -175,7 +175,14 @@ public class MemberService {
         friend.setFriends(Friends);
         friendRepository.save(addMe);
 
-        return FriendResponseDto.toResponse(addFriend,addMe);
+        return FriendResponseDto.responseRelation(addFriend,addMe);
+    }
+
+    public List<FriendResponseDto> getFriendList()
+    {
+        Long myId=SecurityUtil.getCurrentMemberId();
+        List<Friend> friends=friendRepository.findAllByMemberId(myId);
+        return FriendResponseDto.responseList(friends);
     }
 
     public void playerOnline(long memberId) {
