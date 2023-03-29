@@ -77,7 +77,9 @@ public class Member extends BaseTimeEntity {
     @ColumnDefault("false")
     private Boolean isDeleted;
 
-
+    @Column
+    @ColumnDefault("false")
+    private String startSpell;
 
     @Enumerated(EnumType.STRING)
     private Authority authority;
