@@ -1,12 +1,13 @@
 import { useState, useEffect, useContext } from "react";
 import { AttackType, CardType } from '@/utils/Types'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { RootState } from '@/store'
 import { WebSocketContext } from '@/store/websocket'
 
 import './Spell.css'
 import Timer from "@/components/Game/Items/Timer";
+import { attackActions1 } from "@/store/attack1";
 
 
 interface Spell {
@@ -16,9 +17,12 @@ interface Spell {
 }
 
 const Spell = ({attack}: {attack: AttackType}) => {
+  const dispatch = useDispatch();
   const { send } = useContext(WebSocketContext);
+
   const roomId = useSelector((state: RootState) => state.room.roomId)
   const memberId = useSelector((state: RootState) => state.user.id)
+
 
   console.log('attack ',attack)
   console.log('spell ',attack.card.spell)
@@ -46,7 +50,7 @@ const Spell = ({attack}: {attack: AttackType}) => {
   const spanList: JSX.Element[] = [];
 
   // 타이머 띄우기
-  const [sec, setSec] = useState<number>(0);
+  // const [sec, setSec] = useState<number>(0);
 
   // 주문 버튼 클릭시 음성 인식 시작
   const handleClick = (attack: AttackType) => {
@@ -108,29 +112,32 @@ const Spell = ({attack}: {attack: AttackType}) => {
 
     // 음성 인식 시작
     recognition.start();
-    setSec(card.cost);
+    // setSec(card.cost);
     console.log('SpeechRecognition start!')
 
     // 타이머
-    const interval = setInterval(() => {
-        setSec(prevSec => prevSec - 1);
-    }, 1000)
+    // const interval = setInterval(() => {
+    //     setSec(prevSec => prevSec - 1);
+    // }, 1000)
     
     // 주문 제한 시간 흐른 후 음성인식 종료
     setTimeout(() => {
         recognition.stop();
-        clearInterval(interval);
+        // clearInterval(interval);
         console.log('SpeechRecognition end!')
+        dispatch(attackActions1.setIdx())
     }, card.cost*1000);
+    
   };
 
   useEffect(()=>{
     handleClick(attack)
-  }, [])
+  }, [attack])
+
 
   return (
       <>
-        <Timer time={sec}></Timer>
+        {/* <Timer time={sec}></Timer> */}
         {/* <button onClick={() => {handleClick(sparkSpell)}}>뇌전의 창</button>
         <button onClick={() => {handleClick(iceSpell)}}>영원의 동토</button>
         <button onClick={() => {handleClick(stormSpell)}}>남양의 폭풍</button>

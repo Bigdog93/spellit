@@ -14,26 +14,42 @@ import { gameActions } from "@/store/game";
 
 
 const Attack = () => {
+  console.log('Attack')
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const attacks = useSelector((state: RootState) => (state.attack1.attacks));
   const idx = useSelector((state: RootState) => (state.attack1.idx));
 
   useEffect(() => {
     if(idx === attacks!.length){
       dispatch(gameActions.endAttack())
+      navigate('/defense')
     }
   }, [idx, dispatch])
+  // const temp = attacks[idx].card.cost
+  // console.log('cost를 초로 쓰자', temp)
+  // const [time, setTime] = useState(temp)
 
-  console.log(attacks)
-  console.log(idx)
+  // useEffect(()=> {
+  //   console.log('timer useEffect')
+  //   let interval = setInterval(() => setTime(time-1), 1000)
+  //   setTimeout(()=>{
+  //     clearInterval(interval);
+  //     // dispatch(attackActions1.setIdx())
+  //     console.log(time)
+  //   }, temp)
+  // }, []);
+
+
   return (
     <div>
-      {attacks && (
+      {/* {attacks && ( */}
         <div>
-          <Timer time={attacks[idx].card.cost}/>
+          {/* <Timer time={attacks[idx].card.cost}/> */}
           <Spell attack={attacks[idx]}/>
         </div>
-      )}
+      {/* )} */}
     </div>
   )
 }

@@ -6,8 +6,9 @@ import { CardType, AttackType } from '@/utils/Types'
 import { gameActions } from './game';
 
 
+
 type initialAttackType = {
-  attacks: AttackType[] | null
+  attacks: AttackType[]
   idx: number
 }
 
@@ -25,10 +26,12 @@ const attackSlice1 = createSlice({
       console.log(action.payload)
     },
     setIdx(state) {
-      if (state.idx === (state.attacks!.length)-1) {
+      if (state.idx === state.attacks.length-1) {
         state.idx = 0
+        console.log('idx 끝')
       } else {
         state.idx += 1
+        console.log('idx +1 해줌')
       }
     }
   },
