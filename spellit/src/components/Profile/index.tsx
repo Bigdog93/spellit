@@ -37,13 +37,22 @@ const Profile = () => {
 
   const [hoveredCard, setHoveredCard] = useState<DeckType>(user.deck[0])
 
-  const [nicknameModal, setNicknameModal] = useState<boolean>(false);
+  const [openModalFlag, setOpenModalFlag] = useState<boolean>(false);
 
-  const openNicknameModal = () => {
-    setNicknameModal(true);
+  const [modProp, setModProp] = useState<string>('');
+
+  const openModal = (modProp:string) => {
+    setModProp(modProp);
+    setOpenModalFlag(true);
   }
-  const closeNicknameModal = () => {
-    setNicknameModal(false);
+  const closeModal = () => {
+    setOpenModalFlag(false);
+  }
+  const modifyMyInfo = (nickname: string, profileMsg:string) => {
+    const tmpUser = user;
+    tmpUser.nickname = nickname;
+    tmpUser.profileMsg = profileMsg;
+    setUser(tmpUser);
   }
 
   useEffect(() => {
@@ -111,13 +120,13 @@ const Profile = () => {
           <div className={`${style.userTextContainer}`}>
             <div className={`${style.bigSize}`}>
               {user.nickname}
-              <div className={`${style.editBtn}`} onClick={openNicknameModal}>
+                <div className={`${style.editBtn}`} onClick={(e) => { openModal('nickname') }}>
                 <img className={`${style.editBtnImg}`} src={editBtnImg} alt='editBtn.svg' />
               </div> 
             </div>
             <div className={`${style.smallSize}`}>
               {user.profileMsg}
-              <div className={`${style.editBtn}`} onClick={openNicknameModal}>
+              <div className={`${style.editBtn}`} onClick={(e) => {openModal('profileMsg')}}>
                 <img className={`${style.editBtnImg}`} src={editBtnImg} alt='editBtn.svg' />
               </div>  
             </div>
@@ -170,7 +179,7 @@ const Profile = () => {
         </div>
       </div>
       </div>
-      {nicknameModal && <Modal closeModal={closeNicknameModal} user={user}></Modal>}
+      {openModalFlag && <Modal closeModal={closeModal} user={user} modProp={modProp} modifyMyInfo={modifyMyInfo}></Modal>}
       </>
   )
 };
