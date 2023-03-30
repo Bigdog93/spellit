@@ -9,7 +9,7 @@ type initialGameType = {
     settleTurn: boolean,
     attacks: AttackType[],
     idx: number,
-    myAttackTurn: boolean,
+    myAttackTurn: boolean|null,
 }
 const initialGameState: initialGameType = {
   readyTurn: false,
@@ -18,7 +18,7 @@ const initialGameState: initialGameType = {
   settleTurn: false,
   attacks: [],
   idx: 0,
-  myAttackTurn: false,
+  myAttackTurn: null,
 };
 
 const gameSlice = createSlice({
