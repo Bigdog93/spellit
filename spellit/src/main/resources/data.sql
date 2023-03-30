@@ -17,7 +17,7 @@ VALUES
     (12,"light2", "광휘의 섬광", "빛의 권능을 내 손에, 태양과 달, 별들의 힘을 모아, 적들에게 심판을 내려라", 7, 180, 4),
     (13,"dark1", "무광의 심연", "어둠보다 어두운 자여, 심연 깊은 곳에서 우리를 올려다보는 자여, 한 점 빛조차 허락하지 않는 어둠을 내보여 그 공포로 영혼까지 떨게 하라", 12, 300, 5),
     (14,"dark2", "탐닉의 심연", "끌어당겨라 ,집어삼켜라, 빛을 질투하는 어둠이여, 게걸스럽게 탐하여 모든것을 빼앗아라", 9, 230, 5)
-AS new_record
+    AS new_record
 ON DUPLICATE KEY
 UPDATE
     code=new_record.code,
@@ -30,10 +30,10 @@ UPDATE
 INSERT INTO game_character
 (character_id,character_name, english_name, stand, hurt, attack, winner, combo)
 VALUES
-(1,"곽춘배", "CB", "", "", "", "", ""),
-(2,"키리카", "AK", "", "", "", "", ""),
-(3,"루나", "LUNA", "", "", "", "", "")
-AS new_record
+    (1,"곽춘배", "CB", "", "", "", "", ""),
+    (2,"키리카", "AK", "", "", "", "", ""),
+    (3,"루나", "LUNA", "", "", "", "", "")
+    AS new_record
 ON DUPLICATE KEY
 UPDATE
     character_name=new_record.character_name,
