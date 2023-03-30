@@ -26,20 +26,14 @@ const OpenViduVideo = () => {
     //     subscribers: Array<StreamManager>,
     //     currentVideoDevice: any,
     // }
-    const roomId = useSelector((state: RootState) => state.room.roomId);
-    const nickname = useSelector((state: RootState) => state.user.nickname);
-    let mySessionId: string = 'session' + roomId.toString();
-    let myUserName: string = nickname;
-    const [OV, setOV] = useState<OpenVidu | null>(new OpenVidu());
-    const [session, setSession] = useState<Session | undefined>(OV?.initSession());
-    const [mainStreamManager, setMainStreamManager] = useState<Publisher | undefined>(undefined) // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
-    const [publisher, setPublisher] = useState<Publisher | undefined>(undefined);
+    let mySessionId: string = "0";
+    let myUserName: string = "default" + Math.random().toString();
+    const [session, setSession] = useState<Session | undefined>(undefined);
+    // let mainStreamManager: Publisher | undefined = undefined;  // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
+    const [mainStreamManager, setMainStreamManager] = useState<Publisher | undefined>(undefined)
+    let [publisher, setPublisher] = useState<StreamManager | undefined>(undefined);
+    // let subscribers: Array<StreamManager> = [];
     const [subscribers, setSubscribers] = useState<Array<StreamManager>>([]);
-    const [token, setToken] = useState<string | null>(null);
-    const { send } = useContext(WebSocketContext);
-    const myTurn = useSelector((state: RootState) => (state.attack.myTurn));
-
-    // const [mute, setMute] = useState<boolean>(true);
     let currentVideoDevice: any = null;
     const onbeforeunload = (event :any) => {
         leaveSession();
@@ -220,41 +214,12 @@ const OpenViduVideo = () => {
         console.log(publisher);
         console.log(mainStreamManager);
     }
-    function testFunction() {
-        send({
-            event: 'test',
-            memberId: 0,
-            data: '바람의 칼날이여'
-        })
-    }
-    function muteOn() {
-        console.log("publisher : " + publisher);
-        if (publisher === undefined) return;
-        // setMute(!mute);
-        publisher.publishAudio(false);
-    }
-    function muteOff() {
-        publisher?.publishAudio(true);
-    }
-    useEffect(() => {
-        if (myTurn) {
-            muteOff();
-        } else {
-            muteOn();
-        }
-        return () => {
-
-        }
-    }, [myTurn])
 
     return (
         <>
             {mainStreamManager && <OvVideo streamManager={mainStreamManager}></OvVideo>}
-            {/* <button onClick={joinSession}>joinSession</button> */}
-            {/* <button onClick={showSubs}>showSubs</button> */}
-            {/* <button onClick={testFunction}>testFunction</button> */}
-            <button onClick={muteOn}>muteOn</button>
-            <button onClick={muteOff}>muteOff</button>
+            <button onClick={joinSession}>joinSession</button>
+            <button onClick={showSubs}>showSubs</button>
             {subscribers.map((sub:any, idx:number) => {
                 return (
                     <div key={idx}>

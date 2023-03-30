@@ -6,22 +6,15 @@ import { RootState } from "./store";
 import Home from "./components/Home";
 import Game from "./components/Game";
 import Matching from "./components/Matching";
-import Deck from "./components/User";
-import Ready from "@/components/Game/Ready";
-import Defence from "@/components/Game/Defense/Defense";
+import User from './components/User'
+import Ready from "@/components/Game/Ready"
+import Defence from '@/components/Game/Defense/Defense';
+import Attack from "@/components/Game/Attack/Attack";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 import OAuth from "./components/Auth/OAuth";
 import Settle from "./components/Settle/Settle";
 import Result from "./components/Game/Result";
-import Test from "./components/Test";
-import OpenViduTest from "./components/Game/OpenVidu/OpenVidu";
-import Attack from "./components/Game/Attack";
-import Spell from "./components/Game/Attack/Spell";
-import Profile from "./components/Profile";
-
-// 임시
-import SKills from "@/components/Settle/SKills";
 
 function App() {
   const isLogged = useSelector(
@@ -43,18 +36,14 @@ function App() {
           <Route path="matching" element={<Matching />} />
           <Route path="deck" element={<Deck />} />
           <Route path="ready" element={<Ready />} />
-          <Route path="defense" element={<Defence />} />
-          <Route path="attack" element={<Attack />} />
-          <Route path="login" element={<Login />} />
-          <Route path="oath" element={<OAuth />} />
-          <Route path="join" element={<Signup />} />
-          <Route path="test" element={<Test />} />
-          <Route path="openviduTest" element={<OpenViduTest />} />
-          <Route path="settle" element={<Settle />} />
-          <Route path="result" element={<Result />} />
-          <Route path="spell" element={<Spell />} />
-          <Route path="skills" element={<SKills />} />
-          <Route path="profile/:id" element={<Profile />} />
+          <Route path="defense" element={<Defence/>}/>
+          <Route path="attack" element={<Attack/>}/>
+          <Route path="login" element={<Login/>}/>
+          <Route path="oath" element={<OAuth/>}/>
+          <Route path="join" element={<Signup/>}/>
+          <Route path="test" element={<Test/>}/>
+          <Route path="settle" element={<Settle/>}/>
+          <Route path="result" element={<Result/>}/>
         </Routes>
       </BrowserRouter>
     </WebSocketProvider>

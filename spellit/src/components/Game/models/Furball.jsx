@@ -11,7 +11,7 @@ import { useGLTF } from '@react-three/drei'
 
 
 export default function Furball(props) {
-  const { nodes, materials } = useGLTF('./Furball.glb')
+  const { nodes, materials } = useGLTF('./homeglb/Furball.glb')
 	console.log(nodes)
   return (
     <group {...props} dispose={null}>

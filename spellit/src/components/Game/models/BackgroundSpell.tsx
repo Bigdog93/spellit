@@ -19,7 +19,7 @@ type GLTFResult = GLTF & {
 
 export default function BackgroundSpell(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF(
-    "./models/backgroundspell.glb"
+    "./models/homeglb/backgroundspell.glb"
   ) as GLTFResult;
   return (
     <group {...props} dispose={null} scale={[200, 200, 200]}>

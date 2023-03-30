@@ -10,7 +10,7 @@ import { useGLTF } from "@react-three/drei";
 import { RootState } from "@/store/";
 
 export default function MypageButton(props) {
-  const { nodes, materials } = useGLTF("./models/mypagebutton.glb");
+  const { nodes, materials } = useGLTF("./models/homeglb/mypagebutton.glb");
 
   const myPageRef = useRef();
   const [hover, setHover] = useState(false);

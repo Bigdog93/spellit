@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 
 export default function BigMagicCircle(props) {
-  const { nodes, materials } = useGLTF("./models/bigmagiccircle.glb");
+  const { nodes, materials } = useGLTF("./models/homeglb/bigmagiccircle.glb");
 
   const bigMagicCircleRef = useRef(null);
 

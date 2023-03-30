@@ -8,7 +8,7 @@ import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 
 export default function Magician(props) {
-  const { nodes, materials } = useGLTF("./models/magician.glb");
+  const { nodes, materials } = useGLTF("./models/homeglb/magician.glb");
 
   const magicianRef = useRef(null);
 

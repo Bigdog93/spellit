@@ -14,6 +14,17 @@ type GameCharacterType = {
   combo : string,
 }
 
+type GameCharacterType = {
+  id : number,
+  characterName : string,
+  englishName : string,
+  stand : string,
+  hurt : string,
+  attack : string,
+  winner : string,
+  combo : string,
+}
+
 type userInitialType = {
   deck: Array<DeckType>,
   email: string,

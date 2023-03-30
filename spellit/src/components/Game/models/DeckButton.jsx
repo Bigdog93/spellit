@@ -5,7 +5,7 @@ import { MathUtils } from "three";
 import { useNavigate } from "react-router-dom";
 
 export default function DeckButton(props) {
-  const { nodes, materials } = useGLTF("./models/deckbutton.glb");
+  const { nodes, materials } = useGLTF("./models/homeglb/deckbutton.glb");
 
   const deckRef = useRef();
   const [hover, setHover] = useState(false);
