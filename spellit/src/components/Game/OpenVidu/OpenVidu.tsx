@@ -7,7 +7,7 @@ import axios from "axios";
 import { WebSocketContext } from '@/store/websocket'
 
 import React, { Component } from 'react';
-import { send } from "q";
+// import { send } from "q";
 
 
 
@@ -26,14 +26,21 @@ const OpenViduVideo = () => {
     //     subscribers: Array<StreamManager>,
     //     currentVideoDevice: any,
     // }
-    let mySessionId: string = "0";
-    let myUserName: string = "default" + Math.random().toString();
+    const roomId = useSelector((state: RootState) => state.room.roomId);
+    const nickname = useSelector((state: RootState) => state.user.nickname);
+    let mySessionId: string = 'session' + roomId.toString();
+    let myUserName: string = nickname;
+    const [OV, setOV] = useState<OpenVidu | null>(new OpenVidu());
     const [session, setSession] = useState<Session | undefined>(undefined);
     // let mainStreamManager: Publisher | undefined = undefined;  // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
     const [mainStreamManager, setMainStreamManager] = useState<Publisher | undefined>(undefined)
-    let [publisher, setPublisher] = useState<StreamManager | undefined>(undefined);
+    let [publisher, setPublisher] = useState<Publisher | undefined>(undefined);
     // let subscribers: Array<StreamManager> = [];
     const [subscribers, setSubscribers] = useState<Array<StreamManager>>([]);
+    const [token, setToken] = useState<string | null>(null);
+    const { send } = useContext(WebSocketContext);
+    const myTurn = useSelector((state: RootState) => (state.attack.myTurn));
+
     let currentVideoDevice: any = null;
     const onbeforeunload = (event :any) => {
         leaveSession();
@@ -196,6 +203,14 @@ const OpenViduVideo = () => {
     }
 
 
+    function muteOn() {
+        if (publisher === undefined) return;
+        publisher.publishAudio(false);
+    }
+    function muteOff() {
+        if (publisher === undefined) return;
+        publisher.publishAudio(true);
+    }
 
     useEffect(() => {
         window.addEventListener('beforeunload', leaveSession);
@@ -218,8 +233,10 @@ const OpenViduVideo = () => {
     return (
         <>
             {mainStreamManager && <OvVideo streamManager={mainStreamManager}></OvVideo>}
-            <button onClick={joinSession}>joinSession</button>
-            <button onClick={showSubs}>showSubs</button>
+            {/* <button onClick={joinSession}>joinSession</button>
+            <button onClick={showSubs}>showSubs</button> */}
+            <button onClick={muteOn}>muteOn</button>
+            <button onClick={muteOff}>muteOff</button>
             {subscribers.map((sub:any, idx:number) => {
                 return (
                     <div key={idx}>
