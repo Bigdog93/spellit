@@ -8,7 +8,7 @@ import playCountUp from '../../assets/profile/playCountUp.svg'
 import playCountDown from '../../assets/profile/playCountDown.svg'
 import editBtnImg from '@/assets/profile/editBtn.svg'
 
-import style from '@/components/Profile/index.module.css'
+import style from '@/components/Profile/Profile.module.css'
 import Card from './Card';
 import Modal from './Modal';
 

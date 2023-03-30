@@ -75,8 +75,17 @@
   flex-direction: row;
   align-items: center;
 }
+.characterDiv {
+  cursor: pointer;
+}
 .characterImg{
   height: 60vh;
+}
+.characterImg:hover {
+  
+}
+.shadowCharacter {
+  filter: drop-shadow(0px 0px 22px #d453ff96);
 }
 
 .cardcselectcontainer{
