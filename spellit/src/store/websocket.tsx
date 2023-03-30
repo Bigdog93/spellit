@@ -105,9 +105,15 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
 
       } else if (type === 'toDefense') {
         console.log('toDefense 입니다.')
+        dispatch(gameActions.endAttack());
+        dispatch(gameActions.startDefense());
+
 
       } else if (type === 'toSettle') {
         console.log('toSettle 입니다.')
+        dispatch(gameActions.endDefense());
+        dispatch(gameActions.startSettle());
+
 
       } else if (type === 'gameOver') {
         console.log('gameOver입니다.')

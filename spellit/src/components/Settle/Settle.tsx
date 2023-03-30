@@ -9,147 +9,63 @@ import ProfileHp from '../Game/Items/ProfileHp';
 import "./Settle.css";
 import LUNA_attack from '../../assets/character/LUNA_attack.png';
 import AK_attack from '../../assets/character/AK_attack.png';
+import { playerActions } from '@/store/player';
 
 function Settle() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // 주문 영창에 대한 처리된 데미지 값을 서버에서 받아서 이펙트 효과와 함께 데미지값으로 넘겨주기
-    const p1Deck = useSelector((state: RootState) => (state.attack.p1Deck));
     const defaultHP = useSelector((state: RootState) => (state.attack.defaultHp));
 
-    // const firstHp = useSelector((state: RootState) => (state.attack.firstHp));
-    // const secondHp = useSelector((state: RootState) => (state.attack.secondHp));
+    const p1Hp = useSelector((state: RootState) => (state.player.p1!.hp));
+    const p2Hp = useSelector((state: RootState) => (state.player.p2!.hp));
 
-    const p1Hp = useSelector((state: RootState) => (state.attack.p1Hp));
-    const p2Hp = useSelector((state: RootState) => (state.attack.p2Hp));
+    const p1Deffense = useSelector((state: RootState) => (state.settle.p1Deffense));
+    const p2Deffense = useSelector((state: RootState) => (state.settle.p2Deffense));
 
-    
-    // console.log(firstHp);
-    const damageStack = useSelector((state: RootState) => (state.attack.p1Damage));
-    const [d, setD] = useState(0);
+    const attacks = useSelector((state: RootState) => (state.game.attacks));
+
+    const percentList = useSelector((state: RootState) => (state.settle.percentList));
+
     
     const p1HpStyle = {
-        width: `${p1Hp}px`,
-        backgroundColor: p1Hp > defaultHP*0.3 ? '#FFF500' : '#FF0000' ,
+        width: `${p1Hp/defaultHP*385}px`,
+        backgroundColor: p1Hp > 100 ? '#FFF500' : '#FF0000' ,
     }
     const p2HpStyle = {
-        width: `${p2Hp}px`,
-        backgroundColor: p2Hp > defaultHP*0.3 ? '#FFF500' : '#FF0000' ,
+        width: `${p2Hp/defaultHP*385}px`,
+        backgroundColor: p2Hp > 100 ? '#FFF500' : '#FF0000' ,
     }
+
+    const [idx, setIdx] = useState(0);
     
-    // 데미지 정산
-    // const hit = (damage: number) => {
-    //     // const effectList = [...p1Deck];
-    //     // 배열의 맨 처음 값을 pop
-    //     // const effect = effectList.shift();
-    //     // console.log(effect);
-    //     console.log('이펙트 띄우기')
-    //     // console.log(effect);
-    //     console.log('d : ', d)
-    //     const hideEffect = document.querySelector(`.${p1Deck[d]}-${d}`);
-    //     // console.log(hideEffect);
-    //     setTimeout(() => {
-    //         hideEffect?.classList.add('hidden-effect');
-    //         dispatch(attackActions.firstHit(damage));
-    //         dispatch(attackActions.secondHit(damage));
+    function settling(idx: number) {
+        // for (let i=0; i<attacks.length; i++) {
+            let d = attacks[idx].card.damage * percentList[idx];
+
+            if (attacks[idx].isMine) {
+                if (p2Deffense) {
+                    d = d/2;
+                }
+                dispatch(playerActions.p2HpDecrese(d));
+            } else {
+                if (p1Deffense) {
+                    d = d/2;
+                }
+                dispatch(playerActions.p1HpDecrese(d));
+            }
             
-    //         // action 이후에 state값이 바로 변경되어 반영되지 않음,, 왜일까,,?
-    //         console.log('p1Hp : '+ p1Hp);
-    //         console.log('p2Hp : '+ p2Hp);
-    //         setTimeout(() => {
-    //             console.log('얍!')
-    //             setD(d+1);
-    //         }, 5000)
-    //     }, 5000);
-    // }
+        // }
+    }
 
     useEffect(() => {
-        const damage = damageStack[d];
-        
-        // 스킬 이펙트 숨기는 함수
-        async function hideEffect () {
-            const hiddenEffect = document.querySelector(`.${p1Deck[d]}-${d}`);
-            setTimeout(() => {
-                hiddenEffect?.classList.add('hidden-effect');
-            }, 2000);
-        }
-        
-        // result 페이지로 이동
-        async function moveResult () {
-            setTimeout(() => {
-                navigate('/result');
-            }, 5000);
-        }
-
-        // ready 페이지로 이동
-        async function moveReady () {
-            setTimeout(() => {
-                navigate('/ready');
-            }, 3000);
-        }
-
-        // 데미지 공격하는 함수
-        const hit = async (damage: number) => {
-            console.log('이펙트 띄우기')
-            console.log('d : ', d)
-            setTimeout(() => {
-                dispatch(attackActions.p1Hit(damage));
-                // dispatch(attackActions.p2Hit(damage));
-                
-                // action 이후에 state값이 바로 변경되어 반영되지 않음,, 왜일까,,?
-                console.log('p1Hp : '+ p1Hp);
-                console.log('p2Hp : '+ p2Hp);
-                setTimeout(() => {
-                    console.log('얍!')
-                    setD(d+1);
-                }, 2000)
-            }, 3000);
-        }
-        
-        if (d < p1Deck.length) {
-            if (p1Hp <= damage) {
-                hideEffect();
-                hit(p1Hp);
-                moveResult();
-                
-            } else {
-                hideEffect();
-                hit(damage);
-            }
+        if (idx < attacks.length) {
+            settling(idx);
+            setIdx(idx+1);
         } else {
-            if (p1Hp > 0) {
-                moveReady();
-            } else {
-                hideEffect();
-                hit(p1Hp);
-                moveResult();
-            }
+            navigate('/result');
         }
-        
-        // if (d < p1Deck.length) {
-        //     if (firstHp <= damage) {
-        //         hit(firstHp);
-        //         setTimeout(() => {
-        //             navigate('/result');
-        //         }, 0);
-        //     } else {
-        //         hit(damage);
-        //     }
-        // } else {
-        //     if (firstHp > 0) {
-        //         setTimeout(() => {
-        //             navigate('/ready');
-        //         }, 0);
-        //     } else {
-        //         hit(firstHp);
-        //         setTimeout(() => {
-        //             navigate('/result');
-        //         }, 0);
-        //     }
-        // }
-
-    }, [d]);
+    }, [idx]);
 
     return (
         <div className='settle-bg'>

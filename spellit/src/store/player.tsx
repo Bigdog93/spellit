@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-type PlayerType = 
-  {
+type PlayerType = {
     memberId : number,
     hp : number,
     nickname : string,
@@ -62,7 +61,12 @@ const playerSlice = createSlice({
     setP2(state, action: PayloadAction<PlayerType>) {
       state.p2 = action.payload
     },
-    
+    p1HpDecrese(state, action: PayloadAction<number>) {
+      state.p1!.hp -= action.payload;
+    },
+    p2HpDecrese(state, action: PayloadAction<number>) {
+      state.p2!.hp -= action.payload;
+    },
   },
 });
 

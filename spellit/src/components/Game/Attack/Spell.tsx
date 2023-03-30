@@ -9,6 +9,7 @@ import './Spell.css'
 import Timer from "@/components/Game/Items/Timer";
 import { gameActions } from "@/store/game";
 import ProfileHp from "../Items/ProfileHp";
+import { settleActions } from "@/store/settle";
 
 
 interface Spell {
@@ -115,10 +116,10 @@ const Spell = ({attack}: {attack: AttackType}) => {
                 console.log('------')
             }
         }
-        const percentEl = document.getElementById("percent") as HTMLDivElement;
-        const correctPercent = Math.round((correct / spellLength) * 100);
-        percentEl.innerText = `총 ${spellLength}개 중 ${correct}개 맞음 : ${correctPercent} %`;
-    });
+        // const percentEl = document.getElementById("percent") as HTMLDivElement;
+        // const correctPercent = Math.round((correct / spellLength) * 100);
+        // percentEl.innerText = `총 ${spellLength}개 중 ${correct}개 맞음 : ${correctPercent} %`;
+      });
 
     // 음성 인식 시작
     setSec(card.cost);
@@ -140,6 +141,15 @@ const Spell = ({attack}: {attack: AttackType}) => {
         clearInterval(interval);
         console.log('SpeechRecognition end!')
         setTimeout(() => {
+          let correct = 0;
+          for (let i=0; i<spellLength; i++) {
+            const correctEl = document.querySelector(`spell-${i}`);
+            if (correctEl?.classList.contains(`correct${card.attribute}`)) {
+              correct++;
+            }
+          }
+          dispatch(settleActions.percentList(Math.round(correct / spellLength)));
+
           dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
         }, 3000);
 
