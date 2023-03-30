@@ -180,24 +180,26 @@ const Spell = ({attack}: {attack: AttackType}) => {
               <div className="second-hp-bar" style={p2HpStyle}></div>
           </div>
         </div>
-          <div className="attack-bottom-itmes">
-            {attack.isMine && <img className="myCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p1Character}_attack.png`)} alt="" /> }
-            <div className="SpellandBar">
-              <div className="SpellBox">
-                <img style={{ width: 800, height: 400}} src={require(`../../../assets/InGame/SpellBox.png`)} alt="" />
-                <div id='origin'>{spanEl}</div>
-              </div>
-              <div className="spell-bar-box">
-                <img src={require(`../../../assets/InGame/SkillBar.png`)} alt="" style={{width: '100%', height: '140px'}} />
-                <div className="cardList">
-                  {attackCardList.map((card: AttackType, idx: number) => (
-                    card.isMine && <img style={{width: '100px', margin: "10px"}} key={idx} src={require(`../../../assets/card/icon/${card.card.code}.png`)} alt="" />
-                  ))}
-                </div>
+
+        <div className="attack-bottom-itmes">
+          {attack.isMine && <img className="myCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p1Character}_attack.png`)} alt="" /> }
+          <div className="SpellandBar">
+            <div className="SpellBox">
+              <img style={{ width: 800, height: 400}} src={require(`../../../assets/InGame/SpellBox.png`)} alt="" />
+              <div id='origin'>{spanEl}</div>
+            </div>
+            <div className="spell-bar-box">
+              <img src={require(`../../../assets/InGame/SkillBar.png`)} alt="" style={{width: '100%', height: '140px'}} />
+              <div className="cardList">
+                {attackCardList.map((card: AttackType, idx: number) => (
+                  card.isMine && <img style={{width: '100px', margin: "10px"}} key={idx} src={require(`../../../assets/card/icon/${card.card.code}.png`)} alt="" />
+                ))}
               </div>
             </div>
-            {!attack.isMine && <img className="yourCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" /> }
           </div>
+          {!attack.isMine && <img className="yourCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" /> }
+        </div>
+
       </div>
   )
 }

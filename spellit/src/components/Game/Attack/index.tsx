@@ -53,11 +53,11 @@ const Attack = () => {
   return (
     <div>
         <OpenViduVideo />
-        <div>
           {/* <Timer time={attacks[idx].card.cost}/> */}
-          {/* {isMine && <img src={require(`../../../assets/character/${myCharacter}_default.png`)} alt='character'></img>} */}
+        <div className='spell-and-character'>
+          {isMine && <img src={require(`../../../assets/character/${myCharacter}_default.png`)} alt='character' className='attack-character-1p'></img>}
           <Spell attack={attacks[idx]}/>
-          {/* {!isMine && <img src={require(`../../../assets/character/${myCharacter}_default.png`)} alt='character'></img>} */}
+          {!isMine && <img src={require(`../../../assets/character/${myCharacter}_default.png`)} alt='character' className='attack-character-2p'></img>}
         </div>
       {/* )} */}
     </div>
