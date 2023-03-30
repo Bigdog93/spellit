@@ -25,7 +25,7 @@ public class FriendWaitEntity {
 
     @ManyToOne
     @JoinColumn(name="member_id")
-    @JsonIgnoreProperties({"friendWaitEntities"})
+    @JsonIgnoreProperties({"friendWaitEntities", "friends"})
     @NonNull
     private Member member;
 
