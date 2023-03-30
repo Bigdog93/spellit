@@ -18,7 +18,7 @@ function TextInputBox() {
     setMessage(e.target.value);
   }
 
-  const cost = useSelector((state: RootState) => state.cost.currentCost);
+  const cost = useSelector((state: RootState) => state.cost.usedCost);
 
   const handleClickSubmit = () => {
     // ws.current.send(JSON.stringify({

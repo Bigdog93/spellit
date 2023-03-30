@@ -8,10 +8,9 @@ type initialMatchingType = {
   game: boolean,
   p1Loading: boolean,
   p2Loading: boolean,
-  p1: [],
-  p2: [],
   p1Ready: boolean,
   p2Ready: boolean,
+  otherReady: boolean,
 };
 
 const initialMatchingState: initialMatchingType = {
@@ -19,10 +18,9 @@ const initialMatchingState: initialMatchingType = {
   game: false,  // 게임을 시작할지 여부
   p1Loading: false, // 나 동전던지기 끝났는지 여부
   p2Loading: false, // 상대 동전던지기 끝났는지 여부
-  p1: [],
-  p2: [],
   p1Ready: false,   // 나 게임 준비 여부
-  p2Ready: false    // 상대 게임 준비 여부
+  p2Ready: false,    // 상대 게임 준비 여부
+  otherReady: false,
 };
 
 
@@ -40,7 +38,6 @@ const matchingSlice = createSlice({
     },
     p1Loading(state) {
       console.log('p1Loading in store')
-      console.log(state.p1)
       state.p1Loading = true
     },
     p2Loading(state) {
@@ -55,6 +52,9 @@ const matchingSlice = createSlice({
     p2Ready(state) {
       state.p2Ready = true;
       // dispatch(matchingActions.startGame());
+    },
+    setOtherReady(state) {
+      state.otherReady = true;
     },
   },
 });

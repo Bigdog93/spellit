@@ -1,35 +1,6 @@
-.attack-bg {
-    height: 100vh;
-    background: url(../../../assets/InGame/BgImg.png) no-repeat center;
-    background-size: cover;
-}
-
-.attack-top-items {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    min-width: 1250px;
-
-    margin-bottom: 50px;
-    /* padding-top: 20px; */
-}
-
-.attack-bottom-itmes {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* .first-hp-box {
-    display: flex;
-    align-items: center;
-} */
-
-.second-hp-box {
-
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
+vbody {
+    background-color: #100f0f ;
+    height: "100vh";
 }
 
 .SpellBox {
@@ -62,7 +33,7 @@
         0 0 5px #ffffff;
 }
 
-.wind3-correct{
+.correct3{
     color: rgb(23, 205, 72);
     text-shadow:
         0 0 2px rgb(0, 0, 0),
@@ -75,7 +46,7 @@
         0 0 10px #92ed99;
 }
 
-.fire1-correct{
+.correct2{
     color: rgb(205, 23, 23);
     text-shadow:
         0 0 2px rgb(0, 0, 0),
@@ -88,7 +59,7 @@
         0 0 10px #ed9292;
 }
 
-.wind1-correct{
+.correct0{
     color: rgb(205, 184, 23);
     text-shadow:
         0 0 2px rgb(0, 0, 0),
@@ -101,7 +72,7 @@
         0 0 10px #e7ed92;
 }
 
-.ice1-correct{
+.correct1{
     color: rgb(23, 47, 205);
     text-shadow:
         0 0 2px rgb(0, 0, 0),
@@ -114,7 +85,7 @@
         0 0 10px #92bced;
 }
 
-.storm1-correct{
+/* .stormSpell-correct{
     color: rgb(156, 205, 23);
     text-shadow:
         0 0 2px rgb(0, 0, 0),
@@ -125,9 +96,9 @@
         0 0 10px #edde92,
         0 0 10px #edde92,
         0 0 10px #edde92;
-}
+} */
 
-.light1-correct{
+.correct4{
     color: rgb(28, 28, 28);
     text-shadow:
         0 0 2px rgb(0, 0, 0),
@@ -140,7 +111,7 @@
         0 0 10px #484848;
 }
 
-.dark1-correct{
+.correct5{
     color: rgb(28, 28, 28);
     text-shadow:
         0 0 2px rgb(0, 0, 0),
@@ -151,22 +122,6 @@
         0 0 10px #484848,
         0 0 10px #484848,
         0 0 10px #484848;
-}
-
-.spell-bar-box {
-    position: relative;
-    display: inline-block;
-
-    width: 800px;
-}
-
-.spells {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    height: 100%;
-    
-    padding-left: 10px;    
 }
 
 #percent {
