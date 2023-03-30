@@ -156,4 +156,4 @@ const Spell = ({attack}: {attack: AttackType}) => {
   )
 }
 
-export default memo(Spell);
+export default Spell;
