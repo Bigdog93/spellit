@@ -43,6 +43,10 @@ dependencies {
 	// https://mvnrepository.com/artifact/io.openvidu/openvidu-java-client
 	implementation group: 'io.openvidu', name: 'openvidu-java-client', version: '2.26.0'
 
+
+	// validation
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.6'
+
 	// swagger
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
 }

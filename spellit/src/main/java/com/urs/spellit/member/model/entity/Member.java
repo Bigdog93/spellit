@@ -9,6 +9,7 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -111,4 +112,6 @@ public class Member extends BaseTimeEntity {
     }
     public void setUserDeck(List<DeckEntity> deckList) {this.deck=deckList;}
     public void changeFriendWaitList(List<FriendWaitEntity> friendWaitEntities){this.friendWaitEntities=friendWaitEntities;}
+
+    public void changePassword(PasswordEncoder passwordEncoder, String changPassword){this.password = passwordEncoder.encode(changPassword);}
 }
