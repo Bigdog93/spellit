@@ -1,3 +1,4 @@
+import API from '@/utils/API';
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit' 
 
@@ -11,13 +12,24 @@ type DeckType = {
   attribute : number,
 }
 
+type GameCharacterType = {
+  id : number,
+  characterName : string,
+  englishName : string,
+  stand : string,
+  hurt : string,
+  attack : string,
+  winner : string,
+  combo : string,
+}
+
 type userInitialType = {
   deck: Array<DeckType>,
   email: string,
   exp: number,
-  gameCharacter:string | null,
+  gameCharacter: GameCharacterType | null,
   id: number | null,
-  level: number
+  level: number,
   nickname: string,
   playCount: number,
   winCount: number,
@@ -37,13 +49,12 @@ const userInitialState: userInitialType = {
   winCount: 0,
 }
 
-
+const token = sessionStorage.getItem("token");
 const userSlice = createSlice({
   name: 'index',
   initialState: userInitialState,
   reducers: {
-    setMyInfo(state, action:PayloadAction<userInitialType>) {
-      console.log(action.payload)
+    setMyInfo(state, action: PayloadAction<userInitialType>) {
       state.deck = action.payload.deck
       state.email = action.payload.email
       state.exp = action.payload.exp
@@ -53,9 +64,31 @@ const userSlice = createSlice({
       state.nickname = action.payload.nickname
       state.playCount = action.payload.playCount
       state.winCount = action.payload.winCount
-      console.log(state)
-    }
-    
+    },
+    setDeck(state, action: PayloadAction<Array<DeckType>>) {
+      state.deck = action.payload
+      /* API 요청 */
+      API.post('member/deck',
+      state.deck,
+      { headers: { Authorization: `Bearer ${token}` } })
+    },
+    addCard(state, action: PayloadAction<DeckType>) {
+      state.deck?.push(action.payload)
+      /* API 요청 */
+      API.post('member/deck',
+      state.deck,
+      { headers: { Authorization: `Bearer ${token}` } })
+    },
+    removeCard(state, action: PayloadAction<number>) {
+      state.deck = state.deck.slice(0, action.payload).concat(state.deck.slice(action.payload + 1))
+      /* API 요청 */
+      API.post('member/deck',
+      state.deck,
+      { headers: { Authorization: `Bearer ${token}` } })
+    },
+    setCharacter(state, action: PayloadAction<GameCharacterType>) {
+      state.gameCharacter = action.payload;
+    },
   },
 });
 

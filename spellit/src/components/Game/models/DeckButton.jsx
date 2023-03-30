@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { MathUtils } from "three";
 
 export default function DeckButton(props) {
-  const { nodes, materials } = useGLTF("./models/deckbutton.glb");
+  const { nodes, materials } = useGLTF("./models/homeglb/deckbutton.glb");
 
   const deckRef = useRef();
   const [hover, setHover] = useState(false);

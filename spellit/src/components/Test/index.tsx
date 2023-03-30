@@ -1,10 +1,10 @@
-import Chatting from "../../components/Test/Chatting";
-import TextInputBox from "../../components/Test/TextInputBox";
+import Chatting from "@/components/Test/Chatting";
+import TextInputBox from "@/components/Test/TextInputBox";
 // import WebsocektProvider from '../../utils/WebsocektProvider'
-import OpenViduVideo from './openviduTest'
+import OpenViduVideo from '@/components/Game/OpenVidu/OpenVidu'
 // import { OpenviduProvider } from '@/store/openvidu'
 
-const Test = () => {
+const OpenViduTest = () => {
   return (
     <div>
       {/* <WebsocektProvider> */}
@@ -17,4 +17,4 @@ const Test = () => {
     </div>
   )
 };
-export default Test;
+export default OpenViduTest;

@@ -19,7 +19,10 @@ function CoinFlipper(coin: coinType) {
 
   // 코인 앞뒤로 할당
   const order = () => {
-    if (!coin) {
+    console.log(coin)
+    console.log(typeof(coin))
+    
+    if (!(coin.coin)) {
       setFlips('head')
     } else {
       setFlips('tail')
@@ -30,15 +33,17 @@ function CoinFlipper(coin: coinType) {
   const roomId = useSelector((state: RootState) => state.room.roomId);
 
   // 동전 던지기 끝났을 때 store 업뎃
+  // ready로 넘어갈 준비
   const rollingEnd = () => {
     console.log('endLoading in CoinFlipper')
-    dispatch(matchingActions.p1Loading())
+    // dispatch(matchingActions.p1Loading())
     send({
-      event: 'loading',
+      event: 'readyTurn',
       data: '',
       memberId: memberId,
       roomId: roomId,
     })
+    console.log('sent readyTurn')
   }
 
 

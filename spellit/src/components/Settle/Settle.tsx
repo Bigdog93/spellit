@@ -166,14 +166,14 @@ function Settle() {
             <div className='settle-bottom-items'>
                 <div style={{display: 'inline-flex'}}>
                     <div className='first-player-effects'>
-                        {p1Deck.map((card: string, index: number) => {
+                        {/* {p1Deck.map((card: string, index: number) => {
                             return (
                             <img className={`${card}-${index}`}
                             style={{height: '150px', margin: '10px',}}
                             key={index} 
                             src={require(`../../assets/effect/${card}.png`)} 
                             alt='' />)}
-                        )}
+                        )} */}
                     </div>                    
                     <img className='first-player' src={AK_attack} alt="" style={{width: '300px', height: '400px'}}/>
                 </div>
@@ -184,5 +184,7 @@ function Settle() {
         </div>
     )
 }
+
+
 
 export default Settle;

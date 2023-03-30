@@ -1,12 +1,14 @@
 import Ready from './Ready'
+import OpenViduVideo from '@/components/Game/OpenVidu/OpenVidu'
 
 
 const Game = () => {
 
   return (
-  <div>
-    <Ready/>
-  </div>
+    <div>
+      {/* <OpenViduVideo/> */}
+      <Ready/>
+    </div>
   )
 }
 export default Game;

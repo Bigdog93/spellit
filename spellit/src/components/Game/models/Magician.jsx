@@ -8,7 +8,7 @@ import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 
 export default function Magician(props) {
-  const { nodes, materials } = useGLTF("./models/magician.glb");
+  const { nodes, materials } = useGLTF("./models/homeglb/magician.glb");
 
   const magicianRef = useRef(null);
 
@@ -23,6 +23,7 @@ export default function Magician(props) {
 
   return (
     <group {...props} dispose={null} scale={[5, 5, 5]} ref={magicianRef}>
+    {/* <group {...props} dispose={null}  ref={magicianRef}> */}
       <mesh
         geometry={nodes.magician.geometry}
         material={materials.magician}

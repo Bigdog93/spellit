@@ -1,12 +1,14 @@
 import { createContext, useRef } from 'react';
-import { costActions } from "@/store/cost"
+import cost, { costActions } from "@/store/cost"
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store';
 
 import store from "@/store/";
-import { playerActions } from "@/store/player"
+import { RootState } from '@/store';
+import { playerActions } from "@/store/player";
 import { matchingActions } from './matching';
-import { roomActions } from './room';
+import { attackActions } from './attack';
+import { roomActions } from "@/store/room";
+import { gameActions } from './game';
 
 const WebSocketContext = createContext<any>(null);
 export { WebSocketContext };
@@ -15,11 +17,14 @@ export { WebSocketContext };
 export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) => {
   // const webSocketUrl = `ws://localhost:8080/api/socket`
   const webSocketUrl = `wss://j8d201.p.ssafy.io/api/socket`
+  
   let ws = useRef<WebSocket | null>(null).current;
   let send = ws?.send;
   const dispatch = useDispatch();
 
-  const state = store.getState();
+  // const state = store.getState();
+  const state = useSelector((state: RootState) => state);
+
 
   if (!ws) {
     ws = new WebSocket(webSocketUrl);
@@ -45,14 +50,15 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
       const info = content.info;
       if (type === 'test') {
         console.log('test입니다.')
-        dispatch(costActions.set(info.data));
+        // dispatch(costActions.set(info.data));
+        console.log(content);
         
       } else if (type === 'entQueue') {
         console.log('entQueue 입니다.')
 
       } else if (type === 'connected') {
           console.log('connected 입니다.')
-          console.log(info)
+          
           // 매칭 성공했을 때 player의 p1은 나, p2는 상대방에 넣음
           if (info.roomInfo.playerList[0].memberId === state.user.id ) {
             dispatch(playerActions.setP1(info.roomInfo.playerList[0]))
@@ -67,18 +73,26 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
 
       } else if (type === 'loaded') {
         console.log('loaded 입니다.')
+        console.log(info);
         dispatch(matchingActions.p2Loading())
-
+        // dispatch(gameActions.endReady())
 
       } else if (type === 'toReady') {
         console.log('toReady 입니다.')
-
+        dispatch(gameActions.startReady())
+        dispatch(costActions.set(info.cost))
+        
       } else if (type === 'toAttack') {
         console.log('toAttack 입니다.')
+        dispatch(gameActions.endReady())
+        dispatch(gameActions.startAttack())
+
+        dispatch(attackActions.playersDeckList(info.attackCards));
 
       } else if (type === 'otherSpell') {
         console.log('otherSpell 입니다.')
-
+        dispatch(attackActions.attackInfo(info.spell));
+        
       } else if (type === 'combo') {
         console.log('combo 입니다.')
 
@@ -106,6 +120,4 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
       {children}
     </WebSocketContext.Provider>
   );
-}
-
-// export const useConn = () => useContext(Context);
+};

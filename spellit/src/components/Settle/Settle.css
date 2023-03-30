@@ -1,83 +1,83 @@
 .settle-bg {
-    height: 100vh;
-    background: url(../../assets/InGame/BgImg.png) no-repeat center;
-    background-size: cover;
+	height: 100vh;
+	background: url(../../assets/InGame/BgImg.png) no-repeat center;
+	background-size: cover;
 
-    /* padding-left: 5px;
-    padding-right: 5px; */
+	/* padding-left: 5px;
+	padding-right: 5px; */
 }
 
 .settle-top-itmes {
-    display: flex;
-    justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 
-    min-width: 1000px;
+	min-width: 1000px;
 }
 
 .first-hp-box, .second-hp-box {
-    position: relative;
-    display: inline-block;
-    /* margin: 10px; */
+	position: relative;
+	display: inline-block;
+	/* margin: 10px; */
 }
 
 .first-hp-bar, .second-hp-bar {
-    /* visibility: hidden; */
-    box-sizing: border-box;
-    display: flex;
-    position: absolute;
+	/* visibility: hidden; */
+	box-sizing: border-box;
+	display: flex;
+	position: absolute;
 
-    height: 45px;
-    top: 38px;
-    left: 118px;
+	height: 45px;
+	top: 38px;
+	left: 118px;
 
-    background: #FFF500;
-    border: 1px solid #FFFFFF;
-    box-shadow: 0px 0px 6px rgba(255, 255, 255, 0.8);
-    border-radius: 11px;
+	background: #FFF500;
+	border: 1px solid #FFFFFF;
+	box-shadow: 0px 0px 6px rgba(255, 255, 255, 0.8);
+	border-radius: 11px;
 }
 
 /* .first-hp-bar {
-    left: 7px;
+	left: 7px;
 }
 
 .second-hp-bar {
-    right: 7px;
+	right: 7px;
 } */
 
 .settle-bottom-items {
-    display: flex;
-    justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 }
 
 .first-player, .second-player {
-    /* margin: 100px; */
-    position: relative;
-    animation-name: player-move-up-down;
-    animation-duration: 2.5s;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-  }
-  
+	/* margin: 100px; */
+	position: relative;
+	animation-name: player-move-up-down;
+	animation-duration: 2.5s;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: infinite;
+}
+
 @keyframes player-move-up-down {
-    0% {top: 0;}
-    50% {top: 30px;}
-    100% {top: 0;}
+	0% {top: 0;}
+	50% {top: 30px;}
+	100% {top: 0;}
 }
 
 .first-player img {
-    position: relative;
-    animation-name: effect-move-up-down;
-    animation-duration: 1.5s;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
+	position: relative;
+	animation-name: effect-move-up-down;
+	animation-duration: 1.5s;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: infinite;
 }
 
 @keyframes effect-move-up-down {
-    0% {top: 0;}
-    50% {top: 20px;}
-    100% {top: 0;}
+	0% {top: 0;}
+	50% {top: 20px;}
+	100% {top: 0;}
 }
 
 .hidden-effect {
-    visibility: hidden;
+	visibility: hidden;
 }

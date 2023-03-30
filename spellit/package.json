@@ -27,6 +27,7 @@
     "react-scripts": "5.0.1",
     "three": "^0.150.1",
     "three-nebula": "^10.0.3",
+    "three.quarks": "^0.10.2",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
