@@ -3,9 +3,71 @@ vbody {
     height: "100vh";
 }
 
+.attack-bg {
+    height: 100vh;
+    background: url(../../../assets/InGame/BgImg.png) no-repeat center;
+    background-size: cover;
+}
+
+.attack-top-items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    min-width: 1250px;
+
+    margin-bottom: 50px;
+
+}
+
 .SpellBox {
     position: relative;
     display: inline-block;
+}
+
+.attack-bottom-itmes {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.SpellandBar {
+    display: flex;
+    flex-direction: column;
+}
+
+.spell-bar-box {
+    position: relative;
+    display: inline-block;
+    width: 800px;
+}
+
+.cardList {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    
+    padding-left: 10px;    
+}
+
+.myCharacter, .yourCharacter{
+    position: relative;
+    top: 0;
+    margin: 50px;
+
+    animation: UpDown 2s ease-in Infinite Alternate;
+}
+
+
+@keyframes UpDown {
+    from {
+        top: 0px;
+    }
+    to {
+        top:50px;
+    }
 }
 
 #origin {

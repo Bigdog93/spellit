@@ -3,6 +3,11 @@
     align-items: center;
 }
 
+.second-hp-box {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
 #TimerBox {
     display: flex;
     justify-content: center;
