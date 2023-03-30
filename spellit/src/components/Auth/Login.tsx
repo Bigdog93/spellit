@@ -11,7 +11,7 @@ import kakao from "../../assets/ui/kakao_login_medium_narrow.png";
 import { UserType } from "@/utils/Types";
 
 const Login = () => {
-  const send = useContext(WebSocketContext);
+  const { send } = useContext(WebSocketContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [id, setId] = useState("");
