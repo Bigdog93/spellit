@@ -4,9 +4,9 @@ type Props = {}
 
 function Friend({}: Props) {
   return (
-      <div>
-          
-    </div>
+    <>
+        
+    </>
   )
 }
 

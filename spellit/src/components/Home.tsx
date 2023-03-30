@@ -1,6 +1,7 @@
 // import * as THREE from "three";
 import { useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
+import { Html } from "@react-three/drei";
 // import { OrbitControls } from "@react-three/drei";
 
 import Magician from "@/components/Game/models/Magician";
@@ -27,6 +28,9 @@ const Home = () => {
 
         {/* <OrbitControls /> */}
         {/* <Box position={[0, 0, 2]} /> */}
+        <Html>
+          
+        </Html>
 
         <Magician position={[-3, 0, 0]} />
         <Undercha position={[-2.7, -2.5, 0]} />
