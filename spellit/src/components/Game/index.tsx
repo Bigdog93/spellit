@@ -5,7 +5,7 @@ import { RootState } from '@/store';
 import Ready from './Ready'
 import Attack from './Attack';
 import Defense from './Defense';
-// import Settle from '../Settle/Settle';
+import Settle from '../Settle/Settle';
 
 
 const Game = () => {
@@ -15,13 +15,16 @@ const Game = () => {
   const settleTurn = useSelector((state: RootState) => state.game.settleTurn)
   
 
-  
+  console.log('readyTurn: ', readyTurn)
+  console.log('attackTurn: ', attackTurn)
+  console.log('defenseTurn: ', defenseTurn)
+  console.log('settleTurn: ', settleTurn)
   return (
     <div>
       {readyTurn && <Ready />}
       {attackTurn && <Attack />}
       {defenseTurn && <Defense />}
-      {/* {settleTurn && <Settle />} */}
+      {settleTurn && <Settle />}
     </div>
   )
 }

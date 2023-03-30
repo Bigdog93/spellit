@@ -60,22 +60,31 @@ const Defense = () => {
   // 게임 끝나고 성공 여부 결정 됐을 때 결과 send
   const myDefense = useSelector((state: RootState) => state.game.myDefense)
  
+  
+  // useEffect(() => {
+  //   send({
+  //     event: 'defenseTurn',
+  //     roomId: roomId,
+  //     memberId: memberId,
+  //     data: ''
+  //   })
+  // }, [])
 
-  useEffect(()=> {
-    // defenseTurn일 대
-    if(defenseTurn) {
-      // defense 게임 결과 전달
-      send({
-        event: 'settlleTrun',
-        roomId: roomId,
-        memberId: memberId,
-        data: {'defense': myDefense}
-      })
-      // dispatch(gameActions.endDefense)
+  // useEffect(()=> {
+  //   // defenseTurn일 때
+  //   if(defenseTurn) {
+  //     // defense 게임 결과 전달
+  //     send({
+  //       event: 'settlleTrun',
+  //       roomId: roomId,
+  //       memberId: memberId,
+  //       data: {'defense': myDefense}
+  //     })
+  //     // dispatch(gameActions.endDefense)
       
-      console.log('hp확인 if 밖이야')
-    }
-  }, [defenseTurn, navigate])
+  //     console.log('hp확인 if 밖이야')
+  //   }
+  // }, [myDefense, navigate])
 
   const readyTurn = useSelector((state:RootState) => state.game.readyTurn)
   useEffect(() => {

@@ -17,7 +17,7 @@ interface Spell {
     time: number;
 }
 
-const Spell = ({attack}: {attack: AttackType}) => {
+const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   const dispatch = useDispatch();
   const { send } = useContext(WebSocketContext);
 
@@ -56,6 +56,10 @@ const Spell = ({attack}: {attack: AttackType}) => {
   // 타이머 띄우기
   // const sec = useRef<number>(attack.card.cost);
   const [sec, setSec] = useState<number>(0);
+
+  // 이번 턴의 전체 공격 카드 수
+  const attacks = useSelector((state: RootState) => (state.game.attacks));
+
 
   // 주문 버튼 클릭시 음성 인식 시작
   const handleClick = (attack: AttackType) => {
@@ -115,9 +119,9 @@ const Spell = ({attack}: {attack: AttackType}) => {
                 console.log('------')
             }
         }
-        const percentEl = document.getElementById("percent") as HTMLDivElement;
+        // const percentEl = document.getElementById("percent") as HTMLDivElement;
         const correctPercent = Math.round((correct / spellLength) * 100);
-        percentEl.innerText = `총 ${spellLength}개 중 ${correct}개 맞음 : ${correctPercent} %`;
+        // percentEl.innerText = `총 ${spellLength}개 중 ${correct}개 맞음 : ${correctPercent} %`;
     });
 
     // 음성 인식 시작
@@ -134,10 +138,27 @@ const Spell = ({attack}: {attack: AttackType}) => {
         console.log('============')
     }, 1000)
     
+
+
     // 주문 제한 시간 흐른 후 음성인식 종료
     setTimeout(() => {
         recognition.stop();
         clearInterval(interval);
+
+        // 마지막 인덱스면 defense 턴 시작
+        if(idx+1 === attacks.length){
+          send({
+            event: 'defenseTurn',
+            roomId: roomId,
+            memberId: memberId,
+            data: ''
+          })
+        }
+        // 마지막 턴 아니면 인덱스 올려주기
+        // } else {
+        dispatch(gameActions.setIdx())
+        // }
+
         console.log('SpeechRecognition end!')
         setTimeout(() => {
           dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌

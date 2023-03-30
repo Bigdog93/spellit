@@ -11,6 +11,7 @@ type initialGameType = {
   settleTurn: boolean,
   attacks: AttackType[],
   idx: number,
+  transcript: string,
   myAttackTurn: boolean|null,
   myDefense: boolean,
   otherDefense: boolean,
@@ -23,6 +24,7 @@ const initialGameState: initialGameType = {
   settleTurn: false,
   attacks: [],
   idx: 0,
+  transcript: '',
   myAttackTurn: null,
   myDefense: false,
   otherDefense: false,
@@ -72,13 +74,17 @@ const gameSlice = createSlice({
       if (state.attackTurn){
         if (state.idx === state.attacks.length-1) {
           state.idx = 0
-          state.attackTurn = false
+          // state.attackTurn = false
+          // state.defenseTurn = true
           console.log('idx 끝')
         } else {
           state.idx += 1
           console.log('idx +1 해줌')
         }
       }
+    },
+    setTranscript(state, action: PayloadAction<string>){
+      state.transcript = action.payload
     },
     setMyAttackTurn(state, action: PayloadAction<boolean>) {
       state.myAttackTurn = action.payload

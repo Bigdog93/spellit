@@ -90,15 +90,21 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         
       } else if (type === 'toAttack') {
         console.log('toAttack 입니다.')
+        // 이번 턴에 진행될 공격들 셋팅
+        // dispatch(attackActions.playersDeckList(info.attackCards));
+        dispatch(gameActions.setAttacks(info.attackCards))
+        
         // readyTurn 끝냄
         dispatch(gameActions.endReady())
+
         // attackTurn 시작
         dispatch(gameActions.startAttack())
-        // 이번 턴에 진행될 공격들 셋팅
-        dispatch(attackActions.playersDeckList(info.attackCards));
+        // setTimeout(() => {
+        // }, 1000);
 
-        console.log('toAttack에 websocket에서 찍는',info)
-        dispatch(gameActions.setAttacks(info.attackCards))
+        // console.log('toAttack에 websocket에서 찍는',info)
+        // setTimeout(() => {
+        // }, 1000);
 
       } else if (type === 'otherSpell') {
         console.log('otherSpell 입니다.')
@@ -123,8 +129,6 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         console.log('gameOver입니다.')
         dispatch(gameActions.endGame())
 
-
-        
       } else {
         console.log('그런 이벤트는 없습니다.')
       }
