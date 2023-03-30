@@ -138,14 +138,7 @@ const Spell = ({attack}: {attack: AttackType}) => {
   return (
       <>
         <Timer time={sec}></Timer>
-        {/* <button onClick={() => {handleClick(sparkSpell)}}>뇌전의 창</button>
-        <button onClick={() => {handleClick(iceSpell)}}>영원의 동토</button>
-        <button onClick={() => {handleClick(stormSpell)}}>남양의 폭풍</button>
-        <button onClick={() => {handleClick(fireSpell)}}>화염탄</button>
-        <button onClick={() => {handleClick(lightSpell)}}>멸마의 성휘</button>
-        <button onClick={() => {handleClick(darkSpell)}}>무광의 심연</button>
-        <button onClick={() => {handleClick(windSpell)}}>풍화의 검</button>
-        <br /> */}
+      
         <div className="SpellBox">
           <img style={{ width: 800, height: 400}} src="assets/InGame/SpellBox.png" alt="" />
           <div id='origin'>{spanEl}</div>
