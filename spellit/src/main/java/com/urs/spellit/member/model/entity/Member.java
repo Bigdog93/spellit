@@ -1,5 +1,6 @@
 package com.urs.spellit.member.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.urs.spellit.common.model.BaseTimeEntity;
 import com.urs.spellit.game.entity.DeckEntity;
 import com.urs.spellit.game.entity.GameCharacterEntity;
@@ -62,6 +63,7 @@ public class Member extends BaseTimeEntity {
 
 
     @OneToMany(mappedBy = "member")
+    @JsonIgnoreProperties({"member"})
     private List<DeckEntity> deck = new ArrayList<>();
 
     @OneToMany(mappedBy="member")
