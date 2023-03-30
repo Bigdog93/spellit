@@ -1,5 +1,6 @@
 package com.urs.spellit.game.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.urs.spellit.game.DeckRepository;
 import com.urs.spellit.member.model.entity.Member;
 import lombok.*;
@@ -22,6 +23,7 @@ public class DeckEntity {
 
     @ManyToOne
     @JoinColumn(name="member_id")
+    @JsonIgnoreProperties({"deck"})
     @NonNull
     private Member member;
 
