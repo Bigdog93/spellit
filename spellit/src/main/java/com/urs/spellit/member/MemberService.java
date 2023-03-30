@@ -188,4 +188,6 @@ public class MemberService {
         player.setIsOnline(false);
         memberRepository.save(player);
     }
+
+
 }
