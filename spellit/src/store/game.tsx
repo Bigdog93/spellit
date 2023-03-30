@@ -1,17 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { AttackType } from '@/utils/Types'
+import { WebSocketContext } from '@/store/websocket'
 
 type initialGameType = {
-   readyTurn: boolean,
-    attackTurn: boolean,
-    defenseTurn: boolean,
-    settleTurn: boolean,
-    attacks: AttackType[],
-    idx: number,
-    myAttackTurn: boolean|null,
+  game: boolean
+  readyTurn: boolean,
+  attackTurn: boolean,
+  defenseTurn: boolean,
+  settleTurn: boolean,
+  attacks: AttackType[],
+  idx: number,
+  myAttackTurn: boolean|null,
+  myDefense: boolean,
+  otherDefense: boolean,
 }
 const initialGameState: initialGameType = {
+  game: false,
   readyTurn: false,
   attackTurn: false,
   defenseTurn: false,
@@ -19,12 +24,21 @@ const initialGameState: initialGameType = {
   attacks: [],
   idx: 0,
   myAttackTurn: null,
+  myDefense: false,
+  otherDefense: false,
+
 };
 
 const gameSlice = createSlice({
   name: 'authentication',
   initialState: initialGameState,
   reducers: {
+    startGame(state) {
+      state.game = true;
+    },
+    endGame(state) {
+      state.game = false;
+    },
     startReady(state) {
       state.readyTurn = true;
     },
@@ -69,7 +83,13 @@ const gameSlice = createSlice({
     setMyAttackTurn(state, action: PayloadAction<boolean>) {
       state.myAttackTurn = action.payload
       console.log('game reduer에서 setMyAttackTurn 찍는 isMine', state.myAttackTurn)
-    }
+    },
+    setMyDefense(state, action: PayloadAction<boolean>){
+      state.myDefense = action.payload
+    },
+    setOtherDefense(state, action: PayloadAction<boolean>){
+      state.otherDefense = action.payload
+    },
   },
 });
 

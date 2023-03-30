@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useRef, useEffect, useContext } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { useNavigate } from "react-router-dom";
 import { WebSocketContext } from '@/store/websocket'
@@ -9,17 +9,18 @@ import Click from "@/components/Game/Defense/Click";
 import Blow from "@/components/Game/Defense/Blow";
 
 
-import styles from "./Defence.module.css";
+import styles from "./index.module.css";
+import { gameActions } from "@/store/game";
 
-const Defence = () => {
+const Defense = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { send } = useContext(WebSocketContext);
 
   // 게임 선택(둘중 하나)
   const [gameSelect, setGameSelect] = useState<"click" | "blow" | null>(null);
 
   // 게임이 진행되는 중인지 판단하는 state
-
   const [onTime, setOnTime] = useState<boolean>(false);
   const [isDone, setIsDone] = useState<boolean>(false);
 
@@ -49,34 +50,40 @@ const Defence = () => {
 
 
   // 화면 넘어가게 하는 것들
-  const p1Hp = useSelector((state: RootState) => state.player.p1?.hp);
-  const p2Hp = useSelector((state: RootState) => state.player.p2?.hp);
-  const endDefense = useSelector((state: RootState) => state.defense.defenseEnd)
+  const hp1 = useSelector((state: RootState) => state.player.p1?.hp);
+  const hp2 = useSelector((state: RootState) => state.player.p2?.hp);
+  const defenseTurn = useSelector((state: RootState) => state.game.defenseTurn)
 
   const roomId = useSelector((state: RootState) => state.room.roomId)
   const memberId = useSelector((state: RootState) => state.user.id)
+
+  // 게임 끝나고 성공 여부 결정 됐을 때 결과 send
+  const myDefense = useSelector((state: RootState) => state.game.myDefense)
+ 
+
   useEffect(()=> {
-    if(endDefense) {
-      if (p1Hp && p2Hp) {
-        console.log('hp확인 if 안이야')
-        if(p1Hp <=0 || p2Hp <=0) {
-          navigate('/result')
-          console.log('hp 다 떨어졌다...')
-        } else {
-          send({
-            event: 'toReady',
-            roomId: roomId,
-            memberId: memberId,
-            data: ''
-          })
-          navigate('/ready')
-        }
-      }
+    // defenseTurn일 대
+    if(defenseTurn) {
+      // defense 게임 결과 전달
+      send({
+        event: 'settlleTrun',
+        roomId: roomId,
+        memberId: memberId,
+        data: {'defense': myDefense}
+      })
+      // dispatch(gameActions.endDefense)
+      
       console.log('hp확인 if 밖이야')
-      navigate('/ready')
-      // navigate('/result')
     }
-  }, [endDefense, navigate])
+  }, [defenseTurn, navigate])
+
+  const readyTurn = useSelector((state:RootState) => state.game.readyTurn)
+  useEffect(() => {
+    if (readyTurn) {
+      navigate('/Ready')
+    }
+  }, [readyTurn])
+
   return (
     <div
       className={styles.box}
@@ -98,6 +105,7 @@ const Defence = () => {
             onTime={onTime}
             handleResult={handleResult}
             isDone={isDone}
+            // success={onSuccess}
           />
         ) : gameSelect === "blow" ? (
           <Blow
@@ -105,6 +113,7 @@ const Defence = () => {
             onTime={onTime}
             handleResult={handleResult}
             isDone={isDone}
+            
           />
         ) : null}
       </div>
@@ -112,4 +121,4 @@ const Defence = () => {
   );
 };
 
-export default Defence;
+export default Defense;

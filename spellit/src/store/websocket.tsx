@@ -9,6 +9,7 @@ import { matchingActions } from './matching';
 import { attackActions } from './attack';
 import { roomActions } from "@/store/room";
 import { gameActions } from './game';
+import defense, { defenseActions } from './defense';
 
 const WebSocketContext = createContext<any>(null);
 export { WebSocketContext };
@@ -89,12 +90,15 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         
       } else if (type === 'toAttack') {
         console.log('toAttack 입니다.')
+        // readyTurn 끝냄
         dispatch(gameActions.endReady())
-        dispatch(attackActions.playersDeckList(info.attackCards));
+        // attackTurn 시작
         dispatch(gameActions.startAttack())
+        // 이번 턴에 진행될 공격들 셋팅
+        dispatch(attackActions.playersDeckList(info.attackCards));
+
         console.log('toAttack에 websocket에서 찍는',info)
         dispatch(gameActions.setAttacks(info.attackCards))
-        // dispatch(attackActions.playersDeckList(info.attackCards));
 
       } else if (type === 'otherSpell') {
         console.log('otherSpell 입니다.')
@@ -106,12 +110,20 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
 
       } else if (type === 'toDefense') {
         console.log('toDefense 입니다.')
-
+        dispatch(gameActions.endAttack())
+        dispatch(gameActions.startDefense())
+        
       } else if (type === 'toSettle') {
         console.log('toSettle 입니다.')
+        dispatch(gameActions.endDefense())
+        dispatch(gameActions.startSettle())
+        dispatch(gameActions.setOtherDefense(info.defense))
 
       } else if (type === 'gameOver') {
         console.log('gameOver입니다.')
+        dispatch(gameActions.endGame())
+
+
         
       } else {
         console.log('그런 이벤트는 없습니다.')
