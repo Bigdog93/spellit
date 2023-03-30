@@ -1,9 +1,9 @@
 package com.urs.spellit.security.auth;
 
+import com.urs.spellit.common.util.SecurityUtil;
 import com.urs.spellit.game.GameService;
 import com.urs.spellit.member.MemberRepository;
-import com.urs.spellit.member.model.dto.MemberRequestDto;
-import com.urs.spellit.member.model.dto.MemberResponseDto;
+import com.urs.spellit.member.model.dto.*;
 import com.urs.spellit.member.model.entity.Member;
 import com.urs.spellit.security.jwt.TokenProvider;
 import com.urs.spellit.security.token.RefreshTokenRepository;
@@ -139,5 +139,14 @@ public class AuthService {
         // 토큰 발급
         return tokenDto;
     }
+
+    // 비밀번호 변경
+    public String changPassword(String changePwd){
+        Optional<Member> member=memberRepository.findById(SecurityUtil.getCurrentMemberId());
+        member.get().changePassword(passwordEncoder, changePwd);
+        memberRepository.save(member.get());
+        return "success";
+    }
+
 
 }

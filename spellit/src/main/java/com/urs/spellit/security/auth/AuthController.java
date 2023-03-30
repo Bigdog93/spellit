@@ -3,11 +3,18 @@ package com.urs.spellit.security.auth;
 
 import com.urs.spellit.member.model.dto.MemberRequestDto;
 import com.urs.spellit.member.model.dto.MemberResponseDto;
+import com.urs.spellit.member.model.dto.UserPasswordUpdateRequestDto;
 import com.urs.spellit.security.token.dto.TokenDto;
 import com.urs.spellit.security.token.dto.TokenRequestDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping("/auth")
@@ -46,5 +53,13 @@ public class AuthController {
     @PostMapping("/reissue")
     public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
         return ResponseEntity.ok(authService.reissue(tokenRequestDto));
+    }
+
+
+    // 비밀번호 변경
+    @PutMapping("/changepwd")
+    public ResponseEntity<String> changPassword(@RequestBody UserPasswordUpdateRequestDto userPwdDto
+    ){
+        return ResponseEntity.ok(authService.changPassword(userPwdDto.getPassword()));
     }
 }
