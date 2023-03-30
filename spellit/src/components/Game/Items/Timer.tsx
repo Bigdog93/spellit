@@ -6,7 +6,7 @@ interface Time {
     time:number;
 }
 
-function Timer({time}: {time: number}) {
+function Timer({time}: {time: any}) {
   console.log(time)
     return (
         <>

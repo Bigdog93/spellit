@@ -31,7 +31,7 @@ const Attack = () => {
         dispatch(gameActions.endAttack())
       }
     }else{
-      navigate('/defense')
+      // navigate('/defense')
     }
   }, [idx, dispatch])
 

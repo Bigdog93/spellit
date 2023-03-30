@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { AttackType, CardType } from '@/utils/Types'
 import { useDispatch, useSelector } from "react-redux";
 
@@ -8,6 +8,8 @@ import { WebSocketContext } from '@/store/websocket'
 import './Spell.css'
 import Timer from "@/components/Game/Items/Timer";
 import { gameActions } from "@/store/game";
+import ProfileHp from "../Items/ProfileHp";
+
 
 interface Spell {
     name: string;
@@ -21,7 +23,10 @@ const Spell = ({attack}: {attack: AttackType}) => {
 
   const roomId = useSelector((state: RootState) => state.room.roomId)
   const memberId = useSelector((state: RootState) => state.user.id)
+  const p1Character = useSelector((state: RootState) => state.player.p1!.gameCharacterEntity.englishName);
+  const p2Character = useSelector((state: RootState) => state.player.p2!.gameCharacterEntity.englishName);
 
+  const attackCardList = useSelector((state: RootState) => state.game.attacks);
 
   console.log('attack ', attack)
   console.log('spell ', attack.card.spell)
@@ -49,6 +54,7 @@ const Spell = ({attack}: {attack: AttackType}) => {
   const spanList: JSX.Element[] = [];
 
   // 타이머 띄우기
+  // const sec = useRef<number>(attack.card.cost);
   const [sec, setSec] = useState<number>(0);
 
   // 주문 버튼 클릭시 음성 인식 시작
@@ -57,14 +63,14 @@ const Spell = ({attack}: {attack: AttackType}) => {
     const card = attack.card
     let spellLength = 0; // 띄어쓰기 제거한 주문의 길이
     for (let i = 0; i < card.spell.length; i++) {
+      let spanClassName = `spell`;
         if (!card.spell[i].match(reg)) {
         spellLength++;
-        }
-        let spanClassName = `spell`;
-        if (card.spell[i] != " ") {
         spanClassName = `spell-${spellLength - 1}`;
         }
-        const newSpanEl = <span id={spanClassName}>{card.spell[i]}</span>; // spanEl에 id 값 넣어주기
+        // if (card.spell[i] != reg) {
+        // }
+        const newSpanEl = <span key={i} id={spanClassName}>{card.spell[i]}</span>; // spanEl에 id 값 넣어주기
         spanList.push(newSpanEl);
     }
     setSpanEl(spanList);
@@ -93,15 +99,20 @@ const Spell = ({attack}: {attack: AttackType}) => {
           console.log('isMine은 false다.')
         }
 
+
         let correct = 0;
         console.log("------------------------------------------------");
         for (let i = 0; i < transcript.length; i++) {
+          console.log('for 문 안이다!')
             if (transcript[i] == trimText[i]) {
                 const element = document.getElementById(`spell-${i}`);
 
                 const correctColor = `correct${card.attribute}`;
                 element?.classList.add(correctColor);
                 correct++;
+                console.log('------')
+                console.log(element);
+                console.log('------')
             }
         }
         const percentEl = document.getElementById("percent") as HTMLDivElement;
@@ -110,13 +121,17 @@ const Spell = ({attack}: {attack: AttackType}) => {
     });
 
     // 음성 인식 시작
-    recognition.start();
     setSec(card.cost);
+    recognition.start();
     console.log('SpeechRecognition start!')
 
     // 타이머
     const interval = setInterval(() => {
-        setSec(sec - 1);
+        setSec(sec => sec-1);
+        // sec.current -= 1;
+        console.log('============')
+        console.log('sec : ', sec)
+        console.log('============')
     }, 1000)
     
     // 주문 제한 시간 흐른 후 음성인식 종료
@@ -124,28 +139,66 @@ const Spell = ({attack}: {attack: AttackType}) => {
         recognition.stop();
         clearInterval(interval);
         console.log('SpeechRecognition end!')
-        dispatch(gameActions.setIdx())
+        setTimeout(() => {
+          dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
+        }, 3000);
 
     }, card.cost*1000);
     
   };
 
   useEffect(()=>{
-    handleClick(attack)
+    handleClick(attack);
   }, [attack])
+
+    const defaultHP = useSelector((state: RootState) => (state.attack.defaultHp));
+    const p1Hp = useSelector((state: RootState) => (state.player.p1!.hp));
+    const p2Hp = useSelector((state: RootState) => (state.player.p2!.hp));
+    
+    // console.log(p1Hp);
+    
+    const p1HpStyle = {
+        width: `${p1Hp/defaultHP*385}px`,
+        backgroundColor: p1Hp > 100 ? '#FFF500' : '#FF0000' ,
+    }
+    const p2HpStyle = {
+        width: `${p2Hp/defaultHP*385}px`,
+        backgroundColor: p2Hp > 100 ? '#FFF500' : '#FF0000' ,
+    }
 
 
   return (
-      <>
-        <Timer time={sec}></Timer>
-      
-        <div className="SpellBox">
-          <img style={{ width: 800, height: 400}} src="assets/InGame/SpellBox.png" alt="" />
-          <div id='origin'>{spanEl}</div>
+      <div className="attack-bg">
+        <div className="attack-top-items">
+          <div className='first-hp-box'>
+              <ProfileHp></ProfileHp>
+              <div className="first-hp-bar" style={p1HpStyle}></div>
+            </div>
+            <Timer time={sec}></Timer>
+            <div className='second-hp-box'>
+              <ProfileHp></ProfileHp>
+              <div className="second-hp-bar" style={p2HpStyle}></div>
+          </div>
         </div>
-        <div className="words"></div>
-        <div id="percent"></div>
-      </>
+          <div className="attack-bottom-itmes">
+            {attack.isMine && <img className="myCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p1Character}_attack.png`)} alt="" /> }
+            <div className="SpellandBar">
+              <div className="SpellBox">
+                <img style={{ width: 800, height: 400}} src={require(`../../../assets/InGame/SpellBox.png`)} alt="" />
+                <div id='origin'>{spanEl}</div>
+              </div>
+              <div className="spell-bar-box">
+                <img src={require(`../../../assets/InGame/SkillBar.png`)} alt="" style={{width: '100%', height: '140px'}} />
+                <div className="cardList">
+                  {attackCardList.map((card: AttackType, idx: number) => (
+                    card.isMine && <img style={{width: '100px', margin: "10px"}} key={idx} src={require(`../../../assets/card/icon/${card.card.code}.png`)} alt="" />
+                  ))}
+                </div>
+              </div>
+            </div>
+            {!attack.isMine && <img className="yourCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" /> }
+          </div>
+      </div>
   )
 }
 
