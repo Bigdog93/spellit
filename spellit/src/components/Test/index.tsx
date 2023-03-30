@@ -8,11 +8,12 @@ import VoiceRec from '@/components/Test/VoiceRec'
 const OpenViduTest = () => {
   return (
     <div>
+      여긴가..?
       {/* <WebsocektProvider> */}
       {/* <OpenviduProvider> */}
         {/* <Chatting/>
       <TextInputBox /> */}
-      <VoiceRec/>
+      {/* <VoiceRec/> */}
       <OpenViduVideo />
         {/* </OpenviduProvider> */}
       {/* </WebsocektProvider> */}

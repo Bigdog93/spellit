@@ -8,7 +8,8 @@ type initialGameType = {
     defenseTurn: boolean,
     settleTurn: boolean,
     attacks: AttackType[],
-    idx: number
+    idx: number,
+    myAttackTurn: boolean,
 }
 const initialGameState: initialGameType = {
   readyTurn: false,
@@ -16,7 +17,8 @@ const initialGameState: initialGameType = {
   defenseTurn: false,
   settleTurn: false,
   attacks: [],
-  idx: 0
+  idx: 0,
+  myAttackTurn: false,
 };
 
 const gameSlice = createSlice({
@@ -63,6 +65,10 @@ const gameSlice = createSlice({
           console.log('idx +1 해줌')
         }
       }
+    },
+    setMyAttackTurn(state, action: PayloadAction<boolean>) {
+      state.myAttackTurn = action.payload
+      console.log('game reduer에서 setMyAttackTurn 찍는 isMine', state.myAttackTurn)
     }
   },
 });

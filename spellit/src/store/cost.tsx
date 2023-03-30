@@ -11,7 +11,7 @@ const costSlice = createSlice({
   initialState: initialCostState,
   reducers: {
     set(state, action: PayloadAction<number>) {
-      state.maxCost += state.maxCost - state.usedCost;
+      state.maxCost = state.maxCost - state.usedCost;
       state.maxCost += action.payload;
       state.usedCost = 0;
     },

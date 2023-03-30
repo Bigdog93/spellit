@@ -56,7 +56,6 @@ function App() {
           {/* <Route path="spell" element={<Spell />} /> */}
           <Route path="skills" element={<SKills />} />
           <Route path="profile/:id" element={<Profile />} />
-          <Route path="stt" element={<STT />} />
         </Routes>
       </BrowserRouter>
     </WebSocketProvider>
