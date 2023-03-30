@@ -15,12 +15,11 @@ import Signup from "./components/Auth/Signup";
 import OAuth from "./components/Auth/OAuth";
 import Settle from "./components/Settle/Settle";
 import Result from "./components/Game/Result";
-import Test from "./components/Test";
-import OpenViduTest from "./components/Game/OpenVidu/OpenVidu";
-import Attack from "./components/Game/Attack";
+// import Test from "./components/Test";
+// import OpenViduTest from "./components/Game/OpenVidu/OpenVidu";
 // import Spell from "./components/Game/Attack/Spell";
 import Profile from "./components/Profile";
-import STT from "./components/Test/STT";
+// import STT from "./components/Test/STT";
 
 // 임시
 import SKills from "@/components/Settle/SKills";
