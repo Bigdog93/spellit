@@ -99,7 +99,7 @@ const Spell = ({attack}: {attack: AttackType}) => {
             if (transcript[i] == trimText[i]) {
                 const element = document.getElementById(`spell-${i}`);
 
-                const correctColor = `${card.code}-correct`;
+                const correctColor = `correct${card.attribute}`;
                 element?.classList.add(correctColor);
                 correct++;
             }

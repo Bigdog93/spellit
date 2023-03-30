@@ -82,6 +82,7 @@ const Ready = () => {
     })
     setConfirm(true);
   }
+  
   const attackTrun = useSelector((state:RootState)=> state.game.attackTurn)
   useEffect(()=> {
     if(attackTrun){

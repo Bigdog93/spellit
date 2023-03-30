@@ -80,6 +80,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
       } else if (type === 'otherReady'){
         console.log('otherReady 입니다.') 
         dispatch(matchingActions.setOtherReady())
+        
       }else if (type === 'toReady') {
         console.log('toReady 입니다.')
         dispatch(gameActions.startReady())

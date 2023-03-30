@@ -21,12 +21,16 @@ const Attack = () => {
   const attacks = useSelector((state: RootState) => (state.game.attacks));
   const idx = useSelector((state: RootState) => (state.game.idx));
   const attackTurn = useSelector((state: RootState) => (state.game.attackTurn));
+  const isMine = attacks[idx].isMine
+  const myCharacter = useSelector((state: RootState) => (state.user.gameCharacter?.englishName));
   useEffect(() => {
-    if (!attackTurn) {
+    if (attackTurn) {
       if(idx === attacks!.length){
+        console.log('atttack턴 끝내기')
         dispatch(gameActions.endAttack())
-        navigate('/defense')
       }
+    }else{
+      navigate('/defense')
     }
   }, [idx, dispatch])
   // const temp = attacks[idx].card.cost
@@ -49,7 +53,9 @@ const Attack = () => {
       {/* {attacks && ( */}
         <div>
           {/* <Timer time={attacks[idx].card.cost}/> */}
+          {/* {isMine && <img src={require(`../../../assets/character/${myCharacter}_default.png`)} alt='character'></img>} */}
           <Spell attack={attacks[idx]}/>
+          {/* {!isMine && <img src={require(`../../../assets/character/${myCharacter}_default.png`)} alt='character'></img>} */}
         </div>
       {/* )} */}
     </div>
