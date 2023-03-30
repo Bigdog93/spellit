@@ -7,10 +7,7 @@ import com.urs.spellit.security.token.dto.TokenDto;
 import com.urs.spellit.security.token.dto.TokenRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -21,6 +18,14 @@ public class AuthController {
     @PostMapping("/signup") //회원가입
     public ResponseEntity<MemberResponseDto> signup(@RequestBody MemberRequestDto memberRequestDto) {
         return ResponseEntity.ok(authService.signup(memberRequestDto));
+    }
+    @PostMapping("/signup/email") //이메일 중복 확인
+    public ResponseEntity<Boolean> checkEmailDuplicate(@RequestBody MemberRequestDto memberRequestDto) {
+        return ResponseEntity.ok(authService.checkEmailDuplicate(memberRequestDto));
+    }
+    @PostMapping("/signup/nickname") //닉네임 중복 확인
+    public ResponseEntity<Boolean> checkNickNameDuplicate(@RequestBody MemberRequestDto memberRequestDto) {
+        return ResponseEntity.ok(authService.checkNickNameDuplicate(memberRequestDto));
     }
     @PostMapping("/withdrawal") //회원탈퇴
     public ResponseEntity<Integer> withdrawal(@RequestBody MemberRequestDto memberRequestDto) {

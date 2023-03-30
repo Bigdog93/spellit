@@ -33,6 +33,17 @@ public class MemberController {
         return ResponseEntity.ok(memberService.findMemberInfoById(SecurityUtil.getAnotherMemberId(userId)));
     }
 
+    @PutMapping("/info")
+    public ResponseEntity<Object> updateMemberInfoById(@RequestBody MemberUpdateRequestDto murDto) {
+        int res = memberService.updateMemberInfoById(murDto);
+        if(res == 0) {
+            return ResponseEntity.badRequest().build();
+        }else if(res == 2) {
+            return ResponseEntity.internalServerError().build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/deck") //사용자 덱 정보 요청
     public ResponseEntity<List<CardEntity>> getUserDeck()
     {
@@ -68,6 +79,19 @@ public class MemberController {
     {
         return ResponseEntity.ok(memberService.addFriend(friendRequestDto));
     }
+
+    @GetMapping("/friend/list") //내 친구 목록
+    public ResponseEntity<List<FriendResponseDto>> getFriendList()
+    {
+        return ResponseEntity.ok(memberService.getFriendList());
+    }
+
+    @DeleteMapping("/friend/delete/{userId}") //친구삭제
+    public ResponseEntity<Boolean> deleteFriend(@PathVariable("userId") Long friendId )
+    {
+        return ResponseEntity.ok(memberService.deleteFriend(friendId));
+    }
+
 
 
     // 로그인2(목소리)

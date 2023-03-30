@@ -3,6 +3,7 @@ package com.urs.spellit.member.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,7 +24,7 @@ public class Friend {
     private String friendEmail;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name="member_id")
     @NonNull
     private Member member;
 
@@ -36,4 +37,15 @@ public class Friend {
                 .build();
     }
 
+    public static Friend checkExistsInFriends(List<Friend> friendList, Long memberId)
+    {
+        for(Friend friend : friendList)
+        {
+            if(friend.getFriendId()==memberId)
+            {
+                return friend;
+            }
+        }
+        return null;
+    }
 }

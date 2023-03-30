@@ -11,7 +11,6 @@ import com.urs.spellit.member.model.dto.*;
 import com.urs.spellit.member.model.entity.Friend;
 import com.urs.spellit.member.model.entity.FriendWaitEntity;
 import com.urs.spellit.member.model.entity.Member;
-import com.urs.spellit.websocket.dto.PlayerDto;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,6 +96,7 @@ public class MemberService {
         return this.getUserDeck(member.get().getId());
     }
 
+    //친구 요청을 하는 입장
     public FriendWaitResponseDto addFriendWait(FriendWaitRequestDto friendWaitRequestDto) {
         Member member=memberRepository.findById(SecurityUtil.getCurrentMemberId()).get(); //나
         Long friendId=friendWaitRequestDto.getFriendId(); //친구Id
@@ -105,7 +105,7 @@ public class MemberService {
         List<FriendWaitEntity> friendWaitEntities=friendWaitRepository.findAllByMemberId(friendId); //상대의 친구대기 리스트
 
         if(friendId==member.getId())
-            throw new RuntimeException(("나에게 친구요청을 보낼 수 없습니다."));
+            throw new RuntimeException(("나는 세상에서 제일 소중한 친구입니다:) "));
 
         for(FriendWaitEntity friendWaitEntity : friendWaitEntities)
         {
@@ -123,6 +123,7 @@ public class MemberService {
         return FriendWaitResponseDto.toResponse(friendWaitEntity); //친구Id, 내 Id 반환
     }
 
+    //친구 수락을 하는 입장 (전제: 나의 친구대기창에 상대가 있음)
     public List<FriendResponseDto> addFriend(FriendRequestDto friendRequestDto)
     {
         Long myId=SecurityUtil.getCurrentMemberId();
@@ -137,6 +138,10 @@ public class MemberService {
         List<Friend> myFriends=me.getFriends();
         List<Friend> Friends=friend.getFriends();
 
+        ///입력값이 나인지 확인///
+        if(friendId==myId)
+            throw new RuntimeException(("나는 세상에서 제일 소중한 친구입니다:) "));
+
         ///이미 친구인지 확인///
         for(Friend myFriend : myFriends)
         {
@@ -148,7 +153,7 @@ public class MemberService {
         List<FriendWaitEntity> myFriendWaitList=me.getFriendWaitEntities(); //내 친구대기 리스트
         FriendWaitEntity friendWait=FriendWaitEntity.checkExistsInWaitList(myFriendWaitList,friendId); //내 친구대기 리스트에 상대가 존재하는지 확인
         if(friendWait!=null) //존재
-            myFriendWaitList.remove(friendWait); //내 친구 대기 리스트에서 상대를 삭제
+            friendWaitRepository.delete(friendWait); //내 친구 대기 리스트에서 상대를 삭제
         else //존재X
             throw new RuntimeException("내 친구 대기 리스트에 상대가 존재하지 않습니다.");
 
@@ -156,23 +161,55 @@ public class MemberService {
         List<FriendWaitEntity> friendFriendWaitList=friend.getFriendWaitEntities(); //상대의 친구대기 리스트
         FriendWaitEntity meWait=FriendWaitEntity.checkExistsInWaitList(friendFriendWaitList,myId); //상대의 친구대기 리스트에 내가 존재하는지 확인
         if(meWait!=null) //존재
-            friendFriendWaitList.remove(meWait); //상대의 친구 대기 리스트에서 나를 삭제
+            friendWaitRepository.delete(meWait); //상대의 친구 대기 리스트에서 나를 삭제
 
         ///내 친구 리스트에 상대 추가///
-        Friend addFriend=Friend.toBuild(friendId,friendEmail,friend);
+        Friend addFriend=Friend.toBuild(friendId,friendEmail,me);
         myFriends.add(addFriend);
         me.setFriends(myFriends);
-        memberRepository.save(me);
+        friendRepository.save(addFriend);
         
         ///상대의 친구 리스트에 나 추가///
-        Friend addMe=Friend.toBuild(myId,myEmail,me);
+        Friend addMe=Friend.toBuild(myId,myEmail,friend);
         Friends.add(addMe);
         friend.setFriends(Friends);
-        memberRepository.save(friend);
+        friendRepository.save(addMe);
 
-        return FriendResponseDto.toResponse(addFriend,addMe);
+        return FriendResponseDto.responseRelation(addFriend,addMe);
     }
 
+    public List<FriendResponseDto> getFriendList()
+    {
+        Long myId=SecurityUtil.getCurrentMemberId();
+        List<Friend> friends=friendRepository.findAllByMemberId(myId);
+        return FriendResponseDto.responseList(friends);
+    }
+
+    public Boolean deleteFriend(Long friendId)
+    {
+        Long myId=SecurityUtil.getCurrentMemberId();
+        List<Friend> myFriends=friendRepository.findAllByMemberId(myId);
+        List<Friend> friendFriends=friendRepository.findAllByMemberId(friendId);
+
+        if(myId==friendId)
+            throw new RuntimeException("나는 세상에서 제일 소중한 친구입니다:) ");
+
+        Friend me=Friend.checkExistsInFriends(friendFriends,myId);
+        Friend friend=Friend.checkExistsInFriends(myFriends,friendId);
+        if(friend!=null) {
+            friendRepository.delete(friend);
+        }
+        else
+            throw new RuntimeException("내 친구목록에 없는 친구입니다.");
+
+        if(me!=null) {
+            friendRepository.delete(me);
+        }
+        else
+            throw new RuntimeException("상대 친구목록에 내가 없습니다.");
+
+        return true;
+    }
     public void playerOnline(long memberId) {
         Optional<Member> playerOpt = memberRepository.findById(memberId);
         if(playerOpt.isEmpty()) return;
@@ -189,5 +226,18 @@ public class MemberService {
         memberRepository.save(player);
     }
 
-
+    public int updateMemberInfoById(MemberUpdateRequestDto murDto) {
+        Optional<Member> memberOpt = memberRepository.findById(SecurityUtil.getCurrentMemberId());
+        if(memberOpt.isEmpty()) return 0;
+        try {
+            Member member = memberOpt.get();
+            member.setNickname(murDto.getNickname());
+            member.setProfileMsg(murDto.getProfileMsg());
+            memberRepository.save(member);
+            return 1;
+        }catch(Exception e) {
+            e.printStackTrace();
+            return 2;
+        }
+    }
 }
