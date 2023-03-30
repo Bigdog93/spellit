@@ -1,4 +1,6 @@
 import style from './index.module.css'
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/index';
 
 type GameCharacterType = {
   id : number,
@@ -20,13 +22,15 @@ const Characters = ({characters, selectCharacter}: PropsType) => {
     selectCharacter(data);
     console.log(data)
   }
- 
+  const characterId = useSelector((state:RootState) => state.user.gameCharacter?.id)
+
+
   return (
     <div className={`${style.characterItems}`}>
       { characters.map((character: GameCharacterType, index: number) => (
-        <div onClick={(e) => onSelectCharacter(character)}>
+        <div className={`${style.characterDiv}`} onClick={(e) => onSelectCharacter(character)}>
           {/* {character.characterName} */}
-          <img className={`${style.characterImg}`} src={require(`../../assets/character/${character.englishName}_card.png`)} alt="" />
+          <img className={(characterId === index + 1 ? `${style.characterImg} ${style.shadowCharacter}` : `${style.characterImg}`)} src={require(`../../assets/character/${character.englishName}_card.png`)} alt="" />
           {/* <Card key={index} card={card.code}/> */}
         </div>
       ))}
