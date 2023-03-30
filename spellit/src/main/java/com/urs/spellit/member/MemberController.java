@@ -4,12 +4,15 @@ import com.urs.spellit.common.util.SecurityUtil;
 import com.urs.spellit.game.entity.CardEntity;
 import com.urs.spellit.game.entity.GameCharacterEntity;
 import com.urs.spellit.member.model.dto.*;
+import com.urs.spellit.member.model.entity.Friend;
+import com.urs.spellit.member.model.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,6 +23,7 @@ public class MemberController {
     private Logger log = LoggerFactory.getLogger(MemberController.class);
 
     private final MemberService memberService;
+    private final FriendRepository friendRepository;
 
     @GetMapping("/info") //내 정보 요청
     public ResponseEntity<MemberResponseDto> findMemberInfoById()
@@ -81,9 +85,14 @@ public class MemberController {
     }
 
     @GetMapping("/friend/list") //내 친구 목록
-    public ResponseEntity<List<FriendResponseDto>> getFriendList()
+    public ResponseEntity<List<Member>> getFriendList()
     {
-        return ResponseEntity.ok(memberService.getFriendList());
+        List<Friend> friendIdList = friendRepository.findAllByFriendId(SecurityUtil.getCurrentMemberId());
+        List<Member> friendList = new ArrayList<>();
+        for(Friend f : friendIdList) {
+            friendList.add(f.getMember());
+        }
+        return ResponseEntity.ok(friendList);
     }
 
     @DeleteMapping("/friend/delete/{userId}") //친구삭제

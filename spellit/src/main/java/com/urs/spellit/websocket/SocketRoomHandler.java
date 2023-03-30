@@ -72,8 +72,15 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 		}
 //		 각 이벤트에 따라 if문을 실행해 줘요
 		if(event.equals("login")) {
-			memberService.playerOnline(memberId);
+			List<Long> friendsId = memberService.playerOnline(memberId);
 			allPlayers.put(memberId, session);
+			infoMap.put("friendId", memberId);
+			infoMap.put("friendNickname", nickname);
+			for(Long id : friendsId) {
+				if(allPlayers.get(id) != null) {
+					allPlayers.get(id).sendMessage(makeTextMsg("friendLogin", infoMap));
+				}
+			}
 		}else if(event.equals("matchStart")) {
 			/* 빠른 매치 눌렀을 때*/
 			PlayerDto player = getPlayerByMemberId(session, memberId);
@@ -229,6 +236,18 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 		// 끊어진 세션 쫓아내고 방폭하고 남은 사람 가져오기
 		PlayerDto[] players = roomManager.dropSession(session);
 		PlayerDto leavePlayer = players[0];
+		if(leavePlayer == null) {
+			for(Long key : allPlayers.keySet()) {
+				if(allPlayers.get(key) == session) {
+					leavePlayer = new PlayerDto();
+					leavePlayer.setMemberId(key);
+					leavePlayer.setSession(session);
+					Optional<Member> member = memberRepository.findById(key);
+					leavePlayer.setNickname(member.get().getNickname());
+					break;
+				}
+			}
+		}
 		PlayerDto remainPlayer = players[1];
 		memberService.playerOffline(leavePlayer.getMemberId());
 		if(remainPlayer != null) { // 플레이 중인 사람이었다면
@@ -241,10 +260,16 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 				break;
 			}
 		}
-		for(Long id : allPlayers.keySet()) {
-			if(allPlayers.get(id).equals(session)) {
-				allPlayers.remove(id);
-				break;
+		Long memberId = leavePlayer.getMemberId();
+		allPlayers.remove(memberId);
+		List<Long> friendsId = memberService.playerOnline(memberId);
+		allPlayers.put(memberId, session);
+		HashMap<String, Object> infoMap = new HashMap<>();
+		infoMap.put("friendId", memberId);
+		infoMap.put("friendNickname", leavePlayer.getNickname());
+		for(Long id : friendsId) {
+			if(allPlayers.get(id) != null) {
+				allPlayers.get(id).sendMessage(makeTextMsg("friendLogout", infoMap));
 			}
 		}
 

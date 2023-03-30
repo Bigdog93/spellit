@@ -210,12 +210,18 @@ public class MemberService {
 
         return true;
     }
-    public void playerOnline(long memberId) {
+    public List<Long> playerOnline(long memberId) {
         Optional<Member> playerOpt = memberRepository.findById(memberId);
-        if(playerOpt.isEmpty()) return;
+        if(playerOpt.isEmpty()) return null;
         Member player = playerOpt.get();
         player.setIsOnline(true);
         memberRepository.save(player);
+        List<Friend> friends = friendRepository.findAllByMemberId(memberId);
+        List<Long> friendsId = new ArrayList<>();
+        for(Friend f : friends) {
+            friendsId.add(f.getFriendId());
+        }
+        return friendsId;
     }
 
     public void playerOffline(long memberId) {
