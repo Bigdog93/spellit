@@ -3,16 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit' 
 import { DeckType } from '@/utils/Types'
 
-type GameCharacterType = {
-  id : number,
-  characterName : string,
-  englishName : string,
-  stand : string,
-  hurt : string,
-  attack : string,
-  winner : string,
-  combo : string,
-}
 
 type GameCharacterType = {
   id : number,

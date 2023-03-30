@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { Canvas} from "@react-three/fiber";
+import { OrbitControls, } from "@react-three/drei";
 
 // import TestComp from "@/components/Settle/quarks/TestComp";
 import StartSpell from "@/components/Settle/quarks/StartSpell";
@@ -66,15 +66,16 @@ function Skills() {
   // const back = isMoving ? "box2" : "box";
 
   return (
-    <div>
+    <div className="box2">
       <div>
         <button onClick={handleButton}>button</button>
         <img className="icon1" src={light_icon} alt="" />
         <img className="cha1" src={LUNA_attack} alt="" />
         <img className={attacked} src={AK_attack} alt="" />
       </div>
-      <Canvas>
+      <Canvas >
         {/* <OrbitControls /> */}
+			
 
         {isMoving && (
           <>
