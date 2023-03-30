@@ -1,5 +1,26 @@
+import { useEffect } from 'react'
 
 const Loading = () => {
+  useEffect(()=>{
+    const cursor = document.querySelector('.cursor');
+
+    document.addEventListener('mousemove', e => {
+      if (cursor?.classList.length === 1) {
+        cursor?.setAttribute("style", "top: " + (e.pageY - 10) + "px; left: " + (e.pageX - 10) + "px;");
+      }
+    })
+
+    document.addEventListener('click', () => {
+      cursor?.classList.add("expand");
+
+      setTimeout(() => {
+        cursor?.classList.remove("expand");
+      }, 500);
+    })
+  }, []);
+  
+
+
   return (
     <div id="">
       <div className="btn-contain">
@@ -8,7 +29,7 @@ const Loading = () => {
         </div>
       </div>
 
-      <h1>
+      {/* <h1>
         <span>대</span>
         <span>전</span>
         <span> </span>
@@ -24,7 +45,7 @@ const Loading = () => {
         <span>니</span>
         <span>다</span>
         <span>.</span>
-      </h1>
+      </h1> */}
     </div>
 
   )
