@@ -1,5 +1,6 @@
 package com.urs.spellit.member.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,6 +26,7 @@ public class Friend {
 
     @ManyToOne
     @JoinColumn(name="member_id")
+    @JsonIgnoreProperties({"friends"})
     @NonNull
     private Member member;
 

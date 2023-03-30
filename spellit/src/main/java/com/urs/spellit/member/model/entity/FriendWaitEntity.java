@@ -1,5 +1,6 @@
 package com.urs.spellit.member.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class FriendWaitEntity {
 
     @ManyToOne
     @JoinColumn(name="member_id")
+    @JsonIgnoreProperties({"friendWaitEntities"})
     @NonNull
     private Member member;
 
