@@ -20,9 +20,9 @@ import Result from "./components/Game/Result";
 // import Spell from "./components/Game/Attack/Spell";
 import Profile from "./components/Profile";
 // import STT from "./components/Test/STT";
-
+import Deck from './components/User'
 // 임시
-import SKills from "@/components/Settle/SKills";
+import Skills from "./components/Settle/Skills";
 
 function App() {
   const isLogged = useSelector(
@@ -54,7 +54,7 @@ function App() {
           <Route path="settle" element={<Settle />} />
           <Route path="result" element={<Result />} />
           {/* <Route path="spell" element={<Spell />} /> */}
-          <Route path="skills" element={<SKills />} />
+          <Route path="skills" element={<Skills />} />
           <Route path="profile/:id" element={<Profile />} />
         </Routes>
       </BrowserRouter>
