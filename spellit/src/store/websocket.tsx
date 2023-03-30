@@ -9,7 +9,6 @@ import { matchingActions } from './matching';
 import { attackActions } from './attack';
 import { roomActions } from "@/store/room";
 import { gameActions } from './game';
-import { attackActions1 } from './attack1';
 
 const WebSocketContext = createContext<any>(null);
 export { WebSocketContext };
@@ -78,7 +77,10 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         dispatch(matchingActions.p2Loading())
         // dispatch(gameActions.endReady())
 
-      } else if (type === 'toReady') {
+      } else if (type === 'otherReady'){
+        console.log('otherReady 입니다.') 
+        dispatch(matchingActions.setOtherReady())
+      }else if (type === 'toReady') {
         console.log('toReady 입니다.')
         dispatch(gameActions.startReady())
         dispatch(costActions.set(info.cost))
@@ -88,11 +90,12 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         dispatch(gameActions.endReady())
         dispatch(gameActions.startAttack())
         console.log('toAttack에 websocket에서 찍는',info)
-        dispatch(attackActions1.setAttacks(info.attackCards))
+        dispatch(gameActions.setAttacks(info.attackCards))
         // dispatch(attackActions.playersDeckList(info.attackCards));
 
       } else if (type === 'otherSpell') {
         console.log('otherSpell 입니다.')
+        console.log(info)
         dispatch(attackActions.attackInfo(info.spell));
         
       } else if (type === 'combo') {
