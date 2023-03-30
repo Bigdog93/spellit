@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
-import { Canvas } from "@react-three/fiber";
-// import { OrbitControls } from "@react-three/drei";
+import { Canvas} from "@react-three/fiber";
+import { OrbitControls, } from "@react-three/drei";
 
-import "./Skills.css";
-// import FireBall from "@//components/Settle/Skill/FireBall";
-import FireBall from "@/components/Settle/Skill/FireBall";
-// import Thunder from "./Skill/Thunder";
-// import Smoke from "./Skill/Smoke";
-// import SpellBar from "../Game/Items/SpellBar";
+// import TestComp from "@/components/Settle/quarks/TestComp";
+// import StartSpell from "@/components/Settle/quarks/StartSpell";
+import FireBall from "./quarks/1P/FireBall";
 
 import LUNA_attack from "@/assets/character/LUNA_attack.png";
+import AK_attack from "@/assets/character/AK_attack.png";
+import light_icon from "@/assets/settle/light-icon.png";
+import "./Skills.css";
 
 function Skills() {
   const [isMoving, setIsMoving] = useState<boolean>(false);
@@ -31,10 +31,10 @@ function Skills() {
     if (isMoving) {
       spell = new Audio("/bgm/spell.mp3");
       spell.play();
-      setTimeout(() => {
-        audio = new Audio("/bgm/firebeam.mp3");
-        audio.play();
-      }, 1000);
+      // setTimeout(() => {
+      //   // audio = new Audio("/bgm/firebeam.mp3");
+      //   audio.play();
+      // }, 1000);
     }
     return () => {
       if (audio) {
@@ -63,25 +63,28 @@ function Skills() {
   }, [isMoving, isDone]);
 
   const attacked = isDone ? "cha2-shake" : "cha2";
-  const back = isMoving ? "box2" : "box";
+  // const back = isMoving ? "box2" : "box";
+
   return (
-    <div>
-      <div className={back}>
+    <div className="box2">
+      <div>
         <button onClick={handleButton}>button</button>
-        {/* key를 바꾸면 강제로 재렌더링 되면서 잔상이 사라짐, but 비효율적일 수 있음 */}
+        <img className="icon1" src={light_icon} alt="" />
         <img className="cha1" src={LUNA_attack} alt="" />
-        <img className={attacked} src={LUNA_attack} alt="" />
-        <Canvas key={isMoving.toString()}>
-          {/* <OrbitControls /> */}
-          {isMoving && (
-            <>
-              <FireBall handleButton={handleButton} handleDone={handleDone} />
-              {/* <Thunder handleButton={handleButton} /> */}
-              {/* <Smoke handleButton={handleButton} /> */}
-            </>
-          )}
-        </Canvas>
+        <img className={attacked} src={AK_attack} alt="" />
       </div>
+      <Canvas >
+        {/* <OrbitControls /> */}
+			
+
+        {isMoving && (
+          <>
+            {/* <StartSpell handleButton={handleButton} handleDone={handleDone}/> */}
+            {/* <TestComp handleButton={handleButton} handleDone={handleDone} /> */}
+						<FireBall handleButton={handleButton} handleDone={handleDone}/>
+          </>
+        )}
+      </Canvas>
     </div>
   );
 }

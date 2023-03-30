@@ -8,7 +8,7 @@ import { useGLTF } from "@react-three/drei";
 
 
 export default function Undercha(props) {
-  const { nodes, materials } = useGLTF("./models/undercha.glb");
+  const { nodes, materials } = useGLTF("./models/homeglb/undercha.glb");
   return (
     <group {...props} dispose={null} scale={[3, 3, 3]}>
       <mesh

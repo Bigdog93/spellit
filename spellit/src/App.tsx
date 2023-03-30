@@ -6,9 +6,10 @@ import { RootState } from "./store";
 import Home from "./components/Home";
 import Game from "./components/Game";
 import Matching from "./components/Matching";
-import Deck from "./components/User";
+import User from "./components/User";
 import Ready from "@/components/Game/Ready";
 import Defence from "@/components/Game/Defense/Defense";
+import Attack from "@/components/Game/Attack";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 import OAuth from "./components/Auth/OAuth";
@@ -49,8 +50,8 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="oath" element={<OAuth />} />
           <Route path="join" element={<Signup />} />
-          <Route path="test" element={<Test />} />
-          <Route path="openviduTest" element={<OpenViduTest />} />
+          <Route path="profile/:id" element={<Profile />} />
+          {/* <Route path="test" element={<Test/>}/> */}
           <Route path="settle" element={<Settle />} />
           <Route path="result" element={<Result />} />
           {/* <Route path="spell" element={<Spell />} /> */}

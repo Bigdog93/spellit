@@ -1,8 +1,8 @@
 import { createContext, useRef } from 'react';
-import cost, { costActions } from "@/store/cost"
+import  { costActions } from "@/store/cost"
 import { useDispatch, useSelector } from 'react-redux';
 
-import store from "@/store/";
+// import store from "@/store/";
 import { RootState } from '@/store';
 import { playerActions } from "@/store/player";
 import { matchingActions } from './matching';
@@ -89,6 +89,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
       } else if (type === 'toAttack') {
         console.log('toAttack 입니다.')
         dispatch(gameActions.endReady())
+        dispatch(attackActions.playersDeckList(info.attackCards));
         dispatch(gameActions.startAttack())
         console.log('toAttack에 websocket에서 찍는',info)
         dispatch(gameActions.setAttacks(info.attackCards))

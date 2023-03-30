@@ -19,7 +19,7 @@ export default function QuickstartButton(
   props: JSX.IntrinsicElements["group"]
 ) {
   const { nodes, materials } = useGLTF(
-    "./models/quickstartbutton.glb"
+    "./models/homeglb/quickstartbutton.glb"
   ) as GLTFResult;
 
   const quickRef = useRef<THREE.Mesh>(null);

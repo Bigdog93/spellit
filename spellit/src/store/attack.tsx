@@ -30,6 +30,8 @@ type initialAttackType = {
   transcript: string,
   myTurn: boolean,
   sec: number,
+  movePageCnt: number,
+  endStt: boolean,
 }
 
 const initialAttack: initialAttackType = {
@@ -46,6 +48,8 @@ const initialAttack: initialAttackType = {
   transcript: "",   // 주문 영창 실시간 데이터
   myTurn: false,    // 본인 주문영창인지
   sec: 0,           // 타이머
+  movePageCnt: 0,   // attack 내 컴포넌트 이동 회수 파악
+  endStt: false,   // 한 턴 종료
 };
 
 const attackSlice = createSlice({
@@ -93,7 +97,13 @@ const attackSlice = createSlice({
     },
     setSec(state, action: PayloadAction<number>) {
       state.sec = action.payload;
-    }, 
+    },
+    movePageCnt(state, action: PayloadAction<number>) {
+      state.movePageCnt = action.payload;
+    },
+    endStt(state, action: PayloadAction<boolean>) {
+      state.endStt = action.payload;
+    }
   },
 });
 

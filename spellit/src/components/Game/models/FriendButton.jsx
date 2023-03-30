@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { MathUtils } from "three";
 
 export default function FriendButton(props) {
-  const { nodes, materials } = useGLTF("./models/friendbutton.glb");
+  const { nodes, materials } = useGLTF("./models/homeglb/friendbutton.glb");
   const friendRef = useRef();
   const [hover, setHover] = useState(false);
   const [y, setY] = useState(0);

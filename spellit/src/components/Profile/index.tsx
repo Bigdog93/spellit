@@ -8,7 +8,7 @@ import playCountUp from '../../assets/profile/playCountUp.svg'
 import playCountDown from '../../assets/profile/playCountDown.svg'
 import editBtnImg from '@/assets/profile/editBtn.svg'
 
-import style from './index.module.css'
+import style from '@/components/Profile/Profile.module.css'
 import Card from './Card';
 import Modal from './Modal';
 
@@ -37,13 +37,23 @@ const Profile = () => {
 
   const [hoveredCard, setHoveredCard] = useState<DeckType>(user.deck[0])
 
-  const [nicknameModal, setNicknameModal] = useState<boolean>(false);
+  const [openModalFlag, setOpenModalFlag] = useState<boolean>(false);
+  const [modifyPassword, setModifyPassword] = useState<boolean>(false);
 
-  const openNicknameModal = () => {
-    setNicknameModal(true);
+  const [modProp, setModProp] = useState<string>('');
+
+  const openModal = (modProp:string) => {
+    setModProp(modProp);
+    setOpenModalFlag(true);
   }
-  const closeNicknameModal = () => {
-    setNicknameModal(false);
+  const closeModal = () => {
+    setOpenModalFlag(false);
+  }
+  const modifyMyInfo = (nickname: string, profileMsg:string) => {
+    const tmpUser = user;
+    tmpUser.nickname = nickname;
+    tmpUser.profileMsg = profileMsg;
+    setUser(tmpUser);
   }
 
   useEffect(() => {
@@ -66,9 +76,9 @@ const Profile = () => {
   }
 
   return (
-    <>
-    <div className={`${style.bg}`}>
-      <div className={`${style.sidebar}`}>
+    <div>
+      <div className={`${style.bg}`}>
+        !modifyPassword && <div className={`${style.sidebar}`}>
         <div className={`${style.selectedCharacter}`}>
             <button className={`${style.deckBtn} ${style.characterkBtn}`}>
             {user.gameCharacter && <img
@@ -80,14 +90,12 @@ const Profile = () => {
         <div className={`${style.userRecord}`}>
           <div className={`${style.playCount}`}>
             <img className={`${style.playCountUp}`} src={playCountUp} alt='playCountUp.svg' />
-            {/* <div className={`${style.bigNumber}`}>{user.playCount}</div> */}
-            <div className={`${style.bigSize}`}>133</div>
+            <div className={`${style.bigNumber}`}>{user.playCount}</div>
             <div>플레이한 게임</div>
             <img className={`${style.playCountDown}`} src={playCountDown} alt='playCountDown.svg' />
           </div>
           <div className={`${style.winRateDiv}`}>
-            {/* <div>{user.winCount / user.playCount === 0 ? 1 : user.playCount}</div> */}
-            <div className={`${style.midSize}`}>54.6</div>
+            <div>{user.winCount / user.playCount === 0 ? 1 : user.playCount}</div>
             <div>승률</div>
           </div>
           <div className={`${style.winCountDiv}`}>
@@ -111,13 +119,13 @@ const Profile = () => {
           <div className={`${style.userTextContainer}`}>
             <div className={`${style.bigSize}`}>
               {user.nickname}
-              <div className={`${style.editBtn}`} onClick={openNicknameModal}>
+                <div className={`${style.editBtn}`} onClick={(e) => { openModal('nickname') }}>
                 <img className={`${style.editBtnImg}`} src={editBtnImg} alt='editBtn.svg' />
               </div> 
             </div>
             <div className={`${style.smallSize}`}>
               {user.profileMsg}
-              <div className={`${style.editBtn}`} onClick={openNicknameModal}>
+              <div className={`${style.editBtn}`} onClick={(e) => {openModal('profileMsg')}}>
                 <img className={`${style.editBtnImg}`} src={editBtnImg} alt='editBtn.svg' />
               </div>  
             </div>
@@ -170,8 +178,8 @@ const Profile = () => {
         </div>
       </div>
       </div>
-      {nicknameModal && <Modal closeModal={closeNicknameModal} user={user}></Modal>}
-      </>
+      {openModalFlag && <Modal closeModal={closeModal} user={user} modProp={modProp} modifyMyInfo={modifyMyInfo}></Modal>}
+      </div>
   )
 };
 export default Profile;
