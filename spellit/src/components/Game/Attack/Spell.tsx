@@ -79,6 +79,7 @@ const Spell = ({attack}: {attack: AttackType}) => {
     const trimText = card.spell.replaceAll(" ", ""); // 띄어쓰기 제거한 주문
     // console.log(trimText);
 
+    let correct = 0;
     recognition.addEventListener("result", (e) => {
         console.log("말하는 중이잖아요?");
         console.log(e)
@@ -101,25 +102,30 @@ const Spell = ({attack}: {attack: AttackType}) => {
         }
 
 
-        let correct = 0;
         console.log("------------------------------------------------");
         for (let i = 0; i < transcript.length; i++) {
-          console.log('for 문 안이다!')
+          // console.log('for 문 안이다!')
             if (transcript[i] == trimText[i]) {
                 const element = document.getElementById(`spell-${i}`);
 
                 const correctColor = `correct${card.attribute}`;
                 element?.classList.add(correctColor);
                 correct++;
-                console.log('------')
-                console.log(element);
-                console.log('------')
+                // console.log('------')
+                // console.log(element);
+                // console.log('------')
             }
         }
-        // const percentEl = document.getElementById("percent") as HTMLDivElement;
-        // const correctPercent = Math.round((correct / spellLength) * 100);
+        // console.log('correct 개수 : ', correct)
+        // dispatch(settleActions.percentList(Math.round(correct / spellLength)));
         // percentEl.innerText = `총 ${spellLength}개 중 ${correct}개 맞음 : ${correctPercent} %`;
       });
+      // const percentEl = document.getElementById("percent") as HTMLDivElement;
+      // const correctPercent = Math.round((correct / spellLength) * 100);
+      // console.log('==============')
+      // console.log('correctPercent : ' ,correctPercent, '%');
+      // console.log('==============')
+      // dispatch(settleActions.percentList(correct));
 
     // 음성 인식 시작
     setSec(card.cost);
@@ -129,10 +135,6 @@ const Spell = ({attack}: {attack: AttackType}) => {
     // 타이머
     const interval = setInterval(() => {
         setSec(sec => sec-1);
-        // sec.current -= 1;
-        console.log('============')
-        console.log('sec : ', sec)
-        console.log('============')
     }, 1000)
     
     // 주문 제한 시간 흐른 후 음성인식 종료
@@ -143,12 +145,14 @@ const Spell = ({attack}: {attack: AttackType}) => {
         setTimeout(() => {
           let correct = 0;
           for (let i=0; i<spellLength; i++) {
-            const correctEl = document.querySelector(`spell-${i}`);
+            const correctEl = document.querySelector(`#spell-${i}`);
             if (correctEl?.classList.contains(`correct${card.attribute}`)) {
               correct++;
+              correctEl.classList.remove(`correct${card.attribute}`);
             }
           }
-          dispatch(settleActions.percentList(Math.round(correct / spellLength)));
+          console.log('맞은 개수 : ', correct)
+          dispatch(settleActions.percentList(correct / spellLength));
 
           dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
         }, 3000);

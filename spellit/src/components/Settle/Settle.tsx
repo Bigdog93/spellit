@@ -26,7 +26,7 @@ function Settle() {
     const attacks = useSelector((state: RootState) => (state.game.attacks));
 
     const percentList = useSelector((state: RootState) => (state.settle.percentList));
-
+    console.log('percentList : ', percentList);
     
     const p1HpStyle = {
         width: `${p1Hp/defaultHP*385}px`,
@@ -40,8 +40,11 @@ function Settle() {
     const [idx, setIdx] = useState(0);
     
     function settling(idx: number) {
+        console.log('정산중..')
         // for (let i=0; i<attacks.length; i++) {
-            let d = attacks[idx].card.damage * percentList[idx];
+            let d = attacks[idx].card.damage * percentList[idx] * 2;
+            console.log('========')
+            console.log('d', d);
 
             if (attacks[idx].isMine) {
                 if (p2Deffense) {
@@ -59,9 +62,15 @@ function Settle() {
     }
 
     useEffect(() => {
+        console.log('=========')
+        console.log('idx : ', idx)
+        console.log('=========')
+
         if (idx < attacks.length) {
             settling(idx);
-            setIdx(idx+1);
+            setTimeout(() => {
+                setIdx(idx+1);
+            }, 10000)
         } else {
             navigate('/result');
         }

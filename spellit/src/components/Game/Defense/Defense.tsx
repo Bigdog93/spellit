@@ -52,18 +52,19 @@ const Defence = () => {
   const endDefense = useSelector((state: RootState) => state.defense.defenseEnd)
   useEffect(()=> {
     if(endDefense) {
-      if (p1Hp && p2Hp) {
-        console.log('hp확인 if 안이야')
-        if(p1Hp <=0 || p2Hp <=0) {
-          navigate('/result')
-          console.log('hp 다 떨어졌다...')
-        } else {
-          navigate('/ready')
-        }
-      }
-      console.log('hp확인 if 밖이야')
-      navigate('/ready')
+      // if (p1Hp && p2Hp) {
+      //   console.log('hp확인 if 안이야')
+      //   if(p1Hp <=0 || p2Hp <=0) {
+      //     navigate('/result')
+      //     console.log('hp 다 떨어졌다...')
+      //   } else {
+      //     navigate('/ready')
+      //   }
+      // }
+      // console.log('hp확인 if 밖이야')
+      // navigate('/ready')
       // navigate('/result')
+      navigate('/settle');
     }
   }, [endDefense])
   return (
