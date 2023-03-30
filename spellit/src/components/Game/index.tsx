@@ -6,6 +6,7 @@ import Ready from './Ready'
 import Attack from './Attack';
 import Defense from './Defense';
 import Settle from '../Settle/Settle';
+import OpenViduVideo from '@/components/Game/OpenVidu/OpenVidu'
 
 
 const Game = () => {
@@ -21,6 +22,7 @@ const Game = () => {
   console.log('settleTurn: ', settleTurn)
   return (
     <div>
+      <OpenViduVideo />
       {readyTurn && <Ready />}
       {attackTurn && <Attack />}
       {defenseTurn && <Defense />}

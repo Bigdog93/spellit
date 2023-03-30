@@ -7,6 +7,8 @@ import { WebSocketContext } from '@/store/websocket'
 
 
 import  Spell from "./Spell";
+import  MySpell from "./MySpell";
+import  OtherSpell from "./OtherSpell";
 import Character from "./Character";
 import game, { gameActions } from "@/store/game";
 // import OpenViduVideo from '@/components/Game/OpenVidu/OpenVidu'
@@ -60,9 +62,15 @@ const Attack = () => {
         {/* <OpenViduVideo /> */}
           {/* <Timer time={attacks[idx].card.cost}/> */}
         <div className='spell-and-character'>
-          {isMine && <img src={require(`../../../assets/character/${myCharacter}_default.png`)} alt='character' className='attack-character-1p'></img>}
-          <Spell attack={attacks[idx]} idx={idx}/>
-          {!isMine && <img src={require(`../../../assets/character/${myCharacter}_default.png`)} alt='character' className='attack-character-2p'></img>}
+          {isMine && <div>
+            {/* <img src={require(`../../../assets/character/${myCharacter}_default.png`)} alt='character' className='attack-character-1p'></img> */}
+            <MySpell attack={attacks[idx]} idx={idx}/>
+          </div>}
+          {!isMine && <div>
+            <MySpell attack={attacks[idx]} idx={idx}/>
+            {/* <OtherSpell attack={attacks[idx]} idx={idx}/> */}
+            {/* <img src={require(`../../../assets/character/${myCharacter}_default.png`)} alt='character' className='attack-character-2p'></img> */}
+          </div>}
         </div>
       {/* )} */}
     </div>
