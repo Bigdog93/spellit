@@ -1,4 +1,4 @@
-.flip-container {
+.flip-container-profile {
   width: 140px;
   height: 190px;
   background-color: transparent;
@@ -9,7 +9,7 @@
   /* padding: 1rem; */
 }
 
-.flip-inner-container {
+.flip-inner-container-profile {
   position: relative;
   width: 100%;
   height: 100%;
@@ -18,13 +18,13 @@
   transition: transform 0.8s;
 }
 
-.flip-container:hover .flip-inner-container {
+.flip-container-profile:hover .flip-inner-container-profile {
   cursor: pointer;
   transform: rotateY(-180deg);
 }
 
-.flip-front,
-.flip-back {
+.flip-front-profile,
+.flip-back-profile {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -35,20 +35,20 @@
 }
 
 
-.flip-front img {
+.flip-front-profile img {
   width: 100%;
   height: 100%;
   border-radius: 10px;
   -webkit-user-drag: none;
 }
-.flip-back img {
+.flip-back-profile img {
   width: 100%;
   height: 100%;
   border-radius: 10px;
   -webkit-user-drag: none;
 }
 
-.flip-back {
+.flip-back-profile {
   width: 140px;
   height: 190px;
   background: white;

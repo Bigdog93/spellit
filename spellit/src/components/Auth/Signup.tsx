@@ -1,4 +1,4 @@
-import { useState, FormEvent, ChangeEvent } from 'react'
+import { useState, FormEvent, ChangeEvent, useRef, useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
@@ -15,25 +15,57 @@ const Signup = () => {
   const dispatch = useDispatch
 
   const [email, setEmail] = useState('')
-  const [password1, setPassword1] = useState('')
-  const [password2, setPassword2] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordConfirm, setPasswordConfirm] = useState<string>('');
   // 7자 제한
   const [nickname, setNickname] = useState('')
   // 100자 제한
   const [startSpell, setStartSpell] = useState('')
 
+  const [wrongPw, setWrongPw] = useState<boolean>(true);
+  const [emailAbailablity, setEmailAbailablity] = useState<boolean>(true);
+  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState<string>('');
+  const [isPasswordConfirm, setIsPasswordConfirm] = useState<boolean>(true);
+
+  const pw1 = useRef<HTMLInputElement>();
+  const pw2 = useRef<HTMLInputElement>();
+
+
 
   const emailChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value)
-    console.log(email)
   }
+  useEffect(() => {
+    const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    if (email.match(regExp)) {
+      setEmailAbailablity(true);
+      API.post<any>('auth/signup/email',
+        { 'email': email },)
+        .then(({ data }) => {
+          setEmailAbailablity(data);
+        })
+    } else {
+      setEmailAbailablity(false);
+    }
+
+    
+  }, [email])
   const password1ChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword1(event.target.value)
+    setPassword(event.target.value)
   }
   const password2ChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword2(event.target.value)
-    pwCheck()
+    setPasswordConfirm(event.target.value)
   }
+  useEffect(() => {
+    if (password === passwordConfirm) {
+      setPasswordConfirmMessage('비밀번호를 똑같이 입력했어요.')
+      setIsPasswordConfirm(true)
+    } else {
+      setPasswordConfirmMessage('비밀번호가 틀립니다.')
+      setIsPasswordConfirm(false)
+    }
+  }, [password, passwordConfirm])
+
   const nicknameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setNickname(event.target.value)
   }
@@ -42,11 +74,6 @@ const Signup = () => {
   }
 
 
-  const pwCheck = ()=> {
-    if(password2.length > 0 && password1 !== password2){
-      console.log('worng pw')
-    }
-  }
 
   const signupHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -54,7 +81,7 @@ const Signup = () => {
     // 회원가입
     API.post<any>(
       "auth/signup", 
-      {'email': email, 'password': password1, 'nickname': nickname, 'startSpell': startSpell}, 
+      {'email': email, 'password': password, 'nickname': nickname, 'startSpell': startSpell}, 
     ).then((res) => {
       console.log('회원가입 성공')
       console.log(res.data)
@@ -86,7 +113,9 @@ const Signup = () => {
     })
     
   };
-
+  const test = {
+    color: 'red',
+  }
   
   const toLogin = () => {
    navigate('/login')
@@ -96,56 +125,68 @@ const Signup = () => {
     <div className='auth-bg'>
       <div className="login-box">
         <form action="submit" className="login-form" onSubmit={signupHandler}>
-          <div>
-            <label htmlFor="">EMAIL</label>
-            <br />
-            <input 
-              type="email" 
-              onChange={emailChangeHandler}
-            />
-            <button>중복 확인</button>
-            <br />
-            {/* {(email.length && emailAbailablity) && <div>사용 가능한 이메일입니다.</div>}
-            {(email.length && emailAbailablity) && <div>사용 불가한 이메일입니다.</div>} */}
+          <div className="signupRow">
+            <div>
+              <label htmlFor="">EMAIL</label>
+            </div>
+            <div>
+              <input 
+                type="email" 
+                onChange={emailChangeHandler}
+                />
+            </div>
+            {(email.length > 0 && emailAbailablity) && <div className='message success'>사용 가능한 이메일입니다.</div>}
+            {(email.length > 0 && !emailAbailablity) && <div className='message error'>사용 불가한 이메일입니다.</div>}
           </div>
-          <br />
-          <div>
-            <label htmlFor="">PASSWORD</label>
-            <br />
+          <div className="signupRow">
+            <div>
+              <label htmlFor="">PASSWORD</label>
+            </div>
+            <div>
             <input 
               type="password" 
-              onChange={password1ChangeHandler}
-            />
-            <br />
-            <label htmlFor="">PASSWORD 확인</label>
-            <br />
+                onChange={password1ChangeHandler}
+              />
+            </div>
+            <div>
+              <label htmlFor="">PASSWORD CHECK</label>
+            </div>
+            <div>
             <input 
               type="password" 
-              onChange={password2ChangeHandler}
-            />
-
+                onChange={password2ChangeHandler}
+              />
+            </div>
+            {(passwordConfirm.length > 0 || password.length > 0) && (
+            <div className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>{passwordConfirmMessage}</div>
+          )}
           </div>
-          <br />
-          <label htmlFor="">NICKNAME</label>
-          <br />
-          <input 
+          <div  className="signupRow">
+            <div>
+              <label htmlFor="">NICKNAME</label>
+            </div>
+            <div>
+            <input 
             type="text" 
             onChange={nicknameChangeHandler}
-          />
-          <br />
+            />
+            </div>
+          </div>
+          
+          
+          {/* <br />
           <label htmlFor="">SPELL</label>
           <br />
           <input 
             type="text" 
             onChange={startSpellChangeHandler}
-          />
-          <br />
-          <button type="submit">Connect</button>
+          /> */}
+          <div className='signupRow'>
+            <button className='signupBtn' type="submit">SIGN UP</button>
+          </div>
         </form>
-        <br />
-        <hr />
-        <img src={kakao} alt="kakao" className="mouse-hover"/>
-        <p onClick={toLogin} className="mouse-hover">로그인</p>
+        {/* <img src={kakao} alt="kakao" className="mouse-hover"/> */}
+        <button onClick={toLogin} className="mouse-hover signupBtn">CANCEL</button>
       </div>
     </div>
   )
