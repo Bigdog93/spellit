@@ -6,6 +6,7 @@ import OvVideo from '@/components/Game/OpenVidu/OvVideo'
 import { ExceptionEvent, OpenVidu, Publisher, Session, StreamEvent, StreamManager, Subscriber } from 'openvidu-browser';
 import axios from "axios";
 import { WebSocketContext } from '@/store/websocket'
+import room from "@/store/room";
 
 
 const OpenViduVideo = () => {
@@ -25,6 +26,8 @@ const OpenViduVideo = () => {
     // }
     const roomId = useSelector((state: RootState) => state.room.roomId);
     const nickname = useSelector((state: RootState) => state.user.nickname);
+    console.log('roomId', roomId)
+    console.log('nickname', nickname)
     let mySessionId: string = 'session' + roomId.toString();
     let myUserName: string = nickname;
     const [OV, setOV] = useState<OpenVidu | null>(new OpenVidu());

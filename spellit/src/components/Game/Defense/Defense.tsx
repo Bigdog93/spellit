@@ -1,7 +1,8 @@
-import { useCallback, useState, useRef, useEffect } from "react";
+import React, { useCallback, useState, useRef, useEffect, useContext } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { useNavigate } from "react-router-dom";
+import { WebSocketContext } from '@/store/websocket'
 
 import Timer from "@/components/Game/Defense/Timer";
 import Click from "@/components/Game/Defense/Click";
@@ -12,6 +13,7 @@ import styles from "./Defence.module.css";
 
 const Defence = () => {
   const navigate = useNavigate();
+  const { send } = useContext(WebSocketContext);
 
   // 게임 선택(둘중 하나)
   const [gameSelect, setGameSelect] = useState<"click" | "blow" | null>(null);
@@ -50,6 +52,9 @@ const Defence = () => {
   const p1Hp = useSelector((state: RootState) => state.player.p1?.hp);
   const p2Hp = useSelector((state: RootState) => state.player.p2?.hp);
   const endDefense = useSelector((state: RootState) => state.defense.defenseEnd)
+
+  const roomId = useSelector((state: RootState) => state.room.roomId)
+  const memberId = useSelector((state: RootState) => state.user.id)
   useEffect(()=> {
     if(endDefense) {
       if (p1Hp && p2Hp) {
@@ -58,6 +63,12 @@ const Defence = () => {
           navigate('/result')
           console.log('hp 다 떨어졌다...')
         } else {
+          send({
+            event: 'toReady',
+            roomId: roomId,
+            memberId: memberId,
+            data: ''
+          })
           navigate('/ready')
         }
       }
@@ -65,7 +76,7 @@ const Defence = () => {
       navigate('/ready')
       // navigate('/result')
     }
-  }, [endDefense])
+  }, [endDefense, navigate])
   return (
     <div
       className={styles.box}

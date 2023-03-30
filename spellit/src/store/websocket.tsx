@@ -85,6 +85,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         console.log('toReady 입니다.')
         dispatch(gameActions.startReady())
         dispatch(costActions.set(info.cost))
+        console.log('toReady에서 info.cost로 받은 cost', info.cost)
         
       } else if (type === 'toAttack') {
         console.log('toAttack 입니다.')

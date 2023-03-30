@@ -140,7 +140,7 @@ const Spell = ({attack}: {attack: AttackType}) => {
         <Timer time={sec}></Timer>
       
         <div className="SpellBox">
-          <img style={{ width: 800, height: 400}} src="assets/InGame/SpellBox.png" alt="" />
+          <img style={{ width: 800, height: 400}} src={require("../../../assets/InGame/SpellBox.png")} alt="spellBox" />
           <div id='origin'>{spanEl}</div>
         </div>
         <div className="words"></div>
