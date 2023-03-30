@@ -39,7 +39,7 @@ const OpenViduVideo = () => {
     const [subscribers, setSubscribers] = useState<Array<StreamManager>>([]);
     const [token, setToken] = useState<string | null>(null);
     const { send } = useContext(WebSocketContext);
-    const myTurn = useSelector((state: RootState) => (state.attack.myTurn));
+    const myTurn = useSelector((state: RootState) => (state.game.myAttackTurn));
 
     let currentVideoDevice: any = null;
     const onbeforeunload = (event :any) => {

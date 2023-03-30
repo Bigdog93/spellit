@@ -15,9 +15,16 @@ import Signup from "./components/Auth/Signup";
 import OAuth from "./components/Auth/OAuth";
 import Settle from "./components/Settle/Settle";
 import Result from "./components/Game/Result";
-import Deck from "./components/User/index";
-import Skills from "@/components/Settle/Skills";
+import Test from "./components/Test";
+import OpenViduTest from "./components/Game/OpenVidu/OpenVidu";
+import Attack from "./components/Game/Attack";
+// import Spell from "./components/Game/Attack/Spell";
 import Profile from "./components/Profile";
+import STT from "./components/Test/STT";
+
+// 임시
+import SKills from "@/components/Settle/SKills";
+
 function App() {
   const isLogged = useSelector(
     (state: RootState) => state.auth.isAuthenticated
@@ -47,7 +54,9 @@ function App() {
           {/* <Route path="test" element={<Test/>}/> */}
           <Route path="settle" element={<Settle />} />
           <Route path="result" element={<Result />} />
-          <Route path="skills" element={<Skills />} />
+          {/* <Route path="spell" element={<Spell />} /> */}
+          <Route path="skills" element={<SKills />} />
+          <Route path="profile/:id" element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </WebSocketProvider>

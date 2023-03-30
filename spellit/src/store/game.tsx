@@ -1,10 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit'
+import { AttackType } from '@/utils/Types'
 
-const initialGameState = {
+type initialGameType = {
+   readyTurn: boolean,
+    attackTurn: boolean,
+    defenseTurn: boolean,
+    settleTurn: boolean,
+    attacks: AttackType[],
+    idx: number,
+    myAttackTurn: boolean,
+}
+const initialGameState: initialGameType = {
   readyTurn: false,
   attackTurn: false,
   defenseTurn: false,
   settleTurn: false,
+  attacks: [],
+  idx: 0,
+  myAttackTurn: false,
 };
 
 const gameSlice = createSlice({
@@ -35,7 +49,27 @@ const gameSlice = createSlice({
     endSettle(state) {
       state.settleTurn = false;
     },
-    
+    // toAttack에서 받아온 전체 attack 리스트 업뎃
+    setAttacks(state, action: PayloadAction<Array<AttackType>>) {
+      state.attacks = action.payload
+      console.log(action.payload)
+    },
+    setIdx(state) {
+      if (state.attackTurn){
+        if (state.idx === state.attacks.length-1) {
+          state.idx = 0
+          state.attackTurn = false
+          console.log('idx 끝')
+        } else {
+          state.idx += 1
+          console.log('idx +1 해줌')
+        }
+      }
+    },
+    setMyAttackTurn(state, action: PayloadAction<boolean>) {
+      state.myAttackTurn = action.payload
+      console.log('game reduer에서 setMyAttackTurn 찍는 isMine', state.myAttackTurn)
+    }
   },
 });
 
