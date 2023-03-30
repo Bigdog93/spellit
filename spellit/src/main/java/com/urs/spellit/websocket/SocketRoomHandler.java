@@ -37,6 +37,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 	ArrayList<WebSocketSession> allSession = new ArrayList<>();
 	Queue<PlayerDto> readyQueue = new ArrayDeque<>();
 	HashMap<Integer, String> room_host = new HashMap<>();
+	HashMap<Long, WebSocketSession> allPlayers = new HashMap<>();
 	private final RoomManager roomManager;
 	private final ObjectMapper mapper = new ObjectMapper();
 	final private MyParser myParser;
@@ -70,10 +71,11 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 			return;
 		}
 //		 각 이벤트에 따라 if문을 실행해 줘요
-		/* 빠른 매치 눌렀을 때*/
 		if(event.equals("login")) {
 			memberService.playerOnline(memberId);
+			allPlayers.put(memberId, session);
 		}else if(event.equals("matchStart")) {
+			/* 빠른 매치 눌렀을 때*/
 			PlayerDto player = getPlayerByMemberId(session, memberId);
 			logger.info("player : " + player.getNickname());
 			/*--- 대기열 사람 없으면 대기열 큐에 집어넣음 ---*/
@@ -92,7 +94,20 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 				infoMap.put("roomInfo", room); // 방 정보 담아서
 				room.sendMessage(makeTextMsg("connected", infoMap)); // 전송
 			}
-		}else {
+		}else if(event.equals("friendRequest")) {
+			infoMap.put("memberId", memberId);
+			infoMap.put("nickname", nickname);
+			long otherId = myParser.getLong("otherId", data);
+			allPlayers.get(otherId).sendMessage(makeTextMsg("friendRequest", infoMap));
+		}else if(event.equals("friendResponse")) {
+			infoMap.put("memberId", memberId);
+			infoMap.put("nickname", nickname);
+			long otherId = myParser.getLong("otherId", data);
+			String accept = myParser.getString("accept", data);
+			infoMap.put("accept", accept);
+			allPlayers.get(otherId).sendMessage(makeTextMsg("friendResponse", infoMap));
+		}
+		else {
 			/*=============== 매칭 된 이후(게임 시작) ================*/
 			RoomInfo room = roomManager.getRoomInfo(roomId); // 방정보 가져오기
 			List<PlayerDto> players = room.getPlayerList(); // 플레이어 정보 가져오기
@@ -203,11 +218,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 						}
 					}
 					break;
-				case "friendRequest":
-					infoMap.put("memberId", memberId);
-					infoMap.put("nickname", nickname);
-					other.getSession().sendMessage(makeTextMsg("friendRequest", infoMap));
-					break;
+					/* 게임 로직 끝 */
 			}
 		}
 	}
@@ -227,6 +238,12 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 		for (WebSocketSession w : allSession) {
 			if (w.equals(session)) {
 				allSession.remove(w);
+				break;
+			}
+		}
+		for(Long id : allPlayers.keySet()) {
+			if(allPlayers.get(id).equals(session)) {
+				allPlayers.remove(id);
 				break;
 			}
 		}
