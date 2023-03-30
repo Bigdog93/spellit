@@ -5,6 +5,7 @@ import com.urs.spellit.game.entity.CardEntity;
 import com.urs.spellit.game.entity.GameCharacterEntity;
 import com.urs.spellit.member.model.dto.*;
 import com.urs.spellit.member.model.entity.Friend;
+import com.urs.spellit.member.model.entity.FriendWaitEntity;
 import com.urs.spellit.member.model.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -26,6 +27,7 @@ public class MemberController {
     private final MemberService memberService;
     private final FriendRepository friendRepository;
     private final MemberRepository memberRepository;
+    private final FriendWaitRepository friendWaitRepository;
 
     @GetMapping("/info") //내 정보 요청
     public ResponseEntity<MemberResponseDto> findMemberInfoById()
@@ -104,6 +106,16 @@ public class MemberController {
         }
         return ResponseEntity.ok(friendList);
     }
+    @GetMapping("/friend/wait")
+    public ResponseEntity<List<Member>> getFriendWaitList() {
+        List<FriendWaitEntity> friendIdList = friendWaitRepository.findAllByFriendId(SecurityUtil.getCurrentMemberId());
+        List<Member> friendList = new ArrayList<>();
+        for(FriendWaitEntity f : friendIdList) {
+            friendList.add(f.getMember());
+        }
+        return ResponseEntity.ok(friendList);
+    }
+
 
     @DeleteMapping("/friend/delete/{userId}") //친구삭제
     public ResponseEntity<Boolean> deleteFriend(@PathVariable("userId") Long friendId )

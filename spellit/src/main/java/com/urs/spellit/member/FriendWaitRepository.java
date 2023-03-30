@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface FriendWaitRepository extends JpaRepository<FriendWaitEntity,Long> {
     List<FriendWaitEntity> findAllByMemberId(Long memberId );
+
+    List<FriendWaitEntity> findAllByFriendId(Long currentMemberId);
 }
