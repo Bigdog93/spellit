@@ -13,11 +13,27 @@ import MypageButton from "@/components/Game/models/MypageButton";
 import FriendButton from "@/components/Game/models/FriendButton";
 // import BackgroundSpell from "@/components/Game/models/BackgroundSpell";
 
+import Friend from "./Friend";
+
 import styles from "./Home.module.css";
+import { Provider } from "react-redux";
+import store from "@/store";
+import AddFriendModal from "./Friend/AddFriendModal";
 
 const Home = () => {
   // 기본 카메라 위치
   // Vector3 {x: 0, y: 3.061616997868383e-16, z: 5}
+
+  const [addFriendModalFlag, setAddFriendModalFlag] = useState<boolean>(false);
+
+
+  function openAddFriendModal() {
+    setAddFriendModalFlag(true);
+    console.log(addFriendModalFlag);
+  }
+  function closeAddFriendModal() {
+    setAddFriendModalFlag(false);
+  }
 
   return (
     <div>
@@ -28,10 +44,6 @@ const Home = () => {
 
         {/* <OrbitControls /> */}
         {/* <Box position={[0, 0, 2]} /> */}
-        <Html>
-          
-        </Html>
-
         <Magician position={[-3, 0, 0]} />
         <Undercha position={[-2.7, -2.5, 0]} />
         <BigMagicCircle
@@ -60,6 +72,8 @@ const Home = () => {
           rotation={[0, Math.PI / 2, Math.PI / 2]}
         /> */}
       </Canvas>
+      <Friend openAddFriendModal={openAddFriendModal} />
+      {addFriendModalFlag && <AddFriendModal closeAddFriendModal={closeAddFriendModal} />}
     </div>
   );
 };

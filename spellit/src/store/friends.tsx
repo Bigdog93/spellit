@@ -1,20 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { UserType } from '@/utils/Types';
+import { UserEntityType } from '@/utils/Types';
 
-type FriendListType = {
-    friends: Array<UserType>;
+type FriendsListType = {
+    friends: Array<UserEntityType>;
+    friendWaits: Array<UserEntityType>;
 }
 
-const initialFriends: FriendListType = {
+const initialFriends: FriendsListType = {
     friends: [],
+    friendWaits: [],
 }
 
-const friendSlice = createSlice({
+const friendsSlice = createSlice({
     name: 'friends',
     initialState: initialFriends,
     reducers: {
-        fillFriendsList(state, action: PayloadAction<UserType>) {
+        fillFriendsList(state, action: PayloadAction<UserEntityType>) {
             state.friends.push(action.payload);
         },
         logoutFriend(state, action: PayloadAction<Number>) {
@@ -23,10 +25,19 @@ const friendSlice = createSlice({
                     user.isOnline = false;
                 }
             }
+        },
+        fillFriendWaitsList(state, action: PayloadAction<UserEntityType>) {
+            state.friendWaits.push(action.payload);
+        },
+        acceptFriendRequest(state, action: PayloadAction<UserEntityType>) {
+            state.friendWaits = state.friendWaits.filter((f) => 
+                !(f.id === action.payload.id)
+            )
+            state.friends.push(action.payload);
         }
     },
 });
 
-export const friendActions = friendSlice.actions;
+export const friendsActions = friendsSlice.actions;
 
-export default friendSlice.reducer;
+export default friendsSlice.reducer;

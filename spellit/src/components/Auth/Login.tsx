@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { userActions } from "@/store/user";
-import { friendActions } from "@/store/friends";
+import { friendsActions } from "@/store/friends";
 import { WebSocketContext } from '@/store/websocket'
 import API from "@/utils/API";
 import "./Login.css";
 import kakao from "../../assets/ui/kakao_login_medium_narrow.png";
-import { UserType } from "@/utils/Types";
+import { UserEntityType } from "@/utils/Types";
 
 const Login = () => {
   const { send } = useContext(WebSocketContext);
@@ -51,11 +51,11 @@ const Login = () => {
             API.get('member/friend/list', { headers: { Authorization: `Bearer ${token}` }, })
               .then((res) => {
                 for (let f of res.data) {
-                  const friend: UserType = {
+                  const friend: UserEntityType = {
                     deck: [],
                     email: f.email,
                     exp: f.exp,
-                    gameCharacter: f.gameCharacter,
+                    gameCharacterEntity: f.gameCharacterEntity,
                     id: f.id,
                     level: f.level,
                     nickname: f.nickname,
@@ -66,7 +66,28 @@ const Login = () => {
                     profileMsg: f.profileMsh,
                     isOnline: f.isOnline
                   }
-                  dispatch(friendActions.fillFriendsList(friend));
+                  dispatch(friendsActions.fillFriendsList(friend));
+                }
+              })
+            API.get('member/friend/wait', { headers: { Authorization: `Bearer ${token}` }, })
+              .then(({ data }) => {
+                for (let f of data) {
+                  const friendWait: UserEntityType = {
+                    deck: [],
+                    email: f.email,
+                    exp: f.exp,
+                    gameCharacterEntity: f.gameCharacterEntity,
+                    id: f.id,
+                    level: f.level,
+                    nickname: f.nickname,
+                    playCount: f.playCount,
+                    winCount: f.winCount,
+                    looseCount: f.looseCount,
+                    drawCount: f.drawCount,
+                    profileMsg: f.profileMsh,
+                    isOnline: f.isOnline
+                  }
+                  dispatch(friendsActions.fillFriendWaitsList(friendWait));
                 }
             })
           })
