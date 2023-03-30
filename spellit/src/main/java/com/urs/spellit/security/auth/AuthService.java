@@ -145,7 +145,7 @@ public class AuthService {
         Optional<Member> memberOpt=memberRepository.findById(SecurityUtil.getCurrentMemberId());
         if(memberOpt.isEmpty()) return 2;
         Member member = memberOpt.get();
-        if(!passwordEncoder.matches(changePwd.getPassword(), member.getPassword())) {
+        if(!passwordEncoder.matches(changePwd.getOriginPassword(), member.getPassword())) {
             return 3;
         }
         member.changePassword(passwordEncoder, changePwd.getPassword());
