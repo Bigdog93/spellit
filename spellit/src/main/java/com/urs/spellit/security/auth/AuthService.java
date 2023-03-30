@@ -141,11 +141,16 @@ public class AuthService {
     }
 
     // 비밀번호 변경
-    public String changPassword(String changePwd){
-        Optional<Member> member=memberRepository.findById(SecurityUtil.getCurrentMemberId());
-        member.get().changePassword(passwordEncoder, changePwd);
-        memberRepository.save(member.get());
-        return "success";
+    public int changPassword(UserPasswordUpdateRequestDto changePwd){
+        Optional<Member> memberOpt=memberRepository.findById(SecurityUtil.getCurrentMemberId());
+        if(memberOpt.isEmpty()) return 2;
+        Member member = memberOpt.get();
+        if(!passwordEncoder.matches(changePwd.getPassword(), member.getPassword())) {
+            return 3;
+        }
+        member.changePassword(passwordEncoder, changePwd.getPassword());
+        memberRepository.save(member);
+        return 1;
     }
 
 

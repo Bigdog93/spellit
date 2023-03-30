@@ -60,6 +60,13 @@ public class AuthController {
     @PutMapping("/changepwd")
     public ResponseEntity<String> changPassword(@RequestBody UserPasswordUpdateRequestDto userPwdDto
     ){
-        return ResponseEntity.ok(authService.changPassword(userPwdDto.getPassword()));
+        if(!userPwdDto.getPassword().equals(userPwdDto.getPasswordConfirm()))
+            return ResponseEntity.badRequest().body("");
+        int res = authService.changPassword(userPwdDto);
+        if(res == 1) {
+            return ResponseEntity.ok().build();
+        }else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

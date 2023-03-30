@@ -13,6 +13,8 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class UserPasswordUpdateRequestDto{
 
+    private String originPassword;
     @NotBlank
     private String password;
+    private String passwordConfirm;
 }
