@@ -78,7 +78,7 @@ const Login = () => {
               <label htmlFor="">ID</label>
             </div>
             <div>
-              <input type="email" onChange={idChangeHandler} />
+              <input className='loginInput' type="email" onChange={idChangeHandler} />
             </div>
           </div>
 
@@ -87,7 +87,7 @@ const Login = () => {
               <label htmlFor="">PW</label>
             </div>
             <div>
-              <input type="password" onChange={pwChangeHandler} />
+              <input className='loginInput' type="password" onChange={pwChangeHandler} />
             </div>
           </div>
           <div className="signupRow">

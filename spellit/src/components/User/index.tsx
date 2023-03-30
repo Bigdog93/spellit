@@ -8,6 +8,10 @@ import API from "@/utils/API";
 import Cards from './Cards'
 import Characters from "./Characters";
 import style from './index.module.css'
+
+import homeBtnImg from '@/assets/ui/homeBtn.svg';
+import { useNavigate } from "react-router-dom";
+
 interface CardType {
   attribute: number;
   code: string;
@@ -33,6 +37,8 @@ const User = () => {
   const token = sessionStorage.getItem("token");
 
   const dispatch = useDispatch();
+  // onClick 이동
+  const navigate = useNavigate();
   
   // 전체 캐릭터 목록
   const [characters, setCharacters] = useState<Array<GameCharacterType>>([]);
@@ -126,10 +132,15 @@ const User = () => {
     setMode(!mode)
   };
 
+  const toHome = () => {
+    navigate('/home');
+  }
 
   return (
     <div className={`${style.bg}`}>
-      {/* { !mode &&  <Cards cards={cards} selectCard={selectCard}/>} */}
+      <button type="button" className={`${style.btn} ${style.homeBtn}`} onClick={toHome}>
+        <img src={homeBtnImg} alt="home"></img>
+      </button>      {/* { !mode &&  <Cards cards={cards} selectCard={selectCard}/>} */}
       { !mode && <div className={`${style.cardsContainer}`}>
         <Cards cards={cards} selectCard={selectCard}/>
       </div>}

@@ -122,7 +122,7 @@ const Signup = () => {
   }
 
   return (
-    <div className='auth-bg'>
+    <div className="auth-bg">
       <div className="login-box">
         <form action="submit" className="login-form" onSubmit={signupHandler}>
           <div className="signupRow">
@@ -130,50 +130,49 @@ const Signup = () => {
               <label htmlFor="">EMAIL</label>
             </div>
             <div>
-              <input 
-                type="email" 
-                onChange={emailChangeHandler}
-                />
+              <input className='loginInput' type="email" onChange={emailChangeHandler} />
             </div>
-            {(email.length > 0 && emailAbailablity) && <div className='message success'>사용 가능한 이메일입니다.</div>}
-            {(email.length > 0 && !emailAbailablity) && <div className='message error'>사용 불가한 이메일입니다.</div>}
+            {email.length > 0 && emailAbailablity && (
+              <div className="message success">사용 가능한 이메일입니다.</div>
+            )}
+            {email.length > 0 && !emailAbailablity && (
+              <div className="message error">사용 불가한 이메일입니다.</div>
+            )}
           </div>
           <div className="signupRow">
             <div>
               <label htmlFor="">PASSWORD</label>
             </div>
             <div>
-            <input 
-              type="password" 
-                onChange={password1ChangeHandler}
-              />
+              <input className='loginInput' type="password" onChange={password1ChangeHandler} />
             </div>
             <div>
               <label htmlFor="">PASSWORD CHECK</label>
             </div>
             <div>
-            <input 
-              type="password" 
-                onChange={password2ChangeHandler}
-              />
+              <input className='loginInput' type="password" onChange={password2ChangeHandler} />
             </div>
             {(passwordConfirm.length > 0 || password.length > 0) && (
-            <div className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>{passwordConfirmMessage}</div>
-          )}
+              <div
+                className={`message ${isPasswordConfirm ? "success" : "error"}`}
+              >
+                {passwordConfirmMessage}
+              </div>
+            )}
           </div>
-          <div  className="signupRow">
+          <div className="signupRow">
             <div>
               <label htmlFor="">NICKNAME</label>
             </div>
             <div>
-            <input 
-            type="text" 
-            onChange={nicknameChangeHandler}
-            />
+              <input
+                className="loginInput"
+                type="text"
+                onChange={nicknameChangeHandler}
+              />
             </div>
           </div>
-          
-          
+
           {/* <br />
           <label htmlFor="">SPELL</label>
           <br />
@@ -181,14 +180,18 @@ const Signup = () => {
             type="text" 
             onChange={startSpellChangeHandler}
           /> */}
-          <div className='signupRow'>
-            <button className='signupBtn' type="submit">SIGN UP</button>
+          <div className="signupRow">
+            <button className="signupBtn" type="submit">
+              SIGN UP
+            </button>
           </div>
         </form>
         {/* <img src={kakao} alt="kakao" className="mouse-hover"/> */}
-        <button onClick={toLogin} className="mouse-hover signupBtn">CANCEL</button>
+        <button onClick={toLogin} className="mouse-hover signupBtn">
+          CANCEL
+        </button>
       </div>
     </div>
-  )
+  );
 }
 export default Signup

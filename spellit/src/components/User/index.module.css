@@ -2,6 +2,31 @@
   background-color: transparent;
   border: 0;
 }
+.homeBtn {
+  position: absolute; 
+  bottom: 10px;
+  right: 10px;
+  box-sizing: border-box;
+  width: 40px;
+  height: 40px;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.25s;
+  color: #ffffff;
+  cursor: pointer;
+  border: 1px solid #ffffff;
+  background-color: #ffffff15;
+}
+.homeBtn:hover {
+  border: 1px solid #929292;
+  background-color: rgba(63, 63, 63, 0.796);
+}
+.homeBtn>img {
+  width: 30px;
+  height: 30px;
+}
 
 .deckBtn img{
   width: 30px;
