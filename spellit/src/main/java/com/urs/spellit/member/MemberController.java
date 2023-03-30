@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/member")
@@ -24,6 +25,7 @@ public class MemberController {
 
     private final MemberService memberService;
     private final FriendRepository friendRepository;
+    private final MemberRepository memberRepository;
 
     @GetMapping("/info") //내 정보 요청
     public ResponseEntity<MemberResponseDto> findMemberInfoById()
@@ -73,9 +75,17 @@ public class MemberController {
     }
 
     @PostMapping("/friend/ask") //친구 신청
-    public ResponseEntity<FriendWaitResponseDto> addFriendWait(@RequestBody FriendWaitRequestDto friendWaitRequestDto)
+    public ResponseEntity<String> addFriendWait(@RequestBody FriendWaitRequestDto friendWaitRequestDto)
     {
-        return ResponseEntity.ok(memberService.addFriendWait(friendWaitRequestDto));
+        if(friendWaitRequestDto.getFriendId() == null || friendWaitRequestDto.getFriendId() == 0) {
+            Optional<Member> memberOpt = memberRepository.findByEmail(friendWaitRequestDto.getFriendEmail());
+            if(memberOpt.isEmpty()) {
+                return ResponseEntity.badRequest().body("친구가 없습니다.");
+            }
+            friendWaitRequestDto.setFriendId(memberOpt.get().getId());
+        }
+        memberService.addFriendWait(friendWaitRequestDto);
+        return ResponseEntity.ok("success");
     }
 
     @PostMapping("/friend/accept") //친구 수락

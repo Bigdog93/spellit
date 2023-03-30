@@ -11,4 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class FriendWaitRequestDto {
     private Long friendId;
+    private String friendEmail;
 }
