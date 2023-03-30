@@ -231,6 +231,3 @@ UPDATE
     friend_email=new_record.friend_email,
     friend_id=new_record.friend_id,
     member_id=new_record.member_id;
-
-
-
