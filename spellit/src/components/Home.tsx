@@ -64,7 +64,31 @@ const Home = () => {
                   friendList.push(friend);
                 }
                 dispatch(friendsActions.setFriendsList(friendList));
-              })
+      })
+      API.get('member/friend/wait', { headers: { Authorization: `Bearer ${token}` }, })
+      .then(({ data }) => {
+        console.log("friend wait list : ", data);
+        const friendWaitList = Array<UserEntityType>();
+        for (let f of data) {
+          const friendWait: UserEntityType = {
+            deck: [],
+            email: f.email,
+            exp: f.exp,
+            gameCharacterEntity: f.gameCharacterEntity,
+            id: f.id,
+            level: f.level,
+            nickname: f.nickname,
+            playCount: f.playCount,
+            winCount: f.winCount,
+            looseCount: f.looseCount,
+            drawCount: f.drawCount,
+            profileMsg: f.profileMsh,
+            isOnline: f.isOnline
+          }
+          friendWaitList.push(friendWait);
+        }
+        dispatch(friendsActions.setFriendWaitsList(friendWaitList));
+    })
     setFriendPopupFlag(true);
   }
   function closeFriendPopup() {

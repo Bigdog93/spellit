@@ -183,7 +183,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
           profileMsg: f.profileMsh,
           isOnline: f.isOnline
         }
-        dispatch(friendsActions.acceptFriendRequest(friend))
+        dispatch(friendsActions.fillFriendsList(friend))
       }
       else {
         console.log('그런 이벤트는 없습니다.')

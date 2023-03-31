@@ -18,19 +18,22 @@ type Props = {
 }
 
 function Friend({ openAddFriendModal, closeFriendPopup } : Props) {
-    const dispatch = useDispatch();
     
+    const dispatch = useDispatch();
     const friends = useSelector((state: RootState) => { return state.friends.friends });
     const friendWaits = useSelector((state: RootState) => { return state.friends.friendWaits });
     const [friendCount, setFriendCount] = useState<number>(0);
     const [onlineFriendCount, setOnlineFriendCount] = useState<number>(0);
     useEffect(() => {
+        console.log(friends);
+        let count = 0;
         setFriendCount(friends.length);
         for (let f of friends) {
             if (f.isOnline) {
-                setOnlineFriendCount(onlineFriendCount + 1);
+                count++;
             }
         }
+        setOnlineFriendCount(count);
     }, [friends])
 
 
@@ -77,7 +80,6 @@ function Friend({ openAddFriendModal, closeFriendPopup } : Props) {
             </div>
             <div className={`${style.friendList}`}>
               {friends.map((friend: UserEntityType, idx: number) => {
-                console.log(friend);
                 return (
                   <div key={idx}>
                         <EachFriend
