@@ -11,6 +11,7 @@ type initialGameType = {
   resultTurn: boolean,
   attacks: AttackType[],
   idx: number,
+  attackCheck: boolean,
   transcript: string,
   myAttackTurn: boolean|null,
   myDefense: boolean,
@@ -26,6 +27,7 @@ const initialGameState: initialGameType = {
   resultTurn: false,
   attacks: [],
   idx: 0,
+  attackCheck: true, // idx가 다시 0이 됐을 때, 실행되는 것 방지하는 용도
   transcript: '',
   myAttackTurn: null,
   myDefense: false,
@@ -81,12 +83,13 @@ const gameSlice = createSlice({
     setIdx(state) {
       if (state.attackTurn){
         if (state.idx === state.attacks.length-1) {
-          state.idx = 0
+          state.idx = 0;
+          state.attackCheck = false;
           // state.attackTurn = false
           // state.defenseTurn = true
           console.log('idx 끝')
         } else {
-          state.idx += 1
+          state.idx += 1;
           console.log('idx +1 해줌')
         }
       }

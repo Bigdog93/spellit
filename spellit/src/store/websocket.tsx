@@ -138,16 +138,19 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         dispatch(gameActions.endSettle())
         dispatch(gameActions.endGame())
         dispatch(gameActions.setResult(info.result))
+
       } else if (type === 'friendLogin') {
         const friendId = info.friendId;
         const friendNickname = info.friendNickname;
         console.log(friendNickname + '님이 접속하였습니다.');
         dispatch(friendsActions.loginFriend(friendId));
+
       } else if (type === 'friendLogout') {
         const friendId = info.friendId;
         const friendNickname = info.friendNickname;
         console.log(friendNickname + '님이 로그아웃 하였습니다.');
         dispatch(friendsActions.logoutFriend(friendId));
+
       } else if (type === 'friendRequest') {
         const f = info.friend;
         const friend: UserEntityType = {
@@ -166,6 +169,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
           isOnline: f.isOnline
         }
         dispatch(friendsActions.fillFriendWaitsList(friend));
+
       } else if (type === 'friendResponse') {
         const f = info.friend;
         const friend: UserEntityType = {
@@ -184,6 +188,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
           isOnline: f.isOnline
         }
         dispatch(friendsActions.acceptFriendRequest(friend))
+        
       }
       else {
         console.log('그런 이벤트는 없습니다.')
