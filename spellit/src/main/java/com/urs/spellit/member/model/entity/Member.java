@@ -78,6 +78,10 @@ public class Member extends BaseTimeEntity {
 
     @Column
     @ColumnDefault("false")
+    private Boolean isPlaying;
+
+    @Column
+    @ColumnDefault("false")
     private Boolean isDeleted;
 
     @Column

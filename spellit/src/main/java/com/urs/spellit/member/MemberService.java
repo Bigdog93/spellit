@@ -16,9 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -232,6 +230,41 @@ public class MemberService {
         if(playerOpt.isEmpty()) return null;
         Member player = playerOpt.get();
         player.setIsOnline(false);
+        memberRepository.save(player);
+        List<Friend> friends = friendRepository.findAllByMemberId(memberId);
+        List<Long> friendsId = new ArrayList<>();
+        for(Friend f : friends) {
+            friendsId.add(f.getFriendId());
+        }
+        return friendsId;
+    }
+
+    public Set<Long> playerPlayStart(long player1Id, long player2Id) {
+        Optional<Member> playerOpt1 = memberRepository.findById(player1Id);
+        Optional<Member> playerOpt2 = memberRepository.findById(player2Id);
+        if(playerOpt1.isEmpty() || playerOpt2.isEmpty()) return null;
+        Member player1 = playerOpt1.get();
+        Member player2 = playerOpt2.get();
+        player1.setIsPlaying(true);
+        player2.setIsPlaying(true);
+        memberRepository.save(player1);
+        memberRepository.save(player2);
+        List<Friend> friends1 = friendRepository.findAllByMemberId(player1Id);
+        List<Friend> friends2 = friendRepository.findAllByMemberId(player2Id);
+        Set<Long> friendsId = new HashSet<>();
+        for(Friend f : friends1) {
+            friendsId.add(f.getFriendId());
+        }
+        for(Friend f: friends2) {
+            friendsId.add(f.getFriendId());
+        }
+        return friendsId;
+    }
+    public List<Long> playerPlayEnd(long memberId) {
+        Optional<Member> playerOpt = memberRepository.findById(memberId);
+        if(playerOpt.isEmpty()) return null;
+        Member player = playerOpt.get();
+        player.setIsPlaying(false);
         memberRepository.save(player);
         List<Friend> friends = friendRepository.findAllByMemberId(memberId);
         List<Long> friendsId = new ArrayList<>();

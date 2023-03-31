@@ -26,6 +26,7 @@ public class MemberResponseDto {
     private GameCharacterEntity gameCharacter;
     private List<CardEntity> deck;
     private Boolean isOnline;
+    private Boolean isPlaying;
 
 
     public static MemberResponseDto of(Member member) {
@@ -41,6 +42,7 @@ public class MemberResponseDto {
                 .profileMsg(member.getProfileMsg())
                 .gameCharacter(member.getGameCharacterEntity())
                 .isOnline(member.getIsOnline())
+                .isPlaying(member.getIsPlaying())
                 .build();
     }
 

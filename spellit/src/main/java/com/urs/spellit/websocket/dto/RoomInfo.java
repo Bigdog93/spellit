@@ -23,6 +23,7 @@ public class RoomInfo {
 	private int turn;
 	private boolean[] isReady = new boolean[2];
 	private List<PlayerDto> playerList;
+	private boolean gameOver;
 
 	public void sendMessage(TextMessage msg) throws IOException {
 		for (PlayerDto p : playerList) {
