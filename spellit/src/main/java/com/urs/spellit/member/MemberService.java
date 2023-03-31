@@ -126,8 +126,8 @@ public class MemberService {
     //친구 수락을 하는 입장 (전제: 나의 친구대기창에 상대가 있음)
     public List<FriendResponseDto> addFriend(FriendRequestDto friendRequestDto)
     {
-        Long myId=SecurityUtil.getCurrentMemberId();
-        Long friendId=friendRequestDto.getFriendId();
+        Long myId=SecurityUtil.getCurrentMemberId(); // 1
+        Long friendId=friendRequestDto.getFriendId(); // 2
 
         Member me=(memberRepository.findById(myId)).get();
         Member friend=(memberRepository.findById(friendId)).get();
@@ -150,16 +150,16 @@ public class MemberService {
         }
 
         ///내 친구 대기 리스트에서 상대 삭제///
-        List<FriendWaitEntity> myFriendWaitList=me.getFriendWaitEntities(); //내 친구대기 리스트
-        FriendWaitEntity friendWait=FriendWaitEntity.checkExistsInWaitList(myFriendWaitList,friendId); //내 친구대기 리스트에 상대가 존재하는지 확인
+        List<FriendWaitEntity> myFriendWaitList=friend.getFriendWaitEntities(); //내 친구대기 리스트
+        FriendWaitEntity friendWait=FriendWaitEntity.checkExistsInWaitList(myFriendWaitList,myId); //내 친구대기 리스트에 상대가 존재하는지 확인
         if(friendWait!=null) //존재
             friendWaitRepository.delete(friendWait); //내 친구 대기 리스트에서 상대를 삭제
         else //존재X
             throw new RuntimeException("내 친구 대기 리스트에 상대가 존재하지 않습니다.");
 
         ///상대의 친구대기 리스트에 내가 있으면 나를 삭제///
-        List<FriendWaitEntity> friendFriendWaitList=friend.getFriendWaitEntities(); //상대의 친구대기 리스트
-        FriendWaitEntity meWait=FriendWaitEntity.checkExistsInWaitList(friendFriendWaitList,myId); //상대의 친구대기 리스트에 내가 존재하는지 확인
+        List<FriendWaitEntity> friendFriendWaitList=me.getFriendWaitEntities(); //상대의 친구대기 리스트
+        FriendWaitEntity meWait=FriendWaitEntity.checkExistsInWaitList(friendFriendWaitList,friendId); //상대의 친구대기 리스트에 내가 존재하는지 확인
         if(meWait!=null) //존재
             friendWaitRepository.delete(meWait); //상대의 친구 대기 리스트에서 나를 삭제
 
