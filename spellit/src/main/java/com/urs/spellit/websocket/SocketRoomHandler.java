@@ -61,7 +61,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 		String nickname = myParser.getString("nickname", input);
 		JsonElement data = input.get("data");
 		Object dataObj = myParser.getBackData(data);
-		logger.info("*************************data 값이다!! : " + data.toString());
+		logger.info("*************************data 값이다!! : " + data);
 		Map<String, Object> infoMap = new HashMap<>();
 		if(event.equals("test")) {
 			List<CardEntity> cardList = new ArrayList<>();
@@ -246,8 +246,8 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 		System.out.println("누군가 소켓이 끊어짐");
 		// 끊어진 세션 쫓아내고 방폭하고 남은 사람 가져오기
 		PlayerDto[] players = roomManager.dropSession(session);
-		PlayerDto leavePlayer = players[0];
-		if(leavePlayer == null) {
+		PlayerDto leavePlayer = new PlayerDto();
+		if(players == null) {
 			for(Long key : allPlayers.keySet()) {
 				if(allPlayers.get(key) == session) {
 					leavePlayer = new PlayerDto();
@@ -258,6 +258,8 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 					break;
 				}
 			}
+		}else {
+			leavePlayer = players[0];
 		}
 		PlayerDto remainPlayer = players[1];
 		memberService.playerOffline(leavePlayer.getMemberId());
