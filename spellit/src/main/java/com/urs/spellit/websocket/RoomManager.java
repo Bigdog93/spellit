@@ -50,15 +50,15 @@ public class RoomManager {
     }
 
     public PlayerDto[] dropSession(WebSocketSession session) {
-        for(RoomInfo room : roomMap.values()) {
-            for(PlayerDto p : room.getPlayerList()) {
-                if(p.getSession().equals(session)) {
-                    room.getPlayerList().remove(p);
-                    PlayerDto remainPlayer = room.getPlayerList().remove(0);
-                    return new PlayerDto[]{p, remainPlayer};
-                }
-            }
-        }
+//        for(RoomInfo room : roomMap.values()) {
+//            for(PlayerDto p : room.getPlayerList()) {
+//                if(p.getSession().equals(session)) {
+//                    room.getPlayerList().remove(p);
+//                    PlayerDto remainPlayer = room.getPlayerList().remove(0);
+//                    return new PlayerDto[]{p, remainPlayer};
+//                }
+//            }
+//        }
         return null;
     }
 }

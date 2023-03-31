@@ -74,6 +74,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 		}
 //		 각 이벤트에 따라 if문을 실행해 줘요
 		if(event.equals("login")) {
+			logger.info("login socket memberId : " + memberId);
 			List<Long> friendsId = memberService.playerOnline(memberId);
 			allPlayers.put(memberId, session);
 			infoMap.put("friendId", memberId);
@@ -92,7 +93,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 			RoomInfo room = roomManager.makeRoom(player);
 			long otherId = myParser.getLong("otherId", data);
 			infoMap.put("roomId", room.getRoomId());
-			infoMap.put("other", player);
+			infoMap.put("friend", player);
 			allPlayers.get(otherId).sendMessage(makeTextMsg("matchRequest", infoMap));
 		}else if(event.equals("matchResponse")) {
 			PlayerDto player = getPlayerByMemberId(session, memberId);
@@ -321,7 +322,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 			leavePlayer = players[0];
 			remainPlayer = players[1];
 		}
-		memberService.playerOffline(leavePlayer.getMemberId());
+//		memberService.playerOffline(leavePlayer.getMemberId());
 		if(remainPlayer != null) { // 플레이 중인 사람이었다면
 			remainPlayer.getSession().sendMessage(makeTextMsg("otherDrop", null)); // 너 상대 나갔다고 알려줘요
 		}
