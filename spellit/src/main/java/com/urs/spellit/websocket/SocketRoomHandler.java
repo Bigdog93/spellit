@@ -122,7 +122,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 			infoMap.put("nickname", nickname);
 			long otherId = myParser.getLong("otherId", data);
 			try {
-				MemberResponseDto memberRes = memberService.findMemberInfoById((otherId));
+				MemberResponseDto memberRes = memberService.findMemberInfoById((memberId));
 				infoMap.put("friend", memberRes);
 			}catch (Exception e) {
 				e.printStackTrace();
