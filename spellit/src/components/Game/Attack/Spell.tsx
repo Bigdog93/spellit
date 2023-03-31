@@ -89,28 +89,8 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
         console.log(e)
         let transcript = e.results[0][0].transcript; // 인식된 음성 글자
         transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
-         // console.log(transcript);
-        // if (isMine){
-          // let transcript = e.results[0][0].transcript; // 인식된 음성 글자
-          // transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
-          // console.log(transcript);
 
-          console.log(transcript)
-        // if (isMine){
-        //   // let transcript = e.results[0][0].transcript; // 인식된 음성 글자
-        //   // transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
-        //   // console.log(transcript);
-        //   send({
-        //     event: 'spell',
-        //     roomId: roomId,
-        //     memberId: memberId,
-        //     data:  transcript,
-        //   })
-        //   console.log(transcript)
-        // } else {
-        //   console.log('isMine은 false다.')
-        // }
-
+        console.log(transcript)
 
         console.log("------------------------------------------------");
         for (let i = 0; i < transcript.length; i++) {
@@ -121,9 +101,6 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
                 const correctColor = `correct${card.attribute}`;
                 element?.classList.add(correctColor);
                 correct++;
-                // console.log('------')
-                // console.log(element);
-                // console.log('------')
             }
         }
       })
@@ -165,6 +142,16 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
                 memberId: memberId,
                 data:  damage,
             })
+
+            // 마지막 인덱스면 defense 턴 시작
+            if(idx+1 === attacks.length){
+              send({
+                event: 'defenseTurn',
+                roomId: roomId,
+                memberId: memberId,
+                data: ''
+              })
+            }
   
             dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
           }, 3000);
@@ -174,6 +161,15 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
         setTimeout(() => {
           clearInterval(interval);
           setTimeout(() => {
+            // 마지막 인덱스면 defense 턴 시작
+            if(idx+1 === attacks.length){
+              send({
+                event: 'defenseTurn',
+                roomId: roomId,
+                memberId: memberId,
+                data: ''
+              })
+            }
             dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
           }, 3000);
       }, card.cost*1000);

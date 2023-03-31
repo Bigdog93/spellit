@@ -13,7 +13,7 @@ import Attack from "@/components/Game/Attack";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 import OAuth from "./components/Auth/OAuth";
-import Settle from "./components/Settle/Settle";
+import Settle from "./components/Game/Settle/Settle";
 import Result from "./components/Game/Result";
 // import Test from "./components/Test";
 // import OpenViduTest from "./components/Game/OpenVidu/OpenVidu";

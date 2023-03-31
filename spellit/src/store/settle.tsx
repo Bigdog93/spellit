@@ -23,6 +23,7 @@ type initialSettleType = {
     p1Deffense: boolean,
     p2Deffense: boolean,
     percentList: Array<number>,
+    idx: number,
 }
 
 const initialSettle: initialSettleType = {
@@ -31,6 +32,7 @@ const initialSettle: initialSettleType = {
     p1Combo: false,
     p2Combo: false,
     percentList: [],
+    idx: 0,
 }
 
 const settleSlice = createSlice({
@@ -42,7 +44,7 @@ const settleSlice = createSlice({
         },
         percentListClear(state) {
             state.percentList = [];
-        }
+        },
     },
 });
 

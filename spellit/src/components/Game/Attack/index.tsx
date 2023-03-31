@@ -11,6 +11,7 @@ import  MySpell from "./MySpell";
 import  OtherSpell from "./OtherSpell";
 import Character from "./Character";
 import game, { gameActions } from "@/store/game";
+import Spell from "./Spell";
 // import OpenViduVideo from '@/components/Game/OpenVidu/OpenVidu'
 
 
@@ -37,32 +38,32 @@ const Attack = () => {
     dispatch(gameActions.setMyAttackTurn(isMine))
     // console.log('attack index에서 dispatch하고 찍는 isMine')
    
-    // // 아직 attackTurn인데
-    // if (attackTurn) {
-    //   // 영창할 게 남지 않았을 때
-    //   console.log('아직 attackTurn임')
-    //   if(idx === attacks.length){
-    //     console.log('atttack턴 끝내기')
-    //     // dispatch(gameActions.endAttack())
-    //     // 웹소켓에 defenseTurn임을 알리기(알아서 defense로 넘어감)
-    //     send({
-    //       event: 'defenseTurn',
-    //       roomId: roomId,
-    //       memberId: memberId,
-    //       data: ''
-    //     })
-    //     console.log('defense턴으로 간다')
-    //   } 
-    // } 
-    console.log('attack index에서 dispatch하고 찍는 isMine')
+    // 아직 attackTurn인데
     if (attackTurn) {
-      if(idx === attacks!.length){
+      // 영창할 게 남지 않았을 때
+      console.log('아직 attackTurn임')
+      if(idx === attacks.length){
         console.log('atttack턴 끝내기')
-        dispatch(gameActions.endAttack())
-      }
-    }else{
-      navigate('/defense');
-    }
+        // dispatch(gameActions.endAttack())
+        // 웹소켓에 defenseTurn임을 알리기(알아서 defense로 넘어감)
+        send({
+          event: 'defenseTurn',
+          roomId: roomId,
+          memberId: memberId,
+          data: ''
+        })
+        console.log('defense턴으로 간다')
+      } 
+    } 
+    // console.log('attack index에서 dispatch하고 찍는 isMine')
+    // if (attackTurn) {
+    //   if(idx === attacks!.length){
+    //     console.log('atttack턴 끝내기')
+    //     dispatch(gameActions.endAttack())
+    //   }
+    // }else{
+    //   navigate('/defense');
+    // }
   }, [idx, dispatch])
 
 
@@ -73,10 +74,10 @@ const Attack = () => {
         <div className='spell-and-character'>
           {isMine && <div>
             {/* <img src={require(`../../../assets/character/${myCharacter}_default.png`)} alt='character' className='attack-character-1p'></img> */}
-            <MySpell attack={attacks[idx]} idx={idx}/>
+            <Spell attack={attacks[idx]} idx={idx}/>
           </div>}
           {!isMine && <div>
-            <MySpell attack={attacks[idx]} idx={idx}/>
+            <Spell attack={attacks[idx]} idx={idx}/>
             {/* <OtherSpell attack={attacks[idx]} idx={idx}/> */}
             {/* <img src={require(`../../../assets/character/${myCharacter}_default.png`)} alt='character' className='attack-character-2p'></img> */}
           </div>}
