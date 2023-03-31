@@ -163,7 +163,8 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
           looseCount: f.looseCount,
           drawCount: f.drawCount,
           profileMsg: f.profileMsh,
-          isOnline: f.isOnline
+          isOnline: f.isOnline,
+          isPlaying: f.isPlaying
         }
         dispatch(friendsActions.fillFriendWaitsList(friend));
       } else if (type === 'friendResponse') {
@@ -181,9 +182,20 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
           looseCount: f.looseCount,
           drawCount: f.drawCount,
           profileMsg: f.profileMsh,
-          isOnline: f.isOnline
+          isOnline: f.isOnline,
+          isPlaying: f.isPlaying
         }
         dispatch(friendsActions.fillFriendsList(friend))
+      } else if (type === 'playStart') {
+        const friendId = info.friendId;
+        const friendNickname = info.friendNickname;
+        console.log(friendNickname + '님이 게임을 시작하였습니다.');
+        dispatch(friendsActions.playStartFriend(friendId));
+      } else if (type === 'playEnd') {
+        const friendId = info.friendId;
+        const friendNickname = info.friendNickname;
+        console.log(friendNickname + '님이 게임을 시작하였습니다.');
+        dispatch(friendsActions.playEndFriend(friendId));
       }
       else {
         console.log('그런 이벤트는 없습니다.')
