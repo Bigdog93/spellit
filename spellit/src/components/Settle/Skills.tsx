@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+// import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 
 // import FireBall from "./quarks/1P/FireBall"
@@ -14,81 +14,56 @@ import "./Skills.css";
 import Background from "./characters/Background";
 
 function Skills() {
+  // 마법 시전 효과 시작
   const [isStart, setIsStart] = useState<boolean>(false);
-  const [isSpell, setIsZoomOut] = useState<boolean>(false);
+  // 마법 사용
+  const [isSpell, setIsSpell] = useState<boolean>(false);
 
   const handleButton = () => {
     setIsStart(!isStart);
   };
   const handleSpell = () => {
-    setIsZoomOut(!isSpell);
+    setIsSpell(!isSpell);
   };
 
-  console.log(isStart, "is");
-  console.log(isSpell, "spell");
-
-  useEffect(() => {
-    let audio: HTMLAudioElement | null = null;
-    let spell: HTMLAudioElement | null = null;
-
-    if (isStart) {
-      spell = new Audio("/bgm/spell.mp3");
-      spell.play();
-      // setTimeout(() => {
-      //   // audio = new Audio("/bgm/firebeam.mp3");
-      //   audio.play();
-      // }, 1000);
-    }
-    return () => {
-      if (audio) {
-        audio.pause();
-        audio.currentTime = 0;
-      }
-    };
-  }, [isStart]);
-
-  useEffect(() => {
-    let audio2: HTMLAudioElement | null = null;
-    if (isSpell) {
-      audio2 = new Audio("/bgm/damaged.mp3");
-      audio2.play();
-      setTimeout(() => {
-        audio2 = new Audio("/bgm/damaged.mp3");
-        audio2.play();
-      }, 200);
-    }
-    return () => {
-      if (audio2) {
-        audio2.pause();
-        audio2.currentTime = 0;
-      }
-    };
-  }, [isStart, isSpell]);
+  console.log(isStart, "isStart");
+  console.log(isSpell, "isSpell");
 
   return (
     <div className="box2">
+      {/* 임시버튼 */}
       <div>
         <button onClick={handleButton}>button</button>
       </div>
       <Canvas className="canvas">
         {/* <OrbitControls /> */}
         <ambientLight intensity={0.8} />
-        <Background position={[0, 0, 0]} />
-        <CBDefault position={[-5, -1, 0]} />
-        <AKDefault position={[5, -1, 0]} />
 
+        {/* 배경이미지 */}
+        <Background position={[0, 0, 0]} />
+
+        {/* 캐릭터 */}
+        <CBDefault position={[-5, -1, 0]} />
+        <AKDefault position={[5, -1, 0]} isSpell={isSpell} />
+
+        {/* 마법 시전 이펙트 */}
         {isStart && (
           <>
-            {/* <FireBall handleButton={handleButton} handleDone={handleDone}/> */}
-
-            <Start handleButton={handleButton} handleSpell={handleSpell} />
+            <Start
+              handleButton={handleButton}
+              handleSpell={handleSpell}
+              isStart={isStart}
+            />
           </>
         )}
+
+        {/* 여기서부터 실행되는 마법 */}
         {isSpell && (
           <>
-            <Tornado handleButton={handleButton} handleSpell={handleSpell} />
+            <Tornado handleSpell={handleSpell} isSpell={isSpell} />
           </>
         )}
+
         {/* 카메라 */}
         <MyCamera isStart={isStart} isSpell={isSpell} />
       </Canvas>
@@ -109,23 +84,22 @@ function MyCamera({ isStart, isSpell }: MyCameraProps) {
   const [position, setPosition] = useState<THREE.Vector3>(new THREE.Vector3());
   const [fov, setFov] = useState<number>(0);
 
+  // 진행상황에 따라 카메라 이동 1
   useEffect(() => {
     if (isStart) {
       setPosition(new THREE.Vector3(-5, 0, 5));
+      // 확대
       setFov(30);
-      console.log(1);
     } else if (!isStart && isSpell) {
-      setPosition(new THREE.Vector3(5, 0, 5));
-      setFov(30);
-      console.log(3);
-    } else if (!(!isStart && !isSpell)) {
       setPosition(new THREE.Vector3(0, 0, 5));
       setFov(75);
-      console.log(4);
-    } else if (!isStart) {
+      setTimeout(() => {
+        setPosition(new THREE.Vector3(5, 0, 5));
+        setFov(30);
+      }, 1500);
+    } else if (!isStart && !isSpell) {
       setPosition(new THREE.Vector3(0, 0, 5));
       setFov(75);
-      console.log(2);
     }
   }, [isStart, isSpell]);
 

@@ -16,12 +16,12 @@ export default function Background(props: JSX.IntrinsicElements["group"]) {
     "./models/settleglb/background.glb"
   ) as GLTFResult;
   return (
-    <group {...props} dispose={null} scale={[8.5, 8.5, 8.5]}>
+    <group {...props} dispose={null} scale={[9, 9, 9]}>
       <mesh
         geometry={nodes["battle-background"].geometry}
         material={materials["battle-background"]}
         rotation={[Math.PI / 2, 0, 0]}
-				position={[0,0,0]}
+        position={[0, 0, 0]}
       />
     </group>
   );

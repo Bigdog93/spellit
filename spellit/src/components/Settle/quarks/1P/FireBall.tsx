@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef } from "react";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useThree } from "@react-three/fiber";
 import { BatchedRenderer, QuarksLoader } from "three.quarks";
-import { Group, Vector3 } from "three";
+import { Group } from "three";
 
 interface Props {
   handleButton: () => void;
@@ -36,8 +36,6 @@ const FireBall: React.FC<Props> = ({ handleButton, handleDone }: Props) => {
       });
     }
   }, [size]);
-
-
 
   return (
     <>

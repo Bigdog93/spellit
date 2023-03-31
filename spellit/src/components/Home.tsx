@@ -7,7 +7,6 @@ import { RootState } from "@/store";
 import { Html } from "@react-three/drei";
 // import { OrbitControls } from "@react-three/drei";
 
-// import Mag from "@/assets/models/Mag";
 import BigMagicCircle from "@/assets/models/BigMagicCircle";
 import Undercha from "@/assets/models/Undercha";
 import QuickstartButton from "@/assets/models/QuickstartButton";
@@ -25,11 +24,10 @@ import FriendBtn from "@/assets/models/FriendBtn";
 
 import Friend from "./Friend";
 
-import { Provider } from "react-redux";
-import store from "@/store";
 import AddFriendModal from "./Friend/AddFriendModal";
 
 const Home = () => {
+	
   // 기본 카메라 위치
   // Vector3 {x: 0, y: 3.061616997868383e-16, z: 5}
   const cha_name = useSelector(
@@ -37,7 +35,6 @@ const Home = () => {
   );
 
   const [addFriendModalFlag, setAddFriendModalFlag] = useState<boolean>(false);
-
 
   function openAddFriendModal() {
     setAddFriendModalFlag(true);
@@ -55,13 +52,10 @@ const Home = () => {
         {/* <pointLight position={[-10, -10, -10]} /> */}
 
         {/* <OrbitControls /> */}
-        {/* <Box position={[0, 0, 2]} /> */}
-
-        {/* <Mag position={[-3, 0, 0]} /> */}
         {cha_name === "AK" && <AKDefault position={[-3, 0.2, 0]} />}
         {cha_name === "CB" && <CBDefault position={[-3, 0.2, 0]} />}
         {cha_name === "LUNA" && <LUNADefault position={[-3, 0.2, 0]} />}
-       
+
         <Undercha position={[-2.7, -2.5, 0]} />
         <BigMagicCircle
           position={[2.5, 0, 0]}
@@ -97,32 +91,11 @@ const Home = () => {
         /> */}
       </Canvas>
       <Friend openAddFriendModal={openAddFriendModal} />
-      {addFriendModalFlag && <AddFriendModal closeAddFriendModal={closeAddFriendModal} />}
+      {addFriendModalFlag && (
+        <AddFriendModal closeAddFriendModal={closeAddFriendModal} />
+      )}
     </div>
   );
 };
 
 export default Home;
-
-export function Box(props: JSX.IntrinsicElements["mesh"]) {
-  const ref = useRef<THREE.Mesh>(null!);
-  const [hovered, hover] = useState(false);
-  const [clicked, click] = useState(false);
-
-  // useFrame((state, delta) => (ref.current.rotation.x += 0.01));
-  // useFrame((state, delta) => (ref.current.rotation.z += 0.01));
-
-  return (
-    <mesh
-      {...props}
-      ref={ref}
-      scale={clicked ? 0.5 : 1}
-      onClick={(event) => click(!clicked)}
-      onPointerOver={(event) => hover(true)}
-      onPointerOut={(event) => hover(false)}
-    >
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
-    </mesh>
-  );
-}

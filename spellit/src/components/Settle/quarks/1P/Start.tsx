@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { BatchedRenderer, QuarksLoader } from "three.quarks";
 import { Group } from "three";
@@ -6,15 +6,15 @@ import { Group } from "three";
 interface Props {
   handleButton: () => void;
   handleSpell: () => void;
+	isStart: boolean
 }
 
-const Start: React.FC<Props> = ({ handleButton, handleSpell }: Props) => {
+const Start: React.FC<Props> = ({ handleButton, handleSpell, isStart }: Props) => {
   const { size } = useThree();
   const sceneRef = useRef<Group>(null);
   const batchSystemRef = useRef<BatchedRenderer>();
 
-  const speed = 4;
-
+	// scene 렌더링
   useLayoutEffect(() => {
     const scene = sceneRef.current;
     const batchSystem = new BatchedRenderer();
@@ -38,6 +38,7 @@ const Start: React.FC<Props> = ({ handleButton, handleSpell }: Props) => {
     }
   }, [size]);
 
+	// scene 애니메이션
   useFrame((state, delta) => {
     const batchSystem = batchSystemRef.current;
 
@@ -51,9 +52,26 @@ const Start: React.FC<Props> = ({ handleButton, handleSpell }: Props) => {
     }, 2000);
   });
 
+
+	// 사운드
+	useEffect(() => {
+    let audio: HTMLAudioElement | null = null;
+    let spell: HTMLAudioElement | null = null;
+
+    if (isStart) {
+      spell = new Audio("/bgm/startspell.mp3");
+      spell.play();
+    }
+    return () => {
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    };
+  }, [isStart]);
+
   return (
     <>
-      {/* <ambientLight intensity={0.5} /> */}
       <group ref={sceneRef} />
     </>
   );

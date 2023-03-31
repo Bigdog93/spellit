@@ -1,18 +1,19 @@
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { BatchedRenderer, QuarksLoader } from "three.quarks";
 import { Group } from "three";
 
 interface Props {
-  handleButton: () => void;
   handleSpell: () => void;
+  isSpell: boolean;
 }
 
-const Tornado: React.FC<Props> = ({ handleButton, handleSpell }: Props) => {
+const Tornado: React.FC<Props> = ({ handleSpell, isSpell }: Props) => {
   const { size } = useThree();
   const sceneRef = useRef<Group>(null);
   const batchSystemRef = useRef<BatchedRenderer>();
 
+	// scene 렌더링
   useLayoutEffect(() => {
     const scene = sceneRef.current;
     const batchSystem = new BatchedRenderer();
@@ -29,11 +30,13 @@ const Tornado: React.FC<Props> = ({ handleButton, handleSpell }: Props) => {
           }
         });
         scene.add(obj);
-        scene.position.set(1.8, -1, 0);
+        scene.position.set(2, -1, 0);
       });
     }
   }, [size]);
 
+
+	// scene 애니메이션
   useFrame((state, delta) => {
     const batchSystem = batchSystemRef.current;
     setTimeout(() => {
@@ -43,14 +46,27 @@ const Tornado: React.FC<Props> = ({ handleButton, handleSpell }: Props) => {
     }, 1000);
 
     setTimeout(() => {
-      // scene.visible = false;
       handleSpell();
     }, 4000);
   });
 
+	// 사운드
+  useEffect(() => {
+    let tornado: HTMLAudioElement | null = null;
+    if (isSpell) {
+      tornado = new Audio("/bgm/tornado.mp3");
+      tornado.play();
+    }
+    return () => {
+      if (tornado) {
+        tornado.pause();
+        tornado.currentTime = 0;
+      }
+    };
+  }, [isSpell]);
+
   return (
     <>
-      <ambientLight intensity={0.5} />
       <group ref={sceneRef} />
     </>
   );
