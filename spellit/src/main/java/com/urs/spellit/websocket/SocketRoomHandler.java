@@ -78,9 +78,11 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 			allPlayers.put(memberId, session);
 			infoMap.put("friendId", memberId);
 			infoMap.put("friendNickname", nickname);
-			for(Long id : friendsId) {
-				if(allPlayers.get(id) != null) {
-					allPlayers.get(id).sendMessage(makeTextMsg("friendLogin", infoMap));
+			if(friendsId != null) {
+				for(Long id : friendsId) {
+					if(allPlayers.get(id) != null) {
+						allPlayers.get(id).sendMessage(makeTextMsg("friendLogin", infoMap));
+					}
 				}
 			}
 		}else if(event.equals("matchStart")) {
@@ -283,6 +285,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 		HashMap<String, Object> infoMap = new HashMap<>();
 		infoMap.put("friendId", memberId);
 		infoMap.put("friendNickname", leavePlayer.getNickname());
+		if(friendsId == null) return;
 		for(Long id : friendsId) {
 			if(allPlayers.get(id) != null) {
 				allPlayers.get(id).sendMessage(makeTextMsg("friendLogout", infoMap));
