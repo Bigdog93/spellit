@@ -39,11 +39,19 @@ const friendsSlice = createSlice({
         fillFriendWaitsList(state, action: PayloadAction<UserEntityType>) {
             state.friendWaits.push(action.payload);
         },
+        setFriendWaitsList(state, action: PayloadAction<Array<UserEntityType>>) {
+            state.friendWaits = action.payload;
+        },
         acceptFriendRequest(state, action: PayloadAction<UserEntityType>) {
             state.friendWaits = state.friendWaits.filter((f) => 
                 !(f.id === action.payload.id)
             )
             state.friends.push(action.payload);
+        },
+        removeFriendWaits(state, action: PayloadAction<number>) {
+            state.friendWaits = state.friendWaits.filter((f) => 
+                !(f.id === action.payload)
+            )
         }
     },
 });

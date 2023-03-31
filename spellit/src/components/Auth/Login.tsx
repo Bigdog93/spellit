@@ -40,7 +40,7 @@ const Login = () => {
           headers: { Authorization: `Bearer ${token}` },
         })
           .then((res) => {
-            console.log(res);
+            console.log("myInfo: ", res);
             send({
               event: 'login',
               memberId: res.data.id,
@@ -93,11 +93,12 @@ const Login = () => {
                   dispatch(friendsActions.fillFriendWaitsList(friendWait));
                 }
             })
+          }).then(() => {
+            navigate("/home");
           })
           .catch((err) => {
             console.log(err);
           });
-        navigate("/home");
       })
       .catch((err) => {
         console.log(err);

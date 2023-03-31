@@ -9,7 +9,8 @@ import onlineDot from '@/assets/ui/online_dot.png'
 import offlineDot from '@/assets/ui/offline_dot.png'
 
 import API from '@/utils/API';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { friendsActions } from '@/store/friends';
 import { RootState } from '@/store';
 import { WebSocketContext } from '@/store/websocket';
 
@@ -21,6 +22,9 @@ type Props = {
 
 function EachFriend({ friend, isFriend, acceptFriendRequest }: Props) {
   const { send } = useContext(WebSocketContext);
+  const dispatch = useDispatch();
+  const friends = useSelector((state: RootState) => { return state.friends.friends });
+  const friendWaits = useSelector((state: RootState) => { return state.friends.friendWaits });
   
   const token = sessionStorage.getItem('token');
   const me = useSelector((state: RootState) => state.user);
@@ -39,6 +43,8 @@ function EachFriend({ friend, isFriend, acceptFriendRequest }: Props) {
           otherId: friend.id,
         }
       })
+    }).catch (err => {
+      dispatch(friendsActions.removeFriendWaits(friend.id))
     })
   }
 
