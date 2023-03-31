@@ -20,6 +20,16 @@
     transform: translate(-50%, -50%);
     z-index: -1;
 }
+.closeBtnDiv {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+}
+.closeBtnDiv>img{
+    width: 30px;
+    height: 30px;
+}
 .friendPopupContainer {
     width: 90%;
     margin: 0 auto;

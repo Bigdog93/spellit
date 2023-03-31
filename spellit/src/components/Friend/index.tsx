@@ -7,6 +7,7 @@ import EachFriend from './EachFriend';
 import style from './Friend.module.css';
 import friendPopupFrameImg from '@/assets/ui/friendModal.svg';
 import addFriendIcon from '@/assets/ui/addFriend.svg';
+import closeBtn from '@/assets/ui/closeBtn.svg'
 import AddFriendModal from './AddFriendModal';
 
 
@@ -37,7 +38,10 @@ function Friend({ openAddFriendModal } : Props) {
           className={`${style.friendPopupFriendImg}`}
           src={friendPopupFrameImg}
           alt="friendPopupFrameImg"
-        />
+            />
+            <div className={`${style.closeBtnDiv}`}>
+                <img src={closeBtn} className={`${style.closeBtn}`} alt=''></img>
+            </div>
         <div className={`${style.friendPopupContainer}`}>
           <div className={`${style.friendListTitle}`}>친구목록</div>
           <div className={`${style.friendUpperRow}`}>
