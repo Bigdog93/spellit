@@ -64,15 +64,6 @@ const Defense = () => {
     setGameSelect(gameTypes[randomIdx]);
   }, []);
 
-  
-
-  const readyTurn = useSelector((state:RootState) => state.game.readyTurn)
-  useEffect(() => {
-    if (readyTurn) {
-      navigate('/Ready')
-
-    }
-  }, [readyTurn])
 
   return (
     <div
