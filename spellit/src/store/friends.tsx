@@ -19,6 +19,13 @@ const friendsSlice = createSlice({
         fillFriendsList(state, action: PayloadAction<UserEntityType>) {
             state.friends.push(action.payload);
         },
+        loginFriend(state, action: PayloadAction<Number>) {
+            for (let user of state.friends) {
+                if (user.id === action.payload) {
+                    user.isOnline = true;
+                }
+            }
+        },
         logoutFriend(state, action: PayloadAction<Number>) {
             for (let user of state.friends) {
                 if (user.id === action.payload) {
