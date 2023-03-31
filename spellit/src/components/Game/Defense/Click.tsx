@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
+import { gameActions } from "@/store/game";
 // import spell1 from "../assets/spell1.png";
 // import spell2 from "../assets/spell2.png";
 // import brokenspell from "../assets/brokenspell.png";
@@ -26,8 +28,15 @@ let twoThree = end * 0.5;
 let threeFour = end * 0.75;
 
 const Click = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
+  const dispatch = useDispatch();
+  
   // 게임의 성공/실패를 관리하는 state(기본이 실패)
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
+
+  // 게임 결과를 store에 저장
+  useEffect(()=> {
+    dispatch(gameActions.setMyDefense(isSuccess))
+  }, [isSuccess])
 
   // 클릭수를 관리하는 state
   const [clicked, setClicked] = useState<number>(0);

@@ -11,9 +11,12 @@ const costSlice = createSlice({
   initialState: initialCostState,
   reducers: {
     set(state, action: PayloadAction<number>) {
-      state.maxCost = state.maxCost - state.usedCost;
+      state.maxCost -= state.usedCost;
       state.maxCost += action.payload;
       state.usedCost = 0;
+
+      console.log('usedCost',state.usedCost)
+      console.log('maxCost',state.maxCost)
     },
     add(state, action: PayloadAction<number>) {
       state.usedCost += action.payload;

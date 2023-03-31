@@ -102,44 +102,6 @@ const Ready = () => {
         {otherReady && <div>상대방의 준비가 끝났습니다. 서둘러주세요</div>}
         {(!otherReady && confirm) && <div>상대방이 카드를 고르는 중입니다. 조금만 기다려주세요.</div>}
         {(!otherReady && !confirm) && <div>상대방도 카드를 고르는 중입니다.</div>}
-        {/* {(!otherReady && confirm) ? (
-          <div>상대방이 카드를 고르는 중입니다. 조금만 기다려주세요.</div> 
-          // <h1>
-          //   <span>상</span>
-          //   <span>대</span>
-          //   <span>방</span>
-          //   <span>이</span>
-          //   <span>카</span>
-          //   <span>드</span>
-          //   <span>를</span>
-          //   <span>고</span>
-          //   <span>르</span>
-          //   <span>는</span>
-          //   <span>중</span>
-          //   <span>입</span>
-          //   <span>니</span>
-          //   <span>다</span>
-          //   <span>.</span>
-          // </h1>
-        ) : (
-          <div>상대방도 카드를 고르는 중입니다.</div>
-            // <h1>
-            //   <span>c</span>
-            //   <span>s</span>
-            //   <span>s</span>
-            //   <span>3</span>
-            //   <span>T</span>
-            //   <span>r</span>
-            //   <span>a</span>
-            //   <span>n</span>
-            //   <span>s</span>
-            //   <span>i</span>
-            //   <span>t</span>
-            //   <span>i</span>
-            //   <span>o</span>
-            //   <span>n</span>
-            // </h1>
-        )} */}
       </div>
       
       <div className="flex-container">
@@ -182,5 +144,5 @@ const Ready = () => {
       
     </div>
   )
-}
-export default Ready
+};
+export default Ready;

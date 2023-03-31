@@ -1,4 +1,4 @@
-import { createContext, useRef } from 'react';
+import React, { createContext, useRef } from 'react';
 import  { costActions } from "@/store/cost"
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -8,9 +8,9 @@ import { playerActions } from "@/store/player";
 import { matchingActions } from './matching';
 import { attackActions } from './attack';
 import { roomActions } from "@/store/room";
-import { gameActions } from './game';
 import { friendsActions } from './friends';
 import { UserEntityType } from '@/utils/Types';
+import game, { gameActions } from './game';
 
 const WebSocketContext = createContext<any>(null);
 export { WebSocketContext };
@@ -82,20 +82,31 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
       } else if (type === 'otherReady'){
         console.log('otherReady 입니다.') 
         dispatch(matchingActions.setOtherReady())
+        dispatch(gameActions.endSettle)
         
       }else if (type === 'toReady') {
         console.log('toReady 입니다.')
         dispatch(gameActions.startReady())
         dispatch(costActions.set(info.cost))
+        console.log('toReady에서 info.cost로 받은 cost', info.cost)
         
       } else if (type === 'toAttack') {
         console.log('toAttack 입니다.')
-        dispatch(gameActions.endReady())
-        dispatch(attackActions.playersDeckList(info.attackCards));
-        dispatch(gameActions.startAttack())
-        console.log('toAttack에 websocket에서 찍는',info)
-        dispatch(gameActions.setAttacks(info.attackCards))
+        // 이번 턴에 진행될 공격들 셋팅
         // dispatch(attackActions.playersDeckList(info.attackCards));
+        dispatch(gameActions.setAttacks(info.attackCards))
+        
+        // readyTurn 끝냄
+        dispatch(gameActions.endReady())
+
+        // attackTurn 시작
+        dispatch(gameActions.startAttack())
+        // setTimeout(() => {
+        // }, 1000);
+
+        // console.log('toAttack에 websocket에서 찍는',info)
+        // setTimeout(() => {
+        // }, 1000);
 
       } else if (type === 'otherSpell') {
         console.log('otherSpell 입니다.')
@@ -107,13 +118,21 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
 
       } else if (type === 'toDefense') {
         console.log('toDefense 입니다.')
-
+        dispatch(gameActions.endAttack())
+        dispatch(gameActions.startDefense())
+        
       } else if (type === 'toSettle') {
+      // } else if (type === 'settle') {
         console.log('toSettle 입니다.')
-
+        dispatch(gameActions.setOtherDefense(info.defense))
+        dispatch(gameActions.endDefense())
+        dispatch(gameActions.startSettle())
+        
       } else if (type === 'gameOver') {
         console.log('gameOver입니다.')
-        
+        dispatch(gameActions.endSettle())
+        dispatch(gameActions.endGame())
+        dispatch(gameActions.setResult(info.result))
       } else if (type === 'friendLogin') {
         const friendId = info.friendId;
         const friendNickname = info.friendNickname;

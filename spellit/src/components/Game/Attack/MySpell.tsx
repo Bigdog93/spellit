@@ -88,20 +88,20 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
         let transcript = e.results[0][0].transcript; // 인식된 음성 글자
         transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
         // console.log(transcript);
-        // if (isMine){
+        if (isMine){
           // let transcript = e.results[0][0].transcript; // 인식된 음성 글자
           // transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
           // console.log(transcript);
-        send({
-          event: 'spell',
-          roomId: roomId,
-          memberId: memberId,
-          data:  transcript,
-        })
+          send({
+            event: 'spell',
+            roomId: roomId,
+            memberId: memberId,
+            data:  transcript,
+          })
           console.log(transcript)
-        // } else {
-        //   console.log('isMine은 false다.')
-        // }
+        } else {
+          console.log('isMine은 false다.')
+        }
 
 
         let correct = 0;
