@@ -1,5 +1,5 @@
 import { UserEntityType } from '@/utils/Types'
-import React from 'react'
+import React, { useContext } from 'react'
 
 import style from './Friend.module.css'
 import battleImg from '@/assets/ui/battle.png';
@@ -11,6 +11,7 @@ import offlineDot from '@/assets/ui/offline_dot.png'
 import API from '@/utils/API';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
+import { WebSocketContext } from '@/store/websocket';
 
 type Props = {
   friend: UserEntityType,
@@ -19,10 +20,10 @@ type Props = {
 }
 
 function EachFriend({ friend, isFriend, acceptFriendRequest }: Props) {
+  const { send } = useContext(WebSocketContext);
   
   const token = sessionStorage.getItem('token');
-  const friendWaits = useSelector((state: RootState) => state.friends.friendWaits);
-  const friends = useSelector((state: RootState) => state.friends.friends);
+  const me = useSelector((state: RootState) => state.user);
 
   function acceptFriend() {
     API.post("member/friend/accept",
@@ -30,6 +31,14 @@ function EachFriend({ friend, isFriend, acceptFriendRequest }: Props) {
       { headers: { Authorization: `Bearer ${token}` } }
     ).then(res => {
       acceptFriendRequest(friend);
+      send({
+        event: 'friendResponse',
+        memberId: me.id,
+        nickname: me.nickname,
+        data: {
+          otherId: friend.id,
+        }
+      })
     })
   }
 
@@ -50,16 +59,16 @@ function EachFriend({ friend, isFriend, acceptFriendRequest }: Props) {
         </div>
       </div>
       <div className={`${style.friendInfoRight}`}>
-      {isFriend && <div className={`${style.friendBtnDiv}`}>
-        <button className={`${style.frinedBattleBtn} ${style.btn}`} onClick={() => { acceptFriend() }}>
-          <img src={battleImg} alt="battleImg"></img>
-        </button>
-      </div>}
       {!isFriend && <div className={`${style.friendBtnDiv}`}>
-        <button className={`${style.frinedAcceptBtn} ${style.btn}`}>
+        <button className={`${style.frinedAcceptBtn} ${style.btn}`} onClick={acceptFriend}>
           <img src={addUserImg} alt="battleImg"></img>
         </button>
         </div>}
+      {isFriend && <div className={`${style.friendBtnDiv}`}>
+        <button className={`${style.frinedBattleBtn} ${style.btn}`}>
+          <img src={battleImg} alt="battleImg"></img>
+        </button>
+      </div>}
         </div>
     </div>
   )

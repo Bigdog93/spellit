@@ -19,6 +19,9 @@ const friendsSlice = createSlice({
         fillFriendsList(state, action: PayloadAction<UserEntityType>) {
             state.friends.push(action.payload);
         },
+        setFriendsList(state, action: PayloadAction<Array<UserEntityType>>) {
+            state.friends = action.payload;
+        },
         loginFriend(state, action: PayloadAction<Number>) {
             for (let user of state.friends) {
                 if (user.id === action.payload) {
