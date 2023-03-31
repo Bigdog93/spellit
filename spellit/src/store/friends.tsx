@@ -5,11 +5,15 @@ import { UserEntityType } from '@/utils/Types';
 type FriendsListType = {
     friends: Array<UserEntityType>;
     friendWaits: Array<UserEntityType>;
+    matchRequestModalFlag: boolean;
+    matchRequestPlayer: UserEntityType | null,
 }
 
 const initialFriends: FriendsListType = {
     friends: [],
     friendWaits: [],
+    matchRequestModalFlag: false,
+    matchRequestPlayer: null,
 }
 
 const friendsSlice = createSlice({
@@ -58,16 +62,22 @@ const friendsSlice = createSlice({
             state.friendWaits = action.payload;
         },
         acceptFriendRequest(state, action: PayloadAction<UserEntityType>) {
-            state.friendWaits = state.friendWaits.filter((f) => 
+            state.friendWaits = state.friendWaits.filter((f) =>
                 !(f.id === action.payload.id)
             )
             state.friends.push(action.payload);
         },
         removeFriendWaits(state, action: PayloadAction<number>) {
-            state.friendWaits = state.friendWaits.filter((f) => 
+            state.friendWaits = state.friendWaits.filter((f) =>
                 !(f.id === action.payload)
             )
-        }
+        },
+        setMatchRequestModalFlag(state, action: PayloadAction<boolean>) {
+            state.matchRequestModalFlag = action.payload;
+        },
+        setMatchRequestPlayer(state, action: PayloadAction<UserEntityType>) { 
+            state.matchRequestPlayer = action.payload;
+        },
     },
 });
 
