@@ -12,17 +12,8 @@ import { matchingActions } from "@/store/matching"
 
 import ConfirmBtn from '../../../assets/ui/ReadyConfirmBtn.png'
 import Frame from '../../../assets/ui/Frame.png'
-import { State } from "howler"
+import { CardType } from "@/utils/Types"
 
-interface CardType {
-  id: number;
-  code: string;
-  title: string
-  spell: string;
-  cost: number;
-  damage: number;
-  attribute: number;
-}
 
 const Ready = () => {
 	const { send } = useContext(WebSocketContext);
@@ -49,14 +40,15 @@ const Ready = () => {
   // 카드 선택
   const selectCard = (card: CardType) => {
     console.log(card)
-    if(currentCost-card.cost < 0) {
+  // const maxCost = useSelector((state: RootState) => state.cost.maxCost);
+    if(usedCost+card.cost > maxCost) {
       shake()
     } else{
       setSelectedCards([
         ...selectedCards,
         card
       ])
-      dispatch(costActions.sub(card.cost))
+      dispatch(costActions.add(card.cost))
       
     }
   };
@@ -65,13 +57,15 @@ const Ready = () => {
   const removeCard = (card: CardType, index: number) => {
     setSelectedCards(selectedCards.slice(0, index).concat(selectedCards.slice(index + 1)));
     navigator.vibrate(200);
-    dispatch(costActions.add(card.cost));
+    dispatch(costActions.sub(card.cost));
   };
 
 
   const roomId = useSelector((state: RootState) => state.room.roomId);
   const memberId = useSelector((state: RootState) => state.user.id);
-  
+  const otherReady = useSelector((state: RootState) => state.matching.otherReady);
+  const [confirm, setConfirm] = useState(false);
+
   // skill 확정
   const confirmSkills = () => {
     console.log('Skill 다 골랐고 확인버튼 누름');
@@ -86,8 +80,9 @@ const Ready = () => {
       roomId: roomId,
       data: { cards : selectedCards }
     })
-
+    setConfirm(true);
   }
+  
   const attackTrun = useSelector((state:RootState)=> state.game.attackTurn)
   useEffect(()=> {
     if(attackTrun){
@@ -98,30 +93,78 @@ const Ready = () => {
   // cost + or -
   // 카드에 따른 cost 수정 필
   // maxCost 수정 필
-  const currentCost = useSelector((state: RootState) => state.cost.currentCost);
+  const usedCost = useSelector((state: RootState) => state.cost.usedCost);
   const maxCost = useSelector((state: RootState) => state.cost.maxCost);
 
   return (
     <div>
+      <div>
+        {otherReady && <div>상대방의 준비가 끝났습니다. 서둘러주세요</div>}
+        {(!otherReady && confirm) && <div>상대방이 카드를 고르는 중입니다. 조금만 기다려주세요.</div>}
+        {(!otherReady && !confirm) && <div>상대방도 카드를 고르는 중입니다.</div>}
+        {/* {(!otherReady && confirm) ? (
+          <div>상대방이 카드를 고르는 중입니다. 조금만 기다려주세요.</div> 
+          // <h1>
+          //   <span>상</span>
+          //   <span>대</span>
+          //   <span>방</span>
+          //   <span>이</span>
+          //   <span>카</span>
+          //   <span>드</span>
+          //   <span>를</span>
+          //   <span>고</span>
+          //   <span>르</span>
+          //   <span>는</span>
+          //   <span>중</span>
+          //   <span>입</span>
+          //   <span>니</span>
+          //   <span>다</span>
+          //   <span>.</span>
+          // </h1>
+        ) : (
+          <div>상대방도 카드를 고르는 중입니다.</div>
+            // <h1>
+            //   <span>c</span>
+            //   <span>s</span>
+            //   <span>s</span>
+            //   <span>3</span>
+            //   <span>T</span>
+            //   <span>r</span>
+            //   <span>a</span>
+            //   <span>n</span>
+            //   <span>s</span>
+            //   <span>i</span>
+            //   <span>t</span>
+            //   <span>i</span>
+            //   <span>o</span>
+            //   <span>n</span>
+            // </h1>
+        )} */}
+      </div>
+      
       <div className="flex-container">
         <div className="cost">
           <div>COST</div>
-          { currentCost }/{ maxCost }
+          { usedCost }/{ maxCost }
         </div>
+
         <div className={isShaking ? "shake selectedCardBox" : "selectedCardBox"}>
           <img src={Frame} alt="frame"/>
           <div className="selectedCard">
             {selectedCards.map((card: CardType, index: number) => (
               <img 
-                key={index} 
-                src={require(`../../../assets/card/icon/${card.code}.png`)} 
-                alt={card.code}
-                onClick={(event) => removeCard(card, index)}
+              key={index} 
+              src={require(`../../../assets/card/icon/${card.code}.png`)} 
+              alt={card.code}
+              onClick={(event) => removeCard(card, index)}
               ></img>
-            ))}
+              ))}
           </div>
         </div>
-        <img src={ ConfirmBtn } alt="confirmBtn" onClick={confirmSkills} className='confirmBtn'/>
+
+        <div className='confirmBtn'>
+          <img src={ ConfirmBtn } alt="confirmBtn" onClick={confirmSkills}/>
+        </div>
       </div>
 
       
@@ -136,6 +179,7 @@ const Ready = () => {
           ></img>
         ))}
       </div>
+      
     </div>
   )
 }

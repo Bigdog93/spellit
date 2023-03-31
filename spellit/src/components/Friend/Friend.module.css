@@ -1,0 +1,207 @@
+* {
+    -webkit-user-drag: none;
+}
+.friendPopupWindow {
+    position: absolute;
+    top: 40%;
+    left: 40px;
+    transform: translateY(-50%);
+    width: 405px;
+    height: 370px;
+    border-radius: 10px;
+    background-color: #2e374bca;
+    box-shadow: 5px 15px 15px rgba(0, 0, 0, 0.2);
+}
+.friendPopupFriendImg {
+    width: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+}
+.friendPopupContainer {
+    width: 90%;
+    margin: 0 auto;
+}
+.friendListTitle {
+    text-align: center;
+    margin-top: 40px;
+}
+.friendUpperRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.friendListScrollContainer {
+    overflow-y: auto;
+}
+.friendListScrollContainer::-webkit-scrollbar {
+    display: none;
+  }
+.friendRequestBtn>img {
+    width: 28px;
+}
+.btn {
+    box-sizing: border-box;
+    width: 60px;
+    height: 32px;
+    position: relative;
+    border-radius: 15px;
+    box-shadow: 5px 15px 15px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+    color: #ffffff;
+    cursor: pointer;
+    border: 1px solid #ffffff;
+    background-color: #ffffff15;
+}
+.btn:hover {
+    background-color: #7c76a7;
+}
+.friendList {
+    margin-top: 20px;
+}
+
+
+
+/* 친구 추가 모달창 */
+.addFriendModalBody {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 270px;
+    border-radius: 10px;
+    background-color: #2e374be4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 15px 35px rgba(0, 0, 0, 0.2);
+}
+.addFriendModalBody>img {
+    z-index: -1;
+    width: 490px;
+    height: 260px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.addFriendModalContainer {
+    width: 90%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.addFriendModalTitle {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+.addFriendModalRow {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.modalBtn {
+    position: relative;
+    padding: 5px 15px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+    color: #ffffff;
+    cursor: pointer;
+    margin: 0 10px;
+}
+.cancleBtn {
+    border: 2px solid #acacac;
+    background-color: #3c3c3c37;
+}
+.cancleBtn:hover {
+    background-color: #1f1f1f;
+}
+.confirmBtn {
+    border: 2px solid #a3ceff;
+    background-color: #4572a556;
+}
+.confirmBtn:hover {
+    background-color: #11539ff1;
+}
+
+/* 각각의 친구들 */
+.EachFriendContainer {
+    position: relative;
+    width: 99%;
+    height: 50px;
+    border: 1px solid white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+.friendInfoleft {
+    display:flex;
+    align-items: center;
+    gap: 5px;
+}
+.friendCharacterDiv {
+    width: 60px;
+}
+.friendCharacterImg {
+    width: 60px;
+    transform: translateY(3px);
+}
+.friendInfoDiv {
+
+}
+.friendNickname {
+    font-size: 1.1rem;
+}
+.friendLevel {
+    font-size: 0.8rem;
+    color:rgba(197, 197, 197, 0.9)
+}
+.friendBtnDiv {
+    width: 40px;
+    height: 40px;
+    margin-right: 5px;
+}
+.frinedAcceptBtn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.frinedBattleBtn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.frinedBattleBtn>img {
+    width: 23px;
+}
+.frinedAcceptBtn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.frinedAcceptBtn:hover {
+    background-color: rgba(0, 128, 23, 0.552);
+}
+.frinedAcceptBtn>img {
+    width: 23px;
+}

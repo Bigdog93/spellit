@@ -1,14 +1,11 @@
-import { useRef, useState, useContext, useEffect } from "react"
-import { useDispatch, useSelector } from 'react-redux'
+
+import { useState, useContext, useEffect } from "react"
+import { useSelector } from 'react-redux'
 import { RootState } from "@/store"
 import OvVideo from '@/components/Game/OpenVidu/OvVideo'
 import { ExceptionEvent, OpenVidu, Publisher, Session, StreamEvent, StreamManager, Subscriber } from 'openvidu-browser';
 import axios from "axios";
 import { WebSocketContext } from '@/store/websocket'
-
-import React, { Component } from 'react';
-// import { send } from "q";
-
 
 
 const OpenViduVideo = () => {
@@ -28,19 +25,19 @@ const OpenViduVideo = () => {
     // }
     const roomId = useSelector((state: RootState) => state.room.roomId);
     const nickname = useSelector((state: RootState) => state.user.nickname);
+    const memberId = useSelector((state: RootState) => state.user.id);
     let mySessionId: string = 'session' + roomId.toString();
-    let myUserName: string = nickname;
+    let myUserName: string = nickname + memberId?.toString();
     const [OV, setOV] = useState<OpenVidu | null>(new OpenVidu());
-    const [session, setSession] = useState<Session | undefined>(undefined);
-    // let mainStreamManager: Publisher | undefined = undefined;  // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
-    const [mainStreamManager, setMainStreamManager] = useState<Publisher | undefined>(undefined)
-    let [publisher, setPublisher] = useState<Publisher | undefined>(undefined);
-    // let subscribers: Array<StreamManager> = [];
+    const [session, setSession] = useState<Session | undefined>(OV?.initSession());
+    const [mainStreamManager, setMainStreamManager] = useState<Publisher | undefined>(undefined) // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
+    const [publisher, setPublisher] = useState<Publisher | undefined>(undefined);
     const [subscribers, setSubscribers] = useState<Array<StreamManager>>([]);
     const [token, setToken] = useState<string | null>(null);
     const { send } = useContext(WebSocketContext);
-    const myTurn = useSelector((state: RootState) => (state.attack.myTurn));
+    const myTurn = useSelector((state: RootState) => (state.game.myAttackTurn));
 
+    // const [mute, setMute] = useState<boolean>(true);
     let currentVideoDevice: any = null;
     const onbeforeunload = (event :any) => {
         leaveSession();
@@ -203,14 +200,6 @@ const OpenViduVideo = () => {
     }
 
 
-    function muteOn() {
-        if (publisher === undefined) return;
-        publisher.publishAudio(false);
-    }
-    function muteOff() {
-        if (publisher === undefined) return;
-        publisher.publishAudio(true);
-    }
 
     useEffect(() => {
         window.addEventListener('beforeunload', leaveSession);
@@ -229,22 +218,52 @@ const OpenViduVideo = () => {
         console.log(publisher);
         console.log(mainStreamManager);
     }
+    function testFunction() {
+        send({
+            event: 'test',
+            memberId: 0,
+            data: '바람의 칼날이여'
+        })
+    }
+    function muteOn() {
+        console.log("publisher : " + publisher);
+        if (publisher === undefined) return;
+        // setMute(!mute);
+        publisher.publishAudio(false);
+    }
+    function muteOff() {
+        publisher?.publishAudio(true);
+    }
+    useEffect(() => {
+        if (myTurn) {
+            muteOff();
+            console.log('내 차례라서 뮤트 해제함')
+          } else {
+            muteOn();
+            // muteOff();
+            console.log('상대방 차례라서 뮤트함')
+        }
+        return () => {
+
+        }
+    }, [myTurn])
 
     return (
-        <>
-            {mainStreamManager && <OvVideo streamManager={mainStreamManager}></OvVideo>}
-            {/* <button onClick={joinSession}>joinSession</button>
-            <button onClick={showSubs}>showSubs</button> */}
-            <button onClick={muteOn}>muteOn</button>
-            <button onClick={muteOff}>muteOff</button>
-            {subscribers.map((sub:any, idx:number) => {
-                return (
-                    <div key={idx}>
-                        <OvVideo streamManager={sub}></OvVideo>
-                    </div>
-                )
-            })}
-        </>
+      <>
+        {mainStreamManager && <OvVideo streamManager={mainStreamManager}></OvVideo>}
+        {/* <button onClick={joinSession}>joinSession</button> */}
+        {/* <button onClick={showSubs}>showSubs</button> */}
+        {/* <button onClick={testFunction}>testFunction</button> */}
+        <button onClick={muteOn}>muteOn</button>
+        <button onClick={muteOff}>muteOff</button>
+        {subscribers.map((sub:any, idx:number) => {
+            return (
+                <div key={idx}>
+                    <OvVideo streamManager={sub}></OvVideo>
+                </div>
+            )
+        })}
+      </>
     )
 }
 

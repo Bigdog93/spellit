@@ -10,6 +10,14 @@ body {
 .mouse-hover{
   cursor:pointer;
 }
+.modalBg {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  top:0;
+  left:0;
+  background-color: rgba(34, 34, 34, 0.482);
+}
 button {
   cursor:pointer;
 }

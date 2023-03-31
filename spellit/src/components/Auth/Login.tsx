@@ -1,13 +1,17 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { userActions } from "@/store/user";
+import { friendsActions } from "@/store/friends";
+import { WebSocketContext } from '@/store/websocket'
 import API from "@/utils/API";
 import "./Login.css";
 import kakao from "../../assets/ui/kakao_login_medium_narrow.png";
+import { UserEntityType } from "@/utils/Types";
 
 const Login = () => {
+  const { send } = useContext(WebSocketContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [id, setId] = useState("");
@@ -36,9 +40,56 @@ const Login = () => {
           headers: { Authorization: `Bearer ${token}` },
         })
           .then((res) => {
+            send({
+              event: 'login',
+              memberId: res.data.memberId,
+              nickname: res.data.nickname,
+            })
             console.log("유저정보 가져오기 성공");
             console.log(res.data);
             dispatch(userActions.setMyInfo(res.data));
+            API.get('member/friend/list', { headers: { Authorization: `Bearer ${token}` }, })
+              .then((res) => {
+                for (let f of res.data) {
+                  const friend: UserEntityType = {
+                    deck: [],
+                    email: f.email,
+                    exp: f.exp,
+                    gameCharacterEntity: f.gameCharacterEntity,
+                    id: f.id,
+                    level: f.level,
+                    nickname: f.nickname,
+                    playCount: f.playCount,
+                    winCount: f.winCount,
+                    looseCount: f.looseCount,
+                    drawCount: f.drawCount,
+                    profileMsg: f.profileMsh,
+                    isOnline: f.isOnline
+                  }
+                  dispatch(friendsActions.fillFriendsList(friend));
+                }
+              })
+            API.get('member/friend/wait', { headers: { Authorization: `Bearer ${token}` }, })
+              .then(({ data }) => {
+                for (let f of data) {
+                  const friendWait: UserEntityType = {
+                    deck: [],
+                    email: f.email,
+                    exp: f.exp,
+                    gameCharacterEntity: f.gameCharacterEntity,
+                    id: f.id,
+                    level: f.level,
+                    nickname: f.nickname,
+                    playCount: f.playCount,
+                    winCount: f.winCount,
+                    looseCount: f.looseCount,
+                    drawCount: f.drawCount,
+                    profileMsg: f.profileMsh,
+                    isOnline: f.isOnline
+                  }
+                  dispatch(friendsActions.fillFriendWaitsList(friendWait));
+                }
+            })
           })
           .catch((err) => {
             console.log(err);
@@ -48,17 +99,6 @@ const Login = () => {
       .catch((err) => {
         console.log(err);
       });
-  };
-
-  const { Kakao } = window;
-
-  const onKakao = () => {
-    console.log("onKakao");
-    console.log(Kakao);
-    Kakao.Auth.authorize({
-      redirectUri: process.env.REACT_APP_HERE + "oauth",
-      scope: "account_email",
-    });
   };
 
   const toSignup = () => {
@@ -78,7 +118,7 @@ const Login = () => {
               <label htmlFor="">ID</label>
             </div>
             <div>
-              <input type="email" onChange={idChangeHandler} />
+              <input className='loginInput' type="email" onChange={idChangeHandler} />
             </div>
           </div>
 
@@ -87,7 +127,7 @@ const Login = () => {
               <label htmlFor="">PW</label>
             </div>
             <div>
-              <input type="password" onChange={pwChangeHandler} />
+              <input className='loginInput' type="password" onChange={pwChangeHandler} />
             </div>
           </div>
           <div className="signupRow">

@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { RootState } from "@/store";
+import { Html } from "@react-three/drei";
+// import { OrbitControls } from "@react-three/drei";
 
 // import Mag from "@/assets/models/Mag";
 import BigMagicCircle from "@/assets/models/BigMagicCircle";
@@ -19,7 +21,13 @@ import AKDefault from "@/assets/models/AKDefault";
 import CBDefault from "@/assets/models/CB_default";
 import LUNADefault from "@/assets/models/LUNA_default";
 import styles from "./Home.module.css";
-import Friend from "@/assets/models/Friend";
+import FriendBtn from "@/assets/models/FriendBtn";
+
+import Friend from "./Friend";
+
+import { Provider } from "react-redux";
+import store from "@/store";
+import AddFriendModal from "./Friend/AddFriendModal";
 
 const Home = () => {
   // 기본 카메라 위치
@@ -27,6 +35,17 @@ const Home = () => {
   const cha_name = useSelector(
     (state: RootState) => state.user.gameCharacter?.englishName
   );
+
+  const [addFriendModalFlag, setAddFriendModalFlag] = useState<boolean>(false);
+
+
+  function openAddFriendModal() {
+    setAddFriendModalFlag(true);
+    console.log(addFriendModalFlag);
+  }
+  function closeAddFriendModal() {
+    setAddFriendModalFlag(false);
+  }
 
   return (
     <div>
@@ -66,7 +85,7 @@ const Home = () => {
           rotation={[Math.PI / 2, 0, Math.PI / 6]}
         />
         <Ranking position={[-6.2, 1, 0]} />
-        <Friend position={[-6.2, -0.5, 0]} />
+        <FriendBtn position={[-6.2, -0.5, 0]} />
 
         {/* <BackgroundSpell
           position={[-50, 20, -50]}
@@ -77,6 +96,8 @@ const Home = () => {
           rotation={[Math.PI / 2, 0,0]}
         /> */}
       </Canvas>
+      <Friend openAddFriendModal={openAddFriendModal} />
+      {addFriendModalFlag && <AddFriendModal closeAddFriendModal={closeAddFriendModal} />}
     </div>
   );
 };

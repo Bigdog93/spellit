@@ -24,7 +24,6 @@
 
 input {
   box-sizing: border-box;
-  width: 200px;
   height: 32px;
   font-size: 15px;
   border: 0;
@@ -32,6 +31,9 @@ input {
   outline: none;
   padding-left: 10px;
   background-color: rgb(233, 233, 233);
+}
+.loginInput {
+  width: 200px;
 }
 .message {
   font-size: 0.9rem;

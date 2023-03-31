@@ -19,7 +19,7 @@ type GLTFResult = GLTF & {
   };
 };
 
-export default function Friend(props: JSX.IntrinsicElements["group"]) {
+export default function FriendBtn(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF(
     "./models/homeglb/friend.glb"
   ) as GLTFResult;
