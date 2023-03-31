@@ -180,7 +180,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 					break;
 				case "spell": // 주문 외우면 외운 주문 상대에게
 					infoMap.put("spell", myParser.getBackData(data));
-					other.getSession().sendMessage(makeTextMsg("otherSpell", infoMap));
+					other.getSession().sendMessage(makeTextMsg("damage", infoMap));
 					break;
 				case "combo": // 100% 달성 시 상대에게 콤보 발동을 알림
 					other.getSession().sendMessage(makeTextMsg("combo", infoMap));
