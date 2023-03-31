@@ -10,6 +10,7 @@ import roomReducer from './room';
 // import defenseReducere from './defense'
 import gameReducer from './game'
 import friendsReducer from './friends'
+import settleReducer from './settle';
 
 const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ const store = configureStore({
     // defense: defenseReducere,
     game: gameReducer,
     friends: friendsReducer,
+    settle: settleReducer,
   },
 });
 

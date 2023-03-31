@@ -11,6 +11,7 @@ import { roomActions } from "@/store/room";
 import { friendsActions } from './friends';
 import { UserEntityType } from '@/utils/Types';
 import game, { gameActions } from './game';
+import { settleActions } from './settle';
 
 const WebSocketContext = createContext<any>(null);
 export { WebSocketContext };
@@ -110,8 +111,11 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
 
       } else if (type === 'otherSpell') {
         console.log('otherSpell 입니다.')
+        console.log('=====================================')
         console.log(info)
-        dispatch(attackActions.attackInfo(info.spell));
+        console.log(info.damage)
+        dispatch(settleActions.percentList(info.damage));
+        // dispatch(attackActions.attackInfo(info.spell));
         
       } else if (type === 'combo') {
         console.log('combo 입니다.')
@@ -121,6 +125,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         dispatch(gameActions.endAttack())
         dispatch(gameActions.startDefense())
         
+
       } else if (type === 'toSettle') {
       // } else if (type === 'settle') {
         console.log('toSettle 입니다.')

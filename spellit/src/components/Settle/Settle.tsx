@@ -1,155 +1,115 @@
-import react, {useState, useEffect} from 'react';
+import react, {useState, useContext, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { attackActions } from '@/store/attack';
+import attack, { attackActions } from '@/store/attack';
 import { RootState } from "@/store/";
+import { AttackType } from '@/utils/Types'
+import { WebSocketContext } from '@/store/websocket'
 
 import ProfileHp from '../Game/Items/ProfileHp';
 
 import "./Settle.css";
 import LUNA_attack from '../../assets/character/LUNA_attack.png';
 import AK_attack from '../../assets/character/AK_attack.png';
+import player, { playerActions } from '@/store/player';
+import { settleActions } from '@/store/settle';
 
 function Settle() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // 주문 영창에 대한 처리된 데미지 값을 서버에서 받아서 이펙트 효과와 함께 데미지값으로 넘겨주기
-    const p1Deck = useSelector((state: RootState) => (state.attack.p1Deck));
+    const { send } = useContext(WebSocketContext);
+
+    const roomId = useSelector((state: RootState) => state.room.roomId)
+    const memberId = useSelector((state: RootState) => state.user.id)
+
+    const p1Character = useSelector((state: RootState) => state.player.p1!.gameCharacterEntity.englishName);
+    const p2Character = useSelector((state: RootState) => state.player.p2!.gameCharacterEntity.englishName);
+
     const defaultHP = useSelector((state: RootState) => (state.attack.defaultHp));
 
-    // const firstHp = useSelector((state: RootState) => (state.attack.firstHp));
-    // const secondHp = useSelector((state: RootState) => (state.attack.secondHp));
+    const p1Hp = useSelector((state: RootState) => (state.player.p1!.hp));
+    const p2Hp = useSelector((state: RootState) => (state.player.p2!.hp));
 
-    const p1Hp = useSelector((state: RootState) => (state.attack.p1Hp));
-    const p2Hp = useSelector((state: RootState) => (state.attack.p2Hp));
+    const p1Deffense = useSelector((state: RootState) => (state.settle.p1Deffense));
+    const p2Deffense = useSelector((state: RootState) => (state.settle.p2Deffense));
 
-    
-    // console.log(firstHp);
-    const damageStack = useSelector((state: RootState) => (state.attack.p1Damage));
-    const [d, setD] = useState(0);
+    const attacks = useSelector((state: RootState) => (state.game.attacks));
+
+    const percentList = useSelector((state: RootState) => (state.settle.percentList));
+    console.log('percentList : ', percentList);
     
     const p1HpStyle = {
-        width: `${p1Hp}px`,
-        backgroundColor: p1Hp > defaultHP*0.3 ? '#FFF500' : '#FF0000' ,
+        width: `${p1Hp/defaultHP*385}px`,
+        backgroundColor: p1Hp > 100 ? '#FFF500' : '#FF0000' ,
     }
     const p2HpStyle = {
-        width: `${p2Hp}px`,
-        backgroundColor: p2Hp > defaultHP*0.3 ? '#FFF500' : '#FF0000' ,
+        width: `${p2Hp/defaultHP*385}px`,
+        backgroundColor: p2Hp > 100 ? '#FFF500' : '#FF0000' ,
     }
+
+    const [idx, setIdx] = useState(0);
     
-    // 데미지 정산
-    // const hit = (damage: number) => {
-    //     // const effectList = [...p1Deck];
-    //     // 배열의 맨 처음 값을 pop
-    //     // const effect = effectList.shift();
-    //     // console.log(effect);
-    //     console.log('이펙트 띄우기')
-    //     // console.log(effect);
-    //     console.log('d : ', d)
-    //     const hideEffect = document.querySelector(`.${p1Deck[d]}-${d}`);
-    //     // console.log(hideEffect);
-    //     setTimeout(() => {
-    //         hideEffect?.classList.add('hidden-effect');
-    //         dispatch(attackActions.firstHit(damage));
-    //         dispatch(attackActions.secondHit(damage));
-            
-    //         // action 이후에 state값이 바로 변경되어 반영되지 않음,, 왜일까,,?
-    //         console.log('p1Hp : '+ p1Hp);
-    //         console.log('p2Hp : '+ p2Hp);
-    //         setTimeout(() => {
-    //             console.log('얍!')
-    //             setD(d+1);
-    //         }, 5000)
-    //     }, 5000);
-    // }
+    async function settling(idx: number) {
+        console.log('정산중..')
+        let d = attacks[idx].card.damage * percentList[idx] * 2;
+        console.log('========')
+        console.log('d', d);
+
+        // 이펙트 사라지게 하기
+        const spellEffect = document.querySelector(`.spellEffect-${idx}`);
+        spellEffect?.classList.add('hidden-effect');
+
+        if (attacks[idx].isMine) {
+            console.log('내가 공격중!!')
+            if (p2Deffense) {
+                d = d/2;
+            }
+            setTimeout(() => {
+                dispatch(playerActions.p2HpDecrese(d));
+            }, 3000);
+        } else {
+            console.log('공격 당하는중,,')
+            if (p1Deffense) {
+                d = d/2;
+            }
+            setTimeout(() => {
+                dispatch(playerActions.p1HpDecrese(d));
+            }, 3000);
+        }
+    }
 
     useEffect(() => {
-        const damage = damageStack[d];
-        
-        // 스킬 이펙트 숨기는 함수
-        async function hideEffect () {
-            const hiddenEffect = document.querySelector(`.${p1Deck[d]}-${d}`);
-            setTimeout(() => {
-                hiddenEffect?.classList.add('hidden-effect');
-            }, 2000);
-        }
-        
-        // result 페이지로 이동
-        async function moveResult () {
-            setTimeout(() => {
-                navigate('/result');
-            }, 5000);
+        console.log('=========')
+        console.log('idx : ', idx)
+        console.log('=========')
+
+        if (p1Hp <= 0 || p2Hp <= 0) {
+            send({
+                event: 'gameOver',
+                roomId: roomId,
+                memberId: memberId,
+                data:  {
+                    hp: p1Hp,
+                },
+            }) 
         }
 
-        // ready 페이지로 이동
-        async function moveReady () {
-            setTimeout(() => {
-                navigate('/ready');
-            }, 3000);
-        }
-
-        // 데미지 공격하는 함수
-        const hit = async (damage: number) => {
-            console.log('이펙트 띄우기')
-            console.log('d : ', d)
-            setTimeout(() => {
-                dispatch(attackActions.p1Hit(damage));
-                // dispatch(attackActions.p2Hit(damage));
-                
-                // action 이후에 state값이 바로 변경되어 반영되지 않음,, 왜일까,,?
-                console.log('p1Hp : '+ p1Hp);
-                console.log('p2Hp : '+ p2Hp);
-                setTimeout(() => {
-                    console.log('얍!')
-                    setD(d+1);
-                }, 2000)
-            }, 3000);
-        }
-        
-        if (d < p1Deck.length) {
-            if (p1Hp <= damage) {
-                hideEffect();
-                hit(p1Hp);
-                moveResult();
-                
-            } else {
-                hideEffect();
-                hit(damage);
-            }
+        if (idx < attacks.length) {
+            settling(idx) ;
         } else {
-            if (p1Hp > 0) {
-                moveReady();
-            } else {
-                hideEffect();
-                hit(p1Hp);
-                moveResult();
-            }
+            dispatch(settleActions.percentListClear());
+            console.log('Go to Next Turn!');
+            navigate('/ready');
         }
-        
-        // if (d < p1Deck.length) {
-        //     if (firstHp <= damage) {
-        //         hit(firstHp);
-        //         setTimeout(() => {
-        //             navigate('/result');
-        //         }, 0);
-        //     } else {
-        //         hit(damage);
-        //     }
-        // } else {
-        //     if (firstHp > 0) {
-        //         setTimeout(() => {
-        //             navigate('/ready');
-        //         }, 0);
-        //     } else {
-        //         hit(firstHp);
-        //         setTimeout(() => {
-        //             navigate('/result');
-        //         }, 0);
-        //     }
-        // }
+        console.log('p1HP : ', p1Hp);
+        console.log('p2HP : ', p1Hp);
 
-    }, [d]);
+        setTimeout(() => {
+            setIdx(idx+1);
+        }, 5000);
+
+    }, [idx]);
 
     return (
         <div className='settle-bg'>
@@ -165,20 +125,26 @@ function Settle() {
             </div>
             <div className='settle-bottom-items'>
                 <div style={{display: 'inline-flex'}}>
-                    <div className='first-player-effects'>
-                        {/* {p1Deck.map((card: string, index: number) => {
+                    {attacks.map((attack: AttackType, i: number) => {
+                        if (attack.isMine) {
                             return (
-                            <img className={`${card}-${index}`}
-                            style={{height: '150px', margin: '10px',}}
-                            key={index} 
-                            src={require(`../../assets/effect/${card}.png`)} 
-                            alt='' />)}
-                        )} */}
-                    </div>                    
-                    <img className='first-player' src={AK_attack} alt="" style={{width: '300px', height: '400px'}}/>
+                                <img key={i} className={`spellEffect-${i}`} src={require(`../../assets/effect/${attack.card.code}.png`)} alt="없음,," />
+                            )
+                        }
+                    })}   
                 </div>
-                <div>
-                    <img className='second-player' src={LUNA_attack} alt="" style={{width: '350px', height: '450px'}}/>
+                <div className='characterBox'>
+                    <img className="myCharacter" style={{width: '400px'}} src={require(`../../assets/character/${p1Character}_attack.png`)} alt="" />
+                    <img className="yourCharacter" style={{width: '400px'}} src={require(`../../assets/character/${p2Character}_attack.png`)} alt="" />
+                </div>
+                <div style={{display: 'inline-flex'}}>
+                    {attacks.map((attack: AttackType, i: number) => {
+                        if (!attack.isMine) {
+                            return (
+                                <img key={i} className={`spellEffect-${i}`} src={require(`../../assets/effect/${attack.card.code}.png`)} alt="없음,," />
+                            )
+                        }
+                    })}   
                 </div>
             </div>
         </div>

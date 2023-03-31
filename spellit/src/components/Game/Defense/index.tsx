@@ -65,12 +65,12 @@ const Defense = () => {
   }, []);
 
   
-  
 
   const readyTurn = useSelector((state:RootState) => state.game.readyTurn)
   useEffect(() => {
     if (readyTurn) {
       navigate('/Ready')
+
     }
   }, [readyTurn])
 

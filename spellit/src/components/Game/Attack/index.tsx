@@ -6,7 +6,7 @@ import { RootState } from "@/store/";
 import { WebSocketContext } from '@/store/websocket'
 
 
-import  Spell from "./Spell";
+// import  Spell from "./Spell";
 import  MySpell from "./MySpell";
 import  OtherSpell from "./OtherSpell";
 import Character from "./Character";
@@ -54,6 +54,15 @@ const Attack = () => {
     //     console.log('defense턴으로 간다')
     //   } 
     // } 
+    console.log('attack index에서 dispatch하고 찍는 isMine')
+    if (attackTurn) {
+      if(idx === attacks!.length){
+        console.log('atttack턴 끝내기')
+        dispatch(gameActions.endAttack())
+      }
+    }else{
+      navigate('/defense');
+    }
   }, [idx, dispatch])
 
 

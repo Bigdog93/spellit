@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { AttackType } from '@/utils/Types'
-import { WebSocketContext } from '@/store/websocket'
 
 type initialGameType = {
   game: boolean
