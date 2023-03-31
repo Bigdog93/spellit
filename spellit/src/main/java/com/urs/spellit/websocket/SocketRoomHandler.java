@@ -81,7 +81,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 			infoMap.put("friendNickname", nickname);
 			if(friendsId != null) {
 				for(Long id : friendsId) {
-					if(allPlayers.get(id) != null) {
+					if(allPlayers.get(id) != null && allPlayers.get(id).isOpen()) {
 						allPlayers.get(id).sendMessage(makeTextMsg("friendLogin", infoMap));
 					}
 				}
@@ -94,6 +94,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 			long otherId = myParser.getLong("otherId", data);
 			infoMap.put("roomId", room.getRoomId());
 			infoMap.put("friend", player);
+			if(allPlayers.get(otherId).isOpen())
 			allPlayers.get(otherId).sendMessage(makeTextMsg("matchRequest", infoMap));
 		}else if(event.equals("matchResponse")) {
 			PlayerDto player = getPlayerByMemberId(session, memberId);
@@ -109,7 +110,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 			infoMap.put("friendNickname", nickname);
 			if(friendsId != null) {
 				for(Long id : friendsId) {
-					if(allPlayers.get(id) != null) {
+					if(allPlayers.get(id) != null && allPlayers.get(id).isOpen()) {
 						allPlayers.get(id).sendMessage(makeTextMsg("playStart", infoMap));
 					}
 				}
@@ -139,7 +140,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 				infoMap.put("friendNickname", nickname);
 				if(friendsId != null) {
 					for(Long id : friendsId) {
-						if(allPlayers.get(id) != null) {
+						if(allPlayers.get(id) != null && allPlayers.get(id).isOpen()) {
 							allPlayers.get(id).sendMessage(makeTextMsg("playStart", infoMap));
 						}
 					}
@@ -156,6 +157,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 				e.printStackTrace();
 			}
 			infoMap.put("memberId", memberId);
+			if(allPlayers.get(otherId).isOpen())
 			allPlayers.get(otherId).sendMessage(makeTextMsg("friendRequest", infoMap));
 		}else if(event.equals("friendResponse")) {
 			infoMap.put("memberId", memberId);
@@ -167,6 +169,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 			}catch (Exception e) {
 				e.printStackTrace();
 			}
+			if(allPlayers.get(otherId).isOpen())
 			allPlayers.get(otherId).sendMessage(makeTextMsg("friendResponse", infoMap));
 		}
 		else {
@@ -286,7 +289,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 							infoMap.put("friendId", memberId);
 							infoMap.put("friendNickname", nickname);
 							for (Long id : friendsId) {
-								if (allPlayers.get(id) != null) {
+								if (allPlayers.get(id) != null && allPlayers.get(id).isOpen()) {
 									allPlayers.get(id).sendMessage(makeTextMsg("playEnd", infoMap));
 								}
 							}
@@ -323,7 +326,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 			remainPlayer = players[1];
 		}
 //		memberService.playerOffline(leavePlayer.getMemberId());
-		if(remainPlayer != null) { // 플레이 중인 사람이었다면
+		if(remainPlayer != null && remainPlayer.getSession().isOpen()) { // 플레이 중인 사람이었다면
 			remainPlayer.getSession().sendMessage(makeTextMsg("otherDrop", null)); // 너 상대 나갔다고 알려줘요
 		}
 		// 연결되어있는 모든 세션 중에서 제거 해요
@@ -343,7 +346,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 		infoMap.put("friendNickname", leavePlayer.getNickname());
 		if(friendsId == null) return;
 		for(Long id : friendsId) {
-			if(allPlayers.get(id) != null) {
+			if(allPlayers.get(id) != null && allPlayers.get(id).isOpen()) {
 				allPlayers.get(id).sendMessage(makeTextMsg("friendLogout", infoMap));
 			}
 		}

@@ -27,6 +27,7 @@ public class RoomInfo {
 
 	public void sendMessage(TextMessage msg) throws IOException {
 		for (PlayerDto p : playerList) {
+			if(p.getSession().isOpen())
 			p.getSession().sendMessage(msg);
 		}
 	}
