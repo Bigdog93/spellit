@@ -93,6 +93,7 @@ public class MemberController {
     @PostMapping("/friend/accept") //친구 수락
     public ResponseEntity<List<FriendResponseDto>> addFriend(@RequestBody FriendRequestDto friendRequestDto)
     {
+        System.out.println("수락하는 친구의 ID : " + friendRequestDto.getFriendId());
         return ResponseEntity.ok(memberService.addFriend(friendRequestDto));
     }
 
