@@ -9,6 +9,7 @@ import { matchingActions } from './matching';
 import { attackActions } from './attack';
 import { roomActions } from "@/store/room";
 import { gameActions } from './game';
+import { settleActions } from './settle';
 
 const WebSocketContext = createContext<any>(null);
 export { WebSocketContext };
@@ -97,8 +98,11 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
 
       } else if (type === 'otherSpell') {
         console.log('otherSpell 입니다.')
+        console.log('=====================================')
         console.log(info)
-        dispatch(attackActions.attackInfo(info.spell));
+        console.log(info.damage)
+        dispatch(settleActions.percentList(info.damage));
+        // dispatch(attackActions.attackInfo(info.spell));
         
       } else if (type === 'combo') {
         console.log('combo 입니다.')
@@ -117,6 +121,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
 
       } else if (type === 'gameOver') {
         console.log('gameOver입니다.')
+        dispatch(gameActions.endSettle());
         
       } else {
         console.log('그런 이벤트는 없습니다.')

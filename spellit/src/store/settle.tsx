@@ -40,6 +40,9 @@ const settleSlice = createSlice({
         percentList(state, action: PayloadAction<number>) {
             state.percentList.push(action.payload);
         },
+        percentListClear(state) {
+            state.percentList = [];
+        }
     },
 });
 

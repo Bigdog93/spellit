@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { AttackType } from '@/utils/Types'
+import { useNavigate } from 'react-router-dom';
 
 type initialGameType = {
    readyTurn: boolean,

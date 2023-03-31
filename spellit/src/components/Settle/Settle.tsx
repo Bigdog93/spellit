@@ -1,19 +1,30 @@
-import react, {useState, useEffect} from 'react';
+import react, {useState, useContext, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { attackActions } from '@/store/attack';
+import attack, { attackActions } from '@/store/attack';
 import { RootState } from "@/store/";
+import { AttackType } from '@/utils/Types'
+import { WebSocketContext } from '@/store/websocket'
 
 import ProfileHp from '../Game/Items/ProfileHp';
 
 import "./Settle.css";
 import LUNA_attack from '../../assets/character/LUNA_attack.png';
 import AK_attack from '../../assets/character/AK_attack.png';
-import { playerActions } from '@/store/player';
+import player, { playerActions } from '@/store/player';
+import { settleActions } from '@/store/settle';
 
 function Settle() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const { send } = useContext(WebSocketContext);
+
+    const roomId = useSelector((state: RootState) => state.room.roomId)
+    const memberId = useSelector((state: RootState) => state.user.id)
+
+    const p1Character = useSelector((state: RootState) => state.player.p1!.gameCharacterEntity.englishName);
+    const p2Character = useSelector((state: RootState) => state.player.p2!.gameCharacterEntity.englishName);
 
     const defaultHP = useSelector((state: RootState) => (state.attack.defaultHp));
 
@@ -39,26 +50,33 @@ function Settle() {
 
     const [idx, setIdx] = useState(0);
     
-    function settling(idx: number) {
+    async function settling(idx: number) {
         console.log('정산중..')
-        // for (let i=0; i<attacks.length; i++) {
-            let d = attacks[idx].card.damage * percentList[idx] * 2;
-            console.log('========')
-            console.log('d', d);
+        let d = attacks[idx].card.damage * percentList[idx] * 2;
+        console.log('========')
+        console.log('d', d);
 
-            if (attacks[idx].isMine) {
-                if (p2Deffense) {
-                    d = d/2;
-                }
-                dispatch(playerActions.p2HpDecrese(d));
-            } else {
-                if (p1Deffense) {
-                    d = d/2;
-                }
-                dispatch(playerActions.p1HpDecrese(d));
+        // 이펙트 사라지게 하기
+        const spellEffect = document.querySelector(`.spellEffect-${idx}`);
+        spellEffect?.classList.add('hidden-effect');
+
+        if (attacks[idx].isMine) {
+            console.log('내가 공격중!!')
+            if (p2Deffense) {
+                d = d/2;
             }
-            
-        // }
+            setTimeout(() => {
+                dispatch(playerActions.p2HpDecrese(d));
+            }, 3000);
+        } else {
+            console.log('공격 당하는중,,')
+            if (p1Deffense) {
+                d = d/2;
+            }
+            setTimeout(() => {
+                dispatch(playerActions.p1HpDecrese(d));
+            }, 3000);
+        }
     }
 
     useEffect(() => {
@@ -66,14 +84,31 @@ function Settle() {
         console.log('idx : ', idx)
         console.log('=========')
 
-        if (idx < attacks.length) {
-            settling(idx);
-            setTimeout(() => {
-                setIdx(idx+1);
-            }, 10000)
-        } else {
-            navigate('/result');
+        if (p1Hp <= 0 || p2Hp <= 0) {
+            send({
+                event: 'gameOver',
+                roomId: roomId,
+                memberId: memberId,
+                data:  {
+                    hp: p1Hp,
+                },
+            }) 
         }
+
+        if (idx < attacks.length) {
+            settling(idx) ;
+        } else {
+            dispatch(settleActions.percentListClear());
+            console.log('Go to Next Turn!');
+            navigate('/ready');
+        }
+        console.log('p1HP : ', p1Hp);
+        console.log('p2HP : ', p1Hp);
+
+        setTimeout(() => {
+            setIdx(idx+1);
+        }, 5000);
+
     }, [idx]);
 
     return (
@@ -90,20 +125,26 @@ function Settle() {
             </div>
             <div className='settle-bottom-items'>
                 <div style={{display: 'inline-flex'}}>
-                    <div className='first-player-effects'>
-                        {/* {p1Deck.map((card: string, index: number) => {
+                    {attacks.map((attack: AttackType, i: number) => {
+                        if (attack.isMine) {
                             return (
-                            <img className={`${card}-${index}`}
-                            style={{height: '150px', margin: '10px',}}
-                            key={index} 
-                            src={require(`../../assets/effect/${card}.png`)} 
-                            alt='' />)}
-                        )} */}
-                    </div>                    
-                    <img className='first-player' src={AK_attack} alt="" style={{width: '300px', height: '400px'}}/>
+                                <img key={i} className={`spellEffect-${i}`} src={require(`../../assets/effect/${attack.card.code}.png`)} alt="없음,," />
+                            )
+                        }
+                    })}   
                 </div>
-                <div>
-                    <img className='second-player' src={LUNA_attack} alt="" style={{width: '350px', height: '450px'}}/>
+                <div className='characterBox'>
+                    <img className="myCharacter" style={{width: '400px'}} src={require(`../../assets/character/${p1Character}_attack.png`)} alt="" />
+                    <img className="yourCharacter" style={{width: '400px'}} src={require(`../../assets/character/${p2Character}_attack.png`)} alt="" />
+                </div>
+                <div style={{display: 'inline-flex'}}>
+                    {attacks.map((attack: AttackType, i: number) => {
+                        if (!attack.isMine) {
+                            return (
+                                <img key={i} className={`spellEffect-${i}`} src={require(`../../assets/effect/${attack.card.code}.png`)} alt="없음,," />
+                            )
+                        }
+                    })}   
                 </div>
             </div>
         </div>

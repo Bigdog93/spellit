@@ -58,9 +58,9 @@ const Spell = ({attack}: {attack: AttackType}) => {
   // const sec = useRef<number>(attack.card.cost);
   const [sec, setSec] = useState<number>(0);
 
+  const isMine = attack.isMine
   // 주문 버튼 클릭시 음성 인식 시작
   const handleClick = (attack: AttackType) => {
-    const isMine = attack.isMine
     const card = attack.card
     let spellLength = 0; // 띄어쓰기 제거한 주문의 길이
     for (let i = 0; i < card.spell.length; i++) {
@@ -86,20 +86,20 @@ const Spell = ({attack}: {attack: AttackType}) => {
         let transcript = e.results[0][0].transcript; // 인식된 음성 글자
         transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
         console.log(transcript);
-        if (isMine){
-          // let transcript = e.results[0][0].transcript; // 인식된 음성 글자
-          // transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
-          // console.log(transcript);
-          send({
-            event: 'spell',
-            roomId: roomId,
-            memberId: memberId,
-            data:  transcript,
-          })
-          console.log(transcript)
-        } else {
-          console.log('isMine은 false다.')
-        }
+        // if (isMine){
+        //   // let transcript = e.results[0][0].transcript; // 인식된 음성 글자
+        //   // transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
+        //   // console.log(transcript);
+        //   send({
+        //     event: 'spell',
+        //     roomId: roomId,
+        //     memberId: memberId,
+        //     data:  transcript,
+        //   })
+        //   console.log(transcript)
+        // } else {
+        //   console.log('isMine은 false다.')
+        // }
 
 
         console.log("------------------------------------------------");
@@ -127,42 +127,78 @@ const Spell = ({attack}: {attack: AttackType}) => {
       // console.log('==============')
       // dispatch(settleActions.percentList(correct));
 
-    // 음성 인식 시작
-    setSec(card.cost);
-    recognition.start();
-    console.log('SpeechRecognition start!')
-
     // 타이머
     const interval = setInterval(() => {
         setSec(sec => sec-1);
     }, 1000)
-    
-    // 주문 제한 시간 흐른 후 음성인식 종료
-    setTimeout(() => {
-        recognition.stop();
-        clearInterval(interval);
-        console.log('SpeechRecognition end!')
-        setTimeout(() => {
-          let correct = 0;
-          for (let i=0; i<spellLength; i++) {
-            const correctEl = document.querySelector(`#spell-${i}`);
-            if (correctEl?.classList.contains(`correct${card.attribute}`)) {
-              correct++;
-              correctEl.classList.remove(`correct${card.attribute}`);
+
+    // 음성 인식 시작
+    setSec(card.cost);
+    if (isMine) {
+      recognition.start();
+      console.log('SpeechRecognition start!')
+      
+      // 주문 제한 시간 흐른 후 음성인식 종료
+      setTimeout(() => {
+          recognition.stop();
+          clearInterval(interval);
+          console.log('SpeechRecognition end!')
+          setTimeout(() => {
+            let correct = 0;
+            for (let i=0; i<spellLength; i++) {
+              const correctEl = document.querySelector(`#spell-${i}`);
+              if (correctEl?.classList.contains(`correct${card.attribute}`)) {
+                correct++;
+                correctEl.classList.remove(`correct${card.attribute}`);
+              }
             }
-          }
-          console.log('맞은 개수 : ', correct)
-          dispatch(settleActions.percentList(correct / spellLength));
-
-          dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
-        }, 3000);
-
-    }, card.cost*1000);
-    
+            console.log('맞은 개수 : ', correct)
+            const damage = correct / spellLength
+            dispatch(settleActions.percentList(damage));
+            console.log('damage 값 보냄!!! : ', damage);
+            // 상대방에게 데미지 값 전송
+            send({
+                event: 'spell',
+                roomId: roomId,
+                memberId: memberId,
+                data:  damage,
+            })
+  
+            dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
+          }, 3000);
+          
+        }, card.cost*1000);
+      } else {
+        setTimeout(() => {
+          clearInterval(interval);
+          setTimeout(() => {
+            dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
+          }, 3000);
+      }, card.cost*1000);
+    }
+  
   };
+
+
+  // const yourTrun = (attack: AttackType) => {
+  //   setSec(attack.card.cost);
+  //   // 타이머
+  //   const interval = setInterval(() => {
+  //     setSec(sec => sec-1);
+  //   }, 1000)
+
+  //   setTimeout(() => {
+  //     clearInterval(interval);
+  //   }, attack.card.cost*1000);
+  // }
 
   useEffect(()=>{
     handleClick(attack);
+    // if (isMine) {
+    //   handleClick(attack);
+    // } else {
+    //   yourTrun(attack);
+    // }
   }, [attack])
 
     const defaultHP = useSelector((state: RootState) => (state.attack.defaultHp));
