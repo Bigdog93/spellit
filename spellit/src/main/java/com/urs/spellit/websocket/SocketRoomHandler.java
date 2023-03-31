@@ -221,11 +221,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 						infoMap.put("attackCards", response);
 						players.get(0).getSession().sendMessage(makeTextMsg("toAttack", infoMap));
 						for(int i = 0; i < response.size(); i++) {
-							if(i < firstCards.size()) {
-								response.get(i).setIsMine(false);
-							}else {
-								response.get(i).setIsMine(true);
-							}
+							response.get(i).setIsMine(i >= firstCards.size());
 						}
 						players.get(1).getSession().sendMessage(makeTextMsg("toAttack", infoMap));
 					}else {
@@ -283,22 +279,17 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 							List<Long> friends1Id = memberService.playerPlayEnd(room.getPlayerList().get(0).getMemberId());
 							List<Long> frineds2Id = memberService.playerPlayEnd(room.getPlayerList().get(1).getMemberId());
 							Set<Long> friendsId = new HashSet<>();
-							for(Long id : friends1Id) {
-								friendsId.add(id);
-							}
-							for(Long id : frineds2Id) {
-								friendsId.add(id);
-							}
+							friendsId.addAll(friends1Id);
+							friendsId.addAll(frineds2Id);
 							infoMap = new HashMap<>();
 							infoMap.put("friendId", memberId);
 							infoMap.put("friendNickname", nickname);
-							if(friendsId != null) {
-								for(Long id : friendsId) {
-									if(allPlayers.get(id) != null) {
-										allPlayers.get(id).sendMessage(makeTextMsg("playEnd", infoMap));
-									}
+							for (Long id : friendsId) {
+								if (allPlayers.get(id) != null) {
+									allPlayers.get(id).sendMessage(makeTextMsg("playEnd", infoMap));
 								}
 							}
+							roomManager.clearRoom(roomId);
 						}
 					}
 					break;
@@ -321,6 +312,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 					leavePlayer.setMemberId(key);
 					leavePlayer.setSession(session);
 					Optional<Member> member = memberRepository.findById(key);
+					if(member.isPresent())
 					leavePlayer.setNickname(member.get().getNickname());
 					break;
 				}

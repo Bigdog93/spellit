@@ -44,6 +44,9 @@ public class RoomManager {
 
     public void clearRoom(long roomId) {
         roomMap.remove(roomId);
+        RoomInfo room = roomMap.get(roomId);
+        room.getPlayerList().clear();
+        room = null;
     }
 
     public PlayerDto[] dropSession(WebSocketSession session) {
