@@ -115,7 +115,7 @@ public class MemberService {
 
         //친구 대기 리스트에 없음//
 
-        FriendWaitEntity friendWaitEntity=FriendWaitEntity.toBuild(member.getId(), member.getEmail(), friend); //나 대기 객체 생성
+        FriendWaitEntity friendWaitEntity=FriendWaitEntity.toBuild(friend.getId(), friend.getEmail(), member); //나 대기 객체 생성
         friendWaitEntities.add(friendWaitEntity); //상대의 친구 대기 리스트에 나를 추가
         friend.changeFriendWaitList(friendWaitEntities);
         friendWaitRepository.save(friendWaitEntity); //친구 대기 리스트 저장
