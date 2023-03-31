@@ -43,6 +43,21 @@ export type UserType = {
   profileMsg: string,
   isOnline: boolean,
 }
+export type UserEntityType = {
+  deck: Array<DeckType>,
+  email: string,
+  exp: number,
+  gameCharacterEntity: GameCharacterType | null,
+  id: number | null,
+  level: number,
+  nickname: string,
+  playCount: number,
+  winCount: number,
+  looseCount: number,
+  drawCount: number,
+  profileMsg: string,
+  isOnline: boolean,
+}
 
 
 export type AttackType = {

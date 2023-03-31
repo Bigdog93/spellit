@@ -1,22 +1,51 @@
 // import * as THREE from "three";
 import { useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import { RootState } from "@/store";
+import { Html } from "@react-three/drei";
 // import { OrbitControls } from "@react-three/drei";
 
-import Magician from "@/components/Game/models/Magician";
-import BigMagicCircle from "@/components/Game/models/BigMagicCircle";
-import Undercha from "@/components/Game/models/Undercha";
-import QuickstartButton from "@/components/Game/models/QuickstartButton";
-import DeckButton from "@/components/Game/models/DeckButton";
-import MypageButton from "@/components/Game/models/MypageButton";
-import FriendButton from "@/components/Game/models/FriendButton";
+// import Mag from "@/assets/models/Mag";
+import BigMagicCircle from "@/assets/models/BigMagicCircle";
+import Undercha from "@/assets/models/Undercha";
+import QuickstartButton from "@/assets/models/QuickstartButton";
+import DeckButton from "@/assets/models/DeckButton";
+import MypageButton from "@/assets/models/MypageButton";
+import CharacterButton from "@/assets/models/CharacterButton";
+import Ranking from "@/assets/models/Ranking";
+// import LogoutButton from "@/components/Game/models/LogoutButton";
 // import BackgroundSpell from "@/components/Game/models/BackgroundSpell";
-
+import AKDefault from "@/assets/models/AKDefault";
+import CBDefault from "@/assets/models/CB_default";
+import LUNADefault from "@/assets/models/LUNA_default";
 import styles from "./Home.module.css";
+import FriendBtn from "@/assets/models/FriendBtn";
+
+import Friend from "./Friend";
+
+import { Provider } from "react-redux";
+import store from "@/store";
+import AddFriendModal from "./Friend/AddFriendModal";
 
 const Home = () => {
   // 기본 카메라 위치
   // Vector3 {x: 0, y: 3.061616997868383e-16, z: 5}
+  const cha_name = useSelector(
+    (state: RootState) => state.user.gameCharacter?.englishName
+  );
+
+  const [addFriendModalFlag, setAddFriendModalFlag] = useState<boolean>(false);
+
+
+  function openAddFriendModal() {
+    setAddFriendModalFlag(true);
+    console.log(addFriendModalFlag);
+  }
+  function closeAddFriendModal() {
+    setAddFriendModalFlag(false);
+  }
 
   return (
     <div>
@@ -28,7 +57,11 @@ const Home = () => {
         {/* <OrbitControls /> */}
         {/* <Box position={[0, 0, 2]} /> */}
 
-        <Magician position={[-3, 0, 0]} />
+        {/* <Mag position={[-3, 0, 0]} /> */}
+        {cha_name === "AK" && <AKDefault position={[-3, 0.2, 0]} />}
+        {cha_name === "CB" && <CBDefault position={[-3, 0.2, 0]} />}
+        {cha_name === "LUNA" && <LUNADefault position={[-3, 0.2, 0]} />}
+       
         <Undercha position={[-2.7, -2.5, 0]} />
         <BigMagicCircle
           position={[2.5, 0, 0]}
@@ -47,15 +80,24 @@ const Home = () => {
           position={[0.4, -1.5, -1]}
           rotation={[Math.PI / 2, 0, Math.PI / 6]}
         />
-        <FriendButton
+        <CharacterButton
           position={[2.3, 2.5, 0.1]}
           rotation={[Math.PI / 2, 0, Math.PI / 6]}
         />
+        <Ranking position={[-6.2, 1, 0]} />
+        <FriendBtn position={[-6.2, -0.5, 0]} />
+
         {/* <BackgroundSpell
           position={[-50, 20, -50]}
           rotation={[0, Math.PI / 2, Math.PI / 2]}
         /> */}
+        {/* <LogoutButton
+          position={[4.3, -2, 1.8]}
+          rotation={[Math.PI / 2, 0,0]}
+        /> */}
       </Canvas>
+      <Friend openAddFriendModal={openAddFriendModal} />
+      {addFriendModalFlag && <AddFriendModal closeAddFriendModal={closeAddFriendModal} />}
     </div>
   );
 };

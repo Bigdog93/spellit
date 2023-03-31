@@ -1,14 +1,14 @@
 import { useLayoutEffect, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { BatchedRenderer, QuarksLoader } from "three.quarks";
-import { Group, Vector3 } from "three";
+import { Group } from "three";
 
 interface Props {
   handleButton: () => void;
-  handleDone: () => void;
+  handleSpell: () => void;
 }
 
-const FireBall: React.FC<Props> = ({ handleButton, handleDone }: Props) => {
+const Start: React.FC<Props> = ({ handleButton, handleSpell }: Props) => {
   const { size } = useThree();
   const sceneRef = useRef<Group>(null);
   const batchSystemRef = useRef<BatchedRenderer>();
@@ -24,7 +24,7 @@ const FireBall: React.FC<Props> = ({ handleButton, handleDone }: Props) => {
 
       const loader = new QuarksLoader();
       loader.setCrossOrigin("");
-      loader.load("./models/skilljson/doublefireball.json", (obj) => {
+      loader.load("./models/skilljson/start.json", (obj) => {
         obj.traverse((child) => {
           if (child.type === "ParticleEmitter") {
             batchSystem.addSystem((child as any).system);
@@ -32,19 +32,31 @@ const FireBall: React.FC<Props> = ({ handleButton, handleDone }: Props) => {
         });
         scene.add(obj);
         // 초기 위치 설정(반응형)
-        scene.position.set((-1.5 * size.width) / size.height, -0.5, 0);
+        scene.position.set(-3.5, -0.5, -1);
+        scene.scale.set(0.4, 0.4, 0.4);
       });
     }
   }, [size]);
 
+  useFrame((state, delta) => {
+    const batchSystem = batchSystemRef.current;
 
+    if (batchSystem) {
+      batchSystem.update(delta);
+    }
+
+    setTimeout(() => {
+      handleButton();
+      handleSpell();
+    }, 2000);
+  });
 
   return (
     <>
-      <ambientLight intensity={0.5} />
+      {/* <ambientLight intensity={0.5} /> */}
       <group ref={sceneRef} />
     </>
   );
 };
 
-export default FireBall;
+export default Start;

@@ -26,10 +26,9 @@ const OpenViduVideo = () => {
     // }
     const roomId = useSelector((state: RootState) => state.room.roomId);
     const nickname = useSelector((state: RootState) => state.user.nickname);
-    console.log('roomId', roomId)
-    console.log('nickname', nickname)
+    const memberId = useSelector((state: RootState) => state.user.id);
     let mySessionId: string = 'session' + roomId.toString();
-    let myUserName: string = nickname;
+    let myUserName: string = nickname + memberId?.toString();
     const [OV, setOV] = useState<OpenVidu | null>(new OpenVidu());
     const [session, setSession] = useState<Session | undefined>(OV?.initSession());
     const [mainStreamManager, setMainStreamManager] = useState<Publisher | undefined>(undefined) // Main video of the page. Will be the 'publisher' or one of the 'subscribers'

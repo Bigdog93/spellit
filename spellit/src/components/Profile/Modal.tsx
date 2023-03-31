@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import style from './Profile.module.css'
-import closeBtn from '@/assets/profile/closeBtn.svg'
+import closeBtn from '@/assets/ui/closeBtn.svg'
 import modalBackgroundImg from '@/assets/profile/modalBody.svg'
 import { UserType } from '@/utils/Types';
 import API from '@/utils/API';
