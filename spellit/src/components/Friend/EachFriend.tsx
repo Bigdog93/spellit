@@ -4,6 +4,7 @@ import React from 'react'
 import style from './Friend.module.css'
 import battleImg from '@/assets/ui/battle.png';
 import addUserImg from '@/assets/ui/add-user.png'
+import closeBtn from '@/assets/ui/closeBtn.svg'
 
 type Props = {
   friend: UserEntityType,

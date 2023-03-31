@@ -8,7 +8,7 @@ import playCountUp from '../../assets/profile/playCountUp.svg'
 import playCountDown from '../../assets/profile/playCountDown.svg'
 import editBtnImg from '@/assets/profile/editBtn.svg'
 import passwordConfigImg from '@/assets/profile/passwordConfig.svg'
-import closeBtn from '@/assets/profile/closeBtn.svg'
+import closeBtn from '@/assets/ui/closeBtn.svg'
 import homeBtnImg from '@/assets/ui/homeBtn.svg';
 
 import PasswordConfig from './PasswordConfig';
