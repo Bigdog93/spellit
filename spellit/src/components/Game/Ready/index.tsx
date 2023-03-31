@@ -83,12 +83,12 @@ const Ready = () => {
     setConfirm(true);
   }
   
-  const attackTrun = useSelector((state:RootState)=> state.game.attackTurn)
-  useEffect(()=> {
-    if(attackTrun){
-      navigate("/attack");
-    }
-  }, [attackTrun, navigate])
+  // const attackTrun = useSelector((state:RootState)=> state.game.attackTurn)
+  // useEffect(()=> {
+  //   if(attackTrun){
+  //     navigate("/attack");
+  //   }
+  // }, [attackTrun, navigate])
 
   // cost + or -
   // 카드에 따른 cost 수정 필

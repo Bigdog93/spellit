@@ -9,7 +9,7 @@ import { WebSocketContext } from '@/store/websocket'
 // import  Spell from "./Spell";
 import  MySpell from "./MySpell";
 import  OtherSpell from "./OtherSpell";
-import Character from "./Character";
+// import Character from "./Character";
 import game, { gameActions } from "@/store/game";
 // import OpenViduVideo from '@/components/Game/OpenVidu/OpenVidu'
 
@@ -37,7 +37,8 @@ const Attack = () => {
   // attackTurn 끝내기
   useEffect(() => {
     dispatch(gameActions.setMyAttackTurn(isMine))
-
+    console.log('setMyAttackTurn에 isMine 업뎃 중', isMine)
+    console.log('idx', idx)
   }, [idx, dispatch])
 
 
@@ -46,7 +47,7 @@ const Attack = () => {
         {/* <div className='spell-and-character'> */}
         {attackCheck && <div>
           {isMine && <MySpell attack={attacks[idx]} idx={idx}/>}
-          {!isMine && <MySpell attack={attacks[idx]} idx={idx}/>}
+          {!isMine && <OtherSpell attack={attacks[idx]} idx={idx}/>}
         </div>
         }
         {/* </div> */}

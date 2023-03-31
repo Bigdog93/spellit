@@ -260,8 +260,8 @@ const OpenViduVideo = () => {
         {/* <button onClick={joinSession}>joinSession</button> */}
         {/* <button onClick={showSubs}>showSubs</button> */}
         {/* <button onClick={testFunction}>testFunction</button> */}
-        <button onClick={muteOn}>muteOn</button>
-        <button onClick={muteOff}>muteOff</button>
+        {/* <button onClick={muteOn}>muteOn</button>
+        <button onClick={muteOff}>muteOff</button> */}
         {subscribers.map((sub:any, idx:number) => {
             return (
                 <div key={idx}>

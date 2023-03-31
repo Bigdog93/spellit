@@ -34,7 +34,8 @@ const Matching = () => {
   
   const readyTurn = useSelector((state: RootState) => state.game.readyTurn)
   const roomId = useSelector((state: RootState) => state.room.roomId);
-
+  console.log('roomId', roomId)
+  console.log('memberId', memberId)
   // p1, p2 모두 동전 던지기가 끝났을 때 store의 game 업뎃
   useEffect(() => {
     console.log('toReady에 실행되는 useEffect')

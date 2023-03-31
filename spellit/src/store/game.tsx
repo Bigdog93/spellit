@@ -72,9 +72,9 @@ const gameSlice = createSlice({
     startResult(state) {
       state.resultTurn = true;
     },
-    // endResult(state) {
-    //   state.resultTurn = false;
-    // },
+    endResult(state) {
+      state.resultTurn = false;
+    },
     // toAttack에서 받아온 전체 attack 리스트 업뎃
     setAttacks(state, action: PayloadAction<Array<AttackType>>) {
       state.attacks = action.payload
@@ -94,6 +94,14 @@ const gameSlice = createSlice({
         }
       }
     },
+    setAttackCheck(state){
+      state.attackCheck = true
+      console.log('setAttackCheckTrue에서 찍는다', state.attackCheck)
+    },
+    // setAttackCheckFalse(state){
+    //   state.attackCheck = false
+    //   console.log('setAttackCheckFalse에서 찍는다', state.attackCheck)
+    // },
     setTranscript(state, action: PayloadAction<string>){
       state.transcript = action.payload
     },
