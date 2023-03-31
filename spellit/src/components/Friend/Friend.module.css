@@ -45,6 +45,7 @@
 }
 .friendListScrollContainer {
     overflow-y: auto;
+    height: 255px;
 }
 .friendListScrollContainer::-webkit-scrollbar {
     display: none;

@@ -40,10 +40,12 @@ const Login = () => {
           headers: { Authorization: `Bearer ${token}` },
         })
           .then((res) => {
+            console.log(res);
             send({
               event: 'login',
-              memberId: res.data.memberId,
+              memberId: res.data.id,
               nickname: res.data.nickname,
+              data: ''
             })
             console.log("유저정보 가져오기 성공");
             console.log(res.data);
@@ -71,6 +73,7 @@ const Login = () => {
               })
             API.get('member/friend/wait', { headers: { Authorization: `Bearer ${token}` }, })
               .then(({ data }) => {
+                console.log("friend wait list : ", data);
                 for (let f of data) {
                   const friendWait: UserEntityType = {
                     deck: [],
