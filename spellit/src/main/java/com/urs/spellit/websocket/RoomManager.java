@@ -55,8 +55,6 @@ public class RoomManager {
                 if(p.getSession().equals(session)) {
                     room.getPlayerList().remove(p);
                     PlayerDto remainPlayer = room.getPlayerList().remove(0);
-                    clearRoom(room.getRoomId());
-                    room = null;
                     return new PlayerDto[]{p, remainPlayer};
                 }
             }
