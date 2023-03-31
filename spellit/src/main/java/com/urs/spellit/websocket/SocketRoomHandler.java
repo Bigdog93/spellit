@@ -249,6 +249,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 		// 끊어진 세션 쫓아내고 방폭하고 남은 사람 가져오기
 		PlayerDto[] players = roomManager.dropSession(session);
 		PlayerDto leavePlayer = new PlayerDto();
+		PlayerDto remainPlayer = null;
 		if(players == null) {
 			for(Long key : allPlayers.keySet()) {
 				if(allPlayers.get(key) == session) {
@@ -262,8 +263,8 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 			}
 		}else {
 			leavePlayer = players[0];
+			remainPlayer = players[1];
 		}
-		PlayerDto remainPlayer = players[1];
 		memberService.playerOffline(leavePlayer.getMemberId());
 		if(remainPlayer != null) { // 플레이 중인 사람이었다면
 			remainPlayer.getSession().sendMessage(makeTextMsg("otherDrop", null)); // 너 상대 나갔다고 알려줘요
