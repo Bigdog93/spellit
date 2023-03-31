@@ -212,8 +212,10 @@ public class MemberService {
     }
     public List<Long> playerOnline(long memberId) {
         Optional<Member> playerOpt = memberRepository.findById(memberId);
-        log.error("온라인으로 표시할 유저가 없습니다. : There is no Member");
-        if(playerOpt.isEmpty()) return null;
+        if(playerOpt.isEmpty()) {
+            log.error("온라인으로 표시할 유저가 없습니다. : There is no Member");
+            return null;
+        }
         Member player = playerOpt.get();
         player.setIsOnline(true);
         memberRepository.save(player);
