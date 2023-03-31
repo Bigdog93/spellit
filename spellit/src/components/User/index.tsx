@@ -64,7 +64,7 @@ const User = () => {
     dispatch(userActions.setCharacter(res));
     /* API 요청 */
     API.put('member/character',
-      { res },
+      res ,
       { headers: { Authorization: `Bearer ${token}` } })
     console.log(character)
     console.log(res)

@@ -20,6 +20,16 @@
     transform: translate(-50%, -50%);
     z-index: -1;
 }
+.closeBtnDiv {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+}
+.closeBtnDiv>img{
+    width: 30px;
+    height: 30px;
+}
 .friendPopupContainer {
     width: 90%;
     margin: 0 auto;
@@ -151,7 +161,6 @@
 .friendInfoleft {
     display:flex;
     align-items: center;
-    gap: 5px;
 }
 .friendCharacterDiv {
     width: 60px;
@@ -159,6 +168,8 @@
 .friendCharacterImg {
     width: 60px;
     transform: translateY(3px);
+}
+.isOnlineDot {
 }
 .friendInfoDiv {
 
@@ -169,6 +180,12 @@
 .friendLevel {
     font-size: 0.8rem;
     color:rgba(197, 197, 197, 0.9)
+}
+.friendInfoRight {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
 }
 .friendBtnDiv {
     width: 40px;

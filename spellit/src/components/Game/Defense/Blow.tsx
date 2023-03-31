@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 
+import { gameActions } from "@/store/game";
 interface onTimeProp {
   onTime: boolean;
   handleTimer: () => void;
@@ -8,11 +10,20 @@ interface onTimeProp {
 }
 
 const Blow = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
+
+  const dispatch = useDispatch();
+
   const [count, setCount] = useState<number>(0);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   // console.log(count);
 
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
+
+  // 게임 결과를 store에 저장
+  useEffect(()=> {
+    dispatch(gameActions.setMyDefense(isSuccess))
+  }, [isSuccess])
+
   const streamRef = useRef<MediaStream | null>(null);
   const handleMicInput = async (stream: MediaStream) => {
     // audioctx를 만들어 web audio api를 사용할 수 있도록 함

@@ -9,7 +9,6 @@ import './Spell.css'
 import Timer from "@/components/Game/Items/Timer";
 import { gameActions } from "@/store/game";
 import ProfileHp from "../Items/ProfileHp";
-import { settleActions } from "@/store/settle";
 
 
 interface Spell {
@@ -62,9 +61,9 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   const attacks = useSelector((state: RootState) => (state.game.attacks));
 
 
-  const isMine = attack.isMine
   // 주문 버튼 클릭시 음성 인식 시작
   const handleClick = (attack: AttackType) => {
+    const isMine = attack.isMine
     const card = attack.card
     let spellLength = 0; // 띄어쓰기 제거한 주문의 길이
     for (let i = 0; i < card.spell.length; i++) {
@@ -83,124 +82,94 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
     const trimText = card.spell.replaceAll(" ", ""); // 띄어쓰기 제거한 주문
     // console.log(trimText);
 
-    let correct = 0;
     recognition.addEventListener("result", (e) => {
         console.log("말하는 중이잖아요?");
         console.log(e)
         let transcript = e.results[0][0].transcript; // 인식된 음성 글자
         transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
-         // console.log(transcript);
-        // if (isMine){
+        // console.log(transcript);
+        if (isMine){
           // let transcript = e.results[0][0].transcript; // 인식된 음성 글자
           // transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
           // console.log(transcript);
-
+          send({
+            event: 'spell',
+            roomId: roomId,
+            memberId: memberId,
+            data:  transcript,
+          })
           console.log(transcript)
-        // if (isMine){
-        //   // let transcript = e.results[0][0].transcript; // 인식된 음성 글자
-        //   // transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
-        //   // console.log(transcript);
-        //   send({
-        //     event: 'spell',
-        //     roomId: roomId,
-        //     memberId: memberId,
-        //     data:  transcript,
-        //   })
-        //   console.log(transcript)
-        // } else {
-        //   console.log('isMine은 false다.')
-        // }
+        } else {
+          console.log('isMine은 false다.')
+        }
 
 
+        let correct = 0;
         console.log("------------------------------------------------");
         for (let i = 0; i < transcript.length; i++) {
-          // console.log('for 문 안이다!')
+          console.log('for 문 안이다!')
             if (transcript[i] == trimText[i]) {
                 const element = document.getElementById(`spell-${i}`);
 
                 const correctColor = `correct${card.attribute}`;
                 element?.classList.add(correctColor);
                 correct++;
-                // console.log('------')
-                // console.log(element);
-                // console.log('------')
+                console.log('------')
+                console.log(element);
+                console.log('------')
             }
         }
-      })
+        // const percentEl = document.getElementById("percent") as HTMLDivElement;
+        const correctPercent = Math.round((correct / spellLength) * 100);
+        // percentEl.innerText = `총 ${spellLength}개 중 ${correct}개 맞음 : ${correctPercent} %`;
+    });
+
+    // 음성 인식 시작
+    setSec(card.cost);
+    recognition.start();
+    console.log('SpeechRecognition start!')
 
     // 타이머
     const interval = setInterval(() => {
         setSec(sec => sec-1);
+        // sec.current -= 1;
+        console.log('============')
+        console.log('sec : ', sec)
+        console.log('============')
     }, 1000)
+    
 
 
-    // 음성 인식 시작
-    setSec(card.cost);
-    if (isMine) {
-      recognition.start();
-      console.log('SpeechRecognition start!')
-      
-      // 주문 제한 시간 흐른 후 음성인식 종료
-      setTimeout(() => {
-          recognition.stop();
-          clearInterval(interval);
-          console.log('SpeechRecognition end!')
-          setTimeout(() => {
-            let correct = 0;
-            for (let i=0; i<spellLength; i++) {
-              const correctEl = document.querySelector(`#spell-${i}`);
-              if (correctEl?.classList.contains(`correct${card.attribute}`)) {
-                correct++;
-                correctEl.classList.remove(`correct${card.attribute}`);
-              }
-            }
-            console.log('맞은 개수 : ', correct)
-            const damage = correct / spellLength
-            dispatch(settleActions.percentList(damage));
-            console.log('damage 값 보냄!!! : ', damage);
-            // 상대방에게 데미지 값 전송
-            send({
-                event: 'spell',
-                roomId: roomId,
-                memberId: memberId,
-                data:  damage,
-            })
-  
-            dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
-          }, 3000);
-          
-        }, card.cost*1000);
-      } else {
+    // 주문 제한 시간 흐른 후 음성인식 종료
+    setTimeout(() => {
+        recognition.stop();
+        clearInterval(interval);
+
+        // 마지막 인덱스면 defense 턴 시작
+        if(idx+1 === attacks.length){
+          send({
+            event: 'defenseTurn',
+            roomId: roomId,
+            memberId: memberId,
+            data: ''
+          })
+        }
+        // 마지막 턴 아니면 인덱스 올려주기
+        // } else {
+        dispatch(gameActions.setIdx())
+        // }
+
+        console.log('SpeechRecognition end!')
         setTimeout(() => {
-          clearInterval(interval);
-          setTimeout(() => {
-            dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
-          }, 3000);
-      }, card.cost*1000);
-    }
-  
+          dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
+        }, 3000);
+
+    }, card.cost*1000);
+    
   };
-
-
-  // const yourTrun = (attack: AttackType) => {
-  //   setSec(attack.card.cost);
-  //   // 타이머
-  //   const interval = setInterval(() => {
-  //     setSec(sec => sec-1);
-  //   }, 1000)
-
-  //   setTimeout(() => {
-  //     clearInterval(interval);
-  //   }, attack.card.cost*1000);
-  // }
 
   useEffect(()=>{
     handleClick(attack);
-    // if (isMine) {
-    //   handleClick(attack);
-    // } else {
-    //   yourTrun(attack);
-    // }
   }, [attack])
 
     const defaultHP = useSelector((state: RootState) => (state.attack.defaultHp));
