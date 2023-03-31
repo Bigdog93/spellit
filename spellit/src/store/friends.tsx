@@ -33,6 +33,21 @@ const friendsSlice = createSlice({
             for (let user of state.friends) {
                 if (user.id === action.payload) {
                     user.isOnline = false;
+                    user.isPlaying = false;
+                }
+            }
+        },
+        playStartFriend(state, action: PayloadAction<Number>) {
+            for (let user of state.friends) {
+                if (user.id === action.payload) {
+                    user.isPlaying = true;
+                }
+            }
+        },
+        playEndFriend(state, action: PayloadAction<Number>) {
+            for (let user of state.friends) {
+                if (user.id === action.payload) {
+                    user.isPlaying = false;
                 }
             }
         },

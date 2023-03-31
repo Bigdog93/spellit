@@ -66,7 +66,8 @@ const Login = () => {
                     looseCount: f.looseCount,
                     drawCount: f.drawCount,
                     profileMsg: f.profileMsh,
-                    isOnline: f.isOnline
+                    isOnline: f.isOnline,
+                    isPlaying: f.isPlaying
                   }
                   dispatch(friendsActions.fillFriendsList(friend));
                 }
@@ -88,7 +89,8 @@ const Login = () => {
                     looseCount: f.looseCount,
                     drawCount: f.drawCount,
                     profileMsg: f.profileMsh,
-                    isOnline: f.isOnline
+                    isOnline: f.isOnline,
+                    isPlaying: f.isPlaying
                   }
                   dispatch(friendsActions.fillFriendWaitsList(friendWait));
                 }
