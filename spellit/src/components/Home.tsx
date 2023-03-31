@@ -37,7 +37,7 @@ const Home = () => {
   );
 
   const [addFriendModalFlag, setAddFriendModalFlag] = useState<boolean>(false);
-
+  const [friendPopupFlag, setFriendPopupFlag] = useState<boolean>(false);
 
   function openAddFriendModal() {
     setAddFriendModalFlag(true);
@@ -45,6 +45,12 @@ const Home = () => {
   }
   function closeAddFriendModal() {
     setAddFriendModalFlag(false);
+  }
+  function openFriendPopup() {
+    setFriendPopupFlag(true);
+  }
+  function closeFriendPopup() {
+    setFriendPopupFlag(false);
   }
 
   return (
@@ -85,7 +91,7 @@ const Home = () => {
           rotation={[Math.PI / 2, 0, Math.PI / 6]}
         />
         <Ranking position={[-6.2, 1, 0]} />
-        <FriendBtn position={[-6.2, -0.5, 0]} />
+        <FriendBtn position={[-6.2, -0.5, 0]} onClick={openFriendPopup}/>
 
         {/* <BackgroundSpell
           position={[-50, 20, -50]}
@@ -96,7 +102,7 @@ const Home = () => {
           rotation={[Math.PI / 2, 0,0]}
         /> */}
       </Canvas>
-      <Friend openAddFriendModal={openAddFriendModal} />
+      {friendPopupFlag && <Friend openAddFriendModal={openAddFriendModal} closeFriendPopup={closeFriendPopup} />}
       {addFriendModalFlag && <AddFriendModal closeAddFriendModal={closeAddFriendModal} />}
     </div>
   );

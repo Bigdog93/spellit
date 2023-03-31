@@ -1,7 +1,7 @@
 import { RootState } from '@/store';
 import { UserEntityType } from '@/utils/Types';
 import {useEffect, useState} from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import EachFriend from './EachFriend';
 
 import style from './Friend.module.css';
@@ -9,13 +9,16 @@ import friendPopupFrameImg from '@/assets/ui/friendModal.svg';
 import addFriendIcon from '@/assets/ui/addFriend.svg';
 import closeBtn from '@/assets/ui/closeBtn.svg'
 import AddFriendModal from './AddFriendModal';
+import { friendsActions } from '../../store/friends';
 
 
 type Props = {
-    openAddFriendModal: Function
+    openAddFriendModal: Function,
+    closeFriendPopup: Function
 }
 
-function Friend({ openAddFriendModal } : Props) {
+function Friend({ openAddFriendModal, closeFriendPopup } : Props) {
+    const dispatch = useDispatch();
     
     const friends = useSelector((state: RootState) => { return state.friends.friends });
     const friendWaits = useSelector((state: RootState) => { return state.friends.friendWaits });
@@ -31,6 +34,9 @@ function Friend({ openAddFriendModal } : Props) {
     }, [friends])
 
 
+    function acceptFriendRequest(friend:UserEntityType) {
+        dispatch(friendsActions.acceptFriendRequest(friend))
+    }
 
     return (
       <div className={`${style.friendPopupWindow}`}>
@@ -39,7 +45,7 @@ function Friend({ openAddFriendModal } : Props) {
           src={friendPopupFrameImg}
           alt="friendPopupFrameImg"
             />
-            <div className={`${style.closeBtnDiv}`}>
+            <div className={`${style.closeBtnDiv}`} onClick={() => { closeFriendPopup() }}>
                 <img src={closeBtn} className={`${style.closeBtn}`} alt=''></img>
             </div>
         <div className={`${style.friendPopupContainer}`}>
@@ -61,7 +67,10 @@ function Friend({ openAddFriendModal } : Props) {
                 console.log(friend);
                 return (
                   <div key={idx}>
-                    <EachFriend friend={friend} isFriend={false} />
+                        <EachFriend
+                            friend={friend}
+                            isFriend={false}
+                            acceptFriendRequest={acceptFriendRequest} />
                   </div>
                 );
               })}
@@ -71,7 +80,10 @@ function Friend({ openAddFriendModal } : Props) {
                 console.log(friend);
                 return (
                   <div key={idx}>
-                    <EachFriend friend={friend} isFriend={true} />
+                        <EachFriend
+                            friend={friend}
+                            isFriend={true}
+                            acceptFriendRequest={acceptFriendRequest} />
                   </div>
                 );
               })}

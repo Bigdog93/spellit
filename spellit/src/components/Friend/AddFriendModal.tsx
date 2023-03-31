@@ -1,7 +1,8 @@
 import { RootState } from '@/store';
 import { UserType } from '@/utils/Types';
-import { useEffect, useState, ChangeEvent, ChangeEventHandler } from 'react';
+import { useEffect, useState, useContext, ChangeEvent, ChangeEventHandler } from 'react';
 import { useSelector } from 'react-redux';
+import { WebSocketContext } from '@/store/websocket';
 
 import style from './Friend.module.css';
 import '@/index.css';
@@ -14,10 +15,13 @@ type Props = {
 }
 
 function AddFriendModal({ closeAddFriendModal }: Props) {
+
+	const { send } = useContext(WebSocketContext);
 	
 	const token = sessionStorage.getItem('token');
 
 	const [friendEmail, setFriendEmail] = useState<string>('');
+	const me = useSelector((state: RootState) => state.user);
 
 	function changeEmailInput(e:React.ChangeEvent<HTMLInputElement>) {
 		const email = e.target.value;
@@ -32,9 +36,14 @@ function AddFriendModal({ closeAddFriendModal }: Props) {
 		},
 			{ headers: { Authorization: `Bearer ${token}` } })
 			.then(res => {
+				send({
+					event: 'friendRequest',
+					memberId: me.id,
+					data: res
+				})
 				alert("친구 요청을 보냈습니다.");
 				closeAddFriendModal();
-		})
+			})
 	}
 
 	return (

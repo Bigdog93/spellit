@@ -161,7 +161,6 @@
 .friendInfoleft {
     display:flex;
     align-items: center;
-    gap: 5px;
 }
 .friendCharacterDiv {
     width: 60px;
@@ -169,6 +168,8 @@
 .friendCharacterImg {
     width: 60px;
     transform: translateY(3px);
+}
+.isOnlineDot {
 }
 .friendInfoDiv {
 
@@ -179,6 +180,12 @@
 .friendLevel {
     font-size: 0.8rem;
     color:rgba(197, 197, 197, 0.9)
+}
+.friendInfoRight {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
 }
 .friendBtnDiv {
     width: 40px;

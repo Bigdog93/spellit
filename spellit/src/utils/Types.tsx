@@ -48,7 +48,7 @@ export type UserEntityType = {
   email: string,
   exp: number,
   gameCharacterEntity: GameCharacterType | null,
-  id: number | null,
+  id: number,
   level: number,
   nickname: string,
   playCount: number,

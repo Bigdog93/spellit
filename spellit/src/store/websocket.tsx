@@ -8,8 +8,9 @@ import { playerActions } from "@/store/player";
 import { matchingActions } from './matching';
 import { attackActions } from './attack';
 import { roomActions } from "@/store/room";
+import { friendsActions } from './friends';
+import { UserEntityType } from '@/utils/Types';
 import game, { gameActions } from './game';
-// import defense, { defenseActions } from './defense';
 
 const WebSocketContext = createContext<any>(null);
 export { WebSocketContext };
@@ -132,7 +133,54 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         dispatch(gameActions.endSettle())
         dispatch(gameActions.endGame())
         dispatch(gameActions.setResult(info.result))
-      } else {
+      } else if (type === 'friendLogin') {
+        const friendId = info.friendId;
+        const friendNickname = info.friendNickname;
+        console.log(friendNickname + '님이 접속하였습니다.');
+        dispatch(friendsActions.loginFriend(friendId));
+      } else if (type === 'friendLogout') {
+        const friendId = info.friendId;
+        const friendNickname = info.friendNickname;
+        console.log(friendNickname + '님이 로그아웃 하였습니다.');
+        dispatch(friendsActions.logoutFriend(friendId));
+      } else if (type === 'friendRequest') {
+        const f = info.friend;
+        const friend: UserEntityType = {
+          deck: [],
+          email: f.email,
+          exp: f.exp,
+          gameCharacterEntity: f.gameCharacter,
+          id: f.id,
+          level: f.level,
+          nickname: f.nickname,
+          playCount: f.playCount,
+          winCount: f.winCount,
+          looseCount: f.looseCount,
+          drawCount: f.drawCount,
+          profileMsg: f.profileMsh,
+          isOnline: f.isOnline
+        }
+        dispatch(friendsActions.fillFriendWaitsList(friend));
+      } else if (type === 'friendResponse') {
+        const f = info.friend;
+        const friend: UserEntityType = {
+          deck: [],
+          email: f.email,
+          exp: f.exp,
+          gameCharacterEntity: f.gameCharacter,
+          id: f.id,
+          level: f.level,
+          nickname: f.nickname,
+          playCount: f.playCount,
+          winCount: f.winCount,
+          looseCount: f.looseCount,
+          drawCount: f.drawCount,
+          profileMsg: f.profileMsh,
+          isOnline: f.isOnline
+        }
+        dispatch(friendsActions.acceptFriendRequest(friend))
+      }
+      else {
         console.log('그런 이벤트는 없습니다.')
       }
     }
