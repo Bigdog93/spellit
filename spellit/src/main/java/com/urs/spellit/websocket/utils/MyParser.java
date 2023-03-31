@@ -18,7 +18,12 @@ public class MyParser {
     private final ObjectMapper mapper = new ObjectMapper();
 
     public Object getBackData(JsonElement data) throws JsonProcessingException {
-        return mapper.readValue(data.toString(), Object.class);
+        try{
+            Object res = mapper.readValue(data.toString(), Object.class);
+            return res;
+        }catch (Exception e) {
+            return null;
+        }
     }
     public String getString(String key, JsonElement json) {
         JsonElement jsonElement = json.getAsJsonObject().get(key);
