@@ -8,7 +8,7 @@ import Game from "./components/Game";
 import Matching from "./components/Matching";
 import User from "./components/User";
 import Ready from "@/components/Game/Ready";
-import Defence from "@/components/Game/Defense/Defense";
+import Defence from "@/components/Game/Defense";
 import Attack from "@/components/Game/Attack";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";

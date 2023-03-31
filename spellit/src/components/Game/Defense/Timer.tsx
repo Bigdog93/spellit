@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux"
 
-import { defenseActions } from "@/store/defense";
+// import { defenseActions } from "@/store/defense";
 interface TimerProps {
   onTime: boolean;
   handleTimer: () => void;
@@ -63,7 +63,7 @@ const Timer = ({ onTime, handleTimer, isDone ,handleResult}: TimerProps) => {
       handleTimer();
       handleResult()
       console.log('endDefense 타이머 0됐을 때 실행되는 함수 in Timer.tsx')
-      dispatch(defenseActions.endDefense())
+      // dispatch(defenseActions.endDefense())
     }
     // eslint-disable-next-line
   }, [sec]);

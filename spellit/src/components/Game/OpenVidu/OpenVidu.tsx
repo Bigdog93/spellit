@@ -6,6 +6,7 @@ import OvVideo from '@/components/Game/OpenVidu/OvVideo'
 import { ExceptionEvent, OpenVidu, Publisher, Session, StreamEvent, StreamManager, Subscriber } from 'openvidu-browser';
 import axios from "axios";
 import { WebSocketContext } from '@/store/websocket'
+import room from "@/store/room";
 
 
 const OpenViduVideo = () => {
@@ -36,7 +37,7 @@ const OpenViduVideo = () => {
     const [token, setToken] = useState<string | null>(null);
     const { send } = useContext(WebSocketContext);
     const myTurn = useSelector((state: RootState) => (state.game.myAttackTurn));
-
+    const attackTurn = useSelector((state:RootState) => state.game.attackTurn)
     // const [mute, setMute] = useState<boolean>(true);
     let currentVideoDevice: any = null;
     const onbeforeunload = (event :any) => {
@@ -235,18 +236,23 @@ const OpenViduVideo = () => {
         publisher?.publishAudio(true);
     }
     useEffect(() => {
+      if(attackTurn) {
         if (myTurn) {
-            muteOff();
-            console.log('내 차례라서 뮤트 해제함')
-          } else {
-            muteOn();
-            // muteOff();
-            console.log('상대방 차례라서 뮤트함')
+          muteOff();
+          console.log('내 차례라서 뮤트 해제함')
+        } else {
+          muteOn();
+          // muteOff();
+          console.log('상대방 차례라서 뮤트함')
         }
-        return () => {
+      } else {
+        muteOn();
+        console.log('공격턴 아니라서 뮤트함')
+      }
+      return () => {
 
-        }
-    }, [myTurn])
+      }
+    }, [attackTurn, myTurn])
 
     return (
       <>

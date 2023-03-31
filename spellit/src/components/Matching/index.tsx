@@ -32,18 +32,16 @@ const Matching = () => {
   }, []);
 
   
-  // const p1Loading = useSelector((state: RootState) => state.matching.p1Loading);
-  // const p2Loading = useSelector((state: RootState) => state.matching.p2Loading);
   const readyTurn = useSelector((state: RootState) => state.game.readyTurn)
   const roomId = useSelector((state: RootState) => state.room.roomId);
-  // p1, p2 모두 동전 던지기가 끝났을 때 stored의 game 업뎃
+
+  // p1, p2 모두 동전 던지기가 끝났을 때 store의 game 업뎃
   useEffect(() => {
     console.log('toReady에 실행되는 useEffect')
     if(readyTurn) {
       console.log('readyTurn 시작이야')
       navigate(`/game/${roomId}`)
     }
-
   }, [readyTurn, navigate]);
 
   
