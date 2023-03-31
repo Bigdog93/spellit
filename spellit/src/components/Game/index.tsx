@@ -5,7 +5,8 @@ import { RootState } from '@/store';
 import Ready from './Ready'
 import Attack from './Attack';
 import Defense from './Defense';
-import Settle from '../Settle/Settle';
+import Settle from './Settle';
+import Result from './';
 import OpenViduVideo from '@/components/Game/OpenVidu/OpenVidu'
 
 
@@ -14,6 +15,7 @@ const Game = () => {
   const attackTurn = useSelector((state: RootState) => state.game.attackTurn)
   const defenseTurn = useSelector((state: RootState) => state.game.defenseTurn)
   const settleTurn = useSelector((state: RootState) => state.game.settleTurn)
+  const resultTurn = useSelector((state: RootState) => state.game.resultTurn)
   
 
   console.log('readyTurn: ', readyTurn)
@@ -26,7 +28,10 @@ const Game = () => {
       {readyTurn && <Ready />}
       {attackTurn && <Attack />}
       {defenseTurn && <Defense />}
+      {/* {resultTurn && <Settle />}
+      {settleTurn && <Result />} */}
       {settleTurn && <Settle />}
+      {resultTurn && <Result />}
     </div>
   )
 }

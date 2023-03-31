@@ -144,5 +144,5 @@ const Ready = () => {
       
     </div>
   )
-}
-export default Ready
+};
+export default Ready;

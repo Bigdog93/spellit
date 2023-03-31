@@ -36,6 +36,22 @@ const Defense = () => {
     setIsDone(!isDone);
   }, [isDone]);
 
+  // 게임 끝났을 때
+  const roomId = useSelector((state: RootState) => state.room.roomId)
+  const memberId = useSelector((state: RootState) => state.user.id)
+  const myDefense = useSelector((state:RootState) => state.game.myDefense)
+  useEffect(()=> {
+    console.log('isDone이 트루인지 확인할거야')
+    if (onTime === false && isDone === true) {
+      console.log('isDone이 트루라서 내 디펜스 결과 보내고 세틀로 넘어갈 예정: ', myDefense)
+      send({
+        event: 'settleTurn',
+        roomId: roomId,
+        memberId: memberId,
+        data: { defense: myDefense }
+      })
+    }
+  }, [onTime, isDone, myDefense])
   // focus가 옮겨가지 않도록 마우스 이벤트를 막기 위한 function
   const preventMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -48,43 +64,8 @@ const Defense = () => {
     setGameSelect(gameTypes[randomIdx]);
   }, []);
 
-
-  // 화면 넘어가게 하는 것들
-  const hp1 = useSelector((state: RootState) => state.player.p1?.hp);
-  const hp2 = useSelector((state: RootState) => state.player.p2?.hp);
-  const defenseTurn = useSelector((state: RootState) => state.game.defenseTurn)
-
-  const roomId = useSelector((state: RootState) => state.room.roomId)
-  const memberId = useSelector((state: RootState) => state.user.id)
-
-  // 게임 끝나고 성공 여부 결정 됐을 때 결과 send
-  const myDefense = useSelector((state: RootState) => state.game.myDefense)
- 
   
-  // useEffect(() => {
-  //   send({
-  //     event: 'defenseTurn',
-  //     roomId: roomId,
-  //     memberId: memberId,
-  //     data: ''
-  //   })
-  // }, [])
-
-  // useEffect(()=> {
-  //   // defenseTurn일 때
-  //   if(defenseTurn) {
-  //     // defense 게임 결과 전달
-  //     send({
-  //       event: 'settlleTrun',
-  //       roomId: roomId,
-  //       memberId: memberId,
-  //       data: {'defense': myDefense}
-  //     })
-  //     // dispatch(gameActions.endDefense)
-      
-  //     console.log('hp확인 if 밖이야')
-  //   }
-  // }, [myDefense, navigate])
+  
 
   const readyTurn = useSelector((state:RootState) => state.game.readyTurn)
   useEffect(() => {

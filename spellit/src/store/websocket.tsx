@@ -1,4 +1,4 @@
-import { createContext, useRef } from 'react';
+import React, { createContext, useRef } from 'react';
 import  { costActions } from "@/store/cost"
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -8,8 +8,8 @@ import { playerActions } from "@/store/player";
 import { matchingActions } from './matching';
 import { attackActions } from './attack';
 import { roomActions } from "@/store/room";
-import { gameActions } from './game';
-import defense, { defenseActions } from './defense';
+import game, { gameActions } from './game';
+// import defense, { defenseActions } from './defense';
 
 const WebSocketContext = createContext<any>(null);
 export { WebSocketContext };
@@ -81,6 +81,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
       } else if (type === 'otherReady'){
         console.log('otherReady 입니다.') 
         dispatch(matchingActions.setOtherReady())
+        dispatch(gameActions.endSettle)
         
       }else if (type === 'toReady') {
         console.log('toReady 입니다.')
@@ -120,15 +121,17 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         dispatch(gameActions.startDefense())
         
       } else if (type === 'toSettle') {
+      // } else if (type === 'settle') {
         console.log('toSettle 입니다.')
+        dispatch(gameActions.setOtherDefense(info.defense))
         dispatch(gameActions.endDefense())
         dispatch(gameActions.startSettle())
-        dispatch(gameActions.setOtherDefense(info.defense))
-
+        
       } else if (type === 'gameOver') {
         console.log('gameOver입니다.')
+        dispatch(gameActions.endSettle())
         dispatch(gameActions.endGame())
-
+        dispatch(gameActions.setResult(info.result))
       } else {
         console.log('그런 이벤트는 없습니다.')
       }

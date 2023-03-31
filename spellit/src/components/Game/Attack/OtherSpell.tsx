@@ -45,7 +45,10 @@ const OtherSpell = ({attack, idx}: {attack: AttackType, idx:number}) => {
           }
           const correctPercent = Math.round((correct / spellLength) * 100);
           console.log(correctPercent+'%')
-        }, [])
+          return () => {
+
+          }
+        }, [transcript])
 
         // for (let i = 0; i < transcript.length; i++) {
         //     if (transcript[i] == trimText[i]) {

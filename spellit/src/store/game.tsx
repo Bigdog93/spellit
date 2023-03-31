@@ -9,12 +9,14 @@ type initialGameType = {
   attackTurn: boolean,
   defenseTurn: boolean,
   settleTurn: boolean,
+  resultTurn: boolean,
   attacks: AttackType[],
   idx: number,
   transcript: string,
   myAttackTurn: boolean|null,
   myDefense: boolean,
   otherDefense: boolean,
+  result: string
 }
 const initialGameState: initialGameType = {
   game: false,
@@ -22,13 +24,14 @@ const initialGameState: initialGameType = {
   attackTurn: false,
   defenseTurn: false,
   settleTurn: false,
+  resultTurn: false,
   attacks: [],
   idx: 0,
   transcript: '',
   myAttackTurn: null,
   myDefense: false,
   otherDefense: false,
-
+  result: '',
 };
 
 const gameSlice = createSlice({
@@ -65,6 +68,12 @@ const gameSlice = createSlice({
     endSettle(state) {
       state.settleTurn = false;
     },
+    startResult(state) {
+      state.resultTurn = true;
+    },
+    // endResult(state) {
+    //   state.resultTurn = false;
+    // },
     // toAttack에서 받아온 전체 attack 리스트 업뎃
     setAttacks(state, action: PayloadAction<Array<AttackType>>) {
       state.attacks = action.payload
@@ -95,6 +104,9 @@ const gameSlice = createSlice({
     },
     setOtherDefense(state, action: PayloadAction<boolean>){
       state.otherDefense = action.payload
+    },
+    setResult(state, action: PayloadAction<string>){
+      state.result = action.payload
     },
   },
 });
