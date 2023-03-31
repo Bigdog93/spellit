@@ -224,12 +224,18 @@ public class MemberService {
         return friendsId;
     }
 
-    public void playerOffline(long memberId) {
+    public List<Long> playerOffline(long memberId) {
         Optional<Member> playerOpt = memberRepository.findById(memberId);
-        if(playerOpt.isEmpty()) return;
+        if(playerOpt.isEmpty()) return null;
         Member player = playerOpt.get();
         player.setIsOnline(false);
         memberRepository.save(player);
+        List<Friend> friends = friendRepository.findAllByMemberId(memberId);
+        List<Long> friendsId = new ArrayList<>();
+        for(Friend f : friends) {
+            friendsId.add(f.getFriendId());
+        }
+        return friendsId;
     }
 
     public int updateMemberInfoById(MemberUpdateRequestDto murDto) {

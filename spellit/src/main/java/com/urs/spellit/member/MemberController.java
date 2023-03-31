@@ -77,17 +77,17 @@ public class MemberController {
     }
 
     @PostMapping("/friend/ask") //친구 신청
-    public ResponseEntity<String> addFriendWait(@RequestBody FriendWaitRequestDto friendWaitRequestDto)
+    public ResponseEntity<Long> addFriendWait(@RequestBody FriendWaitRequestDto friendWaitRequestDto)
     {
         if(friendWaitRequestDto.getFriendId() == null || friendWaitRequestDto.getFriendId() == 0) {
             Optional<Member> memberOpt = memberRepository.findByEmail(friendWaitRequestDto.getFriendEmail());
             if(memberOpt.isEmpty()) {
-                return ResponseEntity.badRequest().body("친구가 없습니다.");
+                return ResponseEntity.badRequest().body(0L);
             }
             friendWaitRequestDto.setFriendId(memberOpt.get().getId());
         }
-        memberService.addFriendWait(friendWaitRequestDto);
-        return ResponseEntity.ok("success");
+        FriendWaitResponseDto resDto = memberService.addFriendWait(friendWaitRequestDto);
+        return ResponseEntity.ok(resDto.getReceiveMemberId());
     }
 
     @PostMapping("/friend/accept") //친구 수락

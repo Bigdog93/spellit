@@ -10,6 +10,8 @@ import com.urs.spellit.game.GameService;
 import com.urs.spellit.game.entity.CardEntity;
 import com.urs.spellit.member.MemberRepository;
 import com.urs.spellit.member.MemberService;
+import com.urs.spellit.member.model.dto.MemberRequestDto;
+import com.urs.spellit.member.model.dto.MemberResponseDto;
 import com.urs.spellit.member.model.entity.Member;
 import com.urs.spellit.websocket.dto.*;
 import com.urs.spellit.websocket.utils.MyParser;
@@ -102,16 +104,25 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 				room.sendMessage(makeTextMsg("connected", infoMap)); // 전송
 			}
 		}else if(event.equals("friendRequest")) {
-			infoMap.put("memberId", memberId);
-			infoMap.put("nickname", nickname);
 			long otherId = myParser.getLong("otherId", data);
+			try {
+				MemberResponseDto memberRes = memberService.findMemberInfoById((memberId));
+				infoMap.put("friend", memberRes);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			infoMap.put("memberId", memberId);
 			allPlayers.get(otherId).sendMessage(makeTextMsg("friendRequest", infoMap));
 		}else if(event.equals("friendResponse")) {
 			infoMap.put("memberId", memberId);
 			infoMap.put("nickname", nickname);
 			long otherId = myParser.getLong("otherId", data);
-			String accept = myParser.getString("accept", data);
-			infoMap.put("accept", accept);
+			try {
+				MemberResponseDto memberRes = memberService.findMemberInfoById((otherId));
+				infoMap.put("friend", memberRes);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
 			allPlayers.get(otherId).sendMessage(makeTextMsg("friendResponse", infoMap));
 		}
 		else {
@@ -262,7 +273,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 		}
 		Long memberId = leavePlayer.getMemberId();
 		allPlayers.remove(memberId);
-		List<Long> friendsId = memberService.playerOnline(memberId);
+		List<Long> friendsId = memberService.playerOffline(memberId);
 		allPlayers.put(memberId, session);
 		HashMap<String, Object> infoMap = new HashMap<>();
 		infoMap.put("friendId", memberId);
