@@ -105,10 +105,12 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 			}
 		}else if(event.equals("friendRequest")) {
 			long otherId = myParser.getLong("otherId", data);
+			System.out.println("otherId 추출 : " + otherId);
 			try {
 				MemberResponseDto memberRes = memberService.findMemberInfoById((memberId));
 				infoMap.put("friend", memberRes);
 			}catch (Exception e) {
+				System.out.println("memberService 도중 error 발생");
 				e.printStackTrace();
 			}
 			infoMap.put("memberId", memberId);
