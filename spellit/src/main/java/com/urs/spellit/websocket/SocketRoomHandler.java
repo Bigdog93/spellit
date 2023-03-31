@@ -196,8 +196,8 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 					isReady[me.getIdx()] = true;
 					me.setMyObj(dataObj);
 					if(isReady(isReady, room, 4)) {
-						players.get(0).getSession().sendMessage(makeTextMsg("settle", players.get(1).getMyObj()));
-						players.get(1).getSession().sendMessage(makeTextMsg("settle", players.get(0).getMyObj()));
+						players.get(0).getSession().sendMessage(makeTextMsg("toSettle", players.get(1).getMyObj()));
+						players.get(1).getSession().sendMessage(makeTextMsg("toSettle", players.get(0).getMyObj()));
 					}
 					break;
 				case "gameOver": // 게임 끝
