@@ -17,8 +17,8 @@ public class FriendWaitResponseDto {
     public static FriendWaitResponseDto toResponse(FriendWaitEntity friendWaitEntity)
     {
         return FriendWaitResponseDto.builder()
-                .askMemberId(friendWaitEntity.getFriendId())
-                .receiveMemberId(friendWaitEntity.getMember().getId())
+                .askMemberId(friendWaitEntity.getMember().getId())
+                .receiveMemberId(friendWaitEntity.getFriendId())
                 .build();
     }
 
