@@ -8,12 +8,20 @@
 .box2 {
   width: 100wh;
   height: 100vh;
-  background-image: url("~@/assets/settle/battle-background.png");
-  background-size: cover;
+  /* background-image: url("~@/assets/settle/battle-background.png");
+  background-size: cover; */
   position: relative;
   /* animation: shakebg 0.2s infinite; */
   animation-delay: 2s;
 }
+
+.canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1; /* 다른 요소들과 겹치지 않도록 z-index를 설정합니다. */
+}
+
 @keyframes shakebg {
   0% {
     left: 0;

@@ -1,34 +1,37 @@
-import { useState, useEffect } from "react";
-import { Canvas} from "@react-three/fiber";
-import { OrbitControls, } from "@react-three/drei";
+import { useState, useEffect, useRef } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import * as THREE from "three";
 
-// import TestComp from "@/components/Settle/quarks/TestComp";
-// import StartSpell from "@/components/Settle/quarks/StartSpell";
-import FireBall from "./quarks/1P/FireBall";
+// import FireBall from "./quarks/1P/FireBall"
+import Tornado from "./quarks/1P/Tornado";
+import Start from "./quarks/1P/Start";
 
-import LUNA_attack from "@/assets/character/LUNA_attack.png";
-import AK_attack from "@/assets/character/AK_attack.png";
-import light_icon from "@/assets/settle/light-icon.png";
+import CBDefault from "./characters/Player1";
+import AKDefault from "./characters/Player2";
 import "./Skills.css";
 
+import Background from "./characters/Background";
+
 function Skills() {
-  const [isMoving, setIsMoving] = useState<boolean>(false);
-  const [isDone, setIsDone] = useState<boolean>(false);
+  const [isStart, setIsStart] = useState<boolean>(false);
+  const [isSpell, setIsZoomOut] = useState<boolean>(false);
 
   const handleButton = () => {
-    setIsMoving(!isMoving);
+    setIsStart(!isStart);
   };
-  const handleDone = () => {
-    setIsDone(!isDone);
+  const handleSpell = () => {
+    setIsZoomOut(!isSpell);
   };
 
-  console.log(isMoving, "is");
+  console.log(isStart, "is");
+  console.log(isSpell, "spell");
 
   useEffect(() => {
     let audio: HTMLAudioElement | null = null;
     let spell: HTMLAudioElement | null = null;
 
-    if (isMoving) {
+    if (isStart) {
       spell = new Audio("/bgm/spell.mp3");
       spell.play();
       // setTimeout(() => {
@@ -42,11 +45,11 @@ function Skills() {
         audio.currentTime = 0;
       }
     };
-  }, [isMoving]);
+  }, [isStart]);
 
   useEffect(() => {
     let audio2: HTMLAudioElement | null = null;
-    if (isDone) {
+    if (isSpell) {
       audio2 = new Audio("/bgm/damaged.mp3");
       audio2.play();
       setTimeout(() => {
@@ -60,33 +63,80 @@ function Skills() {
         audio2.currentTime = 0;
       }
     };
-  }, [isMoving, isDone]);
-
-  const attacked = isDone ? "cha2-shake" : "cha2";
-  // const back = isMoving ? "box2" : "box";
+  }, [isStart, isSpell]);
 
   return (
     <div className="box2">
       <div>
         <button onClick={handleButton}>button</button>
-        <img className="icon1" src={light_icon} alt="" />
-        <img className="cha1" src={LUNA_attack} alt="" />
-        <img className={attacked} src={AK_attack} alt="" />
       </div>
-      <Canvas >
+      <Canvas className="canvas">
         {/* <OrbitControls /> */}
-			
+        <ambientLight intensity={0.8} />
+        <Background position={[0, 0, 0]} />
+        <CBDefault position={[-5, -1, 0]} />
+        <AKDefault position={[5, -1, 0]} />
 
-        {isMoving && (
+        {isStart && (
           <>
-            {/* <StartSpell handleButton={handleButton} handleDone={handleDone}/> */}
-            {/* <TestComp handleButton={handleButton} handleDone={handleDone} /> */}
-						<FireBall handleButton={handleButton} handleDone={handleDone}/>
+            {/* <FireBall handleButton={handleButton} handleDone={handleDone}/> */}
+
+            <Start handleButton={handleButton} handleSpell={handleSpell} />
           </>
         )}
+        {isSpell && (
+          <>
+            <Tornado handleButton={handleButton} handleSpell={handleSpell} />
+          </>
+        )}
+        {/* 카메라 */}
+        <MyCamera isStart={isStart} isSpell={isSpell} />
       </Canvas>
     </div>
   );
 }
 
 export default Skills;
+
+// 카메라
+type MyCameraProps = {
+  isStart: boolean;
+  isSpell: boolean;
+};
+
+function MyCamera({ isStart, isSpell }: MyCameraProps) {
+  const { camera } = useThree();
+  const [position, setPosition] = useState<THREE.Vector3>(new THREE.Vector3());
+  const [fov, setFov] = useState<number>(0);
+
+  useEffect(() => {
+    if (isStart) {
+      setPosition(new THREE.Vector3(-5, 0, 5));
+      setFov(30);
+      console.log(1);
+    } else if (!isStart && isSpell) {
+      setPosition(new THREE.Vector3(5, 0, 5));
+      setFov(30);
+      console.log(3);
+    } else if (!(!isStart && !isSpell)) {
+      setPosition(new THREE.Vector3(0, 0, 5));
+      setFov(75);
+      console.log(4);
+    } else if (!isStart) {
+      setPosition(new THREE.Vector3(0, 0, 5));
+      setFov(75);
+      console.log(2);
+    }
+  }, [isStart, isSpell]);
+
+  useFrame(() => {
+    camera.position.lerp(position, 0.02);
+
+    if (camera instanceof THREE.PerspectiveCamera) {
+      camera.fov = THREE.MathUtils.lerp(camera.fov, fov, 0.02);
+    }
+    camera.updateProjectionMatrix();
+  });
+
+  return <perspectiveCamera fov={fov} />;
+}

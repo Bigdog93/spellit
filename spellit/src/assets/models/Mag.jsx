@@ -14,16 +14,14 @@ export default function Magician(props) {
 
   useFrame((state, delta) => {
     if (magicianRef.current) {
-      magicianRef.current.position.y =  Math.sin(
-        state.clock.elapsedTime * 3
-        // state.clock.elapsedTime * 0.2
-      ) * 0.1;
+      magicianRef.current.position.y =
+        Math.sin(state.clock.elapsedTime * 3) * 0.1;
     }
   });
 
   return (
     <group {...props} dispose={null} scale={[5, 5, 5]} ref={magicianRef}>
-    {/* <group {...props} dispose={null}  ref={magicianRef}> */}
+      {/* <group {...props} dispose={null}  ref={magicianRef}> */}
       <mesh
         geometry={nodes.magician.geometry}
         material={materials.magician}
