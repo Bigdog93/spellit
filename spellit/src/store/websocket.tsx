@@ -196,6 +196,26 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         const friendNickname = info.friendNickname;
         console.log(friendNickname + '님이 게임을 시작하였습니다.');
         dispatch(friendsActions.playEndFriend(friendId));
+      } else if (type === 'matchRequest') {
+        const f = info.friend;
+        const friend: UserEntityType = {
+          deck: [],
+          email: f.email,
+          exp: f.exp,
+          gameCharacterEntity: f.gameCharacter,
+          id: f.id,
+          level: f.level,
+          nickname: f.nickname,
+          playCount: f.playCount,
+          winCount: f.winCount,
+          looseCount: f.looseCount,
+          drawCount: f.drawCount,
+          profileMsg: f.profileMsh,
+          isOnline: f.isOnline,
+          isPlaying: f.isPlaying
+        }
+        dispatch(friendsActions.setMatchRequestPlayer(friend));
+        dispatch(friendsActions.setMatchRequestModalFlag(true));
       }
       else {
         console.log('그런 이벤트는 없습니다.')

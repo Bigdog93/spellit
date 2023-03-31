@@ -49,6 +49,18 @@ function EachFriend({ friend, isFriend, acceptFriendRequest }: Props) {
     })
   }
 
+  function matchRequest() {
+    if (!friend.isOnline || friend.isPlaying) return;
+    send({
+      event: 'friendResponse',
+      memberId: me.id,
+      nickname: me.nickname,
+      data: {
+        otherId: friend.id,
+      }
+    })
+  }
+
   return (
     <div className={`${style.EachFriendContainer}`}>
       <div className={`${style.friendInfoleft}`}>
@@ -95,7 +107,7 @@ function EachFriend({ friend, isFriend, acceptFriendRequest }: Props) {
         {isFriend && (
           <div className={`${style.friendBtnDiv}`}>
             <button className={`${style.frinedBattleBtn} ${style.btn} ${friend.isOnline && !friend.isPlaying ? style.active : style.disabled}`}>
-              <img src={battleImg} alt="battleImg"></img>
+              <img src={battleImg} alt="battleImg" onClick={matchRequest}></img>
             </button>
           </div>
         )}

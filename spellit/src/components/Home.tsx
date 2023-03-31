@@ -25,6 +25,7 @@ import FriendBtn from "@/assets/models/FriendBtn";
 import Friend from "./Friend";
 
 import AddFriendModal from "./Friend/AddFriendModal";
+import MatchRequestModal from './Friend/MatchRequestModal';
 import API from "@/utils/API";
 import { UserEntityType } from "@/utils/Types";
 import { friendsActions } from "@/store/friends";
@@ -36,6 +37,7 @@ const Home = () => {
   const cha_name = useSelector(
     (state: RootState) => state.user.gameCharacter?.englishName
   );
+  const matchRequestModalFlag = useSelector((state: RootState) => state.friends.matchRequestModalFlag);
   const token = sessionStorage.getItem("token");
   const dispatch = useDispatch();
   const [addFriendModalFlag, setAddFriendModalFlag] = useState<boolean>(false);
@@ -152,6 +154,7 @@ const Home = () => {
       </Canvas>
       {friendPopupFlag && <Friend openAddFriendModal={openAddFriendModal} closeFriendPopup={closeFriendPopup} />}
       {addFriendModalFlag && <AddFriendModal closeAddFriendModal={closeAddFriendModal} />}
+      {matchRequestModalFlag && <MatchRequestModal />}
     </div>
   );
 };
