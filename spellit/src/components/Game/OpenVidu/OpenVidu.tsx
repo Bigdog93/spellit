@@ -253,7 +253,13 @@ const OpenViduVideo = () => {
 
       }
     }, [attackTurn, myTurn])
-
+    const resultTurn = useSelector((state: RootState) => state.game.resultTurn)
+    useEffect(() => {
+        if(resultTurn) {
+          leaveSession();
+          console.log('resultTurn이라서 openvidu leaveSession했습니다.')
+        }
+    },[resultTurn])
     return (
       <>
         {mainStreamManager && <OvVideo streamManager={mainStreamManager}></OvVideo>}
