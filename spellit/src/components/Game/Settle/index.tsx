@@ -14,8 +14,8 @@ const Settle = () => {
   const roomId = useSelector((state: RootState) => state.room.roomId)
   const memberId = useSelector((state: RootState) => state.user.id)
 
-  const hp1 = useSelector((state: RootState) => state.player.p1?.hp);
-  const hp2 = useSelector((state: RootState) => state.player.p2?.hp);
+  const hp1 = useSelector((state: RootState) => state.player.p1!.hp);
+  const hp2 = useSelector((state: RootState) => state.player.p2!.hp);
   const settleTurn = useSelector((state: RootState) => state.game.settleTurn)
   console.log('Settle에서 찍히는 settleTurn: ', settleTurn)
   console.log('Settle에서 찍히는 hp1: ', hp1)
@@ -56,9 +56,32 @@ const Settle = () => {
     }
   }, [settleTurn, hp1, hp2, navigate])
 
+
+  const settleTest1 = () => {
+    console.log('settleTest')
+    send({
+      event: 'gameOver',
+      roomId: roomId,
+      memberId: memberId,
+      data: { hp: 0 }
+    })
+  };
+
+  const settleTest2 = () => {
+    console.log('settleTest')
+    send({
+      event: 'gameOver',
+      roomId: roomId,
+      memberId: memberId,
+      data: { hp: 100 }
+    })
+  };
+
   return (    
     <div>
       <p>Settle이무니다</p>
+      <button onClick={settleTest1}>Result로 가기</button>
+      <button onClick={settleTest2}>Ready로 가기</button>
     </div>
   )
 };

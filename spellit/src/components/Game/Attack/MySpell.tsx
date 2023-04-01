@@ -88,7 +88,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
         let transcript = e.results[0][0].transcript; // 인식된 음성 글자
         transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
         // console.log(transcript);
-        if (isMine){
+        // if (isMine){
           // let transcript = e.results[0][0].transcript; // 인식된 음성 글자
           // transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
           // console.log(transcript);
@@ -99,9 +99,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
             data:  transcript,
           })
           console.log(transcript)
-        } else {
-          console.log('isMine은 false다.')
-        }
+        // } 
 
 
         let correct = 0;
@@ -156,7 +154,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
         }
         // 마지막 턴 아니면 인덱스 올려주기
         // } else {
-        dispatch(gameActions.setIdx())
+        // dispatch(gameActions.setIdx())
         // }
 
         console.log('SpeechRecognition end!')

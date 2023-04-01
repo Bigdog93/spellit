@@ -1,4 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit'
+
 // import type { PayloadAction } from '@reduxjs/toolkit'
 // import { useNavigate } from 'react-router-dom';
 
@@ -53,9 +55,12 @@ const matchingSlice = createSlice({
       state.p2Ready = true;
       // dispatch(matchingActions.startGame());
     },
-    setOtherReady(state) {
-      state.otherReady = true;
+    setOtherReady(state,  action: PayloadAction<boolean>) {
+      state.otherReady = action.payload;
     },
+    // setOtherReady(state) {
+    //   state.otherReady = true;
+    // },
   },
 });
 

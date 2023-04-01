@@ -61,6 +61,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
 
       } else if (type === 'connected') {
           console.log('connected 입니다.')
+          console.log('roomInfo있나 확인', info.room)
           
           // 매칭 성공했을 때 player의 p1은 나, p2는 상대방에 넣음
           if (info.roomInfo.playerList[0].memberId === state.user.id ) {
@@ -82,17 +83,21 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
 
       } else if (type === 'otherReady'){
         console.log('otherReady 입니다.') 
-        dispatch(matchingActions.setOtherReady())
+        dispatch(matchingActions.setOtherReady(true))
         dispatch(gameActions.endSettle)
         
       }else if (type === 'toReady') {
         console.log('toReady 입니다.')
+        dispatch(gameActions.endSettle())
         dispatch(gameActions.startReady())
+        dispatch(matchingActions.setOtherReady(false))
+
         dispatch(costActions.set(info.cost))
         console.log('toReady에서 info.cost로 받은 cost', info.cost)
         
       } else if (type === 'toAttack') {
         console.log('toAttack 입니다.')
+        
         // 이번 턴에 진행될 공격들 셋팅
         // dispatch(attackActions.playersDeckList(info.attackCards));
         dispatch(gameActions.setAttacks(info.attackCards))
@@ -124,8 +129,9 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         console.log('toDefense 입니다.')
         dispatch(gameActions.endAttack())
         dispatch(gameActions.startDefense())
-        
-
+        // 애매하지만 이쯤에서 setAttackCheck 리셋
+        dispatch(gameActions.setAttackCheck())
+      
       } else if (type === 'toSettle') {
       // } else if (type === 'settle') {
         console.log('toSettle 입니다.')
@@ -136,18 +142,23 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
       } else if (type === 'gameOver') {
         console.log('gameOver입니다.')
         dispatch(gameActions.endSettle())
-        dispatch(gameActions.endGame())
+        // dispatch(gameActions.endGame())
+        dispatch(gameActions.startResult())
+        console.log('gameOver에서 찍는', info.result)
         dispatch(gameActions.setResult(info.result))
+
       } else if (type === 'friendLogin') {
         const friendId = info.friendId;
         const friendNickname = info.friendNickname;
         console.log(friendNickname + '님이 접속하였습니다.');
         dispatch(friendsActions.loginFriend(friendId));
+
       } else if (type === 'friendLogout') {
         const friendId = info.friendId;
         const friendNickname = info.friendNickname;
         console.log(friendNickname + '님이 로그아웃 하였습니다.');
         dispatch(friendsActions.logoutFriend(friendId));
+
       } else if (type === 'friendRequest') {
         const f = info.friend;
         const friend: UserEntityType = {
@@ -167,6 +178,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
           isPlaying: f.isPlaying
         }
         dispatch(friendsActions.fillFriendWaitsList(friend));
+
       } else if (type === 'friendResponse') {
         const f = info.friend;
         const friend: UserEntityType = {
