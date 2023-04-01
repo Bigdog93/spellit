@@ -80,7 +80,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
     }
     setSpanEl(spanList);
 
-    const trimText = card.spell.replaceAll(" ", ""); // 띄어쓰기 제거한 주문
+    const trimText = card.spell.replaceAll(reg, ""); // 띄어쓰기 제거한 주문
     // console.log(trimText);
 
     let correct = 0;

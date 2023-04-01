@@ -1,3 +1,4 @@
+import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '@/store';
@@ -6,8 +7,10 @@ import Ready from './Ready'
 import Attack from './Attack';
 import Defense from './Defense';
 import Settle from './Settle/Settle';
+
 import Result from './';
 import OpenViduVideo from '@/components/Game/OpenVidu/OpenVidu'
+// import Settle from './Settle/index';
 
 
 const Game = () => {
@@ -22,6 +25,7 @@ const Game = () => {
   console.log('attackTurn: ', attackTurn)
   console.log('defenseTurn: ', defenseTurn)
   console.log('settleTurn: ', settleTurn)
+  console.log('resultTurn: ', resultTurn)
   return (
     <div>
       <OpenViduVideo />
@@ -35,4 +39,4 @@ const Game = () => {
     </div>
   )
 }
-export default Game;
+export default React.memo(Game);

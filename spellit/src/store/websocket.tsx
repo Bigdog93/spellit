@@ -87,6 +87,10 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         
       }else if (type === 'toReady') {
         console.log('toReady 입니다.')
+        if (state.game.settleTurn) {
+          console.log('-------endsettle----------');
+          dispatch(gameActions.endSettle());
+        }
         dispatch(gameActions.startReady())
         dispatch(costActions.set(info.cost))
         console.log('toReady에서 info.cost로 받은 cost', info.cost)
@@ -137,7 +141,11 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         console.log('gameOver입니다.')
         dispatch(gameActions.endSettle())
         dispatch(gameActions.endGame())
+        console.log("-----------------------")
+        console.log(info.result);
+        console.log("-----------------------")
         dispatch(gameActions.setResult(info.result))
+        dispatch(gameActions.startResult());
       } else if (type === 'friendLogin') {
         const friendId = info.friendId;
         const friendNickname = info.friendNickname;

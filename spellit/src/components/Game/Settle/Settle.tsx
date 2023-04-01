@@ -1,4 +1,4 @@
-import react, {useState, useContext, useEffect} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import attack, { attackActions } from '@/store/attack';
@@ -13,9 +13,8 @@ import player, { playerActions } from '@/store/player';
 import { settleActions } from '@/store/settle';
 import { gameActions } from '@/store/game';
 
-function Settle() {
+const Settle = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const { send } = useContext(WebSocketContext);
 
@@ -38,7 +37,8 @@ function Settle() {
     const percentList = useSelector((state: RootState) => (state.settle.percentList));
     console.log('percentList : ', percentList);
 
-    // const settleTurn = useSelector((state: RootState) => state.game.settleTurn)
+    const settleTurn = useSelector((state: RootState) => state.game.settleTurn)
+    console.log('Settle에서 찍히는 settleTurn: ', settleTurn)
 
     // const idx = useSelector((state: RootState) => (state.game.idx));
     const [idx, setIdx] = useState(0);
@@ -52,9 +52,9 @@ function Settle() {
         backgroundColor: p2Hp > 100 ? '#FFF500' : '#FF0000' ,
     }
     
-    async function settling(idx: number) {
+    const settling = (idx: number) => {
         console.log('정산중..')
-        let d = attacks[idx].card.damage * percentList[idx] * 100;
+        let d = attacks[idx].card.damage * percentList[idx] * 5;
         console.log('========')
         console.log('d', d);
 
@@ -70,7 +70,11 @@ function Settle() {
                 d = d/2;
             }
             setTimeout(() => {
-                dispatch(playerActions.p2HpDecrese(d));
+                if (d >= p2Hp) {
+                    dispatch(playerActions.p2HpDecrese(p2Hp));
+                } else {
+                    dispatch(playerActions.p2HpDecrese(d));
+                }
             }, 3000);
         } else {
             console.log('공격 당하는중,,')
@@ -78,79 +82,88 @@ function Settle() {
                 d = d/2;
             }
             setTimeout(() => {
-                dispatch(playerActions.p1HpDecrese(d));
+                if (d >= p1Hp) {
+                    dispatch(playerActions.p1HpDecrese(p1Hp));
+                } else {
+                    dispatch(playerActions.p1HpDecrese(d));
+                }
             }, 3000);
         }
     }
-
+    
+        
     useEffect(() => {
         console.log('=========')
         console.log('idx : ', idx)
         console.log('=========')
-
-        // settleTurn
-        // if (!settleTurn) {
-        //     settling(idx);
-        //     // hp 확인하고
-        //     if (p1Hp && p2Hp) {
-        //         if (p1Hp <= 0 || p2Hp <= 0) {
-        //             send({
-        //                 event: 'gameOver',
-        //                 roomId: roomId,
-        //                 memberId: memberId,
-        //                 data:  {
-        //                     hp: p1Hp,
-        //                 },
-        //             }) 
-        //         // hp 가 남은 경우 다음 턴 진행
-        //         } else {
-        //             settling(idx);
-        //         }
-        //     }
-        // }
-
-
-        if (idx < attacks.length) {
-            console.log('아직 정산 진행중...');
-            if (p1Hp && p2Hp) {
-                console.log('둘다 살아있음!!!');
-                settling(idx);
-            } else {
-                console.log('게임 끝!! Result로 이동해야지~');
-                send({
-                    event: 'gameOver',
-                    roomId: roomId,
-                    memberId: memberId,
-                    data:  {
-                        hp: p1Hp,
-                    },
-                }) 
-            }
-            // 다음 공격 진행
-            setTimeout(() => {
-                setIdx(idx+1);
-            }, 5000);
-        // 다음 턴으로 진행
-        } else {
-            dispatch(settleActions.percentListClear());
-            dispatch(gameActions.endSettle());
-            console.log('Go to Next Turn!');
-            // navigate('/ready');
-            send({
-                event: 'readyTurn',
-                roomId: roomId,
-                memberId: memberId,
-                data: ''
-            })
-        }
         console.log('p1HP : ', p1Hp);
         console.log('p2HP : ', p1Hp);
 
-        // setTimeout(() => {
-        //     setIdx(idx+1);
-        // }, 5000);
+        if(!settleTurn) {
+            if (p1Hp && p2Hp) {
+              // Hp가 0인 플레이어가 있으면
+              console.log('hp확인 if 안이야')
+              if(p1Hp <=0 || p2Hp <=0) {
+                dispatch(settleActions.percentListClear())
+                send({
+                  event: 'gameOver',
+                  roomId: roomId,
+                  memberId: memberId,
+                  data: { hp: p1Hp }
+                })
+                // dispatch(gameActions.endGame)
+                // navigate('/result')
+                console.log('hp 다 떨어졌다...')
+      
+              // 두 플레이어 모두 아직 HP가 남았으면
+              } else {
+                // dispatch(gameActions.startReady)
+                // ready로 돌아가기
+                dispatch(settleActions.percentListClear())
+                send({
+                  event: 'toReady',
+                  roomId: roomId,
+                  memberId: memberId,
+                  data: ''
+                })
+              }
+            }
+            
+          } else {
+              if (idx < attacks.length) {
+                settling(idx)
+                setTimeout(() => {
+                    setIdx(idx+1);
+                }, 5000);
+            } else {
+                dispatch(settleActions.percentListClear())
+                dispatch(gameActions.endSettle());
+                if(p1Hp <=0 || p2Hp <=0) {
+                    console.log('game over! result로 이동!!')
+                    dispatch(settleActions.percentListClear())
+                    send({
+                    event: 'gameOver',
+                    roomId: roomId,
+                    memberId: memberId,
+                    data: { hp: p1Hp }
+                    })
+        
+                // 두 플레이어 모두 아직 HP가 남았으면
+                } else {
+                    send({
+                        event: 'readyTurn',
+                        roomId: roomId,
+                        memberId: memberId,
+                        data: ''
+                    })
+                }
+                  
+            }
+            // dispatch(gameActions.settleIdx());
+          }
 
-    }, [idx]);
+    }, [settleTurn, idx]);
+    
 
     return (
         <div className='settle-bg'>
@@ -194,4 +207,4 @@ function Settle() {
 
 
 
-export default Settle;
+export default React.memo(Settle);

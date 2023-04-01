@@ -107,6 +107,17 @@ const gameSlice = createSlice({
     setResult(state, action: PayloadAction<string>){
       state.result = action.payload
     },
+    settleIdx(state) {
+      if (state.settleTurn) {
+        if (state.idx === state.attacks.length-1) {
+          state.idx = 0
+          console.log('idx 끝')
+        } else {
+          state.idx += 1
+          console.log('idx +1 해줌')
+        }
+      }
+    }
   },
 });
 
