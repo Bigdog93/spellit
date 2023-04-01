@@ -81,7 +81,7 @@ const gameSlice = createSlice({
       console.log(action.payload)
     },
     setIdx(state) {
-      if (state.attackTurn){
+      // if (state.attackTurn){
         if (state.idx === state.attacks.length-1) {
           state.idx = 0;
           state.attackCheck = false;
@@ -92,7 +92,7 @@ const gameSlice = createSlice({
           state.idx += 1;
           console.log('idx +1 해줌')
         }
-      }
+      // }
     },
     setAttackCheck(state){
       state.attackCheck = true
