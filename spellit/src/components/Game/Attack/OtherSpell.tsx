@@ -128,8 +128,8 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
 
     // 음성 인식 시작
     setSec(card.cost);
-    recognition.start();
-    console.log('SpeechRecognition start!')
+    // recognition.start();
+    // console.log('SpeechRecognition start!')
 
     // 타이머
     const interval = setInterval(() => {
