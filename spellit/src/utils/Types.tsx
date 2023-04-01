@@ -57,6 +57,7 @@ export type UserEntityType = {
   drawCount: number,
   profileMsg: string,
   isOnline: boolean,
+  isPlaying: boolean,
 }
 
 

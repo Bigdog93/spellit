@@ -108,6 +108,7 @@ const Signup = () => {
       // }).catch((err) => {
       //   console.log(err)
       // })
+      navigate('/login');
     }).catch((err) => {
       console.log(err)
     })

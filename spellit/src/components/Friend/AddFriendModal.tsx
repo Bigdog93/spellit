@@ -35,11 +35,16 @@ function AddFriendModal({ closeAddFriendModal }: Props) {
 			friendId: 0,
 		},
 			{ headers: { Authorization: `Bearer ${token}` } })
-			.then(res => {
+			.then(({ data }) => {
+				console.log(data);
 				send({
 					event: 'friendRequest',
 					memberId: me.id,
-					data: res
+					roomId: 0,
+					nickname: me.nickname,
+					data: {
+						otherId: data
+					}
 				})
 				alert("친구 요청을 보냈습니다.");
 				closeAddFriendModal();

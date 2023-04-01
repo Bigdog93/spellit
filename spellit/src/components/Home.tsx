@@ -1,6 +1,6 @@
 // import * as THREE from "three";
 import { useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { RootState } from "@/store";
@@ -25,6 +25,10 @@ import FriendBtn from "@/assets/models/FriendBtn";
 import Friend from "./Friend";
 
 import AddFriendModal from "./Friend/AddFriendModal";
+import MatchRequestModal from './Friend/MatchRequestModal';
+import API from "@/utils/API";
+import { UserEntityType } from "@/utils/Types";
+import { friendsActions } from "@/store/friends";
 
 const Home = () => {
 	
@@ -33,22 +37,73 @@ const Home = () => {
   const cha_name = useSelector(
     (state: RootState) => state.user.gameCharacter?.englishName
   );
-
+  const matchRequestModalFlag = useSelector((state: RootState) => state.friends.matchRequestModalFlag);
+  const token = sessionStorage.getItem("token");
+  const dispatch = useDispatch();
   const [addFriendModalFlag, setAddFriendModalFlag] = useState<boolean>(false);
   const [friendPopupFlag, setFriendPopupFlag] = useState<boolean>(false);
 
+  function openFriendPopup() {
+    API.get('member/friend/list', { headers: { Authorization: `Bearer ${token}` }, })
+      .then((res) => {
+        const friendList = Array<UserEntityType>();
+                for (let f of res.data) {
+                  const friend: UserEntityType = {
+                    deck: [],
+                    email: f.email,
+                    exp: f.exp,
+                    gameCharacterEntity: f.gameCharacterEntity,
+                    id: f.id,
+                    level: f.level,
+                    nickname: f.nickname,
+                    playCount: f.playCount,
+                    winCount: f.winCount,
+                    looseCount: f.looseCount,
+                    drawCount: f.drawCount,
+                    profileMsg: f.profileMsh,
+                    isOnline: f.isOnline,
+                    isPlaying: f.isPlaying
+                  }
+                  friendList.push(friend);
+                }
+                dispatch(friendsActions.setFriendsList(friendList));
+      })
+      API.get('member/friend/wait', { headers: { Authorization: `Bearer ${token}` }, })
+      .then(({ data }) => {
+        console.log("friend wait list : ", data);
+        const friendWaitList = Array<UserEntityType>();
+        for (let f of data) {
+          const friendWait: UserEntityType = {
+            deck: [],
+            email: f.email,
+            exp: f.exp,
+            gameCharacterEntity: f.gameCharacterEntity,
+            id: f.id,
+            level: f.level,
+            nickname: f.nickname,
+            playCount: f.playCount,
+            winCount: f.winCount,
+            looseCount: f.looseCount,
+            drawCount: f.drawCount,
+            profileMsg: f.profileMsh,
+            isOnline: f.isOnline,
+            isPlaying: f.isPlaying
+          }
+          friendWaitList.push(friendWait);
+        }
+        dispatch(friendsActions.setFriendWaitsList(friendWaitList));
+    })
+    setFriendPopupFlag(true);
+  }
+  function closeFriendPopup() {
+    setFriendPopupFlag(false);
+  }
   function openAddFriendModal() {
     setAddFriendModalFlag(true);
     console.log(addFriendModalFlag);
   }
   function closeAddFriendModal() {
     setAddFriendModalFlag(false);
-  }
-  function openFriendPopup() {
-    setFriendPopupFlag(true);
-  }
-  function closeFriendPopup() {
-    setFriendPopupFlag(false);
   }
 
   return (
@@ -99,6 +154,7 @@ const Home = () => {
       </Canvas>
       {friendPopupFlag && <Friend openAddFriendModal={openAddFriendModal} closeFriendPopup={closeFriendPopup} />}
       {addFriendModalFlag && <AddFriendModal closeAddFriendModal={closeAddFriendModal} />}
+      {matchRequestModalFlag && <MatchRequestModal />}
     </div>
   );
 };

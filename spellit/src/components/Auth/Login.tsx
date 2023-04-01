@@ -40,10 +40,12 @@ const Login = () => {
           headers: { Authorization: `Bearer ${token}` },
         })
           .then((res) => {
+            console.log("myInfo: ", res);
             send({
               event: 'login',
-              memberId: res.data.memberId,
+              memberId: res.data.id,
               nickname: res.data.nickname,
+              data: ''
             })
             console.log("유저정보 가져오기 성공");
             console.log(res.data);
@@ -64,13 +66,15 @@ const Login = () => {
                     looseCount: f.looseCount,
                     drawCount: f.drawCount,
                     profileMsg: f.profileMsh,
-                    isOnline: f.isOnline
+                    isOnline: f.isOnline,
+                    isPlaying: f.isPlaying
                   }
                   dispatch(friendsActions.fillFriendsList(friend));
                 }
               })
             API.get('member/friend/wait', { headers: { Authorization: `Bearer ${token}` }, })
               .then(({ data }) => {
+                console.log("friend wait list : ", data);
                 for (let f of data) {
                   const friendWait: UserEntityType = {
                     deck: [],
@@ -85,16 +89,18 @@ const Login = () => {
                     looseCount: f.looseCount,
                     drawCount: f.drawCount,
                     profileMsg: f.profileMsh,
-                    isOnline: f.isOnline
+                    isOnline: f.isOnline,
+                    isPlaying: f.isPlaying
                   }
                   dispatch(friendsActions.fillFriendWaitsList(friendWait));
                 }
             })
+          }).then(() => {
+            navigate("/home");
           })
           .catch((err) => {
             console.log(err);
           });
-        navigate("/home");
       })
       .catch((err) => {
         console.log(err);

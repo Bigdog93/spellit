@@ -6,13 +6,12 @@ import { RootState } from "@/store/";
 import { AttackType } from '@/utils/Types'
 import { WebSocketContext } from '@/store/websocket'
 
-import ProfileHp from '../Game/Items/ProfileHp';
+import ProfileHp from '../Items/ProfileHp';
 
 import "./Settle.css";
-import LUNA_attack from '../../assets/character/LUNA_attack.png';
-import AK_attack from '../../assets/character/AK_attack.png';
 import player, { playerActions } from '@/store/player';
 import { settleActions } from '@/store/settle';
+import { gameActions } from '@/store/game';
 
 function Settle() {
     const dispatch = useDispatch();
@@ -38,7 +37,12 @@ function Settle() {
 
     const percentList = useSelector((state: RootState) => (state.settle.percentList));
     console.log('percentList : ', percentList);
-    
+
+    // const settleTurn = useSelector((state: RootState) => state.game.settleTurn)
+
+    // const idx = useSelector((state: RootState) => (state.game.idx));
+    const [idx, setIdx] = useState(0);
+ 
     const p1HpStyle = {
         width: `${p1Hp/defaultHP*385}px`,
         backgroundColor: p1Hp > 100 ? '#FFF500' : '#FF0000' ,
@@ -47,18 +51,18 @@ function Settle() {
         width: `${p2Hp/defaultHP*385}px`,
         backgroundColor: p2Hp > 100 ? '#FFF500' : '#FF0000' ,
     }
-
-    const [idx, setIdx] = useState(0);
     
     async function settling(idx: number) {
         console.log('정산중..')
-        let d = attacks[idx].card.damage * percentList[idx] * 2;
+        let d = attacks[idx].card.damage * percentList[idx] * 100;
         console.log('========')
         console.log('d', d);
 
         // 이펙트 사라지게 하기
         const spellEffect = document.querySelector(`.spellEffect-${idx}`);
-        spellEffect?.classList.add('hidden-effect');
+        setTimeout(() => {
+            spellEffect?.classList.add('hidden-effect');
+        }, 2000);
 
         if (attacks[idx].isMine) {
             console.log('내가 공격중!!')
@@ -84,30 +88,67 @@ function Settle() {
         console.log('idx : ', idx)
         console.log('=========')
 
-        if (p1Hp <= 0 || p2Hp <= 0) {
-            send({
-                event: 'gameOver',
-                roomId: roomId,
-                memberId: memberId,
-                data:  {
-                    hp: p1Hp,
-                },
-            }) 
-        }
+        // settleTurn
+        // if (!settleTurn) {
+        //     settling(idx);
+        //     // hp 확인하고
+        //     if (p1Hp && p2Hp) {
+        //         if (p1Hp <= 0 || p2Hp <= 0) {
+        //             send({
+        //                 event: 'gameOver',
+        //                 roomId: roomId,
+        //                 memberId: memberId,
+        //                 data:  {
+        //                     hp: p1Hp,
+        //                 },
+        //             }) 
+        //         // hp 가 남은 경우 다음 턴 진행
+        //         } else {
+        //             settling(idx);
+        //         }
+        //     }
+        // }
+
 
         if (idx < attacks.length) {
-            settling(idx) ;
+            console.log('아직 정산 진행중...');
+            if (p1Hp && p2Hp) {
+                console.log('둘다 살아있음!!!');
+                settling(idx);
+            } else {
+                console.log('게임 끝!! Result로 이동해야지~');
+                send({
+                    event: 'gameOver',
+                    roomId: roomId,
+                    memberId: memberId,
+                    data:  {
+                        hp: p1Hp,
+                    },
+                }) 
+            }
+            // 다음 공격 진행
+            setTimeout(() => {
+                setIdx(idx+1);
+            }, 5000);
+        // 다음 턴으로 진행
         } else {
             dispatch(settleActions.percentListClear());
+            dispatch(gameActions.endSettle());
             console.log('Go to Next Turn!');
-            navigate('/ready');
+            // navigate('/ready');
+            send({
+                event: 'readyTurn',
+                roomId: roomId,
+                memberId: memberId,
+                data: ''
+            })
         }
         console.log('p1HP : ', p1Hp);
         console.log('p2HP : ', p1Hp);
 
-        setTimeout(() => {
-            setIdx(idx+1);
-        }, 5000);
+        // setTimeout(() => {
+        //     setIdx(idx+1);
+        // }, 5000);
 
     }, [idx]);
 
@@ -128,20 +169,20 @@ function Settle() {
                     {attacks.map((attack: AttackType, i: number) => {
                         if (attack.isMine) {
                             return (
-                                <img key={i} className={`spellEffect-${i}`} src={require(`../../assets/effect/${attack.card.code}.png`)} alt="없음,," />
+                                <img key={i} className={`spellEffect-${i}`} src={require(`../../../assets/effect/${attack.card.code}.png`)} alt="없음,," />
                             )
                         }
                     })}   
                 </div>
                 <div className='characterBox'>
-                    <img className="myCharacter" style={{width: '400px'}} src={require(`../../assets/character/${p1Character}_attack.png`)} alt="" />
-                    <img className="yourCharacter" style={{width: '400px'}} src={require(`../../assets/character/${p2Character}_attack.png`)} alt="" />
+                    <img className="myCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p1Character}_attack.png`)} alt="" />
+                    <img className="yourCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" />
                 </div>
                 <div style={{display: 'inline-flex'}}>
                     {attacks.map((attack: AttackType, i: number) => {
                         if (!attack.isMine) {
                             return (
-                                <img key={i} className={`spellEffect-${i}`} src={require(`../../assets/effect/${attack.card.code}.png`)} alt="없음,," />
+                                <img key={i} className={`spellEffect-${i}`} src={require(`../../../assets/effect/${attack.card.code}.png`)} alt="없음,," />
                             )
                         }
                     })}   

@@ -45,6 +45,7 @@
 }
 .friendListScrollContainer {
     overflow-y: auto;
+    height: 255px;
 }
 .friendListScrollContainer::-webkit-scrollbar {
     display: none;
@@ -66,9 +67,6 @@
     cursor: pointer;
     border: 1px solid #ffffff;
     background-color: #ffffff15;
-}
-.btn:hover {
-    background-color: #7c76a7;
 }
 .friendList {
     margin-top: 20px;
@@ -208,6 +206,22 @@
 }
 .frinedBattleBtn>img {
     width: 23px;
+}
+.frinedBattleBtn.active {
+    background-color: #5e5e5e5b;
+}
+.frinedBattleBtn.active:hover {
+    background-color: #ff8b26;
+}
+.disabled {
+    background-color: rgb(87, 87, 87);
+}
+.frinedAcceptBtn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .frinedAcceptBtn {
     width: 40px;
