@@ -194,20 +194,20 @@ UPDATE
     loose_count=new_record.loose_count,
     start_spell=new_record.start_spell;
 
-INSERT INTO `deck`
-(deck_id,card_id,member_id)
-VALUES
-    (1,4,2),
-    (2,5,2),
-    (3,6,2),
-    (4,6,1),
-    (5,1,1),
-    (6,4,1)
-    AS new_record
-ON DUPLICATE KEY
-UPDATE
-    card_id=new_record.card_id,
-    member_id=new_record.member_id;
+-- INSERT INTO `deck`
+-- (deck_id,card_id,member_id)
+-- VALUES
+--     (1,4,2),
+--     (2,5,2),
+--     (3,6,2),
+--     (4,6,1),
+--     (5,1,1),
+--     (6,4,1)
+--     AS new_record
+-- ON DUPLICATE KEY
+-- UPDATE
+--     card_id=new_record.card_id,
+--     member_id=new_record.member_id;
 
 INSERT INTO `friend_wait`
 (id,friend_email,friend_id,member_id)

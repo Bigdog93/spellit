@@ -340,7 +340,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 		}
 		// 연결되어있는 모든 세션 중에서 제거 해요
 		for (WebSocketSession w : allSession) {
-			if (w.equals(session)) {
+			if (w != null && w.equals(session)) {
 				allSession.remove(w);
 				break;
 			}
