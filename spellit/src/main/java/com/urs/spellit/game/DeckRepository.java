@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface DeckRepository extends JpaRepository<DeckEntity, Long> {
+    long countByMember_Id(Long id);
     @Transactional
     List<DeckEntity> findAllByMemberId(Long memberId);
     @Transactional

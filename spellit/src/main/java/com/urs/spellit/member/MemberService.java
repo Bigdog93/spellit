@@ -74,22 +74,24 @@ public class MemberService {
     }
 
     public List<CardEntity> setUserDeck(List<CardEntity> cardEntities) {
-        Optional<Member> member=memberRepository.findById(SecurityUtil.getCurrentMemberId());
-        deckRepository.deleteAllByMemberId(SecurityUtil.getCurrentMemberId());
-        List<CardEntity> cards= new ArrayList<>();
-        for(CardEntity cardEntity : cardEntities)
-        {
-            try {
-                long cardId = cardEntity.getId();
-                cards.add(cardRepository.findById(cardId));
-            }
-            catch(Exception e)
-            {
-                throw new RuntimeException("존재하지 않는 카드입니다.");
-            }
-        }
-
-        member.get().setUserDeck(DeckEntity.toDeck(deckRepository,member.get(),cards));
+        long memberId = SecurityUtil.getCurrentMemberId();
+        Optional<Member> member=memberRepository.findById(memberId);
+        long count = deckRepository.countByMember_Id(memberId);
+        if(count > 0) deckRepository.deleteAllByMemberId(memberId);
+//        List<CardEntity> cards= new ArrayList<>();
+//        for(CardEntity cardEntity : cardEntities)
+//        {
+//            try {
+//                long cardId = cardEntity.getId();
+//                cards.add(cardRepository.findById(cardId));
+//            }
+//            catch(Exception e)
+//            {
+//                throw new RuntimeException("존재하지 않는 카드입니다.");
+//            }
+//        }
+        if(member.isEmpty()) return null; // null check
+        member.get().setUserDeck(DeckEntity.toDeck(deckRepository,member.get(),cardEntities));
         memberRepository.save(member.get());
         return this.getUserDeck(member.get().getId());
     }
