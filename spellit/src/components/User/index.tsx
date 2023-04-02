@@ -126,17 +126,6 @@ const User = () => {
       shake()
     }
   };
-  useEffect(() => {
-    API.post('member/deck',
-      deck,
-      { headers: { Authorization: `Bearer ${token}` } }
-    ).then((res) => {
-      
-    })
-    return () => {
-      
-    }
-  }, [deck])
   
   // 선택한 카드 삭제
   const removeCard = (event: React.MouseEvent<HTMLDivElement>, index: number) => {
