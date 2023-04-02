@@ -22,7 +22,9 @@ const Matching = () => {
   const memberId = useSelector((state: RootState) => state.user.id);
 	const me = useSelector((state: RootState) => state.user);
   const friend = useSelector((state: RootState) => state.friends.matchRequestPlayer)
+	const roomId = useSelector((state: RootState) => state.friends.matchRequestRoomId);
   const isFriendMatch = useSelector((state: RootState) => state.friends.isFriendMatch);
+  const isFriendMatchRequesting = useSelector((state: RootState) => state.friends.isFriendMatchRequesting);
 
   useEffect(() => {
     console.log(memberId)
@@ -38,12 +40,14 @@ const Matching = () => {
       })
       dispatch(friendsActions.setIsFriendMatch(false));
       dispatch(friendsActions.setMatchRequestPlayer(null));
-    } else {
+    } else if(!isFriendMatchRequesting) {
       send({
         event: 'matchStart',
         memberId: memberId,
         data: ''
       })
+    } else {
+      dispatch(friendsActions.setIsFriendMatchRequesting(false));
     }
     return () => {
     }
@@ -51,7 +55,6 @@ const Matching = () => {
 
   
   const readyTurn = useSelector((state: RootState) => state.game.readyTurn)
-  const roomId = useSelector((state: RootState) => state.room.roomId);
   console.log('roomId', roomId)
   console.log('memberId', memberId)
   // p1, p2 모두 동전 던지기가 끝났을 때 store의 game 업뎃
