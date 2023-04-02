@@ -1,0 +1,5 @@
+.result-bg {
+    height: 100vh;
+    background: url(../../../assets/InGame/BgImg.png) no-repeat center;
+    background-size: cover;
+}

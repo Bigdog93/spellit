@@ -7,7 +7,7 @@ import Attack from './Attack';
 import Defense from './Defense';
 // import Settle from './Settle';
 import Settle from './Settle/Settle';
-import Result from '@/components/Game/Result';
+import Result from '@/components/Game/Result/Result';
 import OpenViduVideo from '@/components/Game/OpenVidu/OpenVidu'
 
 

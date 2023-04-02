@@ -14,7 +14,7 @@ import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 import OAuth from "./components/Auth/OAuth";
 import Settle from "./components/Game/Settle/Settle";
-import Result from "./components/Game/Result";
+import Result from "./components/Game/Result/Result";
 // import Test from "./components/Test";
 // import OpenViduTest from "./components/Game/OpenVidu/OpenVidu";
 // import Spell from "./components/Game/Attack/Spell";
