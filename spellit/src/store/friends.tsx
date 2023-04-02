@@ -9,6 +9,7 @@ type FriendsListType = {
     matchRequestPlayer: UserEntityType | null,
     matchRequestRoomId: number,
     isFriendMatch: boolean,
+    isFriendMatchRequesting: boolean,
 }
 
 const initialFriends: FriendsListType = {
@@ -18,6 +19,7 @@ const initialFriends: FriendsListType = {
     matchRequestPlayer: null,
     matchRequestRoomId: 0,
     isFriendMatch: false,
+    isFriendMatchRequesting: false,
 }
 
 const friendsSlice = createSlice({
@@ -88,6 +90,9 @@ const friendsSlice = createSlice({
         setIsFriendMatch(state, action: PayloadAction<boolean>) {
             state.isFriendMatch = action.payload;
         },
+        setIsFriendMatchRequesting(state, action: PayloadAction<boolean>) {
+            state.isFriendMatchRequesting = action.payload;
+        }
     },
 });
 

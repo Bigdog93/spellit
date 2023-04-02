@@ -53,6 +53,7 @@ function EachFriend({ friend, isFriend, acceptFriendRequest }: Props) {
 
   function matchRequest() {
     if (!friend.isOnline || friend.isPlaying) return;
+    dispatch(friendsActions.setIsFriendMatchRequesting(true));
     send({
       event: 'matchRequest',
       memberId: me.id,
@@ -61,7 +62,9 @@ function EachFriend({ friend, isFriend, acceptFriendRequest }: Props) {
         otherId: friend.id,
       }
     })
-    navigate('/matching');
+    setTimeout(() => {
+      navigate('/matching');
+    }, 200);
   }
 
   return (

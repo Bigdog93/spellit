@@ -240,7 +240,13 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
     }
 
     send = (data: any) => {
-      if(ws) ws.send(JSON.stringify(data));
+      if (ws && ws?.readyState === ws?.OPEN) {
+        ws.send(JSON.stringify(data));
+      } else {
+        setTimeout(() => {
+          if(send !== undefined) send(data);
+        }, 200)
+      }
     }
   }
 
