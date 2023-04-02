@@ -106,13 +106,22 @@ public class Member extends BaseTimeEntity {
     }
     public void changeRecord(MemberRecordRequestDto memberRecordRequestDto)
     {
-        if((this.exp+= memberRecordRequestDto.getPlusExp())>10000)
+        int expMax=1000;
+        String gameResult=memberRecordRequestDto.getPlayResult();
+        int plusExp=0;
+
+        if(gameResult.equals("win"))
+        {   this.winCount++;plusExp+=700;}
+        else if(gameResult.equals("draw"))
+        {   this.drawCount++;plusExp+=500;}
+        else if(gameResult.equals("lose"))
+        {   this.looseCount++;plusExp+=300;}
+
+        if((this.exp+= plusExp)>expMax)
         {
             this.level+=1;
-            this.exp=0;
+            this.exp=this.exp-expMax;
         }
-        if(memberRecordRequestDto.isWon())
-            this.winCount++;
 
         this.playCount++;
     }
