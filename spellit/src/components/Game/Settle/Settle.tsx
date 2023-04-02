@@ -54,7 +54,7 @@ const Settle = () => {
     
     const settling = (idx: number) => {
         console.log('정산중..')
-        let d = attacks[idx].card.damage * percentList[idx] * 5;
+        let d = attacks[idx].card.damage * percentList[idx] * 7;
         console.log('========')
         console.log('d', d);
 
@@ -99,68 +99,38 @@ const Settle = () => {
         console.log('p1HP : ', p1Hp);
         console.log('p2HP : ', p1Hp);
 
-        if(!settleTurn) {
-            if (p1Hp && p2Hp) {
-              // Hp가 0인 플레이어가 있으면
-              console.log('hp확인 if 안이야')
-              if(p1Hp <=0 || p2Hp <=0) {
+        if (settleTurn) {
+            if ((p1Hp===0 || p2Hp===0) && !(idx%2)) {
+                dispatch(settleActions.percentListClear())
+                console.log('game over! ready로 가거나 result로 이동')
                 dispatch(settleActions.percentListClear())
                 send({
-                  event: 'gameOver',
-                  roomId: roomId,
-                  memberId: memberId,
-                  data: { hp: p1Hp }
+                    event: 'gameOver',
+                    roomId: roomId,
+                    memberId: memberId,
+                    data: { hp: p1Hp }
                 })
-                // dispatch(gameActions.endGame)
-                // navigate('/result')
-                console.log('hp 다 떨어졌다...')
-      
-              // 두 플레이어 모두 아직 HP가 남았으면
-              } else {
-                // dispatch(gameActions.startReady)
-                // ready로 돌아가기
-                dispatch(settleActions.percentListClear())
-                send({
-                  event: 'toReady',
-                  roomId: roomId,
-                  memberId: memberId,
-                  data: ''
-                })
-              }
             }
-            
-          } else {
-              if (idx < attacks.length) {
+            if (idx < attacks.length) {
                 settling(idx)
                 setTimeout(() => {
                     setIdx(idx+1);
                 }, 5000);
             } else {
                 dispatch(settleActions.percentListClear())
-                dispatch(gameActions.endSettle());
                 if(p1Hp <=0 || p2Hp <=0) {
-                    console.log('game over! result로 이동!!')
+                    console.log('game over! ready로 가거나 result로 이동')
                     dispatch(settleActions.percentListClear())
                     send({
-                    event: 'gameOver',
-                    roomId: roomId,
-                    memberId: memberId,
-                    data: { hp: p1Hp }
-                    })
-        
-                // 두 플레이어 모두 아직 HP가 남았으면
-                } else {
-                    send({
-                        event: 'readyTurn',
+                        event: 'gameOver',
                         roomId: roomId,
                         memberId: memberId,
-                        data: ''
+                        data: { hp: p1Hp }
                     })
                 }
-                  
             }
-            // dispatch(gameActions.settleIdx());
-          }
+        }
+
 
     }, [settleTurn, idx]);
     

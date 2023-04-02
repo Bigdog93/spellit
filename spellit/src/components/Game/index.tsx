@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '@/store';
@@ -20,12 +20,29 @@ const Game = () => {
   const settleTurn = useSelector((state: RootState) => state.game.settleTurn)
   const resultTurn = useSelector((state: RootState) => state.game.resultTurn)
   
+  useEffect(() => {
+    console.log('resultTurn 값 변함!!')
+  }, [resultTurn])
+  useEffect(() => {
+    console.log('settleTurn 값 변함!!')
+  }, [settleTurn])
+  useEffect(() => {
+    console.log('defenseTurn 값 변함!!')
+  }, [defenseTurn])
+  useEffect(() => {
+    console.log('attackTurn 값 변함!!')
+  }, [attackTurn])
+  useEffect(() => {
+    console.log('readyTurn 값 변함!!')
+  }, [readyTurn])
+
 
   console.log('readyTurn: ', readyTurn)
   console.log('attackTurn: ', attackTurn)
   console.log('defenseTurn: ', defenseTurn)
   console.log('settleTurn: ', settleTurn)
   console.log('resultTurn: ', resultTurn)
+
   return (
     <div>
       <OpenViduVideo />

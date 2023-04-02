@@ -87,10 +87,6 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         
       }else if (type === 'toReady') {
         console.log('toReady 입니다.')
-        if (state.game.settleTurn) {
-          console.log('-------endsettle----------');
-          dispatch(gameActions.endSettle());
-        }
         dispatch(gameActions.startReady())
         dispatch(costActions.set(info.cost))
         console.log('toReady에서 info.cost로 받은 cost', info.cost)

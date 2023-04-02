@@ -255,7 +255,7 @@ const OpenViduVideo = () => {
     }, [attackTurn, myTurn])
 
     return (
-      <>
+      <>{console.log('ovpenvidu 계속 렌더링 중인가요,,')}
         {mainStreamManager && <OvVideo streamManager={mainStreamManager}></OvVideo>}
         {/* <button onClick={joinSession}>joinSession</button> */}
         {/* <button onClick={showSubs}>showSubs</button> */}
