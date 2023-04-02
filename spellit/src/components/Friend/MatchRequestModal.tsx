@@ -45,17 +45,7 @@ function AddFriendModal({  }: Props) {
 		dispatch(friendsActions.setMatchRequestModalFlag(false));
 	}
 	function acceptRequest() {
-		/* 이거 매칭 넘어가서 보내자.. navigate 하면서 소켓 끊김 */
-		send({
-			event: 'matchResponse',
-			memberId: me.id,
-			roomId: roomId,
-			data: {
-				otherId: friend?.id,
-				response: true
-			}
-		})
-		dispatch(friendsActions.setMatchRequestPlayer(null));
+		dispatch(friendsActions.setIsFriendMatch(true));
 		dispatch(friendsActions.setMatchRequestModalFlag(false));
 		navigate('/matching');
 	}

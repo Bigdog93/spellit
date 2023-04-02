@@ -10,6 +10,7 @@ import './index.css'
 import Versus from "./Versus"
 import Loading from "./Loading"
 import { Root } from "@react-three/fiber/dist/declarations/src/core/renderer";
+import { friendsActions } from '../../store/friends';
 
 const Matching = () => {
   const navigate = useNavigate();
@@ -19,14 +20,31 @@ const Matching = () => {
 
   const connected = useSelector((state: RootState) => state.matching.connected);
   const memberId = useSelector((state: RootState) => state.user.id);
+	const me = useSelector((state: RootState) => state.user);
+  const friend = useSelector((state: RootState) => state.friends.matchRequestPlayer)
+  const isFriendMatch = useSelector((state: RootState) => state.friends.isFriendMatch);
 
   useEffect(() => {
     console.log(memberId)
-    send({
-      event: 'matchStart',
-			memberId: memberId,
-      data: ''
-		})
+    if (isFriendMatch) {
+      send({
+        event: 'matchResponse',
+        memberId: me.id,
+        roomId: roomId,
+        data: {
+          otherId: friend?.id,
+          response: true
+        }
+      })
+      dispatch(friendsActions.setIsFriendMatch(false));
+      dispatch(friendsActions.setMatchRequestPlayer(null));
+    } else {
+      send({
+        event: 'matchStart',
+        memberId: memberId,
+        data: ''
+      })
+    }
     return () => {
     }
   }, []);
