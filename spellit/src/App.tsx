@@ -26,6 +26,7 @@ import Skills from "./components/Settle/Skills";
 import Test from "./components/Test";
 import Particle from "./components/Test";
 import OtherSpell from './components/Game/Attack'
+import Combo from "./components/Game/Attack/Combo";
 
 function App() {
   const isLogged = useSelector(
@@ -61,6 +62,7 @@ function App() {
           <Route path="profile/:id" element={<Profile />} />
           <Route path="particle" element={<Particle />} />
           <Route path="otherspell" element={<OtherSpell />} />
+          <Route path="combo" element={<Combo />} />
         </Routes>
       </BrowserRouter>
     </WebSocketProvider>
