@@ -88,32 +88,41 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 			}
 			/* 친구랑 매치 */
 		}else if(event.equals("matchRequest")) {
+			// 내 정보 받아오기
 			PlayerDto player = getPlayerByMemberId(session, memberId);
 			player.setIdx(0);
+			// 방 만들어주기
 			RoomInfo room = roomManager.makeRoom(player);
+			// data로 부터 otherId 받기
 			long otherId = myParser.getLong("otherId", data);
 			infoMap.put("roomId", room.getRoomId());
 			infoMap.put("friend", player);
 			if(allPlayers.get(otherId).isOpen())
 			allPlayers.get(otherId).sendMessage(makeTextMsg("matchRequest", infoMap));
 		}else if(event.equals("matchResponse")) {
-			PlayerDto player = getPlayerByMemberId(session, memberId);
-			player.setIdx(1);
-			RoomInfo room = roomManager.getRoomInfo(roomId);
-			room.getPlayerList().add(player);
-			room.setPlayersPriority(); // 선공 후공 정해주기, 선공, 후공 순서대로 List 재정렬
-			infoMap.put("roomInfo", room); // 방 정보 담아서
-			room.sendMessage(makeTextMsg("connected", infoMap)); // 전송
-			Set<Long> friendsId = memberService.playerPlayStart(room.getPlayerList().get(0).getMemberId(), room.getPlayerList().get(1).getMemberId());
-			infoMap = new HashMap<>();
-			infoMap.put("friendId", memberId);
-			infoMap.put("friendNickname", nickname);
-			if(friendsId != null) {
-				for(Long id : friendsId) {
-					if(allPlayers.get(id) != null && allPlayers.get(id).isOpen()) {
-						allPlayers.get(id).sendMessage(makeTextMsg("playStart", infoMap));
+			boolean res = myParser.getBoolean("response", data);
+			if(res) {
+				PlayerDto player = getPlayerByMemberId(session, memberId);
+				player.setIdx(1);
+				RoomInfo room = roomManager.getRoomInfo(roomId);
+				room.getPlayerList().add(player);
+				room.setPlayersPriority(); // 선공 후공 정해주기, 선공, 후공 순서대로 List 재정렬
+				infoMap.put("roomInfo", room); // 방 정보 담아서
+				room.sendMessage(makeTextMsg("connected", infoMap)); // 전송
+				Set<Long> friendsId = memberService.playerPlayStart(room.getPlayerList().get(0).getMemberId(), room.getPlayerList().get(1).getMemberId());
+				infoMap = new HashMap<>();
+				infoMap.put("friendId", memberId);
+				infoMap.put("friendNickname", nickname);
+				if(friendsId != null) {
+					for(Long id : friendsId) {
+						if(allPlayers.get(id) != null && allPlayers.get(id).isOpen()) {
+							allPlayers.get(id).sendMessage(makeTextMsg("playStart", infoMap));
+						}
 					}
 				}
+			}else {
+				long otherId = myParser.getLong("otherId", data);
+				allPlayers.get(otherId).sendMessage(makeTextMsg("matchRefuse", infoMap));
 			}
 		}else if(event.equals("matchStart")) {
 			/* 빠른 매치 눌렀을 때*/

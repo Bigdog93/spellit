@@ -32,6 +32,13 @@ public class MyParser {
         }
         return jsonElement.getAsString();
     }
+    public boolean getBoolean(String key, JsonElement json) {
+        JsonElement jsonElement = json.getAsJsonObject().get(key);
+        if(jsonElement == null) {
+            return false;
+        }
+        return jsonElement.getAsBoolean();
+    }
     public long getLong(String key, JsonElement json) {
         JsonElement jsonElement = json.getAsJsonObject().get(key);
         if(jsonElement == null) {
