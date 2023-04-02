@@ -15,6 +15,8 @@ public class MemberRecordResponseDto {
     private int exp;
     private int playCount;
     private int winCount;
+    private int drawCount;
+    private int looseCount;
 
     public static MemberRecordResponseDto of(Member member)
     {
@@ -23,6 +25,8 @@ public class MemberRecordResponseDto {
                 .exp(member.getExp())
                 .playCount(member.getPlayCount())
                 .winCount(member.getWinCount())
+                .drawCount(member.getDrawCount())
+                .looseCount(member.getLooseCount())
                 .build();
     }
 }
