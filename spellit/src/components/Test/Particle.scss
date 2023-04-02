@@ -1,0 +1,71 @@
+// html,
+// body {
+//     position: relative;
+//     margin: 0;
+//     width: 100%;
+//     height: 100%;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     overflow: hidden;
+//     background-color: #000;
+//     cursor: pointer;
+// }
+
+// @keyframes change {
+//     10% {
+//         filter: hue-rotate(360deg);
+//     }
+// }
+
+// // .doodle {
+// //     height: 100vh;
+// //     width: 100vw;
+// // }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+}
+
+.bubbleContainer{
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.bubbles{
+  position: relative;
+  display: flex;
+}
+
+.bubbles span {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  background: #fff;
+  margin: 0 4px;
+  border-radius: 70%;
+  box-shadow: 0 0 20px #4fc3dc44, 0 0 60px #4fc3dc, 0 0 110px #4fc3dc;
+  animation: animate 15s linear infinite;
+  animation-duration: calc(100s/var(--i));
+}
+
+.bubbles span:nth-child(even) {
+  background: #fff;
+  box-shadow: 0 0 30px #ff2d75, 0 0 70px #ff2d75, 0 0 120px #ff2d75;
+}
+
+@keyframes animate {
+  0% {
+    transform: translateY(100vh) scale(0);
+  }
+  100% {
+    transform: translateY(-10vh) scale(1);
+  }
+}
