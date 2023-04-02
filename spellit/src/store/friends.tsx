@@ -3,10 +3,11 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { UserEntityType } from '@/utils/Types';
 
 type FriendsListType = {
-    friends: Array<UserEntityType>;
-    friendWaits: Array<UserEntityType>;
-    matchRequestModalFlag: boolean;
+    friends: Array<UserEntityType>,
+    friendWaits: Array<UserEntityType>,
+    matchRequestModalFlag: boolean,
     matchRequestPlayer: UserEntityType | null,
+    matchRequestRoomId: number,
 }
 
 const initialFriends: FriendsListType = {
@@ -14,6 +15,7 @@ const initialFriends: FriendsListType = {
     friendWaits: [],
     matchRequestModalFlag: false,
     matchRequestPlayer: null,
+    matchRequestRoomId: 0,
 }
 
 const friendsSlice = createSlice({
@@ -75,8 +77,11 @@ const friendsSlice = createSlice({
         setMatchRequestModalFlag(state, action: PayloadAction<boolean>) {
             state.matchRequestModalFlag = action.payload;
         },
-        setMatchRequestPlayer(state, action: PayloadAction<UserEntityType>) { 
+        setMatchRequestPlayer(state, action: PayloadAction<UserEntityType | null>) { 
             state.matchRequestPlayer = action.payload;
+        },
+        setMatchRequestRoomId(state, action: PayloadAction<number>) {
+            state.matchRequestRoomId = action.payload;
         },
     },
 });
