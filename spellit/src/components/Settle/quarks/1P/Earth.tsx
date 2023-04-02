@@ -6,22 +6,15 @@ import { Group } from "three";
 interface Props {
   handleSpell: () => void;
   isSpell: boolean;
-  selectCamera: (num: number) => void;
 }
 
-const Tornado: React.FC<Props> = ({
-  handleSpell,
-  isSpell,
-  selectCamera,
-}: Props) => {
+const Earth: React.FC<Props> = ({ handleSpell, isSpell }: Props) => {
   const { size } = useThree();
   const sceneRef = useRef<Group>(null);
   const batchSystemRef = useRef<BatchedRenderer>();
 
   // scene 렌더링
   useLayoutEffect(() => {
-    selectCamera(0);
-
     const scene = sceneRef.current;
     const batchSystem = new BatchedRenderer();
     batchSystemRef.current = batchSystem;
@@ -30,14 +23,15 @@ const Tornado: React.FC<Props> = ({
 
       const loader = new QuarksLoader();
       loader.setCrossOrigin("");
-      loader.load("./models/skilljson/tripletornado.json", (obj) => {
+      loader.load("./models/skilljson/earth.json", (obj) => {
         obj.traverse((child) => {
           if (child.type === "ParticleEmitter") {
             batchSystem.addSystem((child as any).system);
           }
         });
         scene.add(obj);
-        scene.position.set(2, -1, 0);
+        scene.position.set(1, 0, 0);
+        scene.scale.set(0.5, 0.5, 0.5);
       });
     }
   }, [size]);
@@ -78,4 +72,4 @@ const Tornado: React.FC<Props> = ({
   );
 };
 
-export default Tornado;
+export default Earth;

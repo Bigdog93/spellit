@@ -45,7 +45,7 @@ export default function Player2(props: Props & JSX.IntrinsicElements["group"]) {
 
         positionRef.current.x = newPosition;
 
-        const color = new THREE.Color("#ff0000");
+        const color = new THREE.Color("#ff4040");
         materials.AK_default.color = color;
       } else {
       }
