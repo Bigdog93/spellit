@@ -69,6 +69,9 @@ function Settle() {
             if (p2Deffense) {
                 d = d/2;
             }
+            if (d >= p2Hp) {
+                d = p2Hp;
+            }
             setTimeout(() => {
                 dispatch(playerActions.p2HpDecrese(d));
             }, 3000);
@@ -76,6 +79,9 @@ function Settle() {
             console.log('공격 당하는중,,')
             if (p1Deffense) {
                 d = d/2;
+            }
+            if (d >= p1Hp) {
+                d = p1Hp;
             }
             setTimeout(() => {
                 dispatch(playerActions.p1HpDecrese(d));
@@ -87,68 +93,54 @@ function Settle() {
         console.log('=========')
         console.log('idx : ', idx)
         console.log('=========')
-
-        // settleTurn
-        // if (!settleTurn) {
-        //     settling(idx);
-        //     // hp 확인하고
-        //     if (p1Hp && p2Hp) {
-        //         if (p1Hp <= 0 || p2Hp <= 0) {
-        //             send({
-        //                 event: 'gameOver',
-        //                 roomId: roomId,
-        //                 memberId: memberId,
-        //                 data:  {
-        //                     hp: p1Hp,
-        //                 },
-        //             }) 
-        //         // hp 가 남은 경우 다음 턴 진행
-        //         } else {
-        //             settling(idx);
-        //         }
-        //     }
-        // }
-
-
-        if (idx < attacks.length) {
+        
+        
+        if (idx !== attacks.length) {
             console.log('아직 정산 진행중...');
-            if (p1Hp && p2Hp) {
-                console.log('둘다 살아있음!!!');
                 settling(idx);
-            } else {
-                console.log('게임 끝!! Result로 이동해야지~');
-                send({
-                    event: 'gameOver',
-                    roomId: roomId,
-                    memberId: memberId,
-                    data:  {
-                        hp: p1Hp,
-                    },
-                }) 
-            }
-            // 다음 공격 진행
+                console.log('p1HP : ', p1Hp);
+                console.log('p2HP : ', p1Hp);
+
+            // idx 증가
             setTimeout(() => {
                 setIdx(idx+1);
             }, 5000);
-        // 다음 턴으로 진행
+        // 모든 스펠 정산 끝
         } else {
-            dispatch(settleActions.percentListClear());
-            dispatch(gameActions.endSettle());
-            console.log('Go to Next Turn!');
-            // navigate('/ready');
-            send({
-                event: 'readyTurn',
-                roomId: roomId,
-                memberId: memberId,
-                data: ''
-            })
+            setTimeout(() => {
+                // 피가 한 사람이라도 없으면 result로 이동
+                if (p1Hp <= 0 || p2Hp <= 0) {
+                    console.log('게임 끝!! Result로 이동해야지~');
+                    send({
+                        event: 'gameOver',
+                        roomId: roomId,
+                        memberId: memberId,
+                        data:  {
+                            hp: p1Hp,
+                        },
+                    })
+                // 피가 남아 있으면 ready 턴으로 이동
+                } else {
+                    dispatch(settleActions.percentListClear());
+                    // dispatch(gameActions.endSettle());
+                    console.log('Go to Next Turn!');
+                    // send({
+                    //     event: 'readyTurn',
+                    //     roomId: roomId,
+                    //     memberId: memberId,
+                    //     data: ''
+                    // })
+                    send({
+                        event: 'gameOver',
+                        roomId: roomId,
+                        memberId: memberId,
+                        data:  {
+                            hp: p1Hp,
+                        },
+                    })
+                }
+            }, 1500);
         }
-        console.log('p1HP : ', p1Hp);
-        console.log('p2HP : ', p1Hp);
-
-        // setTimeout(() => {
-        //     setIdx(idx+1);
-        // }, 5000);
 
     }, [idx]);
 
@@ -169,7 +161,7 @@ function Settle() {
                     {attacks.map((attack: AttackType, i: number) => {
                         if (attack.isMine) {
                             return (
-                                <img key={i} className={`spellEffect-${i}`} src={require(`../../../assets/effect/${attack.card.code}.png`)} alt="없음,," />
+                                <img key={i} style={{height: '150px'}} className={`spellEffect-${i}`} src={require(`../../../assets/effect/${attack.card.code}.png`)} alt="없음,," />
                             )
                         }
                     })}   
@@ -182,7 +174,7 @@ function Settle() {
                     {attacks.map((attack: AttackType, i: number) => {
                         if (!attack.isMine) {
                             return (
-                                <img key={i} className={`spellEffect-${i}`} src={require(`../../../assets/effect/${attack.card.code}.png`)} alt="없음,," />
+                                <img key={i} style={{height: '150px'}} className={`spellEffect-${i}`} src={require(`../../../assets/effect/${attack.card.code}.png`)} alt="없음,," />
                             )
                         }
                     })}   

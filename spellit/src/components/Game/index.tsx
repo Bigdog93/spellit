@@ -5,7 +5,8 @@ import { RootState } from '@/store';
 import Ready from './Ready'
 import Attack from './Attack';
 import Defense from './Defense';
-import Settle from './Settle';
+// import Settle from './Settle';
+import Settle from './Settle/Settle';
 import Result from '@/components/Game/Result';
 import OpenViduVideo from '@/components/Game/OpenVidu/OpenVidu'
 

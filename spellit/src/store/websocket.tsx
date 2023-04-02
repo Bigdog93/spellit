@@ -141,6 +141,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         
       } else if (type === 'gameOver') {
         console.log('gameOver입니다.')
+        dispatch(settleActions.percentListClear());
         dispatch(gameActions.endSettle())
         // dispatch(gameActions.endGame())
         dispatch(gameActions.startResult())
