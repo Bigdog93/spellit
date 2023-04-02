@@ -9,6 +9,7 @@ import './Spell.css'
 import Timer from "@/components/Game/Items/Timer";
 import { gameActions } from "@/store/game";
 import ProfileHp from "../Items/ProfileHp";
+import { settleActions } from "@/store/settle";
 
 
 interface Spell {
@@ -79,12 +80,12 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
     }
     setSpanEl(spanList);
 
-    const trimText = card.spell.replaceAll(" ", ""); // 띄어쓰기 제거한 주문
+    const trimText = card.spell.replaceAll(reg, ""); // 띄어쓰기랑 , 제거한 주문
     // console.log(trimText);
 
     recognition.addEventListener("result", (e) => {
-        console.log("말하는 중이잖아요?");
-        console.log(e)
+        // console.log("말하는 중이잖아요?");
+        // console.log(e)
         let transcript = e.results[0][0].transcript; // 인식된 음성 글자
         transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
         // console.log(transcript);
@@ -92,33 +93,33 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
           // let transcript = e.results[0][0].transcript; // 인식된 음성 글자
           // transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
           // console.log(transcript);
-          send({
-            event: 'spell',
-            roomId: roomId,
-            memberId: memberId,
-            data:  transcript,
-          })
-          console.log(transcript)
+          // send({
+          //   event: 'spell',
+          //   roomId: roomId,
+          //   memberId: memberId,
+          //   data:  transcript,
+          // })
+          // console.log(transcript)
         // } 
 
 
         let correct = 0;
         console.log("------------------------------------------------");
         for (let i = 0; i < transcript.length; i++) {
-          console.log('for 문 안이다!')
+          // console.log('for 문 안이다!')
             if (transcript[i] == trimText[i]) {
                 const element = document.getElementById(`spell-${i}`);
 
                 const correctColor = `correct${card.attribute}`;
                 element?.classList.add(correctColor);
                 correct++;
-                console.log('------')
-                console.log(element);
-                console.log('------')
+                // console.log('------')
+                // console.log(element);
+                // console.log('------')
             }
         }
         // const percentEl = document.getElementById("percent") as HTMLDivElement;
-        const correctPercent = Math.round((correct / spellLength) * 100);
+        // const correctPercent = Math.round((correct / spellLength) * 100);
         // percentEl.innerText = `총 ${spellLength}개 중 ${correct}개 맞음 : ${correctPercent} %`;
     });
 
@@ -152,6 +153,26 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
 
         console.log('SpeechRecognition end!')
         setTimeout(() => {
+          let correct = 0;
+            for (let i=0; i<spellLength; i++) {
+              const correctEl = document.querySelector(`#spell-${i}`);
+              if (correctEl?.classList.contains(`correct${card.attribute}`)) {
+                correct++;
+                correctEl.classList.remove(`correct${card.attribute}`);
+              }
+            }
+            console.log('맞은 개수 : ', correct)
+            const damage = correct / spellLength
+            dispatch(settleActions.percentList(damage));
+            console.log('damage 값 보냄!!! : ', damage);
+            // 상대방에게 데미지 값 전송
+            send({
+                event: 'spell',
+                roomId: roomId,
+                memberId: memberId,
+                data:  damage,
+            })
+
           if(idx+1 === attacks.length){
             send({
               event: 'defenseTurn',
