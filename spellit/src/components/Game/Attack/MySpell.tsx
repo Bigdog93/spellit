@@ -144,14 +144,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
         clearInterval(interval);
 
         // 마지막 인덱스면 defense 턴 시작
-        if(idx+1 === attacks.length){
-          send({
-            event: 'defenseTurn',
-            roomId: roomId,
-            memberId: memberId,
-            data: ''
-          })
-        }
+        
         // 마지막 턴 아니면 인덱스 올려주기
         // } else {
         // dispatch(gameActions.setIdx())
@@ -159,7 +152,19 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
 
         console.log('SpeechRecognition end!')
         setTimeout(() => {
+          if(idx+1 === attacks.length){
+            send({
+              event: 'defenseTurn',
+              roomId: roomId,
+              memberId: memberId,
+              data: ''
+            })
+            
+            // } else {
+              // dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
+          }
           dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
+
         }, 3000);
 
     }, card.cost*1000);

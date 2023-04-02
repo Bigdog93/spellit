@@ -24,6 +24,9 @@ import Deck from './components/User'
 // 임시
 import Skills from "./components/Settle/Skills";
 import Test from "./components/Test";
+import Particle from "./components/Test";
+import OtherSpell from './components/Game/Attack'
+
 function App() {
   const isLogged = useSelector(
     (state: RootState) => state.auth.isAuthenticated
@@ -56,6 +59,8 @@ function App() {
           {/* <Route path="spell" element={<Spell />} /> */}
           <Route path="skills" element={<Skills />} />
           <Route path="profile/:id" element={<Profile />} />
+          <Route path="particle" element={<Particle />} />
+          <Route path="otherspell" element={<OtherSpell />} />
         </Routes>
       </BrowserRouter>
     </WebSocketProvider>

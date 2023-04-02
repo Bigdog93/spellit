@@ -9,7 +9,7 @@ import './Spell.css'
 import Timer from "@/components/Game/Items/Timer";
 import { gameActions } from "@/store/game";
 import ProfileHp from "../Items/ProfileHp";
-
+import Particle from "../../Test/Particle"
 
 interface Spell {
     name: string;
@@ -128,8 +128,8 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
 
     // 음성 인식 시작
     setSec(card.cost);
-    recognition.start();
-    console.log('SpeechRecognition start!')
+    // recognition.start();
+    // console.log('SpeechRecognition start!')
 
     // 타이머
     const interval = setInterval(() => {
@@ -222,7 +222,9 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
           </div>
           {!attack.isMine && <img className="yourCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" /> }
         </div>
-
+        {/* <div className="otherSpellParticle">
+          <Particle/>
+        </div> */}
       </div>
   )
 }
