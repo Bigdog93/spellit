@@ -1,7 +1,10 @@
-import {RootState} from '@/store'
+import { useState, useEffect } from 'react';
+// import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-
 import _ from 'lodash'
+
+import { RootState } from '@/store'
+import { DeckType } from '@/utils/Types';
 
 import Card from './Card'
 import style from './index.module.css'
@@ -29,14 +32,28 @@ const Cards = ({cards, selectCard}: PropsType) => {
   const myDeck = useSelector((state: RootState) => (state.user.deck))
   console.log('myDeck ', myDeck)
   // const mine = cards.filter(c => myDeck.includes(c))
-  const mine = cards.filter(c => myDeck.includes(c))
-  const notMine = cards.filter(c=> !(myDeck.includes(c)))
+  const [mine, setMine] = useState<Array<DeckType>>([]);
+  const [notMine, setNotMine] = useState<Array<DeckType>>([]);
+
+  useEffect(() => {
+    for (const card of cards) {
+      for (const m of myDeck) {
+        console.log(m.title)
+        if (card.id === m.id) {
+          setMine([...mine, card])
+        } else {
+          setNotMine([...notMine, card])
+        }
+      }
+    }
+  }, [myDeck])
+
   console.log('mine ', mine)
   console.log('notMine ', notMine)
 
   return (
     <div className={`${style.cardItems}`}>
-      { mine.map((card: CardType, index: number) => (
+      { myDeck.map((card: CardType, index: number) => (
         <div onClick={(e) => onSelectCard(card)} className={`${style.cardContainer}`}>
           <Card key={index} card={card.code}/>
         </div>
