@@ -31,7 +31,7 @@ const FireBall: React.FC<Props> = ({
 
       const loader = new QuarksLoader();
       loader.setCrossOrigin("");
-      loader.load("./models/skilljson/fireball.json", (obj) => {
+      loader.load("/models/skilljson/fireball.json", (obj) => {
         obj.traverse((child) => {
           if (child.type === "ParticleEmitter") {
             batchSystem.addSystem((child as any).system);

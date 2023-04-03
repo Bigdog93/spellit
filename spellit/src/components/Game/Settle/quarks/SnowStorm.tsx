@@ -32,7 +32,7 @@ const SnowStorm: React.FC<Props> = ({
 
       const loader = new QuarksLoader();
       loader.setCrossOrigin("");
-      loader.load("./models/skilljson/icestorm.json", (obj) => {
+      loader.load("/models/skilljson/icestorm.json", (obj) => {
         obj.traverse((child) => {
           if (child.type === "ParticleEmitter") {
             batchSystem.addSystem((child as any).system);

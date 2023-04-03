@@ -25,7 +25,7 @@ const Lightning: React.FC<Props> = ({
     selectCamera(0);
     if (scene) {
       const textureLoader = new THREE.TextureLoader();
-      const texture = textureLoader.load("./models/spark_05.png");
+      const texture = textureLoader.load("/models/spark_05.png");
       console.log(texture);
 
       const color1 = new THREE.Color("#ffffff");

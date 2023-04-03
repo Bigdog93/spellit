@@ -4,6 +4,8 @@
   background-image: url("~@/assets/settle/battle-background.png");
   background-size: cover;
   position: relative;
+
+  z-index: 5;
 }
 .box2 {
   width: 100wh;
@@ -13,13 +15,15 @@
   position: relative;
   /* animation: shakebg 0.2s infinite; */
   animation-delay: 2s;
+
+  z-index: 5;
 }
 
 .canvas {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: -1; /* 다른 요소들과 겹치지 않도록 z-index를 설정합니다. */
+  z-index: 5; /* 다른 요소들과 겹치지 않도록 z-index를 설정합니다. */
 }
 
 @keyframes shakebg {
@@ -46,6 +50,8 @@
 
   top: 400px;
   left: 180px;
+
+  z-index: 5;
 }
 
 .cha2 {
@@ -53,7 +59,10 @@
   height: 450px;
   top: 400px;
   right: 180px;
+
+  z-index: 5;
 }
+
 .cha2-shake {
   position: absolute;
   height: 450px;
@@ -61,6 +70,8 @@
   right: 180px;
   animation: shakecha 2s, blink-effect 1s step-end 3;
   filter: brightness(20%);
+
+  z-index: 5;
 }
 
 @keyframes shakecha {
@@ -95,6 +106,8 @@
 	animation-duration: 3s;
 	animation-timing-function: ease-in-out;
 	animation-iteration-count: 2;
+
+  z-index: 5;
 }
 
 .icon2 {
@@ -103,6 +116,8 @@
   position: absolute;
   top: 420px;
   left: 150px;
+
+  z-index: 5;
   
 }
 
@@ -127,4 +142,6 @@
 	position:absolute;
 	top:0;
 	left: 0;
+
+  z-index: 5;
 }

@@ -32,7 +32,7 @@ const DarkHall: React.FC<Props> = ({
 
       const loader = new QuarksLoader();
       loader.setCrossOrigin("");
-      loader.load("./models/skilljson/abyss.json", (obj) => {
+      loader.load("/models/skilljson/abyss.json", (obj) => {
         obj.traverse((child) => {
           if (child.type === "ParticleEmitter") {
             batchSystem.addSystem((child as any).system);

@@ -44,6 +44,7 @@ function Settle() {
 
     // const idx = useSelector((state: RootState) => (state.game.idx));
     const [idx, setIdx] = useState(0);
+    const [isCanvas, setIsCanvas] = useState(false);
  
     const p1HpStyle = {
         width: `${p1Hp/defaultHP*385}px`,
@@ -56,7 +57,7 @@ function Settle() {
     
     async function settling(idx: number) {
         console.log('정산중..')
-        let d = attacks[idx].card.damage * percentList[idx] * 100;
+        let d = attacks[idx].card.damage * percentList[idx] * 2;
         console.log('========')
         console.log('d', d);
 
@@ -64,31 +65,37 @@ function Settle() {
         const spellEffect = document.querySelector(`.spellEffect-${idx}`);
         setTimeout(() => {
             spellEffect?.classList.add('hidden-effect');
+            setTimeout(() => {
+                // canvas 실행
+                setIsCanvas(true);
+                if (attacks[idx].isMine) {
+                    console.log('내가 공격중!!')
+                    if (p2Deffense) {
+                        d = d/2;
+                    }
+                    if (d >= p2Hp) {
+                        d = p2Hp;
+                    }
+                    setTimeout(() => {
+                        setIsCanvas(false);
+                        dispatch(playerActions.p2HpDecrese(d));
+                    }, 3000);
+                } else {
+                    console.log('공격 당하는중,,')
+                    if (p1Deffense) {
+                        d = d/2;
+                    }
+                    if (d >= p1Hp) {
+                        d = p1Hp;
+                    }
+                    setTimeout(() => {
+                        setIsCanvas(false);
+                        dispatch(playerActions.p1HpDecrese(d));
+                    }, 3000);
+                }
+            }, 1000);
         }, 2000);
 
-        if (attacks[idx].isMine) {
-            console.log('내가 공격중!!')
-            if (p2Deffense) {
-                d = d/2;
-            }
-            if (d >= p2Hp) {
-                d = p2Hp;
-            }
-            setTimeout(() => {
-                dispatch(playerActions.p2HpDecrese(d));
-            }, 3000);
-        } else {
-            console.log('공격 당하는중,,')
-            if (p1Deffense) {
-                d = d/2;
-            }
-            if (d >= p1Hp) {
-                d = p1Hp;
-            }
-            setTimeout(() => {
-                dispatch(playerActions.p1HpDecrese(d));
-            }, 3000);
-        }
     }
 
     useEffect(() => {
@@ -147,46 +154,53 @@ function Settle() {
     }, [idx]);
 
     return (
-        <div className='settle-bg'>
-            <div className='settle-top-itmes'>
-                <div className='first-hp-box'>
-                    <ProfileHp></ProfileHp>
-                    <div className="first-hp-bar" style={p1HpStyle}></div>
+        <>
+            {isCanvas && idx<attacks.length ?
+            <Skills code={attacks[idx].card.code} isMine={attacks[idx].isMine} p1Character={p1Character} p2Character={p2Character}></Skills>
+            :
+            <div className='settle-bg'>
+                <div className='settle-top-itmes'>
+                    <div className='first-hp-box'>
+                        <ProfileHp></ProfileHp>
+                        <div className="first-hp-bar" style={p1HpStyle}></div>
+                    </div>
+                    <div className='second-hp-box'>
+                        <ProfileHp></ProfileHp>
+                        <div className="second-hp-bar" style={p2HpStyle}></div>
+                    </div>
                 </div>
-                <div className='second-hp-box'>
-                    <ProfileHp></ProfileHp>
-                    <div className="second-hp-bar" style={p2HpStyle}></div>
+                <div className='settle-bottom-items'>
+                    <div className='settle-p1Box'>
+                        <div style={{display: 'inline-flex'}}>
+                            {attacks.map((attack: AttackType, i: number) => {
+                                if (attack.isMine) {
+                                    return (
+                                        <img key={i} style={{height: '100px'}} className={`spellEffect-${i}`} src={require(`../../../assets/effect/${attack.card.code}.png`)} alt="없음,," />
+                                    )
+                                }
+                            })}   
+                        </div>
+                    <img className="myCharacter" style={{width: '300px'}} src={require(`../../../assets/character/${p1Character}_attack.png`)} alt="" />
+                    </div>
+                    
+                    {/* {idx<attacks.length ? <Skills code={attacks[idx].card.code} isMine={attacks[idx].isMine} p1Character={p1Character} p2Character={p2Character}></Skills> : <></>} */}
+                    
+                    <div className='settle-p2Box'>
+                        <div style={{display: 'inline-flex'}}>
+                            {attacks.map((attack: AttackType, i: number) => {
+                                if (!attack.isMine) {
+                                    return (
+                                        <img key={i} style={{height: '150px'}} className={`spellEffect-${i}`} src={require(`../../../assets/effect/${attack.card.code}.png`)} alt="없음,," />
+                                    )
+                                }
+                            })}   
+                        </div>
+                        <img className="yourCharacter" style={{width: '300px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" />
+                    </div>
                 </div>
             </div>
-            <div className='settle-bottom-items'>
-                <div className='settle-p1Box'>
-                    <div style={{display: 'inline-flex'}}>
-                        {attacks.map((attack: AttackType, i: number) => {
-                            if (attack.isMine) {
-                                return (
-                                    <img key={i} style={{height: '100px'}} className={`spellEffect-${i}`} src={require(`../../../assets/effect/${attack.card.code}.png`)} alt="없음,," />
-                                )
-                            }
-                        })}   
-                    </div>
-                {/* <img className="myCharacter" style={{width: '300px'}} src={require(`../../../assets/character/${p1Character}_attack.png`)} alt="" /> */}
-                </div>
-                
-                <Skills code={attacks[idx].card.code} isMine={attacks[idx].isMine} p1Character={p1Character} p2Character={p2Character}></Skills>
-                <div className='settle-p2Box'>
-                    <div style={{display: 'inline-flex'}}>
-                        {attacks.map((attack: AttackType, i: number) => {
-                            if (!attack.isMine) {
-                                return (
-                                    <img key={i} style={{height: '150px'}} className={`spellEffect-${i}`} src={require(`../../../assets/effect/${attack.card.code}.png`)} alt="없음,," />
-                                )
-                            }
-                        })}   
-                    </div>
-                    {/* <img className="yourCharacter" style={{width: '300px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" /> */}
-                </div>
-            </div>
-        </div>
+            }
+        </>
     )
 }
 

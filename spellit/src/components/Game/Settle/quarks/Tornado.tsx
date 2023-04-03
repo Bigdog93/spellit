@@ -32,7 +32,7 @@ const Tornado: React.FC<Props> = ({
 
       const loader = new QuarksLoader();
       loader.setCrossOrigin("");
-      loader.load("./models/skilljson/tripletornado.json", (obj) => {
+      loader.load("/models/skilljson/tripletornado.json", (obj) => {
         obj.traverse((child) => {
           if (child.type === "ParticleEmitter") {
             batchSystem.addSystem((child as any).system);

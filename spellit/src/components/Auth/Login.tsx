@@ -110,7 +110,7 @@ const Login = () => {
   };
 
   const toSignup = () => {
-    navigate("/join");
+    navigate("/signup");
   };
 
   const toHome = () => {

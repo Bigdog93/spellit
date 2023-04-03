@@ -23,7 +23,7 @@ const Light1: React.FC<Props> = ({ handleSpell, isSpell }: Props) => {
 
       const loader = new QuarksLoader();
       loader.setCrossOrigin("");
-      loader.load("./models/skilljson/light.json", (obj) => {
+      loader.load("/models/skilljson/light.json", (obj) => {
         obj.traverse((child) => {
           if (child.type === "ParticleEmitter") {
             batchSystem.addSystem((child as any).system);
