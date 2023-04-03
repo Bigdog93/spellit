@@ -1,5 +1,5 @@
 import { RootState } from "@/store"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import Draw from "./Draw";
 import Lose from "./Lose";
 import Win from "./Win";
@@ -14,11 +14,13 @@ import quickmatchBtn from "../../../assets/result/quickmatchBtn.png";
 import blueframe from "../../../assets/result/blueframe.png";
 import turnsImg from "../../../assets/result/turnsImg.png";
 import friendaddBtn from "../../../assets/result/friendaddBtn.png";
+import { userActions } from "@/store/user";
 
 
 const Result = () => {
   const navigate = useNavigate();
   const { send } = useContext(WebSocketContext);
+  const dispatch = useDispatch();
 
   const result = useSelector((state: RootState) => (state.game.result));
   const p1Character = useSelector((state: RootState) => state.player.p1!.gameCharacterEntity.englishName);
@@ -28,8 +30,17 @@ const Result = () => {
 
   const token = sessionStorage.getItem('token');
 
+  const p1User = useSelector((state: RootState) => (state.user));
+  const winCount = p1User.winCount;
+  const loseCount = p1User.loseCount;
+  const drawCount = p1User.drawCount;
 
-  let imgsrc = 'draw';
+  // dispatch(userActions.setMyInfo())
+
+  // console.log('=============================')
+  // console.log('result 페이지!!! ')
+  // console.log(result);
+  let imgsrc = '';
   if (result === 'draw') {
     imgsrc = 'default';
   } else {

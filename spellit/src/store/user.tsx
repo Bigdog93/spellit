@@ -25,7 +25,7 @@ type userInitialType = {
   nickname: string,
   playCount: number,
   winCount: number,
-  looseCount: number,
+  loseCount: number,
   drawCount: number,
   isOnline: boolean,
 }
@@ -42,7 +42,7 @@ const userInitialState: userInitialType = {
   nickname: '',
   playCount: 0,
   winCount: 0,
-  looseCount: 0,
+  loseCount: 0,
   drawCount: 0,
   isOnline: false,
 }
@@ -63,7 +63,7 @@ const userSlice = createSlice({
       state.playCount = action.payload.playCount
       state.winCount = action.payload.winCount
       state.isOnline = action.payload.isOnline
-      state.looseCount = action.payload.looseCount
+      state.loseCount = action.payload.loseCount
       state.drawCount = action.payload.drawCount
     },
     setDeck(state, action: PayloadAction<Array<DeckType>>) {
