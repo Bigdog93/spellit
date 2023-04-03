@@ -10,10 +10,11 @@ import com.urs.spellit.game.GameService;
 import com.urs.spellit.game.entity.CardEntity;
 import com.urs.spellit.member.MemberRepository;
 import com.urs.spellit.member.MemberService;
-import com.urs.spellit.member.model.dto.MemberRequestDto;
 import com.urs.spellit.member.model.dto.MemberResponseDto;
 import com.urs.spellit.member.model.entity.Member;
-import com.urs.spellit.websocket.dto.*;
+import com.urs.spellit.websocket.dto.PlayerDto;
+import com.urs.spellit.websocket.dto.RoomInfo;
+import com.urs.spellit.websocket.dto.SelectedCardsDto;
 import com.urs.spellit.websocket.utils.MyParser;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -274,10 +275,10 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 						}else if(players.get(0).getHp() > 0 && players.get(1).getHp() <= 0) {
 							infoMap.put("result", "win");
 							players.get(0).getSession().sendMessage(makeTextMsg("gameOver", infoMap));
-							infoMap.put("result", "loose");
+							infoMap.put("result", "lose");
 							players.get(1).getSession().sendMessage(makeTextMsg("gameOver", infoMap));
 						}else if(players.get(0).getHp() <= 0 && players.get(1).getHp() > 0) {
-							infoMap.put("result", "loose");
+							infoMap.put("result", "lose");
 							players.get(0).getSession().sendMessage(makeTextMsg("gameOver", infoMap));
 							infoMap.put("result", "win");
 							players.get(1).getSession().sendMessage(makeTextMsg("gameOver", infoMap));
