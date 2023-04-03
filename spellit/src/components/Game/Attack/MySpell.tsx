@@ -165,6 +165,19 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
             const damage = correct / spellLength
             dispatch(settleActions.percentList(damage));
             console.log('damage 값 보냄!!! : ', damage);
+
+            // 이펙트 띄우기
+            if (attack.isMine) {
+              const effectSpell = document.querySelector('.effects') as HTMLDivElement;
+              console.log('============================')
+              console.log(effectSpell)
+              console.log('============================')
+              let effectImgTag = document.createElement('img');
+              effectImgTag.src = require(`../../../assets/effect/${card.code}.png`);
+              effectSpell.appendChild(effectImgTag);
+              console.log(effectSpell);
+            }
+
             // 상대방에게 데미지 값 전송
             send({
                 event: 'spell',
@@ -227,6 +240,9 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
         </div>
 
         <div className="attack-bottom-itmes">
+        <div style={{display: 'inline-flex'}}>
+          <div className="effects"></div>  
+          </div>
           {attack.isMine && <img className="myCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p1Character}_attack.png`)} alt="" /> }
           <div className="SpellandBar">
             <div className="SpellBox">

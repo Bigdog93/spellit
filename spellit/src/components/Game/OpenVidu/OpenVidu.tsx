@@ -156,7 +156,7 @@ const OpenViduVideo = () => {
         setOV(null);
         setSession(undefined);
         setSubscribers([]);
-        mySessionId = '0';
+        mySessionId = String(roomId);
         myUserName = 'Participant' + Math.floor(Math.random() * 100);
         // mainStreamManager = undefined;
         setMainStreamManager(undefined);

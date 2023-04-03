@@ -55,7 +55,7 @@ vbody {
 .myCharacter, .yourCharacter{
     position: relative;
     top: 0;
-    margin: 50px;
+    /* margin: 50px; */
 
     animation: UpDown 2s ease-in Infinite Alternate;
 }

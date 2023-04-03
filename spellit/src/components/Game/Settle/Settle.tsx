@@ -139,7 +139,7 @@ function Settle() {
                         },
                     })
                 }
-            }, 1500);
+            }, 1000);
         }
 
     }, [idx]);
@@ -157,27 +157,30 @@ function Settle() {
                 </div>
             </div>
             <div className='settle-bottom-items'>
-                <div style={{display: 'inline-flex'}}>
-                    {attacks.map((attack: AttackType, i: number) => {
-                        if (attack.isMine) {
-                            return (
-                                <img key={i} style={{height: '150px'}} className={`spellEffect-${i}`} src={require(`../../../assets/effect/${attack.card.code}.png`)} alt="없음,," />
-                            )
-                        }
-                    })}   
+                <div className='settle-p1Box'>
+                    <div style={{display: 'inline-flex'}}>
+                        {attacks.map((attack: AttackType, i: number) => {
+                            if (attack.isMine) {
+                                return (
+                                    <img key={i} style={{height: '100px'}} className={`spellEffect-${i}`} src={require(`../../../assets/effect/${attack.card.code}.png`)} alt="없음,," />
+                                )
+                            }
+                        })}   
+                    </div>
+                <img className="myCharacter" style={{width: '300px'}} src={require(`../../../assets/character/${p1Character}_attack.png`)} alt="" />
                 </div>
-                <div className='characterBox'>
-                    <img className="myCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p1Character}_attack.png`)} alt="" />
-                    <img className="yourCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" />
-                </div>
-                <div style={{display: 'inline-flex'}}>
-                    {attacks.map((attack: AttackType, i: number) => {
-                        if (!attack.isMine) {
-                            return (
-                                <img key={i} style={{height: '150px'}} className={`spellEffect-${i}`} src={require(`../../../assets/effect/${attack.card.code}.png`)} alt="없음,," />
-                            )
-                        }
-                    })}   
+
+                <div className='settle-p2Box'>
+                    <img className="yourCharacter" style={{width: '300px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" />
+                    <div style={{display: 'inline-flex'}}>
+                        {attacks.map((attack: AttackType, i: number) => {
+                            if (!attack.isMine) {
+                                return (
+                                    <img key={i} style={{height: '150px'}} className={`spellEffect-${i}`} src={require(`../../../assets/effect/${attack.card.code}.png`)} alt="없음,," />
+                                )
+                            }
+                        })}   
+                    </div>
                 </div>
             </div>
         </div>

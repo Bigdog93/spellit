@@ -42,6 +42,16 @@
 	justify-content: space-between;
 }
 
+.settle-p1Box {
+	display: flex;
+	flex-direction: column;
+}
+
+.settle-p2Box {
+	display: flex;
+	flex-direction: column;
+}
+
 .first-player, .second-player {
 	/* margin: 100px; */
 	position: relative;
@@ -72,5 +82,5 @@
 }
 
 .hidden-effect {
-	visibility: hidden;
+	visibility:hidden;
 }
