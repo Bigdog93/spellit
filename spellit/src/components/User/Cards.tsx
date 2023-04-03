@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 // import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import _ from 'lodash'
@@ -30,25 +30,27 @@ const Cards = ({cards, selectCard}: PropsType) => {
   }
   
   const myDeck = useSelector((state: RootState) => (state.user.deck))
-  console.log('myDeck ', myDeck)
+
   // const mine = cards.filter(c => myDeck.includes(c))
-  const [mine, setMine] = useState<Array<DeckType>>([]);
-  const [notMine, setNotMine] = useState<Array<DeckType>>([]);
+  // const [notMine, setNotMine] = useState<Array<DeckType>>([]);
+  let notMine = useRef<Array<DeckType>>([]);
 
   useEffect(() => {
     for (const card of cards) {
       for (const m of myDeck) {
         console.log(m.title)
-        if (card.id === m.id) {
-          setMine([...mine, card])
-        } else {
-          setNotMine([...notMine, card])
+        if (card.id !== m.id) {
+
+          notMine.current.push(card)
+          // setNotMine([...notMine, card])
+          console.log(notMine)
         }
+        break
       }
     }
   }, [myDeck])
 
-  console.log('mine ', mine)
+  console.log('myDeck ', myDeck)
   console.log('notMine ', notMine)
 
   return (
@@ -59,11 +61,11 @@ const Cards = ({cards, selectCard}: PropsType) => {
         </div>
       ))}
       <hr />
-      { notMine.map((card: CardType, index: number) => (
+      {/* { notMine.map((card: CardType, index: number) => (
         <div onClick={(e) => onSelectCard(card)} className={`${style.cardContainer}`}>
           <Card key={index} card={card.code}/>
         </div>
-      ))}
+      ))} */}
       {/* { cards.map((card: CardType, index: number) => (
         <div onClick={(e) => onSelectCard(card)} className={`${style.cardContainer}`}>
           <Card key={index} card={card.code}/>
