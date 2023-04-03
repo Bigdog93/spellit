@@ -17,6 +17,7 @@ type GameCharacterType = {
 
 type userInitialType = {
   deck: Array<DeckType>,
+  notMyDeck: Array<DeckType>,
   email: string,
   exp: number,
   gameCharacter: GameCharacterType | null,
@@ -34,6 +35,7 @@ type userInitialType = {
 
 const userInitialState: userInitialType = {
   deck: [],
+  notMyDeck: [],
   email: 'string',
   exp: 0,
   gameCharacter: null,
@@ -91,6 +93,9 @@ const userSlice = createSlice({
     setCharacter(state, action: PayloadAction<GameCharacterType>) {
       state.gameCharacter = action.payload;
     },
+    setNotMyDeck(state) {
+
+    }
   },
 });
 

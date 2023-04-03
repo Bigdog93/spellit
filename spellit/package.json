@@ -24,6 +24,7 @@
     "extendable-media-recorder": "^7.1.10",
     "extendable-media-recorder-wav-encoder": "^7.0.85",
     "html-to-react": "^1.5.0",
+    "lodash": "^4.17.21",
     "node-sass": "^7.0.3",
     "openvidu-browser": "^2.26.0",
     "react": "^18.2.0",
@@ -35,6 +36,7 @@
     "three": "^0.150.1",
     "three.quarks": "^0.10.2",
     "typescript": "^4.9.5",
+    "use-sound": "^4.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -60,5 +62,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.192"
   }
 }
