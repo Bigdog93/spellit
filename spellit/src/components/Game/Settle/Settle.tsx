@@ -171,7 +171,6 @@ function Settle() {
                 </div>
 
                 <div className='settle-p2Box'>
-                    <img className="yourCharacter" style={{width: '300px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" />
                     <div style={{display: 'inline-flex'}}>
                         {attacks.map((attack: AttackType, i: number) => {
                             if (!attack.isMine) {
@@ -181,6 +180,7 @@ function Settle() {
                             }
                         })}   
                     </div>
+                    <img className="yourCharacter" style={{width: '300px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" />
                 </div>
             </div>
         </div>
