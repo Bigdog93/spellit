@@ -1,5 +1,5 @@
 // import * as THREE from "three";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
@@ -29,8 +29,16 @@ import MatchRequestModal from './Friend/MatchRequestModal';
 import API from "@/utils/API";
 import { UserEntityType } from "@/utils/Types";
 import { friendsActions } from "@/store/friends";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+  const isLogged = useSelector((state:RootState) => (state.auth.isAuthenticated));
+  useEffect(() => {
+    if(!isLogged) {
+      navigate('/login')
+    }
+  },[]);
 	
   // 기본 카메라 위치
   // Vector3 {x: 0, y: 3.061616997868383e-16, z: 5}

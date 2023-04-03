@@ -7,8 +7,8 @@ import { friendsActions } from "@/store/friends";
 import { WebSocketContext } from '@/store/websocket'
 import API from "@/utils/API";
 import "./Login.css";
-import kakao from "../../assets/ui/kakao_login_medium_narrow.png";
 import { UserEntityType } from "@/utils/Types";
+import { authActions } from "@/store/auth";
 
 const Login = () => {
   const { send } = useContext(WebSocketContext);
@@ -97,8 +97,9 @@ const Login = () => {
             })
           }).then(() => {
             setTimeout(() => {
+              dispatch(authActions.login())
               navigate("/home");
-            }, 200);
+            }, 100);
           })
           .catch((err) => {
             console.log(err);

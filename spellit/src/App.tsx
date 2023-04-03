@@ -30,30 +30,27 @@ import Combo from "./components/Game/Attack/Combo";
 import NotFound404
  from "./NotFound404";
 function App() {
-  const isLogged = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  );
+  const isLogged = useSelector((state: RootState) => (state.auth.isAuthenticated));
 
   return (
     <WebSocketProvider>
       <BrowserRouter>
         <Routes>
-          {/* <Route index element={<Login />}/> */}
           {isLogged ? (
             <Route index element={<Home />} />
           ) : (
             <Route index element={<Login />} />
           )}
-          <Route path="home" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="game/:roomId" element={<Game />} />
           <Route path="matching" element={<Matching />} />
           <Route path="deck" element={<Deck />} />
-          <Route path="ready" element={<Ready />} />
+          {/* <Route path="ready" element={<Ready />} />
           <Route path="defense" element={<Defence />} />
-          <Route path="attack" element={<Attack />} />
+          <Route path="attack" element={<Attack />} /> */}
           <Route path="login" element={<Login />} />
-          <Route path="oath" element={<OAuth />} />
           <Route path="signup" element={<Signup />} />
+          {/* <Route path="oath" element={<OAuth />} /> */}
           <Route path="profile/:id" element={<Profile />} />
           <Route path="test" element={<Test/>}/>
           <Route path="settle" element={<Settle />} />
