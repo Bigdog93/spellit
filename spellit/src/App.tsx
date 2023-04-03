@@ -27,7 +27,8 @@ import Test from "./components/Test";
 import Particle from "./components/Test";
 import OtherSpell from './components/Game/Attack'
 import Combo from "./components/Game/Attack/Combo";
-
+import NotFound404
+ from "./NotFound404";
 function App() {
   const isLogged = useSelector(
     (state: RootState) => state.auth.isAuthenticated
@@ -52,7 +53,7 @@ function App() {
           <Route path="attack" element={<Attack />} />
           <Route path="login" element={<Login />} />
           <Route path="oath" element={<OAuth />} />
-          <Route path="join" element={<Signup />} />
+          <Route path="signup" element={<Signup />} />
           <Route path="profile/:id" element={<Profile />} />
           <Route path="test" element={<Test/>}/>
           <Route path="settle" element={<Settle />} />
@@ -63,6 +64,7 @@ function App() {
           <Route path="particle" element={<Particle />} />
           <Route path="otherspell" element={<OtherSpell />} />
           <Route path="combo" element={<Combo />} />
+          <Route path="*" element={<NotFound404 />} />
         </Routes>
       </BrowserRouter>
     </WebSocketProvider>
