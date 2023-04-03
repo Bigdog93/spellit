@@ -33,8 +33,8 @@ const OpenViduTest = () => {
       {/* <OpenviduProvider> */}
         {/* <Chatting/>
       <TextInputBox /> */}
-      {/* <VoiceRec/> */}
-      <OpenViduVideo />
+      <VoiceRec/>
+      {/* <OpenViduVideo /> */}
         {/* </OpenviduProvider> */}
       {/* </WebsocektProvider> */}
     </div>
