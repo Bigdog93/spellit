@@ -52,6 +52,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   const [spanEl, setSpanEl] = useState<JSX.Element[]>([]);
   const reg = /[~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/ ]/gim;
 
+  const effectRef = useRef<HTMLDivElement>(null);
 
   const spanList: JSX.Element[] = [];
 
@@ -179,6 +180,9 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
           })
           dispatch(gameActions.addAccuracy(damage))
 
+          // 이펙트 띄우기(hidden 해체)
+          const effectImgTag = document.querySelector(`.effectImgTag-${idx}`);
+          effectImgTag?.classList.remove('hiddenEffect');
 
           // 콤보 체크
           // 선공일 때
@@ -192,17 +196,6 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
               }
             }
 
-            // 이펙트 띄우기
-            // if (attack.isMine) {
-            //   const effectSpell = document.querySelector('.effects') as HTMLDivElement;
-            //   console.log('============================')
-            //   console.log(effectSpell)
-            //   console.log('============================')
-            //   let effectImgTag = document.createElement('img');
-            //   effectImgTag.src = require(`../../../assets/effect/${card.code}.png`);
-            //   effectSpell.appendChild(effectImgTag);
-            //   console.log(effectSpell);
-            // }
 
 
           // 후공일 때
@@ -267,9 +260,6 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
     }
   
 
-  
-  
-
   return (
       <div className="attack-bg">
         <div className="attack-top-items">
@@ -285,10 +275,16 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
         </div>
 
         <div className="attack-bottom-itmes">
-        <div style={{display: 'inline-flex'}}>
-          <div className="effects"></div>  
+          <div style={{display: 'flex', flexDirection: 'column'}}>
+            <div style={{display: 'inline-flex'}}>
+              {attackCardList.map((card: AttackType, idx: number) => (
+                card.isMine && <img style={{width: '150px', height: '150px'}} className={`effectImgTag-${idx} hiddenEffect`} key={idx} src={require(`../../../assets/effect/${card.card.code}.png`)} alt="" />
+                ))}
+            </div>
+            {attack.isMine && 
+              <img className="myCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p1Character}_attack.png`)} alt="" /> 
+            }
           </div>
-          {attack.isMine && <img className="myCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p1Character}_attack.png`)} alt="" /> }
           <div className="SpellandBar">
             <div className="SpellBox">
               <img style={{ width: 800, height: 400}} src={require(`../../../assets/InGame/SpellBox.png`)} alt="" />
@@ -303,7 +299,14 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
               </div>
             </div>
           </div>
-          {!attack.isMine && <img className="yourCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" /> }
+          <div style={{display: 'flex', flexDirection: 'column'}}>
+            <div style={{display: 'inline-flex'}}>
+              {attackCardList.map((card: AttackType, idx: number) => (
+                    !card.isMine && <img style={{width: '150px', height: '150px'}} className={`effectImgTag-${idx} hiddenEffect`} key={idx} src={require(`../../../assets/effect/${card.card.code}.png`)} alt="" />
+                ))}
+            </div>
+              {!attack.isMine && <img className="yourCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" /> }
+          </div>
         </div>
 
       </div>
