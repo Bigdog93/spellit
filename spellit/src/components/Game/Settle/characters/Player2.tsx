@@ -25,7 +25,7 @@ interface Props {
 
 export function CBDefault2(props: Props & JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF(
-    "./models/settleglb/CB_default2.glb"
+    "/models/settleglb/CB_default2.glb"
   ) as AllGLTFResult;
 
   // 타격 관련 로직
@@ -119,7 +119,7 @@ export function CBDefault2(props: Props & JSX.IntrinsicElements["group"]) {
 
 export function AKDefault2(props: Props & JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF(
-    "./models/settleglb/AK_default2.glb"
+    "/models/settleglb/AK_default2.glb"
   ) as AllGLTFResult;
 
     // 타격 관련 로직
@@ -210,7 +210,7 @@ export function AKDefault2(props: Props & JSX.IntrinsicElements["group"]) {
 
 export function LUNADefault2(props: Props & JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF(
-    "./models/settleglb/LUNA_default2.glb"
+    "/models/settleglb/LUNA_default2.glb"
   ) as AllGLTFResult;
 
     // 타격 관련 로직

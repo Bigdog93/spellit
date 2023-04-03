@@ -13,7 +13,7 @@ type GLTFResult = GLTF & {
 
 export default function Background(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF(
-    "./models/settleglb/background.glb"
+    "/models/settleglb/background.glb"
   ) as GLTFResult;
   return (
     <group {...props} dispose={null} scale={[9, 9, 9]}>
