@@ -12,6 +12,8 @@ import "./Settle.css";
 import player, { playerActions } from '@/store/player';
 import { settleActions } from '@/store/settle';
 import { gameActions } from '@/store/game';
+import Skills from './Skills';
+
 
 function Settle() {
     const dispatch = useDispatch();
@@ -167,9 +169,10 @@ function Settle() {
                             }
                         })}   
                     </div>
-                <img className="myCharacter" style={{width: '300px'}} src={require(`../../../assets/character/${p1Character}_attack.png`)} alt="" />
+                {/* <img className="myCharacter" style={{width: '300px'}} src={require(`../../../assets/character/${p1Character}_attack.png`)} alt="" /> */}
                 </div>
-
+                
+                <Skills code={attacks[idx].card.code} isMine={attacks[idx].isMine} p1Character={p1Character} p2Character={p2Character}></Skills>
                 <div className='settle-p2Box'>
                     <div style={{display: 'inline-flex'}}>
                         {attacks.map((attack: AttackType, i: number) => {
@@ -180,7 +183,7 @@ function Settle() {
                             }
                         })}   
                     </div>
-                    <img className="yourCharacter" style={{width: '300px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" />
+                    {/* <img className="yourCharacter" style={{width: '300px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" /> */}
                 </div>
             </div>
         </div>
