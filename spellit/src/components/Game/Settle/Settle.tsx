@@ -161,11 +161,11 @@ function Settle() {
             <div className='settle-bg'>
                 <div className='settle-top-itmes'>
                     <div className='first-hp-box'>
-                        <ProfileHp></ProfileHp>
+                        <ProfileHp character={p1Character}></ProfileHp>
                         <div className="first-hp-bar" style={p1HpStyle}></div>
                     </div>
                     <div className='second-hp-box'>
-                        <ProfileHp></ProfileHp>
+                        <ProfileHp character={p2Character}></ProfileHp>
                         <div className="second-hp-bar" style={p2HpStyle}></div>
                     </div>
                 </div>

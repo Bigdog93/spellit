@@ -1,10 +1,10 @@
 import profileImg from "../../../assets/InGame/profileImg.png";
 import HpBar from "./HpBar";
 
-function ProfileHp() {
+function ProfileHp({character}: {character: string}) {
     return (
         <div className="profile-hp-box">
-            <img src={profileImg} alt="" style={{width: '110px', height: '120px'}} />
+            <img src={require(`../../../assets/character/${character}_portrait.png`)} alt="" style={{width: '120px', height: '120px'}} />
             <HpBar></HpBar>
         </div>
     )
