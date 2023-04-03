@@ -20,7 +20,7 @@ public class MemberResponseDto {
     private int exp;
     private int playCount;
     private int winCount;
-    private int looseCount;
+    private int loseCount;
     private int drawCount;
     private String profileMsg;
     private GameCharacterEntity gameCharacter;
@@ -37,7 +37,7 @@ public class MemberResponseDto {
                 .exp(member.getExp())
                 .playCount(member.getPlayCount())
                 .winCount(member.getWinCount())
-                .looseCount(member.getLooseCount())
+                .loseCount(member.getLoseCount())
                 .drawCount(member.getDrawCount())
                 .profileMsg(member.getProfileMsg())
                 .gameCharacter(member.getGameCharacterEntity())

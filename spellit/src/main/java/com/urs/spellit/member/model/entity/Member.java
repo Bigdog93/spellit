@@ -50,7 +50,7 @@ public class Member extends BaseTimeEntity {
     private int winCount;
     @Column(nullable = false)
     @ColumnDefault("0")
-    private int looseCount;
+    private int loseCount;
     @Column(nullable = false)
     @ColumnDefault("0")
     private int drawCount;
@@ -115,7 +115,7 @@ public class Member extends BaseTimeEntity {
         else if(gameResult.equals("draw"))
         {   this.drawCount++;plusExp+=500;}
         else if(gameResult.equals("lose"))
-        {   this.looseCount++;plusExp+=300;}
+        {   this.loseCount++;plusExp+=300;}
 
         if((this.exp+= plusExp)>expMax)
         {

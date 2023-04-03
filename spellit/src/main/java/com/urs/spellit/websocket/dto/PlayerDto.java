@@ -23,7 +23,7 @@ public class PlayerDto {
 	private String nickname;
 	private int playCount;
 	private int winCount;
-	private int looseCount;
+	private int loseCount;
 	private int drawCount;
 	private String profileMsg;
 	private int cost;
@@ -44,7 +44,7 @@ public class PlayerDto {
 				.nickname(member.getNickname())
 				.playCount(member.getPlayCount())
 				.winCount(member.getWinCount())
-				.looseCount(member.getLooseCount())
+				.loseCount(member.getLoseCount())
 				.drawCount(member.getDrawCount())
 				.gameCharacterEntity(member.getGameCharacterEntity())
 				.profileMsg(member.getProfileMsg())

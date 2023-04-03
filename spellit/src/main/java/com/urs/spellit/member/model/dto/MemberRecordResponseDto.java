@@ -16,7 +16,7 @@ public class MemberRecordResponseDto {
     private int playCount;
     private int winCount;
     private int drawCount;
-    private int looseCount;
+    private int loseCount;
 
     public static MemberRecordResponseDto of(Member member)
     {
@@ -26,7 +26,7 @@ public class MemberRecordResponseDto {
                 .playCount(member.getPlayCount())
                 .winCount(member.getWinCount())
                 .drawCount(member.getDrawCount())
-                .looseCount(member.getLooseCount())
+                .loseCount(member.getLoseCount())
                 .build();
     }
 }
