@@ -10,6 +10,7 @@ import Timer from "@/components/Game/Items/Timer";
 import { gameActions } from "@/store/game";
 import ProfileHp from "../Items/ProfileHp";
 import { settleActions } from "@/store/settle";
+import { useSelect } from "@react-three/drei";
 
 
 interface Spell {
@@ -28,7 +29,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   const p2Character = useSelector((state: RootState) => state.player.p2!.gameCharacterEntity.englishName);
 
   const attackCardList = useSelector((state: RootState) => state.game.attacks);
-
+  
   console.log('attack ', attack)
   console.log('spell ', attack.card.spell)
   
@@ -61,6 +62,10 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   // 이번 턴의 전체 공격 카드 수
   const attacks = useSelector((state: RootState) => (state.game.attacks));
 
+  // 콤보 체크할 때 쓸 것들
+  const accuracy = useSelector((state: RootState) => (state.game.accuracy))
+  const isFirst = useSelector((state: RootState) => (state.player.p1?.isFirst))
+  const combo = useSelector((state: RootState) => (state.game.combo))
 
   // 주문 버튼 클릭시 음성 인식 시작
   const handleClick = (attack: AttackType) => {
@@ -107,7 +112,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
         console.log("------------------------------------------------");
         for (let i = 0; i < transcript.length; i++) {
           // console.log('for 문 안이다!')
-            if (transcript[i] == trimText[i]) {
+            if (transcript[i] === trimText[i]) {
                 const element = document.getElementById(`spell-${i}`);
 
                 const correctColor = `correct${card.attribute}`;
@@ -154,33 +159,69 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
         console.log('SpeechRecognition end!')
         setTimeout(() => {
           let correct = 0;
-            for (let i=0; i<spellLength; i++) {
-              const correctEl = document.querySelector(`#spell-${i}`);
-              if (correctEl?.classList.contains(`correct${card.attribute}`)) {
-                correct++;
-                correctEl.classList.remove(`correct${card.attribute}`);
+          for (let i=0; i<spellLength; i++) {
+            const correctEl = document.querySelector(`#spell-${i}`);
+            if (correctEl?.classList.contains(`correct${card.attribute}`)) {
+              correct++;
+              correctEl.classList.remove(`correct${card.attribute}`);
+            }
+          }
+          console.log('맞은 개수 : ', correct)
+          const damage = correct / spellLength
+          dispatch(settleActions.percentList(damage));
+          console.log('damage 값 보냄!!! : ', damage);
+          // 상대방에게 데미지 값 전송
+          send({
+              event: 'spell',
+              roomId: roomId,
+              memberId: memberId,
+              data:  damage,
+          })
+          dispatch(gameActions.addAccuracy(damage))
+
+
+          // 콤보 체크
+          // 선공일 때
+          if(isFirst) {
+            const myAtk = attacks.filter(a => a.isMine)
+            // 내 영창을 다 했을 때
+            if(myAtk.length === idx + 1) {
+              // 정확도 70% 이상일 때 콤보 들어감
+              if(accuracy >= 0.7){
+                dispatch(gameActions.setCombo())
               }
             }
-            console.log('맞은 개수 : ', correct)
-            const damage = correct / spellLength
-            dispatch(settleActions.percentList(damage));
-            console.log('damage 값 보냄!!! : ', damage);
-            // 상대방에게 데미지 값 전송
+          // 후공일 때
+          } else {
+            // 내 영창을 다 했을 때
+            if(idx+1 === attacks.length) {
+              // 정확도 70% 이상일 때 콤보 들어감
+              if(accuracy >= 0.7){
+                dispatch(gameActions.setCombo())
+              }
+            }
+          }
+          
+          // combo 일 때
+          if (combo) {
             send({
-                event: 'spell',
-                roomId: roomId,
-                memberId: memberId,
-                data:  damage,
-            })
-
-          if(idx+1 === attacks.length){
-            send({
-              event: 'defenseTurn',
+              event: 'combo',
               roomId: roomId,
               memberId: memberId,
               data: ''
-            })
-            
+            })  
+
+          // combo 아닐 때
+          } else {
+            if(idx+1 === attacks.length){
+              send({
+                event: 'defenseTurn',
+                roomId: roomId,
+                memberId: memberId,
+                data: ''
+              })  
+            }
+          
             // } else {
               // dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
           }
@@ -210,7 +251,10 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
         width: `${p2Hp/defaultHP*385}px`,
         backgroundColor: p2Hp > 100 ? '#FFF500' : '#FF0000' ,
     }
+  
 
+  
+  
 
   return (
       <div className="attack-bg">

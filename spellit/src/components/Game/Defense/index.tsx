@@ -4,6 +4,7 @@ import { RootState } from "@/store";
 import { useNavigate } from "react-router-dom";
 import { WebSocketContext } from '@/store/websocket'
 
+import '../index.css'
 import Timer from "@/components/Game/Defense/Timer";
 import Click from "@/components/Game/Defense/Click";
 import Blow from "@/components/Game/Defense/Blow";
@@ -66,39 +67,42 @@ const Defense = () => {
 
 
   return (
-    <div
-      className={styles.box}
-      ref={preventMouseRef}
-      tabIndex={0}
-      onMouseDown={preventMouseDown}
-    >
-      <div>
-        <h1>DEFENSE</h1>
-        <Timer
-          handleTimer={handleTimer}
-          onTime={onTime}
-          handleResult={handleResult}
-          isDone={isDone}
-        />
-        {gameSelect === "click" ? (
-          <Click
+    <div className='game-bg'>
+      <div
+        className={styles.box}
+        ref={preventMouseRef}
+        tabIndex={0}
+        onMouseDown={preventMouseDown}
+      >
+        <div>
+          <h1>DEFENSE</h1>
+          <Timer
             handleTimer={handleTimer}
             onTime={onTime}
             handleResult={handleResult}
             isDone={isDone}
-            // success={onSuccess}
           />
-        ) : gameSelect === "blow" ? (
-          <Blow
-            handleTimer={handleTimer}
-            onTime={onTime}
-            handleResult={handleResult}
-            isDone={isDone}
-            
-          />
-        ) : null}
+          {gameSelect === "click" ? (
+            <Click
+              handleTimer={handleTimer}
+              onTime={onTime}
+              handleResult={handleResult}
+              isDone={isDone}
+              // success={onSuccess}
+            />
+          ) : gameSelect === "blow" ? (
+            <Blow
+              handleTimer={handleTimer}
+              onTime={onTime}
+              handleResult={handleResult}
+              isDone={isDone}
+              
+            />
+          ) : null}
+        </div>
       </div>
     </div>
+
   );
 };
 
