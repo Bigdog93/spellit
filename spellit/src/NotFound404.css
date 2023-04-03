@@ -1,0 +1,35 @@
+.not-found-bg {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+.not-found-character {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: translate(10%, 30%);
+}
+.not-found-character img {
+  width: 50vw;
+}
+.not-found-bubble {
+  position: absolute;
+  top: 7rem;
+  left: 7rem;
+}
+.not-found-bubble-large {
+  font-size: 80px;
+}
+.not-found-bubble-medium {
+  font-size: 40px;
+}
+.not-found-bubble-small {
+  font-size: 20px;
+}
+.not-found-bubble-small:hover {
+  color: #956495;
+  cursor: pointer;
+}

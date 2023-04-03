@@ -10,6 +10,7 @@ import Settle from './Settle/Settle';
 import Result from '@/components/Game/Result/Result';
 import OpenViduVideo from '@/components/Game/OpenVidu/OpenVidu'
 
+import './index.css'
 
 const Game = () => {
   const game = useSelector((state: RootState) => state.game.game)

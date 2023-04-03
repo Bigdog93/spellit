@@ -52,6 +52,14 @@ const User = () => {
       setCharacters(data)
       console.log(characters)
     }).catch((err) => console.log(err))
+    API.get<any>("member/info", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => {
+        console.log("유저정보 가져오기 성공");
+        console.log(res.data);
+        dispatch(userActions.setMyInfo(res.data));
+      })
     return () => {}
   }, [])
     

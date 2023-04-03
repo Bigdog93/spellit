@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { friendsActions } from '@/store/friends';
 import { RootState } from '@/store';
 import { WebSocketContext } from '@/store/websocket';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   friend: UserEntityType,
@@ -26,6 +27,7 @@ function EachFriend({ friend, isFriend, acceptFriendRequest }: Props) {
   const dispatch = useDispatch();
   const friends = useSelector((state: RootState) => { return state.friends.friends });
   const friendWaits = useSelector((state: RootState) => { return state.friends.friendWaits });
+  const navigate = useNavigate();
   
   const token = sessionStorage.getItem('token');
   const me = useSelector((state: RootState) => state.user);
@@ -51,14 +53,18 @@ function EachFriend({ friend, isFriend, acceptFriendRequest }: Props) {
 
   function matchRequest() {
     if (!friend.isOnline || friend.isPlaying) return;
+    dispatch(friendsActions.setIsFriendMatchRequesting(true));
     send({
-      event: 'friendResponse',
+      event: 'matchRequest',
       memberId: me.id,
       nickname: me.nickname,
       data: {
         otherId: friend.id,
       }
     })
+    setTimeout(() => {
+      navigate('/matching');
+    }, 200);
   }
 
   return (

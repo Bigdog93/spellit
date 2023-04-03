@@ -11,6 +11,8 @@ type initialGameType = {
   resultTurn: boolean,
   attacks: AttackType[],
   idx: number,
+  accuracy: number,
+  combo: boolean,
   attackCheck: boolean,
   transcript: string,
   myAttackTurn: boolean|null,
@@ -27,6 +29,8 @@ const initialGameState: initialGameType = {
   resultTurn: false,
   attacks: [],
   idx: 0,
+  accuracy: 0,
+  combo: false,
   attackCheck: true, // idx가 다시 0이 됐을 때, 실행되는 것 방지하는 용도
   transcript: '',
   myAttackTurn: null,
@@ -118,6 +122,18 @@ const gameSlice = createSlice({
     setResult(state, action: PayloadAction<string>){
       state.result = action.payload
     },
+    addAccuracy(state, action: PayloadAction<number>){
+      state.accuracy += action.payload
+    },
+    clearAccuracy(state){
+      state.accuracy = 0
+    },
+    setCombo(state) {
+      state.combo = true;
+    },
+    clearCombo(state) {
+      state.combo = false;
+    }
   },
 });
 

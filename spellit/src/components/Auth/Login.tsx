@@ -96,7 +96,9 @@ const Login = () => {
                 }
             })
           }).then(() => {
-            navigate("/home");
+            setTimeout(() => {
+              navigate("/home");
+            }, 200);
           })
           .catch((err) => {
             console.log(err);

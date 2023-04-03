@@ -210,6 +210,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         console.log(friendNickname + '님이 게임을 시작하였습니다.');
         dispatch(friendsActions.playEndFriend(friendId));
       } else if (type === 'matchRequest') {
+        const roomId = info.roomId;
         const f = info.friend;
         const friend: UserEntityType = {
           deck: [],
@@ -228,7 +229,10 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
           isPlaying: f.isPlaying
         }
         dispatch(friendsActions.setMatchRequestPlayer(friend));
+        dispatch(friendsActions.setMatchRequestRoomId(roomId));
         dispatch(friendsActions.setMatchRequestModalFlag(true));
+      } else if (type === 'matchRefuse') {
+        console.log('상대방이 도전을 거부하였습니다.');
       }
       else {
         console.log('그런 이벤트는 없습니다.')
@@ -236,7 +240,13 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
     }
 
     send = (data: any) => {
-      if(ws) ws.send(JSON.stringify(data));
+      if (ws && ws?.readyState === ws?.OPEN) {
+        ws.send(JSON.stringify(data));
+      } else {
+        setTimeout(() => {
+          if(send !== undefined) send(data);
+        }, 200)
+      }
     }
   }
 
