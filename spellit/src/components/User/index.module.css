@@ -172,3 +172,13 @@
   padding: 1rem;
 }
 
+.pointer {
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  left: -15px;
+  top: -15px;
+  z-index: 10;
+}

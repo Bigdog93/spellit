@@ -4,6 +4,7 @@ import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { useFrame } from "@react-three/fiber";
 import { MathUtils } from "three";
+import { useNavigate } from 'react-router-dom';
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -22,6 +23,9 @@ export default function CharacterButton(props: JSX.IntrinsicElements["group"]) {
   const [hover, setHover] = useState(false);
   const [y, setY] = useState(0);
 
+  const navigate = useNavigate();
+  
+
   useFrame(() => {
     if (hover) {
       setY((y) => MathUtils.lerp(y, 0.1, 0.05));
@@ -33,8 +37,12 @@ export default function CharacterButton(props: JSX.IntrinsicElements["group"]) {
     }
   });
 
+  const toCharacter = () => {
+    navigate('/deck/character')
+  }
+
   return (
-    <group {...props} dispose={null} scale={[1.5, 1.5, 1.5]}>
+    <group {...props} dispose={null} scale={[1.5, 1.5, 1.5]} onClick={toCharacter}>
       <mesh
         ref={characterRef}
         geometry={nodes.character.geometry}
