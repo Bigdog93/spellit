@@ -5,6 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+	position: relative;
 }
 
 .login-box {
@@ -66,4 +67,48 @@ input {
 .signupBtn:hover {
   background-color: #ffffff;
   color: rgb(61, 61, 61);
+}
+
+.shape {
+  width: 100vw;
+  height: 100vh;
+  border: 600px solid black; 
+  border-radius: 100px;
+  position: absolute;
+	top: 25%;
+	left:25%;
+
+}
+
+.hole {
+	position: absolute;
+	left: -75%;
+	top: -75%;
+	border-radius: 50%;
+	width: 4000px;
+	height: 4000px;
+	box-shadow: 0 0 0 99999px rgb(0, 0, 0);
+	z-index: 3;
+
+}
+.holedown{
+	position: absolute;
+	left: 47%;
+	top: 47%;
+	border-radius: 50%;
+	width: 100px;
+	height: 100px;
+	box-shadow: 0 0 0 99999px #201c2c;
+	z-index: 3;
+	animation: resizedown 2s ease-in-out
+}
+
+@keyframes resizedown {
+  0% {
+    transform: scale(25);
+  }
+	
+  100% {
+    transform: scale(0.3);
+  }
 }

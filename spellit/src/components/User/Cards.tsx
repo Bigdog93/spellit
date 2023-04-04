@@ -1,12 +1,12 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from "react";
 // import { useEffect } from 'react';
-import useSound from 'use-sound';
-import { useSelector } from 'react-redux';
-import _ from 'lodash'
-import { RootState } from '@/store'
-import { DeckType } from '@/utils/Types';
-import Card from './Card'
-import style from './index.module.css'
+import useSound from "use-sound";
+import { useSelector } from "react-redux";
+import _ from "lodash";
+import { RootState } from "@/store";
+import { DeckType } from "@/utils/Types";
+import Card from "./Card";
+import style from "./index.module.css";
 
 interface CardType {
   attribute: number;
@@ -15,19 +15,19 @@ interface CardType {
   damage: number;
   id: number;
   spell: string;
-  title: string
+  title: string;
 }
 interface PropsType {
   cards: Array<CardType>;
   selectCard: (res: CardType) => void;
-};
+}
 
-const Cards = ({cards, selectCard}: PropsType) => {
-  const onSelectCard = (data:any)=>{
+const Cards = ({ cards, selectCard }: PropsType) => {
+  const onSelectCard = (data: any) => {
     selectCard(data);
-    console.log(data)
-  }
-  
+    console.log(data);
+  };
+
   // const myDeck = useSelector((state: RootState) => (state.user.deck))
 
   // const [myDeckId, setMyDeckId] = useState<Array<number>>([]);
@@ -61,7 +61,7 @@ const Cards = ({cards, selectCard}: PropsType) => {
   // const [notMine, setNotMine] = useState<Array<DeckType>>([]);
 
   // useEffect(() => {
-  
+
   //   for (const card of cards) {
   //     for (const m of myDeck) {
   //       console.log(m.title)
@@ -81,10 +81,9 @@ const Cards = ({cards, selectCard}: PropsType) => {
   // console.log('myDeck ', myDeck)
   // console.log('notMine ', notMine)
 
-
   // CardFlip Sound Effect
   const CardFlip = require("../../assets/soundeffect/CardFlip.mp3");
-  const [playFlip, {stop}] = useSound(CardFlip)
+  const [playFlip, { stop }] = useSound(CardFlip);
   return (
     <div className={`${style.cardItems}`}>
       {/* { myDeck.map((card: CardType, index: number) => (
@@ -102,13 +101,18 @@ const Cards = ({cards, selectCard}: PropsType) => {
           <Card key={index} card={card.code}/>
         </div>
       ))} */}
-      { cards.map((card: CardType, index: number) => (
-        <div onClick={(e) => onSelectCard(card)} className={`${style.cardContainer}`} onMouseEnter={() => playFlip()} onMouseLeave={() => stop()}>
-          <Card key={index} card={card.code}/>
+      {cards.map((card: CardType, index: number) => (
+        <div
+          onClick={(e) => onSelectCard(card)}
+          className={`${style.cardContainer}`}
+          onMouseEnter={() => playFlip()}
+          onMouseLeave={() => stop()}
+        >
+          <Card key={index} card={card.code} />
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
 export default Cards;

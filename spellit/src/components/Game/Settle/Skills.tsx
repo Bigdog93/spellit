@@ -56,9 +56,9 @@ function Skills({code, isMine, p1Character, p2Character}: props) {
   return (
     <div className="box2">
       {/* 임시버튼 */}
-      <div>
+      {/* <div>
         <button onClick={handleButton}>button</button>
-      </div>
+      </div> */}
       <Canvas className="canvas">
         {/* <OrbitControls /> */}
         <ambientLight intensity={0.8} />
