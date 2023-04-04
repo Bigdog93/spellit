@@ -23,9 +23,10 @@ const Signup = () => {
   const [startSpell, setStartSpell] = useState('')
 
   const [wrongPw, setWrongPw] = useState<boolean>(true);
-  const [emailAbailablity, setEmailAbailablity] = useState<boolean>(true);
+  const [emailAbailablity, setEmailAbailablity] = useState<boolean>(false);
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState<string>('');
   const [isPasswordConfirm, setIsPasswordConfirm] = useState<boolean>(false);
+  const [signUpAvailable, setSignUpAvailable] = useState<boolean>(false);
 
   const pw1 = useRef<HTMLInputElement>();
   const pw2 = useRef<HTMLInputElement>();
@@ -36,6 +37,7 @@ const Signup = () => {
     setEmail(event.target.value)
   }
   useEffect(() => {
+    console.log(isPasswordConfirm, emailAbailablity);
     const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     if (email.match(regExp)) {
       setEmailAbailablity(true);
@@ -57,7 +59,7 @@ const Signup = () => {
     setPasswordConfirm(event.target.value)
   }
   useEffect(() => {
-    if (password === passwordConfirm) {
+    if (password.length > 0 && password === passwordConfirm) {
       setPasswordConfirmMessage('비밀번호를 똑같이 입력했어요.')
       setIsPasswordConfirm(true)
     } else {
@@ -73,12 +75,20 @@ const Signup = () => {
     setStartSpell(event.target.value)
   }
 
+  useEffect(() => {
+    if (emailAbailablity && isPasswordConfirm && nickname.length > 0) {
+      setSignUpAvailable(true);
+    } else {
+      setSignUpAvailable(false);
+    }
+  }, [email, password, passwordConfirm, nickname])
+
 
 
   const signupHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log('회원가입 시작')
-    if (!emailAbailablity) return;
+    if (!emailAbailablity || !isPasswordConfirm) return;
     // 회원가입
     API.post<any>(
       "auth/signup", 
@@ -183,9 +193,14 @@ const Signup = () => {
             onChange={startSpellChangeHandler}
           /> */}
           <div className="signupRow">
-            <button className="signupBtn" type="submit">
+            {signUpAvailable && <button className="signupBtn" type="submit" >
+              SIGN UP
+            </button>}
+            {
+              !signUpAvailable && <button className="disabled" type="button" disabled>
               SIGN UP
             </button>
+            }
           </div>
         </form>
         {/* <img src={kakao} alt="kakao" className="mouse-hover"/> */}

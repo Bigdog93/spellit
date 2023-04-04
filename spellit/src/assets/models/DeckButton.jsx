@@ -23,7 +23,7 @@ export default function DeckButton(props) {
   // onClick 이동
   const navigate = useNavigate();
   const toDeck = () => {
-    navigate('/deck')
+    navigate('/deck/deck')
   }
 
   return (

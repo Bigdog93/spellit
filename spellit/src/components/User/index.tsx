@@ -10,7 +10,7 @@ import Characters from "./Characters";
 import style from './index.module.css'
 
 import homeBtnImg from '@/assets/ui/homeBtn.svg';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface CardType {
   attribute: number;
@@ -33,6 +33,8 @@ type GameCharacterType = {
 }
 
 const User = () => {
+
+  const { modeParam } = useParams();
 
   const token = sessionStorage.getItem("token");
 
@@ -133,8 +135,15 @@ const User = () => {
     navigator.vibrate(200);
   };
 
+  const [mode, setMode] = useState<boolean>(false);
+  useEffect(() => {
+    if (modeParam === 'character') {
+      setMode(true);
+    }
+    return () => {
 
-  const [mode, setMode] = useState<boolean>(false)
+    }
+  }, [])
   const switchHandler = () => { 
     console.log('btn click')
     setMode(!mode)
@@ -158,11 +167,11 @@ const User = () => {
         {/* <div className={isShaking ? `${style.shake}`  : `${style.cardselectcontainer}`}> */}
           <div className={`${style.selectedCharacter}`}>
             <button className={`${style.deckBtn} ${style.characterkBtn}`} disabled={mode}>
-              <img 
-                src={require(`../../assets/character/${character?.englishName}_portrait.png`)} 
-                alt="portrait" 
-                onClick={switchHandler}
-              />
+            {character && <img
+              src={require(`../../assets/character/${character?.englishName}_portrait.png`)}
+              alt="portrait"
+              onClick={switchHandler}
+            />}
               </button>
           </div>
 
