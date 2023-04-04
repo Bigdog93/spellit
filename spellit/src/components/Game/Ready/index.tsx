@@ -28,10 +28,26 @@ const Ready = () => {
 
   // cost 부족할 때 나타는 shake 효과
   const [isShaking, setIsShaking] = useState(false);
+  const [timeOut, setTimeOut] = useState<any>(null);
+  const [noCard, setNoCard] = useState<Boolean>(false);
+  const [noCost, setNoCost] = useState<Boolean>(false);
 
-  function shake() {
+  function shake(condition: string) {
+    if (timeOut) {
+      setIsShaking(false)
+      setNoCost(false);
+      clearTimeout(timeOut);
+      setTimeOut(null);
+    }
+    if (condition === "noCost") {
+      setNoCost(true);
+    }
     setIsShaking(true);
-    setTimeout(() => setIsShaking(false), 1000);
+    const shakeTime = setTimeout(() => {
+      setIsShaking(false)
+      setNoCost(false);
+    }, 800);
+    setTimeOut(shakeTime);
   }
   
   // 선택된 카드 리스트
@@ -39,10 +55,12 @@ const Ready = () => {
   
   // 카드 선택
   const selectCard = (card: CardType) => {
+    if (confirm) return;
+    if (noCard) setNoCard(false);
     console.log(card)
   // const maxCost = useSelector((state: RootState) => state.cost.maxCost);
     if(usedCost+card.cost > maxCost) {
-      shake()
+      shake("noCost")
     } else{
       setSelectedCards([
         ...selectedCards,
@@ -55,6 +73,7 @@ const Ready = () => {
 
   // 선택한 카드 삭제
   const removeCard = (card: CardType, index: number) => {
+    if (confirm) return;
     setSelectedCards(selectedCards.slice(0, index).concat(selectedCards.slice(index + 1)));
     navigator.vibrate(200);
     dispatch(costActions.sub(card.cost));
@@ -68,6 +87,11 @@ const Ready = () => {
 
   // skill 확정
   const confirmSkills = () => {
+    if (selectedCards.length === 0) {
+      setNoCard(true);
+      shake("noCard");
+      return;
+    }
     console.log('Skill 다 골랐고 확인버튼 누름');
     console.log(selectedCards)
     console.log('확인');
@@ -99,19 +123,20 @@ const Ready = () => {
   return (
     <div>
       <div>
-        {otherReady && <div>상대방의 준비가 끝났습니다. 서둘러주세요</div>}
-        {(!otherReady && confirm) && <div>상대방이 카드를 고르는 중입니다. 조금만 기다려주세요.</div>}
-        {(!otherReady && !confirm) && <div>상대방도 카드를 고르는 중입니다.</div>}
+        {otherReady && <div className="otherState">상대방의 준비가 끝났습니다. 서둘러주세요</div>}
+        {(!otherReady && confirm) && <div className="otherState">상대방이 카드를 고르는 중입니다. 조금만 기다려주세요.</div>}
+        {(!otherReady && !confirm) && <div className="otherState">상대방도 카드를 고르는 중입니다.</div>}
       </div>
       
       <div className="flex-container">
-        <div className="cost">
+        <div className={noCost ? "red cost" : "cost"}>
           <div>COST</div>
           { usedCost }/{ maxCost }
         </div>
 
         <div className={isShaking ? "shake selectedCardBox" : "selectedCardBox"}>
-          <img src={Frame} alt="frame"/>
+          <img src={Frame} alt="frame" />
+          {noCard && <div className="noCardAlert red">카드를 선택하세요.</div>}
           <div className="selectedCard">
             {selectedCards.map((card: CardType, index: number) => (
               <img 
@@ -125,7 +150,7 @@ const Ready = () => {
         </div>
 
         <div className='confirmBtn'>
-          <img src={ ConfirmBtn } alt="confirmBtn" onClick={confirmSkills}/>
+          <img className={confirm ? "activate" : ""} src={ ConfirmBtn } alt="confirmBtn" onClick={confirmSkills}/>
         </div>
       </div>
 
