@@ -66,57 +66,55 @@ const Home = () => {
 
 	console.log(stopAni,"stop")
   function openFriendPopup() {
-    API.get("member/friend/list", {
-      headers: { Authorization: `Bearer ${token}` },
-    }).then((res) => {
-      const friendList = Array<UserEntityType>();
-      for (let f of res.data) {
-        const friend: UserEntityType = {
-          deck: [],
-          email: f.email,
-          exp: f.exp,
-          gameCharacterEntity: f.gameCharacterEntity,
-          id: f.id,
-          level: f.level,
-          nickname: f.nickname,
-          playCount: f.playCount,
-          winCount: f.winCount,
-          looseCount: f.looseCount,
-          drawCount: f.drawCount,
-          profileMsg: f.profileMsh,
-          isOnline: f.isOnline,
-          isPlaying: f.isPlaying,
-        };
-        friendList.push(friend);
-      }
-      dispatch(friendsActions.setFriendsList(friendList));
-    });
-    API.get("member/friend/wait", {
-      headers: { Authorization: `Bearer ${token}` },
-    }).then(({ data }) => {
-      console.log("friend wait list : ", data);
-      const friendWaitList = Array<UserEntityType>();
-      for (let f of data) {
-        const friendWait: UserEntityType = {
-          deck: [],
-          email: f.email,
-          exp: f.exp,
-          gameCharacterEntity: f.gameCharacterEntity,
-          id: f.id,
-          level: f.level,
-          nickname: f.nickname,
-          playCount: f.playCount,
-          winCount: f.winCount,
-          looseCount: f.looseCount,
-          drawCount: f.drawCount,
-          profileMsg: f.profileMsh,
-          isOnline: f.isOnline,
-          isPlaying: f.isPlaying,
-        };
-        friendWaitList.push(friendWait);
-      }
-      dispatch(friendsActions.setFriendWaitsList(friendWaitList));
-    });
+    API.get('member/friend/list', { headers: { Authorization: `Bearer ${token}` }, })
+      .then((res) => {
+        const friendList = Array<UserEntityType>();
+                for (let f of res.data) {
+                  const friend: UserEntityType = {
+                    deck: [],
+                    email: f.email,
+                    exp: f.exp,
+                    gameCharacterEntity: f.gameCharacterEntity,
+                    id: f.id,
+                    level: f.level,
+                    nickname: f.nickname,
+                    playCount: f.playCount,
+                    winCount: f.winCount,
+                    loseCount: f.loseCount,
+                    drawCount: f.drawCount,
+                    profileMsg: f.profileMsh,
+                    isOnline: f.isOnline,
+                    isPlaying: f.isPlaying
+                  }
+                  friendList.push(friend);
+                }
+                dispatch(friendsActions.setFriendsList(friendList));
+      })
+      API.get('member/friend/wait', { headers: { Authorization: `Bearer ${token}` }, })
+      .then(({ data }) => {
+        console.log("friend wait list : ", data);
+        const friendWaitList = Array<UserEntityType>();
+        for (let f of data) {
+          const friendWait: UserEntityType = {
+            deck: [],
+            email: f.email,
+            exp: f.exp,
+            gameCharacterEntity: f.gameCharacterEntity,
+            id: f.id,
+            level: f.level,
+            nickname: f.nickname,
+            playCount: f.playCount,
+            winCount: f.winCount,
+            loseCount: f.loseCount,
+            drawCount: f.drawCount,
+            profileMsg: f.profileMsh,
+            isOnline: f.isOnline,
+            isPlaying: f.isPlaying
+          }
+          friendWaitList.push(friendWait);
+        }
+        dispatch(friendsActions.setFriendWaitsList(friendWaitList));
+    })
     setFriendPopupFlag(true);
   }
   function closeFriendPopup() {

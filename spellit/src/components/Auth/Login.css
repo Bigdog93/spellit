@@ -112,3 +112,18 @@ input {
     transform: scale(0.3);
   }
 }
+.disabled {
+  box-sizing: border-box;
+  width: 200px;
+  height: 32px;
+  position: relative;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.25s;
+  color: #c5c5c5;
+  cursor: default;
+  border: 1px solid #ffffff;
+  background-color: #707070ea;
+}

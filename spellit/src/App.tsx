@@ -44,7 +44,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="game/:roomId" element={<Game />} />
           <Route path="matching" element={<Matching />} />
-          <Route path="deck" element={<Deck />} />
+          <Route path="deck/:modeParam" element={<Deck />} />
           {/* <Route path="ready" element={<Ready />} />
           <Route path="defense" element={<Defence />} />
           <Route path="attack" element={<Attack />} /> */}

@@ -1,12 +1,12 @@
 import { useRef, useEffect, useState } from "react";
 // import { useEffect } from 'react';
-import useSound from "use-sound";
-import { useSelector } from "react-redux";
-import _ from "lodash";
-import { RootState } from "@/store";
-import { DeckType } from "@/utils/Types";
-import Card from "./Card";
-import style from "./index.module.css";
+import useSound from 'use-sound';
+import { useDispatch, useSelector } from 'react-redux';
+import _ from 'lodash'
+import { RootState } from '@/store'
+import Card from './Card'
+import style from './index.module.css'
+import { userActions } from '@/store/user';
 
 interface CardType {
   attribute: number;
@@ -22,93 +22,35 @@ interface PropsType {
   selectCard: (res: CardType) => void;
 }
 
-const Cards = ({ cards, selectCard }: PropsType) => {
-  const onSelectCard = (data: any) => {
+const Cards = ({cards, selectCard}: PropsType) => {
+
+  const dispatch = useDispatch();
+
+  const onSelectCard = (data:any)=>{
     selectCard(data);
-    console.log(data);
-  };
+    console.log(data)
+  }
+  
 
-  // const myDeck = useSelector((state: RootState) => (state.user.deck))
-
-  // const [myDeckId, setMyDeckId] = useState<Array<number>>([]);
-  // useEffect(() => {
-  //   for (const m of myDeck) {
-  //     setMyDeckId([...myDeckId, m.id])
-  //     // myDeckId.push(m.id)
-  //   }
-  // }, myDeck)
-  // const mine = cards.filter(c => myDeck.includes(c))
-  // const [notMine, setNotMine] = useState<Array<DeckType>>([]);
-  // let notMine = useRef<Array<DeckType>>([]);
+  // const myDeck = useSelector((state: RootState) => state.user.deck)
+  // const notMyDeck = cards.filter((c) => {
+  //   c.id in 
+  // })
+  // const notMyDeck = useSelector((state: RootState) => state.user.notMyDeck)
 
   // useEffect(() => {
-  //   notMine.current = []
-  //   for (const card of cards) {
-  //     for (const m of myDeck) {
-  //       console.log(m.title)
-  //       if (card.id !== m.id) {
-  //         notMine.current.push(card)
-  //         console.log(notMine)
-  //       } else {
-  //         const index = notMine.current.indexOf(card)
-  //         notMine.current.slice(0, index).concat(notMine.current.slice(index + 1))
-  //       }
-  //       break
-  //     }
-  //   }
+  //   dispatch(userActions.setNotMyDeck())
   // }, [myDeck])
-
-  // const [notMine, setNotMine] = useState<Array<DeckType>>([]);
-
-  // useEffect(() => {
-
-  //   for (const card of cards) {
-  //     for (const m of myDeck) {
-  //       console.log(m.title)
-  //       if (card.id !== m.id) {
-  //         setNotMine([...notMine, card])
-  //         // notMine.push(card)
-  //         console.log(notMine)
-  //       } else {
-  //         const index = notMine.indexOf(card)
-  //         notMine.slice(0, index).concat(notMine.slice(index + 1))
-  //       }
-  //       break
-  //     }
-  //   }
-  // }, [myDeck])
-
-  // console.log('myDeck ', myDeck)
-  // console.log('notMine ', notMine)
-
   // CardFlip Sound Effect
   const CardFlip = require("../../assets/soundeffect/CardFlip.mp3");
-  const [playFlip, { stop }] = useSound(CardFlip);
+  const [playFlip, {stop}] = useSound(CardFlip)
+
+
   return (
     <div className={`${style.cardItems}`}>
-      {/* { myDeck.map((card: CardType, index: number) => (
-        <div onClick={(e) => onSelectCard(card)} className={`${style.cardContainer}`}>
+      { cards.map((card: CardType, index: number) => (
+        <div onClick={(e) => onSelectCard(card)} className={`${style.cardContainer}`} onMouseEnter={() => playFlip()} onMouseLeave={() => stop()}>
           <Card key={index} card={card.code}/>
-        </div>
-      ))} */}
-      {/* { notMine.map((card: CardType, index: number) => (
-        <div onClick={(e) => onSelectCard(card)} className={`${style.cardContainer}`}>
-          <Card key={index} card={card.code}/>
-        </div>
-      ))} */}
-      {/* { notMine.current.map((card: CardType, index: number) => (
-        <div onClick={(e) => onSelectCard(card)} className={`${style.cardContainer}`}>
-          <Card key={index} card={card.code}/>
-        </div>
-      ))} */}
-      {cards.map((card: CardType, index: number) => (
-        <div
-          onClick={(e) => onSelectCard(card)}
-          className={`${style.cardContainer}`}
-          onMouseEnter={() => playFlip()}
-          onMouseLeave={() => stop()}
-        >
-          <Card key={index} card={card.code} />
         </div>
       ))}
     </div>

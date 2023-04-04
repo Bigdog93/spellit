@@ -172,3 +172,45 @@
   padding: 1rem;
 }
 
+.charcaterInfoContainer {
+  box-sizing: border-box;
+  position: absolute;
+  border-radius: 5px;
+  width: 270px;
+  height: 355px;
+  left: -290px;
+  top: -350px;
+  z-index: 10;
+}
+.CB {
+  background-color: rgba(113, 47, 47, 0.79)
+}
+.AK {
+  background-color: rgba(64, 76, 133, 0.792);
+}
+.LUNA {
+  background-color: rgba(0, 0, 0, 0.541);
+}
+.characterInfoDiv {
+  box-sizing: border-box;
+  padding: 20px;
+}
+.charcaterInfoContainer>img {
+  width: 270px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.characterInfoName {
+  font-size: 1.1rem;
+}
+.hanza {
+  font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+.characterInfoRow {
+  margin: 5px 0;
+}
+.characterStory {
+  color: rgb(211, 211, 211)
+}

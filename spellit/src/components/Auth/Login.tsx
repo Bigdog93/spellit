@@ -52,57 +52,52 @@ const Login = () => {
             console.log("유저정보 가져오기 성공");
             console.log(res.data);
             dispatch(userActions.setMyInfo(res.data));
-            API.get("member/friend/list", {
-              headers: { Authorization: `Bearer ${token}` },
-            }).then((res) => {
-              for (let f of res.data) {
-                const friend: UserEntityType = {
-                  deck: [],
-                  email: f.email,
-                  exp: f.exp,
-                  gameCharacterEntity: f.gameCharacterEntity,
-                  id: f.id,
-                  level: f.level,
-                  nickname: f.nickname,
-                  playCount: f.playCount,
-                  winCount: f.winCount,
-                  looseCount: f.looseCount,
-                  drawCount: f.drawCount,
-                  profileMsg: f.profileMsh,
-                  isOnline: f.isOnline,
-                  isPlaying: f.isPlaying,
-                };
-                dispatch(friendsActions.fillFriendsList(friend));
-              }
-            });
-            API.get("member/friend/wait", {
-              headers: { Authorization: `Bearer ${token}` },
-            }).then(({ data }) => {
-              console.log("friend wait list : ", data);
-              for (let f of data) {
-                const friendWait: UserEntityType = {
-                  deck: [],
-                  email: f.email,
-                  exp: f.exp,
-                  gameCharacterEntity: f.gameCharacterEntity,
-                  id: f.id,
-                  level: f.level,
-                  nickname: f.nickname,
-                  playCount: f.playCount,
-                  winCount: f.winCount,
-                  looseCount: f.looseCount,
-                  drawCount: f.drawCount,
-                  profileMsg: f.profileMsh,
-                  isOnline: f.isOnline,
-                  isPlaying: f.isPlaying,
-                };
-                dispatch(friendsActions.fillFriendWaitsList(friendWait));
-              }
-            });
-          })
-          .then(() => {
-            // 애니메이션 실행
-            setAni(!ani);
+            API.get('member/friend/list', { headers: { Authorization: `Bearer ${token}` }, })
+              .then((res) => {
+                for (let f of res.data) {
+                  const friend: UserEntityType = {
+                    deck: [],
+                    email: f.email,
+                    exp: f.exp,
+                    gameCharacterEntity: f.gameCharacterEntity,
+                    id: f.id,
+                    level: f.level,
+                    nickname: f.nickname,
+                    playCount: f.playCount,
+                    winCount: f.winCount,
+                    loseCount: f.loseCount,
+                    drawCount: f.drawCount,
+                    profileMsg: f.profileMsh,
+                    isOnline: f.isOnline,
+                    isPlaying: f.isPlaying
+                  }
+                  dispatch(friendsActions.fillFriendsList(friend));
+                }
+              })
+            API.get('member/friend/wait', { headers: { Authorization: `Bearer ${token}` }, })
+              .then(({ data }) => {
+                console.log("friend wait list : ", data);
+                for (let f of data) {
+                  const friendWait: UserEntityType = {
+                    deck: [],
+                    email: f.email,
+                    exp: f.exp,
+                    gameCharacterEntity: f.gameCharacterEntity,
+                    id: f.id,
+                    level: f.level,
+                    nickname: f.nickname,
+                    playCount: f.playCount,
+                    winCount: f.winCount,
+                    loseCount: f.loseCount,
+                    drawCount: f.drawCount,
+                    profileMsg: f.profileMsh,
+                    isOnline: f.isOnline,
+                    isPlaying: f.isPlaying
+                  }
+                  dispatch(friendsActions.fillFriendWaitsList(friendWait));
+                }
+            })
+          }).then(() => {
             setTimeout(() => {
               dispatch(authActions.login());
               navigate("/home");
@@ -113,6 +108,7 @@ const Login = () => {
           });
       })
       .catch((err) => {
+        alert("아이디와 비밀번호를 확인해주세요");
         console.log(err);
       });
   };
