@@ -35,7 +35,7 @@ const Profile = () => {
     nickname: '',
     playCount: 0,
     winCount: 0,
-    looseCount: 0,
+    loseCount: 0,
     drawCount: 0,
     profileMsg: '',
     isOnline: false,
@@ -141,7 +141,7 @@ const Profile = () => {
                   <div>승</div>
                 </div>
                 <div>
-                  <div className={`${style.midSize}`}>{user.looseCount}</div>
+                  <div className={`${style.midSize}`}>{user.loseCount}</div>
                   <div>패</div>
                 </div>
                 <div>
