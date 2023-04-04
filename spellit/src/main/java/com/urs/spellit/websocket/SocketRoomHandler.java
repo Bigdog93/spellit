@@ -88,6 +88,8 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 				}
 			}
 			/* 친구랑 매치 */
+		}else if(event.equals("logout")) {
+			session.close();
 		}else if(event.equals("matchRequest")) {
 			// 내 정보 받아오기
 			PlayerDto player = getPlayerByMemberId(session, memberId);
