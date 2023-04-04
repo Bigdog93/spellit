@@ -47,8 +47,8 @@ const Attack = () => {
     <div>
         {/* <div className='spell-and-character'> */}
         {attackCheck && <div>
-          {isMine && (comboTurn ? <Combo /> : <MySpell attack={attacks[idx]} idx={idx}/>)}
-          {!isMine && (comboTurn ? <Combo /> : <OtherSpell attack={attacks[idx]} idx={idx}/>)}
+          {isMine && (comboTurn ? <Combo attack={attacks[idx]} /> : <MySpell attack={attacks[idx]} idx={idx}/>)}
+          {!isMine && (comboTurn ? <Combo attack={attacks[idx]} /> : <OtherSpell attack={attacks[idx]} idx={idx}/>)}
         </div>
         }
         {/* </div> */}

@@ -1,12 +1,20 @@
 import {useEffect, useState} from 'react'
 import { IMediaRecorder, MediaRecorder, register } from 'extendable-media-recorder';
 import { connect } from 'extendable-media-recorder-wav-encoder';
+import { useDispatch, useSelector } from "react-redux";
+
+import { RootState } from '@/store'
+import { AttackType, CardType } from '@/utils/Types'
+
+import './Spell.css'
+import Timer from "@/components/Game/Items/Timer";
+import ProfileHp from "../Items/ProfileHp";
 
 type Props = {
     blob: Blob,
 }
 
-const Combo = () => {
+const Combo = ({attack}: {attack: AttackType}) => {
 
     // let isRecording = false;
     const [isRecording, setIsRecording] = useState<Boolean>(false);
@@ -117,11 +125,101 @@ const Combo = () => {
         }
     }, [])
 
+
+
+
+    // 화면 띄우는 용
+    const roomId = useSelector((state: RootState) => state.room.roomId)
+    const memberId = useSelector((state: RootState) => state.user.id)
+    const p1Character = useSelector((state: RootState) => state.player.p1!.gameCharacterEntity.englishName);
+    const p2Character = useSelector((state: RootState) => state.player.p2!.gameCharacterEntity.englishName);
+    const defaultHP = useSelector((state: RootState) => (state.attack.defaultHp));
+    const p1Hp = useSelector((state: RootState) => (state.player.p1!.hp));
+    const p2Hp = useSelector((state: RootState) => (state.player.p2!.hp));
+    const attackCardList = useSelector((state: RootState) => state.game.attacks);
+
+    const p1HpStyle = {
+      width: `${p1Hp/defaultHP*385}px`,
+      backgroundColor: p1Hp > 100 ? '#FFF500' : '#FF0000' ,
+    }
+    const p2HpStyle = {
+        width: `${p2Hp/defaultHP*385}px`,
+        backgroundColor: p2Hp > 100 ? '#FFF500' : '#FF0000' ,
+    }
+
+
+    // 타이머
+    const [sec, setSec] = useState<number>(10);
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setSec(sec => sec-1);
+        // sec.current -= 1;
+        console.log('============')
+        console.log('sec : ', sec)
+        console.log('============')
+      }, 1000)
+
+      setTimeout(() => {
+        clearInterval(interval);
+        // idx 추가
+        // combo 상태 업뎃
+      }, 1000)
+
+      return () => {}
+
+    }, [])
+    
+
     return (
-        <div>
-            <div>VoiceRec</div>
-            <button onClick={recording}>test</button>
+      <div className="attack-bg">
+      <div className="attack-top-items">
+        <div className='first-hp-box'>
+            <ProfileHp character={p1Character}></ProfileHp>
+            <div className="first-hp-bar" style={p1HpStyle}></div>
+          </div>
+          <Timer time={sec}></Timer>
+          <div className='second-hp-box'>
+            <ProfileHp character={p2Character}></ProfileHp>
+            <div className="second-hp-bar" style={p2HpStyle}></div>
         </div>
+      </div>
+
+      <div className="attack-bottom-itmes">
+        <div style={{display: 'flex', flexDirection: 'column'}}>
+          <div style={{display: 'inline-flex'}}>
+            {attackCardList.map((card: AttackType, idx: number) => (
+              card.isMine && <img style={{width: '150px', height: '150px'}} className={`effectImgTag-${idx} hiddenEffect`} key={idx} src={require(`../../../assets/effect/${card.card.code}.png`)} alt="" />
+              ))}
+          </div>
+          {attack.isMine && 
+            <img className="myCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p1Character}_attack.png`)} alt="" /> 
+          }
+        </div>
+        <div className="SpellandBar">
+          <div className="SpellBox">
+            <img style={{ width: 800, height: 400}} src={require(`../../../assets/InGame/SpellBox.png`)} alt="" />
+          </div>
+          <div className="spell-bar-box">
+            <img src={require(`../../../assets/InGame/SkillBar.png`)} alt="" style={{width: '100%', height: '140px'}} />
+            <div id='origin'>퍼펙트를 달성하셨습니다.</div>
+            <div className="cardList">
+              {attackCardList.map((card: AttackType, idx: number) => (
+                card.isMine && <img style={{width: '100px', margin: "10px"}} key={idx} src={require(`../../../assets/card/icon/${card.card.code}.png`)} alt="" />
+              ))}
+            </div>
+          </div>
+        </div>
+        <div style={{display: 'flex', flexDirection: 'column'}}>
+          <div style={{display: 'inline-flex'}}>
+            {attackCardList.map((card: AttackType, idx: number) => (
+                  !card.isMine && <img style={{width: '150px', height: '150px'}} className={`effectImgTag-${idx} hiddenEffect`} key={idx} src={require(`../../../assets/effect/${card.card.code}.png`)} alt="" />
+              ))}
+          </div>
+            {!attack.isMine && <img className="yourCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" /> }
+        </div>
+      </div>
+
+    </div>
     )
 }
 

@@ -62,7 +62,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
       } else if (type === 'connected') {
           console.log('connected 입니다.')
           console.log('roomInfo있나 확인', info.room)
-          
+          console.log(info)
           // 매칭 성공했을 때 player의 p1은 나, p2는 상대방에 넣음
           if (info.roomInfo.playerList[0].memberId === state.user.id ) {
             dispatch(playerActions.setP1(info.roomInfo.playerList[0]))

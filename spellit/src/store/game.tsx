@@ -13,7 +13,7 @@ type initialGameType = {
   attacks: AttackType[],
   idx: number,
   accuracy: number,
-  combo: boolean,
+  // combo: boolean,
   attackCheck: boolean,
   transcript: string,
   myAttackTurn: boolean|null,
@@ -32,7 +32,7 @@ const initialGameState: initialGameType = {
   attacks: [],
   idx: 0,
   accuracy: 0,
-  combo: false,
+  // combo: false,
   attackCheck: true, // idx가 다시 0이 됐을 때, 실행되는 것 방지하는 용도
   transcript: '',
   myAttackTurn: null,
