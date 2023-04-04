@@ -27,6 +27,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   const memberId = useSelector((state: RootState) => state.user.id)
   const p1Character = useSelector((state: RootState) => state.player.p1!.gameCharacterEntity.englishName);
   const p2Character = useSelector((state: RootState) => state.player.p2!.gameCharacterEntity.englishName);
+  const p1Combo = useSelector((state: RootState) => (state.settle.p1Combo))
 
   const attackCardList = useSelector((state: RootState) => state.game.attacks);
   
@@ -196,13 +197,13 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
               if(accuracy >= 0){
               // if(accuracy >= 0.7){
                 console.log('선공인데 콤보 들어간다~~~~~~')
-                dispatch(gameActions.startCombo())
                 send({
                   event: 'combo',
                   roomId: roomId,
                   memberId: memberId,
                   data: ''
                 })  
+                dispatch(gameActions.startCombo())
 
               // 콤보 안들어가면 index 추가해줌
               } else {
@@ -212,7 +213,6 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
             // 내 영창을 아직 다 하지 않았을 때도 index 추가
             } else {
               console.log('선공인데 내 영창 아직 남았으니까 index 추가한다.')
-              
               dispatch(gameActions.setIdx())
             }
 
@@ -229,18 +229,24 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
               // if(accuracy >= 0.7){
                 console.log('후공인데 콤보 들어간다~~~~~~')
 
-                dispatch(gameActions.startCombo())
                 send({
                   event: 'combo',
                   roomId: roomId,
                   memberId: memberId,
                   data: ''
                 })  
+                dispatch(gameActions.startCombo())
 
               // 콤보 안들어가면 index 추가해줌
               }else {
                 console.log('후공인데 콤보 달성 못했으니까 index 추가한다.')
-                dispatch(gameActions.setIdx())
+                send({
+                  event: 'defenseTurn',
+                  roomId: roomId,
+                  memberId: memberId,
+                  data: {combo: p1Combo}
+                })  
+                // dispatch(gameActions.setIdx())
               }
             // 내 영창을 아직 다 하지 않았을 때도 index 추가
             } else {
@@ -346,7 +352,6 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
               {!attack.isMine && <img className="yourCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" /> }
           </div>
         </div>
-
       </div>
   )
 }

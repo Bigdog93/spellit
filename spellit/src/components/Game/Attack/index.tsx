@@ -13,8 +13,8 @@ import  OtherSpell from "./OtherSpell";
 import game, { gameActions } from "@/store/game";
 import Spell from "./Spell";
 // import OpenViduVideo from '@/components/Game/OpenVidu/OpenVidu'
-import Combo from "./Combo";
-
+import MyCombo from "./MyCombo";
+import OtherCombo from "./OtherCombo";
 const Attack = () => {
   console.log('Attack')
   
@@ -34,12 +34,21 @@ const Attack = () => {
   const myCharacter = useSelector((state: RootState) => (state.user.gameCharacter?.englishName));
 
   const attackCheck = useSelector((state: RootState) => (state.game.attackCheck))
+  const p1Combo = useSelector((state: RootState) => (state.settle.p1Combo))
 
   // attackTurn 끝내기
   useEffect(() => {
     dispatch(gameActions.setMyAttackTurn(isMine))
     console.log('setMyAttackTurn에 isMine 업뎃 중', isMine)
     console.log('idx', idx)
+    // if (idx + 1 === attacks.length) {
+    //   send({
+    //     event: 'defenseTurn',
+    //     roomId: roomId,
+    //     memberId: memberId,
+    //     data: {combo: p1Combo}
+    //   })
+    // }
   }, [idx, dispatch])
 
 
@@ -47,8 +56,8 @@ const Attack = () => {
     <div>
         {/* <div className='spell-and-character'> */}
         {attackCheck && <div>
-          {isMine && (comboTurn ? <Combo attack={attacks[idx]} /> : <MySpell attack={attacks[idx]} idx={idx}/>)}
-          {!isMine && (comboTurn ? <Combo attack={attacks[idx]} /> : <OtherSpell attack={attacks[idx]} idx={idx}/>)}
+          {isMine && (comboTurn ? <MyCombo attack={attacks[idx]} /> : <MySpell attack={attacks[idx]} idx={idx}/>)}
+          {!isMine && (comboTurn ? <OtherCombo attack={attacks[idx]} /> : <OtherSpell attack={attacks[idx]} idx={idx}/>)}
         </div>
         }
         {/* </div> */}

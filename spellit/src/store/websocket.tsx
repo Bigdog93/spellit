@@ -12,6 +12,7 @@ import { friendsActions } from './friends';
 import { UserEntityType } from '@/utils/Types';
 import game, { gameActions } from './game';
 import { settleActions } from './settle';
+import { diffProps } from '@react-three/fiber/dist/declarations/src/core/utils';
 
 const WebSocketContext = createContext<any>(null);
 export { WebSocketContext };
@@ -126,10 +127,18 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         console.log('combo 입니다.')
         dispatch(gameActions.startCombo())
 
+      } else if (type === 'comboEnd') {
+        console.log('comboEnd 입니다.')
+        dispatch(gameActions.endCombo())
+        dispatch(gameActions.setIdx());
+
       } else if (type === 'toDefense') {
         console.log('toDefense 입니다.')
+        console.log('toDefense에 들어오는 combo',info.combo)
+        dispatch(settleActions.setP2Combo(info.combo))
         dispatch(gameActions.endAttack())
         dispatch(gameActions.startDefense())
+
         // 애매하지만 이쯤에서 setAttackCheck 리셋
         dispatch(gameActions.setAttackCheck())
       
