@@ -72,3 +72,55 @@
 .player1 div, .player2 div {
     font-size: 24pt;
 }
+
+.leftSlider {
+    /* 애니메이션 이름 */
+    animation-name: leftSlider;
+    animation-duration:1.5s;
+    animation-timing-function: cubic-bezier(1,-0.06,.85,1.14);
+    animation-direction:alternate;
+    animation-fill-mode: forwards;
+}
+.rightSlider {
+    animation-name: rightSlider;
+    animation-duration:1.5s;
+    animation-timing-function: cubic-bezier(1,-0.06,.85,1.14);
+    animation-direction:alternate;
+    animation-fill-mode: forwards;
+}
+/* 키프레임 이름 = 애니메이션 이름 */
+@keyframes leftSlider {
+    0% {
+        left:-800px;
+    }
+    87% {
+        left: 50px;
+    }
+    95% {
+        left: -20px;
+    }
+    97% {
+        left : 10px;
+    }
+    100% {
+        left:0px;
+    }
+}
+  /* 키프레임 이름 = 애니메이션 이름 */
+@keyframes rightSlider {
+    0% {
+        left:800px;
+    }
+    87% {
+        left: -50px;
+    }
+    95% {
+        left: 20px;
+    }
+    97% {
+        left : -10px;
+    }
+    100% {
+        left:0px;
+    }
+}
