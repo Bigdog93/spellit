@@ -103,6 +103,7 @@ public class MemberService {
         //Member friend=memberRepository.findById(friendId).get(); //친구
 
         List<FriendWaitEntity> friendWaitEntities=friendWaitRepository.findAllByMyId(friendId); //상대의 친구대기 리스트
+        List<Friend> friendEntities=friendRepository.findAllByMyId(friendId); //상대의 친구 리스트
 
         if(friendId==me.getId())
             throw new RuntimeException(("나는 세상에서 제일 소중한 친구입니다:) "));
@@ -113,7 +114,13 @@ public class MemberService {
                 throw new RuntimeException("이미 친구요청을 보낸 상대입니다.");
         }
 
-        //친구 대기 리스트에 내가 없음//
+        for(Friend friend : friendEntities)
+        {
+            if(me.getId()==friend.getFriendId()) //내가 이미 상대의 친구 리스트에 있음
+                throw new RuntimeException("이미 친구입니다.");
+        }
+
+        //친구 대기 and 친구 리스트에 내가 없음//
 
         FriendWaitEntity friendWaitEntity=FriendWaitEntity.toBuild(friendId, me); //나 대기 객체 생성 (상대방 화면에 띄울 것이므로, 주체가 받는 상대방. 나 => friendId, 상대방 => myID)
         friendWaitEntities.add(friendWaitEntity); //상대의 친구 대기 리스트에 나를 추가
