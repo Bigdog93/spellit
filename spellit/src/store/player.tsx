@@ -15,7 +15,10 @@ type PlayerType = {
     isFirst : 0 | 1,
     idx : 0 | 1,
     defence : boolean,
-    myObj : Object
+    myObj : Object,
+    level: number,
+    drawCount: number,
+    loseCount: number,
   }
 
 type GameCharacterType = {
@@ -67,6 +70,12 @@ const playerSlice = createSlice({
     p2HpDecrese(state, action: PayloadAction<number>) {
       state.p2!.hp -= action.payload;
     },
+    // setP1Hp(state) {
+    //   state.p1!.hp = 600;
+    // },
+    // setP2Hp(state) {
+    //   state.p2!.hp = 600;
+    // }
   },
 });
 

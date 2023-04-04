@@ -19,8 +19,6 @@ type PlayersDeckType = {
 type initialAttackType = {
   startGame: boolean,
   defaultHp: number,
-  p1Hp: number,
-  p2Hp : number,
   playersDeck: PlayersDeckType[],
   p1Deck: object[],
   p2Deck: object[],
@@ -37,8 +35,6 @@ type initialAttackType = {
 const initialAttack: initialAttackType = {
   startGame: false,
   defaultHp: 600,   // hp 초기값
-  p1Hp: 385,        // 남은 p1 hp
-  p2Hp: 385,        // 남은 p2 hp
   playersDeck: [],  // 플레이어의 카드 선택 정보가 담긴 리스트
   p1Deck: [],       // p1 선택한 덱 리스트
   p2Deck: [],       // p2 선택한 덱 리스트
@@ -79,12 +75,6 @@ const attackSlice = createSlice({
     },
     p2Damage(state, action: PayloadAction<number[]>) {
       state.p2Damage = action.payload;
-    },
-    p1Hit(state, action: PayloadAction<number>) {
-      state.p1Hp = state.p1Hp - action.payload;
-    },
-    p2Hit(state, action: PayloadAction<number>) {
-      state.p2Hp = state.p2Hp - action.payload;
     },
     onTimer(state) {
       state.onTimer = !state.onTimer;

@@ -278,11 +278,11 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
           <div style={{display: 'flex', flexDirection: 'column'}}>
             <div style={{display: 'inline-flex'}}>
               {attackCardList.map((card: AttackType, idx: number) => (
-                card.isMine && <img style={{width: '150px', height: '150px'}} className={`effectImgTag-${idx} hiddenEffect`} key={idx} src={require(`../../../assets/effect/${card.card.code}.png`)} alt="" />
+                card.isMine && <img style={{width: '100px', height: '100px'}} className={`effectImgTag-${idx} hiddenEffect`} key={idx} src={require(`../../../assets/effect/${card.card.code}.png`)} alt="" />
                 ))}
             </div>
             {attack.isMine && 
-              <img className="myCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p1Character}_attack.png`)} alt="" /> 
+              <img className="myCharacter" style={{width: '330px'}} src={require(`../../../assets/character/${p1Character}_attack.png`)} alt="" /> 
             }
           </div>
           <div className="SpellandBar">
@@ -300,12 +300,12 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
             </div>
           </div>
           <div style={{display: 'flex', flexDirection: 'column'}}>
-            <div style={{display: 'inline-flex'}}>
+            <div className="p2SkillEffects">
               {attackCardList.map((card: AttackType, idx: number) => (
-                    !card.isMine && <img style={{width: '150px', height: '150px'}} className={`effectImgTag-${idx} hiddenEffect`} key={idx} src={require(`../../../assets/effect/${card.card.code}.png`)} alt="" />
+                    !card.isMine && <img style={{width: '100px', height: '100px'}} className={`effectImgTag-${idx} hiddenEffect`} key={idx} src={require(`../../../assets/effect/${card.card.code}.png`)} alt="" />
                 ))}
             </div>
-              {!attack.isMine && <img className="yourCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" /> }
+              {!attack.isMine && <img className="yourCharacter" style={{width: '330px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" /> }
           </div>
         </div>
 

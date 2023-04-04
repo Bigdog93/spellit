@@ -16,7 +16,7 @@ type GameCharacterType = {
   combo : string,
 }
 
-type userInitialType = {
+export type userInitialType = {
   deck: Array<DeckType>,
   notMyDeck: Array<DeckType>,
   email: string,

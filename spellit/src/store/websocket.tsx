@@ -75,6 +75,9 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
           // room 정보 설정
           dispatch(roomActions.setRoom(info.roomInfo))
 
+          // 턴 수 초기화
+          dispatch(settleActions.setTurnCount());
+
       } else if (type === 'loaded') {
         console.log('loaded 입니다.')
         console.log(info);

@@ -54,6 +54,11 @@ vbody {
     padding-left: 10px;    
 }
 
+.p2SkillEffects {
+    display: inline-flex;
+    transform: scaleX(-1);
+}
+
 .myCharacter, .yourCharacter{
     position: relative;
     top: 0;
