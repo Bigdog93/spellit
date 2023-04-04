@@ -1,5 +1,4 @@
 import React from 'react'
-import { SE } from '@/utils/SoundEffect'
 import useSound from 'use-sound';
 import CardFlip from "@/assets/soundeffect/CardFlip.mp3";
 

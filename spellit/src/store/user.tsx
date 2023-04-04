@@ -117,6 +117,20 @@ const userSlice = createSlice({
           }
         })
         .catch((err) => {console.log('err이무니다', err)})
+    },
+    logout(state) {
+      state.deck = []
+      state.email = ""
+      state.exp = 0
+      state.gameCharacter = null
+      state.id = 0
+      state.level = 1
+      state.nickname = ""
+      state.playCount = 0
+      state.winCount = 0
+      state.isOnline = false
+      state.loseCount = 0
+      state.drawCount = 0
     }
   },
 });
