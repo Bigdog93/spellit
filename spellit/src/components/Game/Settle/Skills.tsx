@@ -70,17 +70,12 @@ function Skills({code, isMine, p1Character, p2Character}: props) {
         {p1Character==='CB' && <CBDefault1 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} /> }
         {p1Character==='AK' && <AKDefault1 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} /> }
         {p1Character==='LUNA' && <LUNADefault1 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} /> }
-        {/* <CBDefault1 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} /> */}
-        {/* <AKDefault1 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} /> */}
-        {/* <LUNADefault1 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} /> */}
+
 
         {/* 캐릭터 2P */}
         {p2Character==='CB' && <CBDefault2 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} /> }
         {p2Character==='AK' && <AKDefault2 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} /> }
         {p2Character==='LUNA' && <LUNADefault2 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} /> }
-        {/* <CBDefault2 position={[5, -1, 0]} isSpell={isSpell} turn={turn} /> */}
-        {/* <AKDefault2 position={[5, -1, 0]} isSpell={isSpell} turn={turn} /> */}
-        {/* <LUNADefault2 position={[5, -1, 0]} isSpell={isSpell} turn={turn} /> */}
 
         {/* 마법 시전 이펙트 */}
         {isStart && (
