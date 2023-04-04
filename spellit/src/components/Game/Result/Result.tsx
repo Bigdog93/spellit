@@ -10,7 +10,7 @@ import { WebSocketContext } from '@/store/websocket';
 import { useContext, useEffect, useState } from "react";
 import user, { userActions, userInitialType } from "@/store/user";
 
-import homeBtn from "../../../assets/result/HomeBtn.png"
+import homeBtn from "../../../assets/result/homeBtn.png"
 import quickmatchBtn from "../../../assets/result/QuickStartBtn.png";
 import blueframe from "../../../assets/result/blueframe.png";
 import turnsImg from "../../../assets/result/turnsImg.png";
