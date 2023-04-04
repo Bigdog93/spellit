@@ -209,25 +209,25 @@ UPDATE
 --     card_id=new_record.card_id,
 --     member_id=new_record.member_id;
 
-INSERT INTO `friend_wait`
-(id,friend_email,friend_id,member_id)
-values
-    (1,'aaa@aaa',1,2)
-    AS new_record
-ON DUPLICATE KEY
-UPDATE
-    friend_email=new_record.friend_email,
-    friend_id=new_record.friend_id,
-    member_id=new_record.member_id;
-
-INSERT INTO `friend`
-(id,friend_email,friend_id,member_id)
-values
-    (1,'lkc2',4,1),
-    (2,'aaa@aaa',1,4)
-    AS new_record
-ON DUPLICATE KEY
-UPDATE
-    friend_email=new_record.friend_email,
-    friend_id=new_record.friend_id,
-    member_id=new_record.member_id;
+-- INSERT INTO `friend_wait`
+-- (id,friend_email,friend_id,member_id)
+-- values
+--     (1,'aaa@aaa',1,2)
+--     AS new_record
+-- ON DUPLICATE KEY
+-- UPDATE
+--     friend_email=new_record.friend_email,
+--     friend_id=new_record.friend_id,
+--     member_id=new_record.member_id;
+--
+-- INSERT INTO `friend`
+-- (id,friend_email,friend_id,member_id)
+-- values
+--     (1,'lkc2',4,1),
+--     (2,'aaa@aaa',1,4)
+--     AS new_record
+-- ON DUPLICATE KEY
+-- UPDATE
+--     friend_email=new_record.friend_email,
+--     friend_id=new_record.friend_id,
+--     member_id=new_record.member_id;

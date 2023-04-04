@@ -93,28 +93,41 @@ public class MemberController {
     @PostMapping("/friend/accept") //친구 수락
     public ResponseEntity<List<FriendResponseDto>> addFriend(@RequestBody FriendRequestDto friendRequestDto)
     {
-        System.out.println("수락하는 친구의 ID : " + friendRequestDto.getFriendId());
+        System.out.println("수락 당하는 친구의 ID : " + friendRequestDto.getFriendId());
         return ResponseEntity.ok(memberService.addFriend(friendRequestDto));
     }
 
     @GetMapping("/friend/list") //내 친구 목록
     public ResponseEntity<List<Member>> getFriendList()
     {
-        List<Friend> friendIdList = friendRepository.findAllByFriendId(SecurityUtil.getCurrentMemberId());
-        List<Member> friendList = new ArrayList<>();
-        for(Friend f : friendIdList) {
-            friendList.add(f.getMember());
+        //List<Friend> friendIdList = friendRepository.findAllByFriendId(SecurityUtil.getCurrentMemberId());
+        //List<Member> friendList = new ArrayList<>();
+        //for(Friend f : friendIdList) {
+          //  friendList.add(f.getFriend());
+        //}
+        //return ResponseEntity.ok(friendList);
+
+        List<Friend> friendList = friendRepository.findAllByMyId(SecurityUtil.getCurrentMemberId());
+        List<Member> friendInfo = new ArrayList<>();
+        for(Friend f : friendList) {
+          friendInfo.add(f.getMember());
         }
-        return ResponseEntity.ok(friendList);
+        return ResponseEntity.ok(friendInfo);
     }
     @GetMapping("/friend/wait")
     public ResponseEntity<List<Member>> getFriendWaitList() {
-        List<FriendWaitEntity> friendIdList = friendWaitRepository.findAllByFriendId(SecurityUtil.getCurrentMemberId());
-        List<Member> friendList = new ArrayList<>();
-        for(FriendWaitEntity f : friendIdList) {
-            friendList.add(f.getMember());
+//        List<FriendWaitEntity> friendIdList = friendWaitRepository.findAllByFriendId(SecurityUtil.getCurrentMemberId());
+//        List<Member> friendList = new ArrayList<>();
+//        for(FriendWaitEntity f : friendIdList) {
+//            friendList.add(f.getFriend());
+//        }
+//        return ResponseEntity.ok(friendList);
+        List<FriendWaitEntity> friendList = friendWaitRepository.findAllByMyId(SecurityUtil.getCurrentMemberId());
+        List<Member> friendInfo = new ArrayList<>();
+        for(FriendWaitEntity f : friendList) {
+            friendInfo.add(f.getMember());
         }
-        return ResponseEntity.ok(friendList);
+        return ResponseEntity.ok(friendInfo);
     }
 
 

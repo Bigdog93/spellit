@@ -19,11 +19,11 @@ public class FriendResponseDto {
     {
         List<FriendResponseDto> list=new ArrayList<>();
         list.add(FriendResponseDto.builder()
-                .myId(addFriend.getMember().getId())
+                .myId(addFriend.getMyId())
                 .friendId(addFriend.getFriendId())
                 .build());
         list.add(FriendResponseDto.builder()
-                .myId(addMe.getMember().getId())
+                .myId(addMe.getMyId())
                 .friendId(addMe.getFriendId())
                 .build());
         return list;
@@ -35,7 +35,7 @@ public class FriendResponseDto {
         for(Friend friend : friends)
         {
             list.add(FriendResponseDto.builder()
-                    .myId(friend.getMember().getId())
+                    .myId(friend.getMyId())
                     .friendId(friend.getFriendId())
                     .build());
         }

@@ -22,6 +22,8 @@ public class FriendWaitEntity {
     private Long friendId;
     @Column
     private String friendEmail;
+    @Column
+    private Long myId;
 
     @ManyToOne
     @JoinColumn(name="member_id")
@@ -29,11 +31,12 @@ public class FriendWaitEntity {
     @NonNull
     private Member member;
 
-    public static FriendWaitEntity toBuild(Long myId, String myEmail, Member friend)
+    public static FriendWaitEntity toBuild(Long myId, Member friend)
     {
         return FriendWaitEntity.builder()
-                .friendId(myId)
-                .friendEmail(myEmail)
+                .myId(myId)
+                .friendId(friend.getId())
+                .friendEmail(friend.getEmail())
                 .member(friend)
                 .build();
 

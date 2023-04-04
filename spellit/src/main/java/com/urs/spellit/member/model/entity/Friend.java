@@ -23,6 +23,8 @@ public class Friend {
     private Long friendId;
     @Column
     private String friendEmail;
+    @Column
+    private Long myId;
 
     @ManyToOne
     @JoinColumn(name="member_id")
@@ -30,12 +32,12 @@ public class Friend {
     @NonNull
     private Member member;
 
-    public static Friend toBuild(Long friendId,String friendEmail, Member member)
+    public static Friend toBuild(Long myId,Member friend)
     {
         return Friend.builder()
-                .friendId(friendId)
-                .friendEmail(friendEmail)
-                .member(member)
+                .myId(myId)
+                .friendId(friend.getId())
+                .member(friend)
                 .build();
     }
 
