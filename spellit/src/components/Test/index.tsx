@@ -3,6 +3,7 @@ import TextInputBox from "@/components/Test/TextInputBox";
 // import WebsocektProvider from '../../utils/WebsocektProvider'
 import OpenViduVideo from '@/components/Game/OpenVidu/OpenVidu'
 import VoiceRec from '@/components/Test/VoiceRec'
+import SoundTest from "./soundTest";
 // import { OpenviduProvider } from '@/store/openvidu'
 import {useEffect, useState} from 'react'
 
@@ -33,7 +34,8 @@ const OpenViduTest = () => {
       {/* <OpenviduProvider> */}
         {/* <Chatting/>
       <TextInputBox /> */}
-      <VoiceRec/>
+      {/* <VoiceRec/> */}
+      <SoundTest/>
       {/* <OpenViduVideo /> */}
         {/* </OpenviduProvider> */}
       {/* </WebsocektProvider> */}
