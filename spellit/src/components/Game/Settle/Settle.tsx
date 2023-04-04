@@ -13,6 +13,7 @@ import player, { playerActions } from '@/store/player';
 import { settleActions } from '@/store/settle';
 import { gameActions } from '@/store/game';
 import Skills from './Skills';
+import API from '@/utils/API';
 
 
 function Settle() {
@@ -32,8 +33,8 @@ function Settle() {
     const p1Hp = useSelector((state: RootState) => (state.player.p1!.hp));
     const p2Hp = useSelector((state: RootState) => (state.player.p2!.hp));
 
-    const p1Deffense = useSelector((state: RootState) => (state.settle.p1Deffense));
-    const p2Deffense = useSelector((state: RootState) => (state.settle.p2Deffense));
+    const p1Deffense = useSelector((state: RootState) => (state.game.myDefense));
+    const p2Deffense = useSelector((state: RootState) => (state.game.otherDefense));
 
     const attacks = useSelector((state: RootState) => (state.game.attacks));
 
@@ -45,6 +46,8 @@ function Settle() {
     // const idx = useSelector((state: RootState) => (state.game.idx));
     const [idx, setIdx] = useState(0);
     const [isCanvas, setIsCanvas] = useState(false);
+
+    const token = sessionStorage.getItem("token");
  
     const p1HpStyle = {
         width: `${p1Hp/defaultHP*385}px`,
@@ -57,7 +60,7 @@ function Settle() {
     
     async function settling(idx: number) {
         console.log('정산중..')
-        let d = attacks[idx].card.damage * percentList[idx] * 2;
+        let d = attacks[idx].card.damage * percentList[idx];
         console.log('========')
         console.log('d', d);
 
@@ -71,7 +74,7 @@ function Settle() {
                 if (attacks[idx].isMine) {
                     console.log('내가 공격중!!')
                     if (p2Deffense) {
-                        d = d/2;
+                        d = d*0.8;
                     }
                     if (d >= p2Hp) {
                         d = p2Hp;
@@ -83,7 +86,7 @@ function Settle() {
                 } else {
                     console.log('공격 당하는중,,')
                     if (p1Deffense) {
-                        d = d/2;
+                        d = d*0.8;
                     }
                     if (d >= p1Hp) {
                         d = p1Hp;
@@ -93,6 +96,9 @@ function Settle() {
                         dispatch(playerActions.p1HpDecrese(d));
                     }, 3000);
                 }
+                console.log('===========')
+                console.log('데미지 : ', d);
+                console.log('===========')
             }, 1000);
         }, 2000);
 
@@ -148,9 +154,11 @@ function Settle() {
                         },
                     })
                 }
+                // 턴 수 증가
+                dispatch(settleActions.addTurnCount());
             }, 1000);
         }
-
+        
     }, [idx]);
 
     return (
@@ -190,7 +198,7 @@ function Settle() {
                             {attacks.map((attack: AttackType, i: number) => {
                                 if (!attack.isMine) {
                                     return (
-                                        <img key={i} style={{height: '150px'}} className={`spellEffect-${i}`} src={require(`../../../assets/effect/${attack.card.code}.png`)} alt="없음,," />
+                                        <img key={i} style={{height: '100px'}} className={`spellEffect-${i}`} src={require(`../../../assets/effect/${attack.card.code}.png`)} alt="없음,," />
                                     )
                                 }
                             })}   

@@ -23,7 +23,7 @@ type initialSettleType = {
     p1Deffense: boolean,
     p2Deffense: boolean,
     percentList: Array<number>,
-    idx: number,
+    turnCount : number,
 }
 
 const initialSettle: initialSettleType = {
@@ -32,7 +32,7 @@ const initialSettle: initialSettleType = {
     p1Combo: false,
     p2Combo: false,
     percentList: [],
-    idx: 0,
+    turnCount: 0,
 }
 
 const settleSlice = createSlice({
@@ -45,6 +45,12 @@ const settleSlice = createSlice({
         percentListClear(state) {
             state.percentList = [];
         },
+        addTurnCount(state) {
+            state.turnCount = state.turnCount + 1;
+        },
+        setTurnCount(state) {
+            state.turnCount = 0;
+        }
     },
 });
 
