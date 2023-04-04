@@ -6,6 +6,7 @@ type initialGameType = {
   game: boolean
   readyTurn: boolean,
   attackTurn: boolean,
+  comboTurn: boolean,
   defenseTurn: boolean,
   settleTurn: boolean,
   resultTurn: boolean,
@@ -24,6 +25,7 @@ const initialGameState: initialGameType = {
   game: false,
   readyTurn: false,
   attackTurn: false,
+  comboTurn: false,
   defenseTurn: false,
   settleTurn: false,
   resultTurn: false,
@@ -128,11 +130,11 @@ const gameSlice = createSlice({
     clearAccuracy(state){
       state.accuracy = 0
     },
-    setCombo(state) {
-      state.combo = true;
+    startCombo(state) {
+      state.comboTurn = true;
     },
-    clearCombo(state) {
-      state.combo = false;
+    endCombo(state) {
+      state.comboTurn = false;
     }
   },
 });

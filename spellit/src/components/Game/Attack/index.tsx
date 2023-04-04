@@ -13,7 +13,7 @@ import  OtherSpell from "./OtherSpell";
 import game, { gameActions } from "@/store/game";
 import Spell from "./Spell";
 // import OpenViduVideo from '@/components/Game/OpenVidu/OpenVidu'
-
+import Combo from "./Combo";
 
 const Attack = () => {
   console.log('Attack')
@@ -29,7 +29,7 @@ const Attack = () => {
   console.log('attack index에서 찍히는 attacks', attacks)
   const idx = useSelector((state: RootState) => (state.game.idx));
   console.log('attack index에서 찍히는 idx', idx)
-  const attackTurn = useSelector((state: RootState) => (state.game.attackTurn));
+  const comboTurn = useSelector((state: RootState) => (state.game.comboTurn));
   const isMine = attacks[idx].isMine
   const myCharacter = useSelector((state: RootState) => (state.user.gameCharacter?.englishName));
 
@@ -47,8 +47,8 @@ const Attack = () => {
     <div>
         {/* <div className='spell-and-character'> */}
         {attackCheck && <div>
-          {isMine && <MySpell attack={attacks[idx]} idx={idx}/>}
-          {!isMine && <OtherSpell attack={attacks[idx]} idx={idx}/>}
+          {isMine && (comboTurn ? <Combo /> : <MySpell attack={attacks[idx]} idx={idx}/>)}
+          {!isMine && (comboTurn ? <Combo /> : <OtherSpell attack={attacks[idx]} idx={idx}/>)}
         </div>
         }
         {/* </div> */}

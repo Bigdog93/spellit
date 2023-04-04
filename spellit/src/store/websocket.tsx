@@ -124,6 +124,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         
       } else if (type === 'combo') {
         console.log('combo 입니다.')
+        dispatch(gameActions.startCombo())
 
       } else if (type === 'toDefense') {
         console.log('toDefense 입니다.')
