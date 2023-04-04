@@ -251,6 +251,9 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 				case "combo": // 100% 달성 시 상대에게 콤보 발동을 알림
 					other.getSession().sendMessage(makeTextMsg("combo", infoMap));
 					break;
+				case "comboEnd":
+					other.getSession().sendMessage(makeTextMsg("comboEnd", infoMap));
+					break;
 				case "defenseTurn": // 디스펠 차례
 					isReady[me.getIdx()] = true;
 					me.setMyObj(dataObj);
