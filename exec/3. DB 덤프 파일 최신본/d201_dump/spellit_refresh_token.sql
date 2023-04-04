@@ -1,0 +1,51 @@
+-- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
+--
+-- Host: j8d201.p.ssafy.io    Database: spellit
+-- ------------------------------------------------------
+-- Server version	8.0.32
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `refresh_token`
+--
+
+DROP TABLE IF EXISTS `refresh_token`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `refresh_token` (
+  `rt_key` varchar(255) NOT NULL,
+  `rt_value` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`rt_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `refresh_token`
+--
+
+LOCK TABLES `refresh_token` WRITE;
+/*!40000 ALTER TABLE `refresh_token` DISABLE KEYS */;
+INSERT INTO `refresh_token` VALUES ('1','eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2ODExNzExMDZ9.t4lz4LKdxwBsnuVLofjejekBMhuzkpDqYXI2k1dXTAMFQX4tDimiSy7HcwS2znn2DpkVeUoyz7j7-VDtXUSvhQ'),('10','eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2ODEwNjMzNzJ9.OYi1gYr3UVuffykKR_EXybJGdkmsgtAsY_BkgVGakvJBBY58ulhrpffFn4cAJ8-mCSytC_G5evFY-0udiqeE6w'),('11','eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2ODEwOTA3MTF9.lXWcfzBHIE7FFOVWc3_YemcnREhkzKDecmPqV7Rx81ES8CJ3QtJMQHwJ46r5DKXQxRJrbob2X7BvgGciijdaZQ'),('12','eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2ODEwNjE0NDh9.0rTb7r32ijj2lkCKWO50fCCTICjDvCmBqoXj7RqRkNwMXXn_X-XYstVXeGyVYBnL5FVHy4C1UOxdWIkt2D6xSA'),('13','eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2ODExMTQ1ODB9.DhKv8_aetPHGf8G4t4JtgWyFxnxdzgX6PIMUrZ1ltSUgkDbURjMoIs2sWmIAEGSsl31Cqqfc-vo59l0tJWtksA'),('14','eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2ODExMzI2MjF9.UnCJGK6CB1hcjvSDNVo9XL84vfW5hjFzcUFLOYZ3Ixb5eY4C-_PVwPpeBfqNQTp82U1jP12GLzxov1-Ai5yedQ'),('2','eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2ODExNzEwNjN9.VG9IEJUYWnlKi_lAiclOusUCY_UFC2bKy6pnsBPrilUb60YG8pfqcNJiTmr05AOKyl5eHL3pa3V_gxcMiDWtFA'),('7','eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2ODA3NTYxNTZ9.TYydRHoiazFWJ4XjNz01BWPGjNqNpGqADAUcZc4W2nMF9jvCiPDxw_DyBdc9EL2Kg5wxcXhzEH97i6qFYh8rlg'),('8','eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2ODA4MzkxMzF9.9zhlGd3v1R1ooC3tZgM335xKjgb54W72nJ5dLnOH9hlr7z6fQdTiFbOoJBVnX_XaXifVBpxiRAJb8ptLTcmkXg');
+/*!40000 ALTER TABLE `refresh_token` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2023-04-04  9:15:48
