@@ -34,6 +34,7 @@ public class AuthService {
     public MemberResponseDto signup(MemberRequestDto memberRequestDto) {
 
         Member member = memberRequestDto.toMember(passwordEncoder);
+        member.setLevel(1);
         member.setGameCharacterEntity(gameService.getCharacter(1L));
         return MemberResponseDto.of(memberRepository.save(member));
     }
