@@ -2,6 +2,7 @@ import API from '@/utils/API';
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit' 
 import { DeckType } from '@/utils/Types'
+import { stringify } from 'querystring';
 
 
 type GameCharacterType = {
@@ -50,6 +51,7 @@ const userInitialState: userInitialType = {
 }
 
 const token = sessionStorage.getItem("token");
+
 const userSlice = createSlice({
   name: 'index',
   initialState: userInitialState,
@@ -94,7 +96,27 @@ const userSlice = createSlice({
       state.gameCharacter = action.payload;
     },
     setNotMyDeck(state) {
-
+      state.notMyDeck = [];
+      API.get(
+        'game/card',
+        { headers: { Authorization: `Bearer ${token}` } }
+        )
+        .then(({data}) => {
+          console.log('user store data', data)
+          for (const d of data){
+            console.log('d ', d)
+            for (const m of d) {
+              console.log('m', m)
+            }
+            // if(state.deck.includes(d.toString())){
+            //   console.log('IF user store setNotMyDeck')
+            // } else {
+            //   console.log('ELSE user store setNotMyDeck')
+            //   state.notMyDeck.push(d)
+            // }
+          }
+        })
+        .catch((err) => {console.log('err이무니다', err)})
     }
   },
 });
