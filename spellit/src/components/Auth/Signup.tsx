@@ -25,7 +25,7 @@ const Signup = () => {
   const [wrongPw, setWrongPw] = useState<boolean>(true);
   const [emailAbailablity, setEmailAbailablity] = useState<boolean>(true);
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState<string>('');
-  const [isPasswordConfirm, setIsPasswordConfirm] = useState<boolean>(true);
+  const [isPasswordConfirm, setIsPasswordConfirm] = useState<boolean>(false);
 
   const pw1 = useRef<HTMLInputElement>();
   const pw2 = useRef<HTMLInputElement>();
@@ -78,6 +78,7 @@ const Signup = () => {
   const signupHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log('회원가입 시작')
+    if (!emailAbailablity) return;
     // 회원가입
     API.post<any>(
       "auth/signup", 
