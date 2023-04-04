@@ -317,6 +317,9 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
 		System.out.println("누군가 소켓이 끊어짐");
 		// 끊어진 세션 쫓아내고 방폭하고 남은 사람 가져오기
+		if(!readyQueue.isEmpty() && readyQueue.peek().getSession() == session) {
+			readyQueue.poll();
+		}
 		PlayerDto[] players = roomManager.dropSession(session);
 		PlayerDto leavePlayer = new PlayerDto();
 		PlayerDto remainPlayer = null;
