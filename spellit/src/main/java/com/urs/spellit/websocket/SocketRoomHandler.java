@@ -251,9 +251,10 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 					break;
 				case "defenseTurn": // 디스펠 차례
 					isReady[me.getIdx()] = true;
+					me.setMyObj(dataObj);
 					if(isReady(isReady, room, 3)) {
-
-						room.sendMessage(makeTextMsg("toDefense", infoMap));
+						players.get(0).getSession().sendMessage(makeTextMsg("toDefense", players.get(1).getMyObj()));
+						players.get(1).getSession().sendMessage(makeTextMsg("toDefense", players.get(0).getMyObj()));
 					}
 					break;
 				case "settleTurn": // 정산 차례

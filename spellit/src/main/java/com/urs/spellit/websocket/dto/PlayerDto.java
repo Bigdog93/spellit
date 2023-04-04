@@ -21,6 +21,7 @@ public class PlayerDto {
 	private long memberId;
 	private int hp;
 	private String nickname;
+	private int level;
 	private int playCount;
 	private int winCount;
 	private int loseCount;
@@ -42,6 +43,7 @@ public class PlayerDto {
 				.memberId(member.getId())
 				.hp(600)
 				.nickname(member.getNickname())
+				.level(member.getLevel())
 				.playCount(member.getPlayCount())
 				.winCount(member.getWinCount())
 				.loseCount(member.getLoseCount())
