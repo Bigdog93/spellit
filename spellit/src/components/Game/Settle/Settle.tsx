@@ -69,8 +69,6 @@ function Settle() {
       backgroundColor: p2Hp > 100 ? '#FFF500' : '#FF0000' ,
   }
 
-  const trigger = useSelector((state: RootState) => state.settle.trigger);
-
   async function settling(idx: number) {
     console.log("정산중..");
     let d = attacks[idx].card.damage * percentList[idx];
@@ -83,7 +81,7 @@ function Settle() {
       spellEffect?.classList.add('hidden-effect');
       setTimeout(() => {
           // canvas 실행
-          setIsCanvas(trigger);
+          setIsCanvas(true);
           setTimeout(() => {
             if (attacks[idx].isMine) {
                 console.log('내가 공격중!!')
