@@ -17,7 +17,7 @@ interface Spell {
     time: number;
 }
 
-const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
+const OtherSpell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   const dispatch = useDispatch();
   const { send } = useContext(WebSocketContext);
 
@@ -26,7 +26,9 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   const p1Character = useSelector((state: RootState) => state.player.p1!.gameCharacterEntity.englishName);
   const p2Character = useSelector((state: RootState) => state.player.p2!.gameCharacterEntity.englishName);
 
+  const comboTurn = useSelector((state: RootState) => state.game.comboTurn)
   const attackCardList = useSelector((state: RootState) => state.game.attacks);
+  const p1Combo = useSelector((state: RootState) => (state.settle.p1Combo))
 
   const p1Level = useSelector((state: RootState) => (state.player.p1!.level));
   const p2Level = useSelector((state: RootState) => (state.player.p2!.level));
@@ -90,55 +92,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
     setSpanEl(spanList);
     
 
-  //   const trimText = card.spell.replaceAll(" ", ""); // 띄어쓰기 제거한 주문
-  //   // console.log(trimText);
-
-  //   recognition.addEventListener("result", (e) => {
-  //       console.log("말하는 중이잖아요?");
-  //       console.log(e)
-  //       let transcript = e.results[0][0].transcript; // 인식된 음성 글자
-  //       transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
-  //       // console.log(transcript);
-  //       if (isMine){
-  //         // let transcript = e.results[0][0].transcript; // 인식된 음성 글자
-  //         // transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
-  //         // console.log(transcript);
-  //         send({
-  //           event: 'spell',
-  //           roomId: roomId,
-  //           memberId: memberId,
-  //           data:  transcript,
-  //         })
-  //         console.log(transcript)
-  //       } else {
-  //         console.log('isMine은 false다.')
-  //       }
-
-
-        // let correct = 0;
-  //       console.log("------------------------------------------------");
-  //       for (let i = 0; i < transcript.length; i++) {
-  //         console.log('for 문 안이다!')
-  //           if (transcript[i] == trimText[i]) {
-  //               const element = document.getElementById(`spell-${i}`);
-
-  //               const correctColor = `correct${card.attribute}`;
-  //               element?.classList.add(correctColor);
-  //               correct++;
-  //               console.log('------')
-  //               console.log(element);
-  //               console.log('------')
-  //           }
-  //       }
-  //       // const percentEl = document.getElementById("percent") as HTMLDivElement;
-  //       const correctPercent = Math.round((correct / spellLength) * 100);
-  //       // percentEl.innerText = `총 ${spellLength}개 중 ${correct}개 맞음 : ${correctPercent} %`;
-  //   });
-
-    // 음성 인식 시작
     setSec(card.cost);
-    // recognition.start();
-    // console.log('SpeechRecognition start!')
 
     // 타이머
     const interval = setInterval(() => {
@@ -155,28 +109,26 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
         // recognition.stop();
         clearInterval(interval);
 
-        // 마지막 인덱스면 defense 턴 시작
-        if(idx+1 === attacks.length){
-          send({
-            event: 'defenseTurn',
-            roomId: roomId,
-            memberId: memberId,
-            data: ''
-          })
-        }
-        // 마지막 턴 아니면 인덱스 올려주기
+        ///////////////////////////// 콤보 체크 /////////////////////////////
+        // if (idx + 1 === attacks.length) {
+        //   send({
+        //     event: 'defenseTurn',
+        //     roomId: roomId,
+        //     memberId: memberId,
+        //     data: {combo: p1Combo}
+        //   })
         // } else {
-        // dispatch(gameActions.setIdx())
+        //   dispatch(gameActions.setIdx())
         // }
 
-        console.log('SpeechRecognition end!')
-        setSpanEl([]);
-        setTimeout(() => {
-          dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
-        }, 2000);
+        // console.log('SpeechRecognition end!')
+        // setSpanEl([]);
+        // setTimeout(() => {
+        //   dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
+        // }, 2000);
 
     }, card.cost*1000);
-    
+      
   };
 
   useEffect(()=>{
@@ -257,4 +209,4 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   )
 }
 
-export default Spell;
+export default OtherSpell;

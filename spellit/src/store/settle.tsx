@@ -18,8 +18,8 @@ import { RootState } from '@react-three/fiber';
 // }
 
 type initialSettleType = {
-    p1Combo: boolean,
-    p2Combo: boolean,
+    p1Combo: number,
+    p2Combo: number,
     p1Deffense: boolean,
     p2Deffense: boolean,
     percentList: Array<number>,
@@ -30,8 +30,8 @@ type initialSettleType = {
 const initialSettle: initialSettleType = {
     p1Deffense: false,
     p2Deffense: false,
-    p1Combo: false,
-    p2Combo: false,
+    p1Combo: 0,
+    p2Combo: 0,
     percentList: [],
     turnCount: 0,
     trigger: true,
@@ -55,7 +55,19 @@ const settleSlice = createSlice({
         },
         setTrigger(state) {
             state.trigger = !state.trigger;
-        }
+        },
+        setP1Combo(state, action: PayloadAction<number>){
+            state.p1Combo = action.payload
+        },
+        setP2Combo(state, action: PayloadAction<number>){
+            state.p2Combo = action.payload
+        },
+        clearP1Combo(state){
+            state.p1Combo = 0
+        },
+        clearP2Combo(state){
+            state.p2Combo = 0
+        },
     },
 });
 

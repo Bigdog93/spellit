@@ -17,7 +17,7 @@ interface Spell {
     time: number;
 }
 
-const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
+const MySpell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   const dispatch = useDispatch();
   const { send } = useContext(WebSocketContext);
 
@@ -25,6 +25,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   const memberId = useSelector((state: RootState) => state.user.id)
   const p1Character = useSelector((state: RootState) => state.player.p1!.gameCharacterEntity.englishName);
   const p2Character = useSelector((state: RootState) => state.player.p2!.gameCharacterEntity.englishName);
+  const p1Combo = useSelector((state: RootState) => (state.settle.p1Combo))
 
   const attackCardList = useSelector((state: RootState) => state.game.attacks);
 
@@ -68,7 +69,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   // 콤보 체크할 때 쓸 것들
   const accuracy = useSelector((state: RootState) => (state.game.accuracy))
   const isFirst = useSelector((state: RootState) => (state.player.p1?.isFirst))
-  const combo = useSelector((state: RootState) => (state.game.combo))
+  const comboTurn = useSelector((state: RootState) => (state.game.comboTurn))
 
   // 주문 버튼 클릭시 음성 인식 시작
   const handleClick = (attack: AttackType) => {
@@ -206,16 +207,47 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
           const effectImgTag = document.querySelector(`.effectImgTag-${idx}`);
           effectImgTag?.classList.remove('hiddenEffect');
 
-          // 콤보 체크
+          ///////////////////////////// 콤보 체크 /////////////////////////////
           // 선공일 때
           if(isFirst) {
             const myAtk = attacks.filter(a => a.isMine)
+            console.log('MySpell에서 찍히는 myAtk.length ', myAtk.length)
             // 내 영창을 다 했을 때
             if(myAtk.length === idx + 1) {
+              console.log('선공인데 영창 다 했다.')
               // 정확도 70% 이상일 때 콤보 들어감
-              if(accuracy >= 0.7){
-                dispatch(gameActions.setCombo())
+              if((accuracy + damage) / myAtk.length >= 0.5){
+              // if(accuracy >= 0.7){
+                console.log('선공인데 콤보 들어간다~~~~~~')
+                send({
+                  event: 'combo',
+                  roomId: roomId,
+                  memberId: memberId,
+                  data: ''
+                })  
+                dispatch(gameActions.startCombo())
+
+              // 콤보 안들어가면 index 추가해줌
+              } else {
+                console.log('선공인데 콤보 달성 못했으니까 index 추가한다.')
+                send({
+                  event: 'comboEnd',
+                  roomId: roomId,
+                  memberId: memberId,
+                  data: ''
+                });
+                dispatch(gameActions.setIdx())
               }
+            // 내 영창을 아직 다 하지 않았을 때도 index 추가
+            } else {
+              console.log('선공인데 내 영창 아직 남았으니까 index 추가한다.')
+              send({
+                event: 'spellEnd',
+                roomId: roomId,
+                memberId: memberId,
+                data: ''
+              });
+              dispatch(gameActions.setIdx())
             }
 
 
@@ -224,38 +256,76 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
           } else {
             // 내 영창을 다 했을 때
             if(idx+1 === attacks.length) {
-              // 정확도 70% 이상일 때 콤보 들어감
-              if(accuracy >= 0.7){
-                dispatch(gameActions.setCombo())
-              }
-            }
-          }
-          
-          // combo 일 때
-          if (combo) {
-            send({
-              event: 'combo',
-              roomId: roomId,
-              memberId: memberId,
-              data: ''
-            })  
+              console.log('후공인데 영창 다 했다.')
+              const myAtk = attacks.filter(a => a.isMine)
 
-          // combo 아닐 때
-          } else {
-            if(idx+1 === attacks.length){
+              // 정확도 70% 이상일 때 콤보 들어감
+              if((accuracy + damage) / myAtk.length >= 0.5){
+              // if(accuracy >= 0.7){
+                console.log('후공인데 콤보 들어간다~~~~~~')
+
+                send({
+                  event: 'combo',
+                  roomId: roomId,
+                  memberId: memberId,
+                  data: ''
+                })  
+                dispatch(gameActions.startCombo())
+
+              // 콤보 안들어가면 index 추가해줌
+              }else {
+                console.log('후공인데 콤보 달성 못했으니까 index 추가한다.')
+                send({
+                  event: 'comboEnd',
+                  roomId: roomId,
+                  memberId: memberId,
+                  data: ''
+                });
+                // send({
+                //   event: 'defenseTurn',
+                //   roomId: roomId,
+                //   memberId: memberId,
+                //   data: { combo: p1Combo }
+                // });
+                dispatch(gameActions.setIdx())
+              }
+            // 내 영창을 아직 다 하지 않았을 때도 index 추가
+            } else {
+              console.log('후공인데 내 영창 아직 남았으니까 index 추가한다.')
               send({
-                event: 'defenseTurn',
+                event: 'spellEnd',
                 roomId: roomId,
                 memberId: memberId,
                 data: ''
-              })  
+              });
+              dispatch(gameActions.setIdx())
             }
-          
-            // } else {
-              // dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
           }
           setSpanEl([]);
           dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
+          
+          // // combo 일 때
+          // console.log('MySpell에서 찍히는 comboTurn', comboTurn)
+          // if (comboTurn) {
+          //   send({
+          //     event: 'combo',
+          //     roomId: roomId,
+          //     memberId: memberId,
+          //     data: ''
+          //   })  
+
+          // // combo 아닐 때
+          // } else {
+          //   if(idx+1 === attacks.length){
+          //     send({
+          //       event: 'defenseTurn',
+          //       roomId: roomId,
+          //       memberId: memberId,
+          //       data: ''
+          //     })  
+          //   }
+          // }
+          // dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
 
         }, 2000);
 
@@ -341,9 +411,8 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
               {!attack.isMine && <img className="yourCharacter" style={{width: '330px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" /> }
           </div>
         </div>
-
       </div>
   )
 }
 
-export default Spell;
+export default MySpell;

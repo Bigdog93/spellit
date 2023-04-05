@@ -45,7 +45,7 @@ const NotFound404 = () => {
       <div className='not-found-bubble'>
         <div className='not-found-bubble-large'>404 NOT FOUND</div>
         <br />
-        <div className='not-found-bubble-medium'>번지수 잘 못 찾으셨어요, 마스터!</div>
+        <div className='not-found-bubble-medium'>여긴 이세계가 아니에요, 마스터!</div>
         <br />
         <br />
         <br />

@@ -6,13 +6,14 @@ type initialGameType = {
   game: boolean
   readyTurn: boolean,
   attackTurn: boolean,
+  comboTurn: boolean,
   defenseTurn: boolean,
   settleTurn: boolean,
   resultTurn: boolean,
   attacks: AttackType[],
   idx: number,
   accuracy: number,
-  combo: boolean,
+  // combo: boolean,
   attackCheck: boolean,
   transcript: string,
   myAttackTurn: boolean|null,
@@ -24,13 +25,14 @@ const initialGameState: initialGameType = {
   game: false,
   readyTurn: false,
   attackTurn: false,
+  comboTurn: false,
   defenseTurn: false,
   settleTurn: false,
   resultTurn: false,
   attacks: [],
   idx: 0,
   accuracy: 0,
-  combo: false,
+  // combo: false,
   attackCheck: true, // idx가 다시 0이 됐을 때, 실행되는 것 방지하는 용도
   transcript: '',
   myAttackTurn: null,
@@ -98,6 +100,9 @@ const gameSlice = createSlice({
         }
       // }
     },
+    setIdxZero(state) {
+      state.idx = 0;
+    },
     setAttackCheck(state){
       state.attackCheck = true
       console.log('setAttackCheckTrue에서 찍는다', state.attackCheck)
@@ -128,11 +133,11 @@ const gameSlice = createSlice({
     clearAccuracy(state){
       state.accuracy = 0
     },
-    setCombo(state) {
-      state.combo = true;
+    startCombo(state) {
+      state.comboTurn = true;
     },
-    clearCombo(state) {
-      state.combo = false;
+    endCombo(state) {
+      state.comboTurn = false;
     }
   },
 });

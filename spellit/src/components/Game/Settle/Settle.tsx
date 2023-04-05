@@ -69,7 +69,7 @@ function Settle() {
       backgroundColor: p2Hp > 100 ? '#FFF500' : '#FF0000' ,
   }
 
-  async function settling(idx: number) {
+  function settling(idx: number) {
     console.log("정산중..");
     let d = attacks[idx].card.damage * percentList[idx];
     console.log("========");
@@ -112,66 +112,69 @@ function Settle() {
           console.log('===========')
           console.log('데미지 : ', d);
           console.log('===========')
-      }, 1000);
+        }, 1000);
     }, 2000);
-  }
+    return d;
+}
 
-  useEffect(() => {
-      console.log('=========')
-      console.log('idx : ', idx)
-      console.log('=========')
-      
-      
-      if (idx !== attacks.length) {
-          console.log('아직 정산 진행중...');
-          settling(idx);
-          console.log('p1HP : ', p1Hp);
-          console.log('p2HP : ', p1Hp);
+useEffect(() => {
+    console.log('=========')
+    console.log('idx : ', idx)
+    console.log('=========')
+    let d:number = 0;
+    
+    if (idx !== attacks.length) {
+        console.log('아직 정산 진행중...');
+            d = settling(idx);
+            console.log('p1HP : ', p1Hp);
+            console.log('p2HP : ', p1Hp);
 
-          // idx 증가
-          setTimeout(() => {
-              setIdx(idx+1);
-          }, 10000);
-      // 모든 스펠 정산 끝
-      } else {
-          setTimeout(() => {
-              // 피가 한 사람이라도 없으면 result로 이동
-              if (p1Hp <= 0 || p2Hp <= 0) {
-                  console.log('게임 끝!! Result로 이동해야지~');
-                  send({
-                      event: 'gameOver',
-                      roomId: roomId,
-                      memberId: memberId,
-                      data:  {
-                          hp: p1Hp,
-                      },
-                  })
-              // 피가 남아 있으면 ready 턴으로 이동
-              } else {
-                  dispatch(settleActions.percentListClear());
-                  // dispatch(gameActions.endSettle());
-                  console.log('Go to Next Turn!');
-                  // send({
-                  //     event: 'readyTurn',
-                  //     roomId: roomId,
-                  //     memberId: memberId,
-                  //     data: ''
-                  // })
-                  send({
-                      event: 'gameOver',
-                      roomId: roomId,
-                      memberId: memberId,
-                      data:  {
-                          hp: p1Hp,
-                      },
-                  })
+        // idx 증가
+        setTimeout(() => {
+            setIdx(idx+1);
+        }, 5000);
+    // 모든 스펠 정산 끝
+    } else {
+        setTimeout(() => {
+            // 피가 한 사람이라도 없으면 result로 이동
+            if (p1Hp - d <= 0 || p2Hp - d <= 0) {
+                console.log('게임 끝!! Result로 이동해야지~');
+                send({
+                    event: 'gameOver',
+                    roomId: roomId,
+                    memberId: memberId,
+                    data:  {
+                        hp: p1Hp - d,
+                    },
+                })
+            // 피가 남아 있으면 ready 턴으로 이동
+            } else {
+                dispatch(settleActions.percentListClear());
+                // dispatch(gameActions.endSettle());
+                console.log('Go to Next Turn!');
+                // send({
+                //     event: 'readyTurn',
+                //     roomId: roomId,
+                //     memberId: memberId,
+                //     data: ''
+                // })
+                send({
+                    event: 'gameOver',
+                    roomId: roomId,
+                    memberId: memberId,
+                    data:  {
+                        hp: p1Hp - d,
+                    },
+                })
               }
               // 턴 수 증가
               dispatch(settleActions.addTurnCount());
           }, 1000);
       }
         
-    }, [idx]);
+  }, [idx]);
+    
+    
 
     return (
         <>

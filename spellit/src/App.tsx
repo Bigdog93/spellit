@@ -7,29 +7,21 @@ import { MusicProvider } from "./store/music";
 import Home from "./components/Home";
 import Game from "./components/Game";
 import Matching from "./components/Matching";
-import User from "./components/User";
-import Ready from "@/components/Game/Ready";
-import Defence from "@/components/Game/Defense";
-import Attack from "@/components/Game/Attack";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
-import OAuth from "./components/Auth/OAuth";
 import Settle from "./components/Game/Settle/Settle";
 import Result from "./components/Game/Result/Result";
-// import Test from "./components/Test";
-// import OpenViduTest from "./components/Game/OpenVidu/OpenVidu";
-// import Spell from "./components/Game/Attack/Spell";
 import Profile from "./components/Profile";
-// import STT from "./components/Test/STT";
-import Deck from './components/User'
+import Deck from './components/User';
 // 임시
 import Skills from "./components/Settle/Skills";
 import Test from "./components/Test";
 import Particle from "./components/Test";
-import OtherSpell from './components/Game/Attack'
-import Combo from "./components/Game/Attack/Combo";
-import NotFound404
- from "./NotFound404";
+import OtherSpell from './components/Game/Attack';
+// import Combo from "./components/Game/Attack/Combo";
+import NotFound404 from "./NotFound404";
+
+
 function App() {
   const isLogged = useSelector((state: RootState) => (state.auth.isAuthenticated));
 
@@ -62,7 +54,7 @@ function App() {
           <Route path="profile/:id" element={<Profile />} />
           <Route path="particle" element={<Particle />} />
           <Route path="otherspell" element={<OtherSpell />} />
-          <Route path="combo" element={<Combo />} />
+          {/* <Route path="combo" element={<Combo />} /> */}
           <Route path="*" element={<NotFound404 />} />
         </Routes>
         </BrowserRouter>

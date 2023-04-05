@@ -11,10 +11,9 @@ import  MySpell from "./MySpell";
 import  OtherSpell from "./OtherSpell";
 // import Character from "./Character";
 import game, { gameActions } from "@/store/game";
-import Spell from "./Spell";
 // import OpenViduVideo from '@/components/Game/OpenVidu/OpenVidu'
-
-
+import MyCombo from "./MyCombo";
+import OtherCombo from "./OtherCombo";
 const Attack = () => {
   console.log('Attack')
   
@@ -29,26 +28,46 @@ const Attack = () => {
   console.log('attack index에서 찍히는 attacks', attacks)
   const idx = useSelector((state: RootState) => (state.game.idx));
   console.log('attack index에서 찍히는 idx', idx)
-  const attackTurn = useSelector((state: RootState) => (state.game.attackTurn));
+  const comboTurn = useSelector((state: RootState) => (state.game.comboTurn));
   const isMine = attacks[idx].isMine
   const myCharacter = useSelector((state: RootState) => (state.user.gameCharacter?.englishName));
 
   const attackCheck = useSelector((state: RootState) => (state.game.attackCheck))
+  const p1Combo = useSelector((state: RootState) => (state.settle.p1Combo))
 
   // attackTurn 끝내기
   useEffect(() => {
     dispatch(gameActions.setMyAttackTurn(isMine))
     console.log('setMyAttackTurn에 isMine 업뎃 중', isMine)
     console.log('idx', idx)
+    // if (idx + 1 === attacks.length) {
+    //   send({
+    //     event: 'defenseTurn',
+    //     roomId: roomId,
+    //     memberId: memberId,
+    //     data: {combo: p1Combo}
+    //   })
+    // }
   }, [idx, dispatch])
 
+  useEffect(() => {
+    if (!attackCheck) {
+      send({
+        event: 'defenseTurn',
+        roomId: roomId,
+        memberId: memberId,
+        data: {combo: p1Combo}
+      })
+    }
+    return () => {}
+  }, [attackCheck])
 
   return (
     <div>
         {/* <div className='spell-and-character'> */}
         {attackCheck && <div>
-          {isMine && <MySpell attack={attacks[idx]} idx={idx}/>}
-          {!isMine && <OtherSpell attack={attacks[idx]} idx={idx}/>}
+          {isMine && (comboTurn ? <MyCombo attack={attacks[idx]} /> : <MySpell attack={attacks[idx]} idx={idx}/>)}
+          {!isMine && (comboTurn ? <OtherCombo attack={attacks[idx]} /> : <OtherSpell attack={attacks[idx]} idx={idx}/>)}
         </div>
         }
         {/* </div> */}

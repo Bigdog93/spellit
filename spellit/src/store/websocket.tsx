@@ -12,6 +12,7 @@ import { friendsActions } from './friends';
 import { UserEntityType } from '@/utils/Types';
 import game, { gameActions } from './game';
 import { settleActions } from './settle';
+import { diffProps } from '@react-three/fiber/dist/declarations/src/core/utils';
 
 const WebSocketContext = createContext<any>(null);
 export { WebSocketContext };
@@ -27,6 +28,12 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
 
   // const state = store.getState();
   const state = useSelector((state: RootState) => state);
+  const game = useSelector((state:RootState)=>state.game)
+  const idx = useSelector((state:RootState) => state.game.idx)
+  const attacks = useSelector((state:RootState)=>state.game.attacks)
+  const roomId = useSelector((state: RootState) => state.room.roomId)
+  const memberId = useSelector((state: RootState) => state.user.id)
+  const p1Combo = useSelector((state: RootState) => (state.settle.p1Combo))
 
 
   if (!ws) {
@@ -62,7 +69,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
       } else if (type === 'connected') {
           console.log('connected 입니다.')
           console.log('roomInfo있나 확인', info.room)
-          
+          console.log(info)
           // 매칭 성공했을 때 player의 p1은 나, p2는 상대방에 넣음
           if (info.roomInfo.playerList[0].memberId === state.user.id ) {
             dispatch(playerActions.setP1(info.roomInfo.playerList[0]))
@@ -91,10 +98,15 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         
       }else if (type === 'toReady') {
         console.log('toReady 입니다.')
+        dispatch(gameActions.endAttack())
+        dispatch(gameActions.endCombo())
         dispatch(gameActions.endSettle())
         dispatch(gameActions.startReady())
+        dispatch(gameActions.setIdxZero())
         dispatch(matchingActions.setOtherReady(false))
-
+        dispatch(settleActions.clearP1Combo())
+        dispatch(settleActions.clearP2Combo())
+        dispatch(gameActions.clearAccuracy())
         dispatch(costActions.set(info.cost))
         console.log('toReady에서 info.cost로 받은 cost', info.cost)
         
@@ -135,11 +147,22 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         
       } else if (type === 'combo') {
         console.log('combo 입니다.')
+        dispatch(gameActions.startCombo())
 
+      } else if (type === 'comboEnd') {
+        console.log('comboEnd 입니다.')
+        dispatch(gameActions.endCombo());
+        dispatch(gameActions.setIdx());
+      } else if (type === 'spellEnd') {
+        dispatch(gameActions.setIdx());
       } else if (type === 'toDefense') {
         console.log('toDefense 입니다.')
+        console.log('toDefense에 들어오는 combo',info.combo)
+        dispatch(settleActions.setP2Combo(info.combo))
         dispatch(gameActions.endAttack())
+        dispatch(gameActions.endCombo())
         dispatch(gameActions.startDefense())
+
         // 애매하지만 이쯤에서 setAttackCheck 리셋
         dispatch(gameActions.setAttackCheck())
       
@@ -149,6 +172,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         dispatch(gameActions.setOtherDefense(info.defense))
         dispatch(gameActions.endDefense())
         dispatch(gameActions.startSettle())
+
         
       } else if (type === 'gameOver') {
         console.log('gameOver입니다.')
