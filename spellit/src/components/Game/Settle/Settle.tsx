@@ -44,6 +44,9 @@ function Settle() {
 
   const attacks = useSelector((state: RootState) => state.game.attacks);
 
+  const p1Level = useSelector((state: RootState) => (state.player.p1!.level));
+  const p2Level = useSelector((state: RootState) => (state.player.p2!.level));
+
   const percentList = useSelector(
     (state: RootState) => state.settle.percentList
   );
@@ -51,25 +54,26 @@ function Settle() {
 
   // const settleTurn = useSelector((state: RootState) => state.game.settleTurn)
 
-    // const idx = useSelector((state: RootState) => (state.game.idx));
-    const [idx, setIdx] = useState(0);
-    const [isCanvas, setIsCanvas] = useState(false);
+  // const idx = useSelector((state: RootState) => (state.game.idx));
+  const [idx, setIdx] = useState(0);
+  const [isCanvas, setIsCanvas] = useState(false);
 
-    const token = sessionStorage.getItem("token");
- 
-    const p1HpStyle = {
-        width: `${p1Hp/defaultHP*385}px`,
-        backgroundColor: p1Hp > 100 ? '#FFF500' : '#FF0000' ,
-    }
-    const p2HpStyle = {
-        width: `${p2Hp/defaultHP*385}px`,
-        backgroundColor: p2Hp > 100 ? '#FFF500' : '#FF0000' ,
-    }
+  const token = sessionStorage.getItem("token");
 
+  const p1HpStyle = {
+      width: `${p1Hp/defaultHP*385}px`,
+      backgroundColor: p1Hp > 100 ? '#FFF500' : '#FF0000' ,
+  }
+  const p2HpStyle = {
+      width: `${p2Hp/defaultHP*385}px`,
+      backgroundColor: p2Hp > 100 ? '#FFF500' : '#FF0000' ,
+  }
+
+  const trigger = useSelector((state: RootState) => state.settle.trigger);
 
   async function settling(idx: number) {
     console.log("정산중..");
-    let d = attacks[idx].card.damage * percentList[idx] * 2;
+    let d = attacks[idx].card.damage * percentList[idx];
     console.log("========");
     console.log("d", d);
 
@@ -79,32 +83,34 @@ function Settle() {
       spellEffect?.classList.add('hidden-effect');
       setTimeout(() => {
           // canvas 실행
-          setIsCanvas(true);
-          if (attacks[idx].isMine) {
-              console.log('내가 공격중!!')
-              if (p2Deffense) {
-                  d = d*0.8;
-              }
-              if (d >= p2Hp) {
-                  d = p2Hp;
-              }
-              setTimeout(() => {
-                  setIsCanvas(false);
-                  dispatch(playerActions.p2HpDecrese(d));
-              }, 3000);
-          } else {
-              console.log('공격 당하는중,,')
-              if (p1Deffense) {
-                  d = d*0.8;
-              }
-              if (d >= p1Hp) {
-                  d = p1Hp;
-              }
-              setTimeout(() => {
-                  setIsCanvas(false);
-                  dispatch(playerActions.p1HpDecrese(d));
-              }, 3000);
-          }
+          setIsCanvas(trigger);
+          setTimeout(() => {
+            if (attacks[idx].isMine) {
+                console.log('내가 공격중!!')
+                if (p2Deffense) {
+                    d = d*0.8;
+                }
+                if (d >= p2Hp) {
+                    d = p2Hp;
+                }
+                setTimeout(() => {
+                    setIsCanvas(false);
+                    dispatch(playerActions.p2HpDecrese(d));
+                }, 3000);
+            } else {
+                console.log('공격 당하는중,,')
+                if (p1Deffense) {
+                    d = d*0.8;
+                }
+                if (d >= p1Hp) {
+                    d = p1Hp;
+                }
+                setTimeout(() => {
+                    setIsCanvas(false);
+                    dispatch(playerActions.p1HpDecrese(d));
+                }, 3000);
+            }
+          }, 10000);
           console.log('===========')
           console.log('데미지 : ', d);
           console.log('===========')
@@ -120,14 +126,14 @@ function Settle() {
       
       if (idx !== attacks.length) {
           console.log('아직 정산 진행중...');
-              settling(idx);
-              console.log('p1HP : ', p1Hp);
-              console.log('p2HP : ', p1Hp);
+          settling(idx);
+          console.log('p1HP : ', p1Hp);
+          console.log('p2HP : ', p1Hp);
 
           // idx 증가
           setTimeout(() => {
               setIdx(idx+1);
-          }, 5000);
+          }, 10000);
       // 모든 스펠 정산 끝
       } else {
           setTimeout(() => {
@@ -172,16 +178,16 @@ function Settle() {
     return (
         <>
             {isCanvas && idx<attacks.length ?
-            <Skills code={attacks[idx].card.code} isMine={attacks[idx].isMine} p1Character={p1Character} p2Character={p2Character}></Skills>
+            <Skills key={idx} code={attacks[idx].card.code} isMine={attacks[idx].isMine} p1Character={p1Character} p2Character={p2Character}></Skills>
             :
             <div className='settle-bg'>
                 <div className='settle-top-itmes'>
                     <div className='first-hp-box'>
-                        <ProfileHp character={p1Character}></ProfileHp>
+                        <ProfileHp character={p1Character} level={p1Level}></ProfileHp>
                         <div className="first-hp-bar" style={p1HpStyle}></div>
                     </div>
                     <div className='second-hp-box'>
-                        <ProfileHp character={p2Character}></ProfileHp>
+                        <ProfileHp character={p2Character} level={p2Level}></ProfileHp>
                         <div className="second-hp-bar" style={p2HpStyle}></div>
                     </div>
                 </div>
@@ -196,7 +202,7 @@ function Settle() {
                                 }
                             })}   
                         </div>
-                    <img className="myCharacter" style={{width: '300px'}} src={require(`../../../assets/character/${p1Character}_attack.png`)} alt="" />
+                    <img className="myCharacter" style={{width: '330px'}} src={require(`../../../assets/character/${p1Character}_attack.png`)} alt="" />
                     </div>
                     
                     {/* {idx<attacks.length ? <Skills code={attacks[idx].card.code} isMine={attacks[idx].isMine} p1Character={p1Character} p2Character={p2Character}></Skills> : <></>} */}
@@ -211,7 +217,7 @@ function Settle() {
                                 }
                             })}   
                         </div>
-                        <img className="yourCharacter" style={{width: '300px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" />
+                        <img className="yourCharacter" style={{width: '330px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" />
                     </div>
                 </div>
             </div>

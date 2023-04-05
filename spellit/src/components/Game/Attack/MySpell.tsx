@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useRef } from "react";
+import { useState, useEffect, useContext } from "react";
 import { AttackType, CardType } from '@/utils/Types'
 import { useDispatch, useSelector } from "react-redux";
 
@@ -10,8 +10,6 @@ import Timer from "@/components/Game/Items/Timer";
 import { gameActions } from "@/store/game";
 import ProfileHp from "../Items/ProfileHp";
 import { settleActions } from "@/store/settle";
-import { useSelect } from "@react-three/drei";
-
 
 interface Spell {
     name: string;
@@ -29,6 +27,12 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   const p2Character = useSelector((state: RootState) => state.player.p2!.gameCharacterEntity.englishName);
 
   const attackCardList = useSelector((state: RootState) => state.game.attacks);
+
+  const p1Level = useSelector((state: RootState) => (state.player.p1!.level));
+  const p2Level = useSelector((state: RootState) => (state.player.p2!.level));
+
+  const [showReady, setShowReady] = useState(false);
+  const [showStart, setShowStart] = useState(false);
   
   console.log('attack ', attack)
   console.log('spell ', attack.card.spell)
@@ -51,8 +55,6 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
 
   const [spanEl, setSpanEl] = useState<JSX.Element[]>([]);
   const reg = /[~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/ ]/gim;
-
-  const effectRef = useRef<HTMLDivElement>(null);
 
   const spanList: JSX.Element[] = [];
 
@@ -180,7 +182,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
           })
           dispatch(gameActions.addAccuracy(damage))
 
-          // 이펙트 띄우기(hidden 해체)
+          // 이펙트 띄우기(hidden 해제)
           const effectImgTag = document.querySelector(`.effectImgTag-${idx}`);
           effectImgTag?.classList.remove('hiddenEffect');
 
@@ -232,6 +234,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
             // } else {
               // dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
           }
+          setSpanEl([]);
           dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
 
         }, 3000);
@@ -241,7 +244,15 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   };
 
   useEffect(()=>{
-    handleClick(attack);
+    setShowReady(true);
+    setTimeout(() => {
+      setShowReady(false);
+      setShowStart(true);
+      setTimeout(() => {
+        setShowStart(false);
+        handleClick(attack);
+      }, 1200)
+    }, 2000)
   }, [attack])
 
     const defaultHP = useSelector((state: RootState) => (state.attack.defaultHp));
@@ -264,17 +275,17 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
       <div className="attack-bg">
         <div className="attack-top-items">
           <div className='first-hp-box'>
-              <ProfileHp character={p1Character}></ProfileHp>
+              <ProfileHp character={p1Character} level={p1Level}></ProfileHp>
               <div className="first-hp-bar" style={p1HpStyle}></div>
             </div>
             <Timer time={sec}></Timer>
             <div className='second-hp-box'>
-              <ProfileHp character={p2Character}></ProfileHp>
+              <ProfileHp character={p2Character} level={p2Level}></ProfileHp>
               <div className="second-hp-bar" style={p2HpStyle}></div>
           </div>
         </div>
 
-        <div className="attack-bottom-itmes">
+        <div className="attack-bottom-items">
           <div style={{display: 'flex', flexDirection: 'column'}}>
             <div style={{display: 'inline-flex'}}>
               {attackCardList.map((card: AttackType, idx: number) => (
@@ -288,6 +299,8 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
           <div className="SpellandBar">
             <div className="SpellBox">
               <img style={{ width: 800, height: 400}} src={require(`../../../assets/InGame/SpellBox.png`)} alt="" />
+              {showReady && <h1 className="ready">READY</h1>}
+              {showStart && <h1 className="start">START</h1>}
               <div id='origin'>{spanEl}</div>
             </div>
             <div className="spell-bar-box">

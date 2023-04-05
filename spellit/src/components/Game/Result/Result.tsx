@@ -69,6 +69,7 @@ const Result = () => {
 
   const moveQuickmatch = () => {
     navigate('/matching');
+    dispatch(gameActions.endResult());
   }
 
   // 전적 기록

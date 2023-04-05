@@ -19,6 +19,9 @@ import Lightning from "./quarks/Lightening";
 import SnowStorm from "./quarks/SnowStorm";
 
 import "./Skills.css";
+import { useDispatch, useSelector } from "react-redux";
+import { settleActions } from "@/store/settle";
+import { RootState } from "@/store";
 
 type props = {
   code: string,
@@ -30,7 +33,7 @@ type props = {
 
 function Skills({code, isMine, p1Character, p2Character}: props) {
   // 마법 시전 효과 시작
-  const [isStart, setIsStart] = useState<boolean>(isMine);
+  const [isStart, setIsStart] = useState<boolean>(() => true);
   // 마법 사용
   const [isSpell, setIsSpell] = useState<boolean>(false);
   // camera
@@ -50,8 +53,9 @@ function Skills({code, isMine, p1Character, p2Character}: props) {
     cameraNum.current = num;
   };
 
-  // console.log(isStart, "isStart");
-  // console.log(isSpell, "isSpell");
+  console.log(isStart, "isStart");
+  console.log(isSpell, "isSpell");
+
 
   return (
     <div className="box2">
@@ -73,9 +77,9 @@ function Skills({code, isMine, p1Character, p2Character}: props) {
 
 
         {/* 캐릭터 2P */}
-        {p2Character==='CB' && <CBDefault2 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} /> }
-        {p2Character==='AK' && <AKDefault2 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} /> }
-        {p2Character==='LUNA' && <LUNADefault2 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} /> }
+        {p2Character==='CB' && <CBDefault2 position={[5, -1, 0]} isSpell={isSpell} turn={turn} /> }
+        {p2Character==='AK' && <AKDefault2 position={[5, -1, 0]} isSpell={isSpell} turn={turn} /> }
+        {p2Character==='LUNA' && <LUNADefault2 position={[5, -1, 0]} isSpell={isSpell} turn={turn} /> }
 
         {/* 마법 시전 이펙트 */}
         {isStart && (
