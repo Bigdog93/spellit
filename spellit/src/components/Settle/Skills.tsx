@@ -32,6 +32,7 @@ function Skills() {
 
   const handleButton = () => {
     setIsStart(!isStart);
+    console.log('start! 누름!!!')
   };
   const handleSpell = () => {
     setIsSpell(!isSpell);
@@ -41,8 +42,8 @@ function Skills() {
     cameraNum.current = num;
   };
 
-  // console.log(isStart, "isStart");
-  // console.log(isSpell, "isSpell");
+  console.log(isStart, "isStart");
+  console.log(isSpell, "isSpell");
 
   return (
     <div className="box2">

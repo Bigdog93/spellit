@@ -33,7 +33,7 @@ type props = {
 
 function Skills({code, isMine, p1Character, p2Character}: props) {
   // 마법 시전 효과 시작
-  const [isStart, setIsStart] = useState<boolean>(() => true);
+  const [isStart, setIsStart] = useState<boolean>(true);
   // 마법 사용
   const [isSpell, setIsSpell] = useState<boolean>(false);
   // camera

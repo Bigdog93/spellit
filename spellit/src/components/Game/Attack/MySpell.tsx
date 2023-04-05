@@ -11,6 +11,7 @@ import { gameActions } from "@/store/game";
 import ProfileHp from "../Items/ProfileHp";
 import { settleActions } from "@/store/settle";
 
+
 interface Spell {
     name: string;
     content: string;
@@ -33,7 +34,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
 
   const [showReady, setShowReady] = useState(false);
   const [showStart, setShowStart] = useState(false);
-  
+
   console.log('attack ', attack)
   console.log('spell ', attack.card.spell)
   

@@ -16,7 +16,6 @@ import { gameActions } from '@/store/game';
 import Skills from './Skills';
 import API from '@/utils/API';
 
-
 function Settle() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -46,6 +45,9 @@ function Settle() {
 
   const p1Level = useSelector((state: RootState) => (state.player.p1!.level));
   const p2Level = useSelector((state: RootState) => (state.player.p2!.level));
+
+  const attr1 = useSelector((state: RootState) => (state.user.gameCharacter?.attribute1));
+  const attr2 = useSelector((state: RootState) => (state.user.gameCharacter?.attribute2));
 
   const percentList = useSelector(
     (state: RootState) => state.settle.percentList
@@ -84,7 +86,16 @@ function Settle() {
           setIsCanvas(true);
           setTimeout(() => {
             if (attacks[idx].isMine) {
+                const cardAttr = attacks[idx].card.attribute;
                 console.log('내가 공격중!!')
+                // console.log('attr1', attr1);
+                // console.log('attr2', attr2);
+                // console.log('cardAttr', cardAttr);
+                if (cardAttr === attr1 || cardAttr === attr2) {
+                    d = d*1.1; // 캐릭터랑 카드 속성이 일치하면 10% 추가 데미지
+                    console.log('캐릭터랑 카드 속성 일치!!!!!!!!!!!!!!')
+                    
+                }
                 if (p2Deffense) {
                     d = d*0.8;
                 }
@@ -176,7 +187,7 @@ function Settle() {
     return (
         <>
             {isCanvas && idx<attacks.length ?
-            <Skills key={idx} code={attacks[idx].card.code} isMine={attacks[idx].isMine} p1Character={p1Character} p2Character={p2Character}></Skills>
+            <Skills code={attacks[idx].card.code} isMine={attacks[idx].isMine} p1Character={p1Character} p2Character={p2Character}></Skills>
             :
             <div className='settle-bg'>
                 <div className='settle-top-itmes'>

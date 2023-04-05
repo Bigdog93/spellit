@@ -31,6 +31,8 @@ type GameCharacterType = {
   attack : string,
   winner : string,
   combo : string,
+  attribute1: number,
+  attribute2: number,
 }
 
 const User = () => {

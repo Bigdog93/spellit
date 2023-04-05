@@ -11,6 +11,7 @@ import { gameActions } from "@/store/game";
 import ProfileHp from "../Items/ProfileHp";
 import Particle from "../../Test/Particle"
 
+
 interface Spell {
     name: string;
     content: string;
@@ -18,6 +19,7 @@ interface Spell {
 }
 
 const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
+
   const dispatch = useDispatch();
   const { send } = useContext(WebSocketContext);
 

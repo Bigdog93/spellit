@@ -13,6 +13,8 @@ type GameCharacterType = {
   attack : string,
   winner : string,
   combo : string,
+  attribute1: number,
+  attribute2: number,
 }
 interface PropsType {
   characters: Array<GameCharacterType>;

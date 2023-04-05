@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { AttackType } from '@/utils/Types'
+import { useDispatch } from 'react-redux';
 
 type initialGameType = {
   game: boolean
@@ -18,7 +19,7 @@ type initialGameType = {
   myAttackTurn: boolean|null,
   myDefense: boolean,
   otherDefense: boolean,
-  result: string
+  result: string,
 }
 const initialGameState: initialGameType = {
   game: false,
@@ -133,7 +134,7 @@ const gameSlice = createSlice({
     },
     clearCombo(state) {
       state.combo = false;
-    }
+    },
   },
 });
 
