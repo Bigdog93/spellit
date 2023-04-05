@@ -143,15 +143,18 @@ const MyCombo = ({attack}: {attack: AttackType}) => {
               memberId: memberId,
               data: ''
             });
-            dispatch(gameActions.endCombo());
-            if (idx + 1 >= attacks.length) {
+          dispatch(gameActions.endCombo());
+          console.log("idx와 attacks.length : ", idx, attacks.length);
+          if (idx + 1 >= attacks.length) {
+            console.log("defenseTurn send***********************");
               send({
                 event: 'defenseTurn',
                 roomId: roomId,
                 memberId: memberId,
                 data: {combo: p1Combo}
               })
-            } else{
+          } else {
+            console.log("mycombo에서 setIdx***********************");
               dispatch(gameActions.setIdx());
             }
 

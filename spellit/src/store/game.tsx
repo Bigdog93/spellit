@@ -100,6 +100,9 @@ const gameSlice = createSlice({
         }
       // }
     },
+    setIdxZero(state) {
+      state.idx = 0;
+    },
     setAttackCheck(state){
       state.attackCheck = true
       console.log('setAttackCheckTrue에서 찍는다', state.attackCheck)
