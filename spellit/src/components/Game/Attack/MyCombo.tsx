@@ -144,7 +144,7 @@ const MyCombo = ({attack}: {attack: AttackType}) => {
               data: ''
             });
             dispatch(gameActions.endCombo());
-            if (idx + 1 === attacks.length) {
+            if (idx + 1 >= attacks.length) {
               send({
                 event: 'defenseTurn',
                 roomId: roomId,

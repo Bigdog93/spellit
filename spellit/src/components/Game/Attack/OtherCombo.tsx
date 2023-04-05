@@ -118,7 +118,7 @@ const OtherCombo = ({attack}: {attack: AttackType}) => {
             if(result.emotion === 'angry'){
               dispatch(settleActions.setP1Combo(result.value))
             }
-            dispatch(gameActions.setIdx())
+            // dispatch(gameActions.setIdx())
 
         })
     }

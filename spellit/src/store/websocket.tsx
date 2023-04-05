@@ -28,7 +28,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
 
   // const state = store.getState();
   const state = useSelector((state: RootState) => state);
-  const idx = useSelector((state:RootState)=>state.game.idx)
+  const game = useSelector((state:RootState)=>state.game)
   const attacks = useSelector((state:RootState)=>state.game.attacks)
   const roomId = useSelector((state: RootState) => state.room.roomId)
   const memberId = useSelector((state: RootState) => state.user.id)
@@ -135,7 +135,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
       } else if (type === 'comboEnd') {
         console.log('comboEnd 입니다.')
         dispatch(gameActions.endCombo());
-        if (idx + 1 === attacks.length) {
+        if (game.idx + 1 >= attacks.length) {
           ws?.send(JSON.stringify({
             event: 'defenseTurn',
             roomId: roomId,
