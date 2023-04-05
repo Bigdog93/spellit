@@ -75,14 +75,15 @@ const userSlice = createSlice({
       /* API 요청 */
       API.post('member/deck',
       state.deck,
-      { headers: { Authorization: `Bearer ${token}` } })
+      { headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` } })
     },
     addCard(state, action: PayloadAction<DeckType>) {
+      console.log(token);
       state.deck?.push(action.payload)
       /* API 요청 */
       API.post('member/deck',
       state.deck,
-      { headers: { Authorization: `Bearer ${token}` } })
+      { headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` } })
     },
     removeCard(state, action: PayloadAction<number>) {
       state.deck = state.deck.slice(0, action.payload).concat(state.deck.slice(action.payload + 1))
@@ -90,7 +91,7 @@ const userSlice = createSlice({
       /* API 요청 */
       API.post('member/deck',
       state.deck,
-      { headers: { Authorization: `Bearer ${token}` } })
+      { headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` } })
     },
     setCharacter(state, action: PayloadAction<GameCharacterType>) {
       state.gameCharacter = action.payload;
@@ -99,7 +100,7 @@ const userSlice = createSlice({
       state.notMyDeck = [];
       API.get(
         'game/card',
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` } }
         )
         .then(({data}) => {
           console.log('user store data', data)

@@ -35,6 +35,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Home.module.css";
 import { userActions } from '../store/user';
 import { WebSocketContext } from '@/store/websocket';
+import { MusicContext } from '@/store/music';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -47,6 +48,12 @@ const Home = () => {
       navigate("/login");
     }
   }, []);
+
+  const { setMusic } = useContext(MusicContext);
+  useEffect(() => {
+    setMusic("home");
+  }, [])
+
   const logout = () => {
     sessionStorage.removeItem("token");
     dispatch(userActions.logout());

@@ -1,12 +1,13 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useContext } from "react";
 // import { useEffect } from 'react';
-import useSound from 'use-sound';
 import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash'
 import { RootState } from '@/store'
+import { MusicProvider, Sound } from '@/store/music';
 import Card from './Card'
 import style from './index.module.css'
 import { userActions } from '@/store/user';
+import CardFlip from '@/assets/soundeffect/CardFlip.mp3';
 
 interface CardType {
   attribute: number;
@@ -42,14 +43,17 @@ const Cards = ({cards, selectCard}: PropsType) => {
   //   dispatch(userActions.setNotMyDeck())
   // }, [myDeck])
   // CardFlip Sound Effect
-  const CardFlip = require("../../assets/soundeffect/CardFlip.mp3");
-  const [playFlip, {stop}] = useSound(CardFlip)
+  // const CardFlip = require("../../assets/soundeffect/CardFlip.mp3");
+  // const [playFlip, { stop }] = useSound(CardFlip)
+  
+  // const { cardFlip, cardFlipOpt } = useContext(MusicContext);
+  const { cardFlip, cardFlipOpt } = Sound();
 
 
   return (
     <div className={`${style.cardItems}`}>
       { cards.map((card: CardType, index: number) => (
-        <div onClick={(e) => onSelectCard(card)} className={`${style.cardContainer}`} onMouseEnter={() => playFlip()} onMouseLeave={() => stop()}>
+        <div onClick={(e) => onSelectCard(card)} className={`${style.cardContainer}`} onMouseEnter={() => cardFlip()} onMouseLeave={() => cardFlipOpt.stop()}>
           <Card key={index} card={card.code}/>
         </div>
       ))}
