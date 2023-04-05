@@ -256,6 +256,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 					break;
 				case "spellEnd":
 					other.getSession().sendMessage(makeTextMsg("spellEnd", infoMap));
+					break;
 				case "defenseTurn": // 디스펠 차례
 					isReady[me.getIdx()] = true;
 					me.setMyObj(dataObj);
