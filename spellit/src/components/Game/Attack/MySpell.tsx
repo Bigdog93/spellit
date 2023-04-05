@@ -299,8 +299,8 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
           <div className="SpellandBar">
             <div className="SpellBox">
               <img style={{ width: 800, height: 400}} src={require(`../../../assets/InGame/SpellBox.png`)} alt="" />
-              {showReady && <h1 className="ready">READY</h1>}
-              {showStart && <h1 className="start">START</h1>}
+              {showReady && <h1 className="readyText">READY</h1>}
+              {showStart && <h1 className="startText">START</h1>}
               <div id='origin'>{spanEl}</div>
             </div>
             <div className="spell-bar-box">

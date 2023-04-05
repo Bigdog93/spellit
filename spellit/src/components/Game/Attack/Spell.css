@@ -234,7 +234,7 @@ vbody {
     visibility: hidden;
 }
 
-.ready, .start {
+.readyText, .startText {
     position: absolute;
     text-align: center;
     left: 145px;
@@ -258,7 +258,7 @@ vbody {
     animation: text-fadeIn 1s;
     opacity: 0;
 }
-.start {
+.startText {
     left: 160px;
 }
 
