@@ -70,6 +70,9 @@ input {
   cursor: pointer;
   border: 1px solid #ffffff;
   background-color: #ffffff15;
+  display:flex;
+  justify-content: center;
+  align-items: center;
 }
 .homeBtn:hover {
   border: 1px solid #929292;
@@ -106,6 +109,7 @@ input {
 .characterkBtn {
   background-color: transparent;
   border: 0;
+  cursor: default;
 }
 .characterkBtn img{
   width: 300px;
@@ -161,15 +165,18 @@ input {
 .editBtn {
   position: relative;
   margin-left: 30px;
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
+  width: 30px;
+  height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   /* border: 1px solid #fff; */
   /* border-radius: 50%; */
 }
 .editBtnImg {
   width: 15px;
   position: absolute;
+  cursor: pointer;
 }
 .passWordConfigBtnDiv {
   position: absolute;
