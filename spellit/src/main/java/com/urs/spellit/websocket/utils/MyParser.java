@@ -34,14 +34,14 @@ public class MyParser {
     }
     public boolean getBoolean(String key, JsonElement json) {
         JsonElement jsonElement = json.getAsJsonObject().get(key);
-        if(jsonElement == null) {
+        if(jsonElement == null || jsonElement.isJsonNull()) {
             return false;
         }
         return jsonElement.getAsBoolean();
     }
     public long getLong(String key, JsonElement json) {
         JsonElement jsonElement = json.getAsJsonObject().get(key);
-        if(jsonElement == null) {
+        if(jsonElement == null || jsonElement.isJsonNull()) {
             return 0;
         }
         return jsonElement.getAsLong();
@@ -53,6 +53,7 @@ public class MyParser {
     public <T> List<T> getList(String key, JsonElement json, Class<T> type) throws JsonProcessingException {
         List<T> list = new ArrayList<>();
         JsonArray jsonArray = json.getAsJsonObject().get(key).getAsJsonArray();
+        if(jsonArray.isJsonNull()) return list;
         for(int i = 0; i < jsonArray.size(); i++) {
             list.add(mapper.readValue(jsonArray.get(i).toString(), type));
         }
