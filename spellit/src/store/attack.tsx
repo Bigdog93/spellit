@@ -30,6 +30,7 @@ type initialAttackType = {
   sec: number,
   movePageCnt: number,
   endStt: boolean,
+  transcriptIdx: number,
 }
 
 const initialAttack: initialAttackType = {
@@ -46,6 +47,7 @@ const initialAttack: initialAttackType = {
   sec: 0,           // 타이머
   movePageCnt: 0,   // attack 내 컴포넌트 이동 회수 파악
   endStt: false,   // 한 턴 종료
+  transcriptIdx: -1,
 };
 
 const attackSlice = createSlice({
@@ -93,6 +95,9 @@ const attackSlice = createSlice({
     },
     endStt(state, action: PayloadAction<boolean>) {
       state.endStt = action.payload;
+    },
+    setTranIdx(state, action: PayloadAction<number>) {
+      state.transcriptIdx = action.payload;
     }
   },
 });

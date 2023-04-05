@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { playerActions } from "@/store/player";
 import { matchingActions } from './matching';
-import { attackActions } from './attack';
+import attack, { attackActions } from './attack';
 import { roomActions } from "@/store/room";
 import { friendsActions } from './friends';
 import { UserEntityType } from '@/utils/Types';
@@ -119,10 +119,18 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
 
       } else if (type === 'otherSpell') {
         console.log('otherSpell 입니다.')
-        console.log('=====================================')
         console.log(info)
         console.log(info.damage)
-        dispatch(settleActions.percentList(info.damage));
+        // ranscript idx만 필요
+        if(info.damage.damage === -1) {
+          // console.log('===================dasdasdasd==================')
+          // console.log('transcriptIdx : ', info.damage.transcriptIdx)
+          // console.log('=================asdasda====================')
+          dispatch(attackActions.setTranIdx(info.damage.transcriptIdx));
+        // damage 값만 필요
+        } else {
+          dispatch(settleActions.percentList(info.damage.damage));
+        }
         // dispatch(attackActions.attackInfo(info.spell));
         
       } else if (type === 'combo') {
