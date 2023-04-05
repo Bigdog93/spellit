@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { WebSocketProvider } from "./store/websocket";
 import { useSelector } from "react-redux";
 import { RootState } from "./store";
+import { MusicProvider } from "./store/music";
 
 import Home from "./components/Home";
 import Game from "./components/Game";
@@ -34,6 +35,7 @@ function App() {
 
   return (
     <WebSocketProvider>
+      <MusicProvider>
       <BrowserRouter>
         <Routes>
           {isLogged ? (
@@ -63,7 +65,8 @@ function App() {
           <Route path="combo" element={<Combo />} />
           <Route path="*" element={<NotFound404 />} />
         </Routes>
-      </BrowserRouter>
+        </BrowserRouter>
+      </MusicProvider>
     </WebSocketProvider>
   );
 }

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom";
 
 import { WebSocketContext } from '@/store/websocket'
+import { MusicContext } from '@/store/music';
 import { RootState } from "@/store/";
 // import { matchingActions } from "@/store/matching";
 
@@ -11,6 +12,7 @@ import Versus from "./Versus"
 import Loading from "./Loading"
 import { Root } from "@react-three/fiber/dist/declarations/src/core/renderer";
 import { friendsActions } from '../../store/friends';
+
 
 const Matching = () => {
   const navigate = useNavigate();
@@ -26,6 +28,10 @@ const Matching = () => {
   const isFriendMatch = useSelector((state: RootState) => state.friends.isFriendMatch);
   const isFriendMatchRequesting = useSelector((state: RootState) => state.friends.isFriendMatchRequesting);
 
+  const { setMusic } = useContext(MusicContext);
+  useEffect(() => {
+    setMusic("battle");
+  }, [])
   useEffect(() => {
     console.log(memberId)
     if (isFriendMatch) {
