@@ -35,6 +35,7 @@ public class AuthService {
 
         Member member = memberRequestDto.toMember(passwordEncoder);
         member.setLevel(1);
+        member.setProfileMsg("상태메시지를 설정해주세요.");
         member.setGameCharacterEntity(gameService.getCharacter(1L));
         return MemberResponseDto.of(memberRepository.save(member));
     }
