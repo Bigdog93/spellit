@@ -28,6 +28,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
 
   const comboTurn = useSelector((state: RootState) => state.game.comboTurn)
   const attackCardList = useSelector((state: RootState) => state.game.attacks);
+  const p1Combo = useSelector((state: RootState) => (state.settle.p1Combo))
 
   console.log('attack ', attack)
   console.log('spell ', attack.card.spell)
@@ -101,15 +102,16 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
         clearInterval(interval);
 
         ///////////////////////////// 콤보 체크 /////////////////////////////
-        if(comboTurn) {
-          // 상대방이 콤보 턴 일 때
-          setTimeout(() => {
-            console.log('내 턴 아닌 콤보 카운트 끝~~')
-            dispatch(gameActions.setIdx())
-            dispatch(gameActions.endCombo())
-          }, 10000)
+        if (idx + 1 === attacks.length) {
+          send({
+            event: 'defenseTurn',
+            roomId: roomId,
+            memberId: memberId,
+            data: {combo: p1Combo}
+          })
+        } else {
+          dispatch(gameActions.setIdx())
         }
-
     }, card.cost*1000);
       
   };

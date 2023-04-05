@@ -28,6 +28,11 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
 
   // const state = store.getState();
   const state = useSelector((state: RootState) => state);
+  const idx = useSelector((state:RootState)=>state.game.idx)
+  const attacks = useSelector((state:RootState)=>state.game.attacks)
+  const roomId = useSelector((state: RootState) => state.room.roomId)
+  const memberId = useSelector((state: RootState) => state.user.id)
+  const p1Combo = useSelector((state: RootState) => (state.settle.p1Combo))
 
 
   if (!ws) {
@@ -129,8 +134,17 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
 
       } else if (type === 'comboEnd') {
         console.log('comboEnd 입니다.')
-        dispatch(gameActions.endCombo())
-        dispatch(gameActions.setIdx());
+        dispatch(gameActions.endCombo());
+        if (idx + 1 === attacks.length) {
+          ws?.send(JSON.stringify({
+            event: 'defenseTurn',
+            roomId: roomId,
+            memberId: memberId,
+            data: {combo: p1Combo}
+          }))
+        } else{
+          dispatch(gameActions.setIdx());
+        }
 
       } else if (type === 'toDefense') {
         console.log('toDefense 입니다.')
