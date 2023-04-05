@@ -51,6 +51,17 @@ const Attack = () => {
     // }
   }, [idx, dispatch])
 
+  useEffect(() => {
+    if (!attackCheck) {
+      send({
+        event: 'defenseTurn',
+        roomId: roomId,
+        memberId: memberId,
+        data: {combo: p1Combo}
+      })
+    }
+    return () => {}
+  }, [attackCheck])
 
   return (
     <div>
