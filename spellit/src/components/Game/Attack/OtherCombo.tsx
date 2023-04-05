@@ -210,7 +210,7 @@ const OtherCombo = ({ attack }: { attack: AttackType }) => {
             <img src={require(`../../../assets/InGame/SkillBar.png`)} alt="" style={{width: '100%', height: '140px'}} />
             <div className="cardList">
               {attackCardList.map((card: AttackType, idx: number) => (
-                card.isMine && <img style={{width: '100px', margin: "10px"}} key={idx} src={require(`../../../assets/card/icon/${card.card.code}.png`)} alt="" />
+                !card.isMine && <img style={{width: '100px', margin: "10px"}} key={idx} src={require(`../../../assets/card/icon/${card.card.code}.png`)} alt="" />
               ))}
             </div>
           </div>

@@ -194,7 +194,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
             if(myAtk.length === idx + 1) {
               console.log('선공인데 영창 다 했다.')
               // 정확도 70% 이상일 때 콤보 들어감
-              if(accuracy >= 0){
+              if(accuracy >= 0.5){
               // if(accuracy >= 0.7){
                 console.log('선공인데 콤보 들어간다~~~~~~')
                 send({
@@ -214,7 +214,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
                   memberId: memberId,
                   data: ''
                 });
-                // dispatch(gameActions.setIdx())
+                dispatch(gameActions.setIdx())
               }
             // 내 영창을 아직 다 하지 않았을 때도 index 추가
             } else {
@@ -237,7 +237,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
               console.log('후공인데 영창 다 했다.')
 
               // 정확도 70% 이상일 때 콤보 들어감
-              if(accuracy >= 0){
+              if(accuracy >= 0.5){
               // if(accuracy >= 0.7){
                 console.log('후공인데 콤보 들어간다~~~~~~')
 

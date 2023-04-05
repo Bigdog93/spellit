@@ -101,7 +101,9 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         dispatch(gameActions.startReady())
         dispatch(gameActions.setIdxZero())
         dispatch(matchingActions.setOtherReady(false))
-
+        dispatch(settleActions.clearP1Combo())
+        dispatch(settleActions.clearP2Combo())
+        dispatch(gameActions.clearAccuracy())
         dispatch(costActions.set(info.cost))
         console.log('toReady에서 info.cost로 받은 cost', info.cost)
         
@@ -159,6 +161,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         dispatch(gameActions.setOtherDefense(info.defense))
         dispatch(gameActions.endDefense())
         dispatch(gameActions.startSettle())
+
         
       } else if (type === 'gameOver') {
         console.log('gameOver입니다.')

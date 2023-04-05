@@ -51,6 +51,12 @@ const settleSlice = createSlice({
         setP2Combo(state, action: PayloadAction<number>){
             state.p2Combo = action.payload
         },
+        clearP1Combo(state){
+            state.p1Combo = 0
+        },
+        clearP2Combo(state){
+            state.p2Combo = 0
+        },
     },
 });
 
