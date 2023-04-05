@@ -33,6 +33,10 @@ public class GameCharacterEntity {
     private String winner;
     @Column
     private String combo;
+    @Column
+    private int attribute1;
+    @Column
+    private int attribute2;
 
     public Long getId() {
         return id;
