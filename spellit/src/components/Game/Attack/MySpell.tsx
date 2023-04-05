@@ -194,7 +194,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
             if(myAtk.length === idx + 1) {
               console.log('선공인데 영창 다 했다.')
               // 정확도 70% 이상일 때 콤보 들어감
-              if(accuracy >= 0.5){
+              if((accuracy + damage) / myAtk.length >= 0.5){
               // if(accuracy >= 0.7){
                 console.log('선공인데 콤보 들어간다~~~~~~')
                 send({
@@ -235,9 +235,10 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
             // 내 영창을 다 했을 때
             if(idx+1 === attacks.length) {
               console.log('후공인데 영창 다 했다.')
+              const myAtk = attacks.filter(a => a.isMine)
 
               // 정확도 70% 이상일 때 콤보 들어감
-              if(accuracy >= 0.5){
+              if((accuracy + damage) / myAtk.length >= 0.5){
               // if(accuracy >= 0.7){
                 console.log('후공인데 콤보 들어간다~~~~~~')
 
