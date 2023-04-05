@@ -118,12 +118,29 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
             if (transcript[i] === trimText[i]) {
                 const element = document.getElementById(`spell-${i}`);
 
+                if (!element?.classList.contains(`correct${card.attribute}`)) {
+                  // console.log('***********************')
+                  // console.log('myspell transcriptIdx : ', i);
+                  // console.log('***********************')
+                  // 상대에게 transcript idx 값
+                  send({
+                    event: 'spell',
+                    roomId: roomId,
+                    memberId: memberId,
+                    data: {
+                      damage: -1,
+                      transcriptIdx: i,
+                    }
+                  })
+                }
+
                 const correctColor = `correct${card.attribute}`;
                 element?.classList.add(correctColor);
                 correct++;
                 // console.log('------')
                 // console.log(element);
                 // console.log('------')
+
             }
         }
         // const percentEl = document.getElementById("percent") as HTMLDivElement;
@@ -178,7 +195,10 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
               event: 'spell',
               roomId: roomId,
               memberId: memberId,
-              data:  damage,
+              data:  {
+                damage: damage,
+                transcriptIdx: -1,
+              },
           })
           dispatch(gameActions.addAccuracy(damage))
 
@@ -237,7 +257,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
           setSpanEl([]);
           dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
 
-        }, 3000);
+        }, 2000);
 
     }, card.cost*1000);
     

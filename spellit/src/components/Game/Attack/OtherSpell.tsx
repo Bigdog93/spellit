@@ -34,6 +34,8 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   const [showReady, setShowReady] = useState(false);
   const [showStart, setShowStart] = useState(false);
 
+  const transIdx = useSelector((state: RootState) => state.attack.transcriptIdx);
+
   console.log('attack ', attack)
   console.log('spell ', attack.card.spell)
   
@@ -67,12 +69,12 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   const attacks = useSelector((state: RootState) => (state.game.attacks));
   // const card = attack.card
   // const isMine = attack.isMine
-
-
+  
   // // 주문 버튼 클릭시 음성 인식 시작
   const handleClick = (attack: AttackType) => {
     const isMine = attack.isMine
     const card = attack.card
+  
     let spellLength = 0; // 띄어쓰기 제거한 주문의 길이
     for (let i = 0; i < card.spell.length; i++) {
       let spanClassName = `spell`;
@@ -86,6 +88,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
         spanList.push(newSpanEl);
     }
     setSpanEl(spanList);
+    
 
   //   const trimText = card.spell.replaceAll(" ", ""); // 띄어쓰기 제거한 주문
   //   // console.log(trimText);
@@ -144,9 +147,8 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
         console.log('============')
         console.log('sec : ', sec)
         console.log('============')
-    }, 1000)
-    
 
+      }, 1000)
 
     // 주문 제한 시간 흐른 후 음성인식 종료
     setTimeout(() => {
@@ -168,10 +170,10 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
         // }
 
         console.log('SpeechRecognition end!')
+        setSpanEl([]);
         setTimeout(() => {
-          setSpanEl([]);
           dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
-        }, 3000);
+        }, 2000);
 
     }, card.cost*1000);
     
@@ -188,6 +190,15 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
       }, 1200)
     }, 2000)
   }, [attack])
+
+  useEffect(() => {
+    console.log('otherspell에서 받아오는 transIdx : ', transIdx);
+    const element = document.querySelector(`#spell-${transIdx}`);
+    element?.classList.add(`correct${attack.card.attribute}`)
+    console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    console.log('element 찍히는지 확인', element)
+    console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+  }, [transIdx])
 
     const defaultHP = useSelector((state: RootState) => (state.attack.defaultHp));
     const p1Hp = useSelector((state: RootState) => (state.player.p1!.hp));
