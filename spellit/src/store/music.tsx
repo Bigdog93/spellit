@@ -5,6 +5,12 @@ import HomeBGM from '@/assets/bgm/home1.mp3'
 import BattleBGM from '@/assets/bgm/battle1.mp3'
 
 import CardFlipSound from '@/assets/soundeffect/CardFlip.mp3'
+import ButtonClickSound from '@/assets/soundeffect/ButtonClick.mp3'
+import NegativeButtonClickSound from '@/assets/soundeffect/NegativeButtonClick.mp3'
+import SetDeckSound from '@/assets/soundeffect/SetDeck.mp3'
+import LoginSound from '@/assets/soundeffect/Login.mp3'
+import LogoutSound from '@/assets/soundeffect/Logout.mp3'
+
 import Module from 'module';
 
 
@@ -49,6 +55,11 @@ export const MusicProvider = ({ children }: { children: React.ReactNode }) => {
     }, [musicName])
 
     const [cardFlip, cardFlipOpt ] = useSound(CardFlipSound);
+    const [buttonClick, buttonClickOpt ] = useSound(ButtonClickSound);
+    const [negativeButtonClick, negativeButtonClickOpt ] = useSound(NegativeButtonClickSound);
+    const [setDeck, setDeckOpt ] = useSound(SetDeckSound);
+    const [login, loginOpt ] = useSound(LoginSound);
+    const [logoutBtn, logoutOpt ] = useSound(LogoutSound);
 
     return (
         <MusicContext.Provider value={{
@@ -56,8 +67,12 @@ export const MusicProvider = ({ children }: { children: React.ReactNode }) => {
             playBGM,
             stop,
             setMusic,
-            cardFlip,
-            cardFlipOpt,
+            cardFlip, cardFlipOpt,
+            buttonClick, buttonClickOpt,
+            negativeButtonClick, negativeButtonClickOpt,
+            setDeck, setDeckOpt,
+            login, loginOpt,
+            logoutBtn,logoutOpt,
 
         }}>
             {children}
