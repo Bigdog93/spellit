@@ -80,7 +80,7 @@ public class MemberController {
     public ResponseEntity<Long> addFriendWait(@RequestBody FriendWaitRequestDto friendWaitRequestDto)
     {
         if(friendWaitRequestDto.getFriendId() == null || friendWaitRequestDto.getFriendId() == 0) {
-            Optional<Member> memberOpt = memberRepository.findByEmail(friendWaitRequestDto.getFriendEmail());
+            Optional<Member> memberOpt = memberRepository.findByNickname(friendWaitRequestDto.getFriendNickname());
             if(memberOpt.isEmpty()) {
                 return ResponseEntity.badRequest().body(0L);
             }

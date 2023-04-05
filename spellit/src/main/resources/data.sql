@@ -44,7 +44,7 @@ UPDATE
     winner=new_record.winner,
     combo=new_record.combo;
 
-/*INSERT INTO `member`
+INSERT INTO `member`
 (member_id,mod_dt,reg_dt,authority,email,exp,is_deleted,is_online,level,nickname,password,play_count,profile_msg,win_count,character_id,draw_count,lose_count,start_spell)
 VALUES
     (1,'2023-03-29 04:07:15.873543','2023-03-28 00:50:29.921532','ROLE_USER','aaa@aaa',0,0,0,1,'인의동 대마법사','$2a$10$jztRRiiepvYOpPq6dcf.O.9oqQxNTfw2rP7jw5BDZD7j59dV4KrbG',0,'11연뽑해서 뭐/뭐/뭐/뭐 득했는데 우각하기 귀찮다',0,1,0,0,'0')
@@ -192,22 +192,22 @@ UPDATE
     character_id=new_record.character_id,
     draw_count=new_record.draw_count,
     lose_count=new_record.lose_count,
-    start_spell=new_record.start_spell;*/
+    start_spell=new_record.start_spell;
 
--- INSERT INTO `deck`
--- (deck_id,card_id,member_id)
--- VALUES
---     (1,4,2),
---     (2,5,2),
---     (3,6,2),
---     (4,6,1),
---     (5,1,1),
---     (6,4,1)
---     AS new_record
--- ON DUPLICATE KEY
--- UPDATE
---     card_id=new_record.card_id,
---     member_id=new_record.member_id;
+INSERT INTO `deck`
+(deck_id,card_id,member_id)
+VALUES
+    (1,4,2),
+    (2,5,2),
+    (3,6,2),
+    (4,6,1),
+    (5,1,1),
+    (6,4,1)
+    AS new_record
+ON DUPLICATE KEY
+UPDATE
+    card_id=new_record.card_id,
+    member_id=new_record.member_id;
 
 -- INSERT INTO `friend_wait`
 -- (id,friend_email,friend_id,member_id)

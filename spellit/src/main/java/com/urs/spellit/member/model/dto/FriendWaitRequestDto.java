@@ -12,4 +12,5 @@ import lombok.Setter;
 public class FriendWaitRequestDto {
     private Long friendId;
     private String friendEmail;
+    private String friendNickname;
 }
