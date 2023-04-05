@@ -48,8 +48,8 @@ const MyCombo = ({attack}: {attack: AttackType}) => {
       // 녹음 데이터 저장 배열
       const audioArray: Blob[] = [];
       
-      if (!savedIsRecording.current) {
-      // if (!isRecording) {
+      // if (!savedIsRecording.current) {
+      if (!val) {
           console.log("if 안");
 
           // 마이크 mediaStream 생성: Promise를 반환하므로 async/await 사용
@@ -147,18 +147,17 @@ const MyCombo = ({attack}: {attack: AttackType}) => {
           console.log("idx와 attacks.length : ", idx, attacks.length);
           if (idx + 1 >= attacks.length) {
             console.log("defenseTurn send***********************");
-              send({
-                event: 'defenseTurn',
-                roomId: roomId,
-                memberId: memberId,
-                data: {combo: p1Combo}
-              })
+              // send({
+              //   event: 'defenseTurn',
+              //   roomId: roomId,
+              //   memberId: memberId,
+              //   data: {combo: p1Combo}
+              // })
+              dispatch(gameActions.setIdx());
           } else {
             console.log("mycombo에서 setIdx***********************");
               dispatch(gameActions.setIdx());
             }
-
-
         })
     }
 

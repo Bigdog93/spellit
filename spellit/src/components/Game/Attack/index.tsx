@@ -11,7 +11,6 @@ import  MySpell from "./MySpell";
 import  OtherSpell from "./OtherSpell";
 // import Character from "./Character";
 import game, { gameActions } from "@/store/game";
-import Spell from "./Spell";
 // import OpenViduVideo from '@/components/Game/OpenVidu/OpenVidu'
 import MyCombo from "./MyCombo";
 import OtherCombo from "./OtherCombo";

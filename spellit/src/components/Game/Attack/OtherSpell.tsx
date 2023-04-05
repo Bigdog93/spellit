@@ -17,7 +17,7 @@ interface Spell {
     time: number;
 }
 
-const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
+const OtherSpell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   const dispatch = useDispatch();
   const { send } = useContext(WebSocketContext);
 
@@ -175,4 +175,4 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   )
 }
 
-export default Spell;
+export default OtherSpell;

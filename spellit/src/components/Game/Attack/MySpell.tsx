@@ -19,7 +19,7 @@ interface Spell {
     time: number;
 }
 
-const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
+const MySpell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   const dispatch = useDispatch();
   const { send } = useContext(WebSocketContext);
 
@@ -259,13 +259,13 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
                   memberId: memberId,
                   data: ''
                 });
-                send({
-                  event: 'defenseTurn',
-                  roomId: roomId,
-                  memberId: memberId,
-                  data: { combo: p1Combo }
-                });
-                // dispatch(gameActions.setIdx())
+                // send({
+                //   event: 'defenseTurn',
+                //   roomId: roomId,
+                //   memberId: memberId,
+                //   data: { combo: p1Combo }
+                // });
+                dispatch(gameActions.setIdx())
               }
             // 내 영창을 아직 다 하지 않았을 때도 index 추가
             } else {
@@ -381,4 +381,4 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   )
 }
 
-export default Spell;
+export default MySpell;
