@@ -301,8 +301,8 @@ const MySpell = ({attack, idx}: {attack: AttackType, idx: number}) => {
               dispatch(gameActions.setIdx())
             }
           }
-          setSpanEl([]);
-          dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
+          // setSpanEl([]);
+          // dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
           
           // // combo 일 때
           // console.log('MySpell에서 찍히는 comboTurn', comboTurn)
