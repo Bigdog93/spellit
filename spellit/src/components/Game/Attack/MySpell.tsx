@@ -269,6 +269,12 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
             // 내 영창을 아직 다 하지 않았을 때도 index 추가
             } else {
               console.log('후공인데 내 영창 아직 남았으니까 index 추가한다.')
+              send({
+                event: 'spellEnd',
+                roomId: roomId,
+                memberId: memberId,
+                data: ''
+              });
               dispatch(gameActions.setIdx())
             }
           }
