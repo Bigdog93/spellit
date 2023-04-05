@@ -134,6 +134,8 @@ const OtherCombo = ({ attack }: { attack: AttackType }) => {
   const defaultHP = useSelector((state: RootState) => (state.attack.defaultHp));
   const p1Hp = useSelector((state: RootState) => (state.player.p1!.hp));
   const p2Hp = useSelector((state: RootState) => (state.player.p2!.hp));
+  const p1Level = useSelector((state: RootState) => (state.player.p1!.level));
+  const p2Level = useSelector((state: RootState) => (state.player.p2!.level));
   const attackCardList = useSelector((state: RootState) => state.game.attacks);
 
   const p1HpStyle = {
@@ -177,12 +179,12 @@ const OtherCombo = ({ attack }: { attack: AttackType }) => {
       <div className="attack-bg">
       <div className="attack-top-items">
         <div className='first-hp-box'>
-            <ProfileHp character={p1Character}></ProfileHp>
+            <ProfileHp character={p1Character} level={p1Level}></ProfileHp>
             <div className="first-hp-bar" style={p1HpStyle}></div>
           </div>
           <Timer time={sec}></Timer>
           <div className='second-hp-box'>
-            <ProfileHp character={p2Character}></ProfileHp>
+            <ProfileHp character={p2Character} level={p2Level}></ProfileHp>
             <div className="second-hp-bar" style={p2HpStyle}></div>
         </div>
       </div>
