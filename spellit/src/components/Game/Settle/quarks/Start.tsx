@@ -48,6 +48,7 @@ const Start: React.FC<Props> = ({
     }
   }, [size]);
 
+
   // scene 애니메이션
   useFrame((state, delta) => {
     const batchSystem = batchSystemRef.current;
@@ -61,6 +62,14 @@ const Start: React.FC<Props> = ({
       handleSpell();
     }, 2000);
   });
+
+  // useEffect(() => {
+  //   console.log('useEffect 안에 들어옴!!!!!!!!!!!!!!!!!!!')
+  //   setTimeout(() => {
+  //     handleButton();
+  //     handleSpell();
+  //   }, 2000);
+  // }, [])
 
   // 사운드
   useEffect(() => {

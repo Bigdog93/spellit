@@ -28,6 +28,12 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
 
   const attackCardList = useSelector((state: RootState) => state.game.attacks);
 
+  const p1Level = useSelector((state: RootState) => (state.player.p1!.level));
+  const p2Level = useSelector((state: RootState) => (state.player.p2!.level));
+
+  const [showReady, setShowReady] = useState(false);
+  const [showStart, setShowStart] = useState(false);
+
   console.log('attack ', attack)
   console.log('spell ', attack.card.spell)
   
@@ -163,6 +169,7 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
 
         console.log('SpeechRecognition end!')
         setTimeout(() => {
+          setSpanEl([]);
           dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
         }, 3000);
 
@@ -171,7 +178,15 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   };
 
   useEffect(()=>{
-    handleClick(attack);
+    setShowReady(true);
+    setTimeout(() => {
+      setShowReady(false);
+      setShowStart(true);
+      setTimeout(() => {
+        setShowStart(false);
+        handleClick(attack);
+      }, 1200)
+    }, 2000)
   }, [attack])
 
     const defaultHP = useSelector((state: RootState) => (state.attack.defaultHp));
@@ -194,21 +209,23 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
       <div className="attack-bg">
         <div className="attack-top-items">
           <div className='first-hp-box'>
-              <ProfileHp character={p1Character}></ProfileHp>
+              <ProfileHp character={p1Character} level={p1Level}></ProfileHp>
               <div className="first-hp-bar" style={p1HpStyle}></div>
             </div>
             <Timer time={sec}></Timer>
             <div className='second-hp-box'>
-              <ProfileHp character={p2Character}></ProfileHp>
+              <ProfileHp character={p2Character} level={p2Level}></ProfileHp>
               <div className="second-hp-bar" style={p2HpStyle}></div>
           </div>
         </div>
 
-        <div className="attack-bottom-itmes">
+        <div className="attack-bottom-items">
           {attack.isMine && <img className="myCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p1Character}_attack.png`)} alt="" /> }
           <div className="SpellandBar">
             <div className="SpellBox">
               <img style={{ width: 800, height: 400}} src={require(`../../../assets/InGame/SpellBox.png`)} alt="" />
+              {showReady && <h1 className="ready">READY</h1>}
+              {showStart && <h1 className="start">START</h1>}
               <div id='origin'>{spanEl}</div>
             </div>
             <div className="spell-bar-box">

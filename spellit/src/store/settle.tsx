@@ -24,6 +24,7 @@ type initialSettleType = {
     p2Deffense: boolean,
     percentList: Array<number>,
     turnCount : number,
+    trigger: boolean,
 }
 
 const initialSettle: initialSettleType = {
@@ -33,6 +34,7 @@ const initialSettle: initialSettleType = {
     p2Combo: false,
     percentList: [],
     turnCount: 0,
+    trigger: true,
 }
 
 const settleSlice = createSlice({
@@ -46,10 +48,13 @@ const settleSlice = createSlice({
             state.percentList = [];
         },
         addTurnCount(state) {
-            state.turnCount = state.turnCount + 1;
+            state.turnCount++;
         },
         setTurnCount(state) {
             state.turnCount = 0;
+        },
+        setTrigger(state) {
+            state.trigger = !state.trigger;
         }
     },
 });
