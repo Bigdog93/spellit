@@ -102,16 +102,16 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
         clearInterval(interval);
 
         ///////////////////////////// 콤보 체크 /////////////////////////////
-        if (idx + 1 === attacks.length) {
-          send({
-            event: 'defenseTurn',
-            roomId: roomId,
-            memberId: memberId,
-            data: {combo: p1Combo}
-          })
-        } else {
-          dispatch(gameActions.setIdx())
-        }
+        // if (idx + 1 === attacks.length) {
+        //   send({
+        //     event: 'defenseTurn',
+        //     roomId: roomId,
+        //     memberId: memberId,
+        //     data: {combo: p1Combo}
+        //   })
+        // } else {
+        //   dispatch(gameActions.setIdx())
+        // }
     }, card.cost*1000);
       
   };

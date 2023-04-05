@@ -151,6 +151,7 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
         console.log('toDefense에 들어오는 combo',info.combo)
         dispatch(settleActions.setP2Combo(info.combo))
         dispatch(gameActions.endAttack())
+        dispatch(gameActions.endCombo())
         dispatch(gameActions.startDefense())
 
         // 애매하지만 이쯤에서 setAttackCheck 리셋

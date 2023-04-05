@@ -208,7 +208,13 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
               // 콤보 안들어가면 index 추가해줌
               } else {
                 console.log('선공인데 콤보 달성 못했으니까 index 추가한다.')
-                dispatch(gameActions.setIdx())
+                send({
+                  event: 'comboEnd',
+                  roomId: roomId,
+                  memberId: memberId,
+                  data: ''
+                });
+                // dispatch(gameActions.setIdx())
               }
             // 내 영창을 아직 다 하지 않았을 때도 index 추가
             } else {
@@ -241,11 +247,17 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
               }else {
                 console.log('후공인데 콤보 달성 못했으니까 index 추가한다.')
                 send({
+                  event: 'comboEnd',
+                  roomId: roomId,
+                  memberId: memberId,
+                  data: ''
+                });
+                send({
                   event: 'defenseTurn',
                   roomId: roomId,
                   memberId: memberId,
-                  data: {combo: p1Combo}
-                })  
+                  data: { combo: p1Combo }
+                });
                 // dispatch(gameActions.setIdx())
               }
             // 내 영창을 아직 다 하지 않았을 때도 index 추가
