@@ -28,11 +28,11 @@ UPDATE
     attribute=new_record.attribute;
 
 INSERT INTO game_character
-(character_id,character_name, english_name, stand, hurt, attack, winner, combo)
+(character_id,character_name, english_name, stand, hurt, attack, winner, combo,attribute1,attribute2)
 VALUES
-    (1,"곽춘배", "CB", "", "", "", "", ""),
-    (2,"키리카", "AK", "", "", "", "", ""),
-    (3,"루나", "LUNA", "", "", "", "", "")
+    (1,"곽춘배", "CB", "", "", "", "", "",3,2),
+    (2,"키리카", "AK", "", "", "", "", "",1,0),
+    (3,"루나", "LUNA", "", "", "", "", "",5,4)
     AS new_record
 ON DUPLICATE KEY
 UPDATE
@@ -42,7 +42,9 @@ UPDATE
     hurt=new_record.hurt,
     attack=new_record.attack,
     winner=new_record.winner,
-    combo=new_record.combo;
+    combo=new_record.combo,
+    attribute1=new_record.attribute1,
+    attribute2=new_record.attribute2;
 
 INSERT INTO `member`
 (member_id,mod_dt,reg_dt,authority,email,exp,is_deleted,is_online,level,nickname,password,play_count,profile_msg,win_count,character_id,draw_count,lose_count,start_spell)
