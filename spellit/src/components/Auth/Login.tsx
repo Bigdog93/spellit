@@ -112,7 +112,8 @@ const Login = () => {
 						setAni(!ani)
             setTimeout(() => {
               dispatch(authActions.login());
-              navigate("/home");
+              // navigate("/home");
+							navigate("/home", {state: {from: '/login'}});
             }, 700);
           })
           .catch((err) => {

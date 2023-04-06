@@ -22,24 +22,23 @@ import LUNADefault from "@/assets/models/LUNA_default";
 import FriendBtn from "@/assets/models/FriendBtn";
 import LogoutBtn from "@/assets/models/LogoutBtn";
 
-
 import Friend from "./Friend";
 
 import AddFriendModal from "./Friend/AddFriendModal";
 import MatchRequestModal from "./Friend/MatchRequestModal";
-import SoundToggleBtn from "@/components/Modules/SoundBtn"
+import SoundToggleBtn from "@/components/Modules/SoundBtn";
 
 import API from "@/utils/API";
 
 import { UserEntityType } from "@/utils/Types";
 import { friendsActions } from "@/store/friends";
 import { authActions } from "@/store/auth";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import styles from "./Home.module.css";
-import { userActions } from '../store/user';
-import { WebSocketContext } from '@/store/websocket';
-import { MusicContext, Sound } from '@/store/music';
+import { userActions } from "../store/user";
+import { WebSocketContext } from "@/store/websocket";
+import { MusicContext, Sound } from "@/store/music";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -56,12 +55,11 @@ const Home = () => {
   const { setMusic, bgmOn, setBgmOn, stop } = useContext(MusicContext);
   useEffect(() => {
     setMusic("home");
-  }, [])
+  }, []);
 
   // Sound Effect
   const { buttonClick, buttonClickOpt } = Sound();
   const { logoutBtn, logoutOpt } = Sound();
-
 
   const logout = () => {
     sessionStorage.removeItem("token");
@@ -69,10 +67,10 @@ const Home = () => {
     dispatch(authActions.logout());
     send({
       event: "logout",
-      data: ''
-    })
+      data: "",
+    });
     navigate("/login");
-  }
+  };
 
   // 기본 카메라 위치
   // Vector3 {x: 0, y: 3.061616997868383e-16, z: 5}
@@ -86,66 +84,68 @@ const Home = () => {
   const dispatch = useDispatch();
   const [addFriendModalFlag, setAddFriendModalFlag] = useState<boolean>(false);
   const [friendPopupFlag, setFriendPopupFlag] = useState<boolean>(false);
-  const [stopAni, setStopani] = useState(false)
-  
+  const [stopAni, setStopani] = useState(false);
+  // const [cnt] =useState(0)
 
-	useEffect(()=> {
-		setTimeout(()=> {
-			setStopani(!stopAni)
-		}, 1900)
-	}, [])
+  useEffect(() => {
+    setTimeout(() => {
+      setStopani(!stopAni);
+    }, 1900);
+  }, []);
 
-	console.log(stopAni,"stop")
+  console.log(stopAni, "stop");
   function openFriendPopup() {
-    API.get('member/friend/list', { headers: { Authorization: `Bearer ${token}` }, })
-      .then((res) => {
-        const friendList = Array<UserEntityType>();
-                for (let f of res.data) {
-                  const friend: UserEntityType = {
-                    deck: [],
-                    email: f.email,
-                    exp: f.exp,
-                    gameCharacterEntity: f.gameCharacterEntity,
-                    id: f.id,
-                    level: f.level,
-                    nickname: f.nickname,
-                    playCount: f.playCount,
-                    winCount: f.winCount,
-                    loseCount: f.loseCount,
-                    drawCount: f.drawCount,
-                    profileMsg: f.profileMsh,
-                    isOnline: f.isOnline,
-                    isPlaying: f.isPlaying
-                  }
-                  friendList.push(friend);
-                }
-                dispatch(friendsActions.setFriendsList(friendList));
-      })
-      API.get('member/friend/wait', { headers: { Authorization: `Bearer ${token}` }, })
-      .then(({ data }) => {
-        console.log("friend wait list : ", data);
-        const friendWaitList = Array<UserEntityType>();
-        for (let f of data) {
-          const friendWait: UserEntityType = {
-            deck: [],
-            email: f.email,
-            exp: f.exp,
-            gameCharacterEntity: f.gameCharacterEntity,
-            id: f.id,
-            level: f.level,
-            nickname: f.nickname,
-            playCount: f.playCount,
-            winCount: f.winCount,
-            loseCount: f.loseCount,
-            drawCount: f.drawCount,
-            profileMsg: f.profileMsh,
-            isOnline: f.isOnline,
-            isPlaying: f.isPlaying
-          }
-          friendWaitList.push(friendWait);
-        }
-        dispatch(friendsActions.setFriendWaitsList(friendWaitList));
-    })
+    API.get("member/friend/list", {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then((res) => {
+      const friendList = Array<UserEntityType>();
+      for (let f of res.data) {
+        const friend: UserEntityType = {
+          deck: [],
+          email: f.email,
+          exp: f.exp,
+          gameCharacterEntity: f.gameCharacterEntity,
+          id: f.id,
+          level: f.level,
+          nickname: f.nickname,
+          playCount: f.playCount,
+          winCount: f.winCount,
+          loseCount: f.loseCount,
+          drawCount: f.drawCount,
+          profileMsg: f.profileMsh,
+          isOnline: f.isOnline,
+          isPlaying: f.isPlaying,
+        };
+        friendList.push(friend);
+      }
+      dispatch(friendsActions.setFriendsList(friendList));
+    });
+    API.get("member/friend/wait", {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then(({ data }) => {
+      console.log("friend wait list : ", data);
+      const friendWaitList = Array<UserEntityType>();
+      for (let f of data) {
+        const friendWait: UserEntityType = {
+          deck: [],
+          email: f.email,
+          exp: f.exp,
+          gameCharacterEntity: f.gameCharacterEntity,
+          id: f.id,
+          level: f.level,
+          nickname: f.nickname,
+          playCount: f.playCount,
+          winCount: f.winCount,
+          loseCount: f.loseCount,
+          drawCount: f.drawCount,
+          profileMsg: f.profileMsh,
+          isOnline: f.isOnline,
+          isPlaying: f.isPlaying,
+        };
+        friendWaitList.push(friendWait);
+      }
+      dispatch(friendsActions.setFriendWaitsList(friendWaitList));
+    });
     setFriendPopupFlag(true);
   }
   function closeFriendPopup() {
@@ -159,30 +159,32 @@ const Home = () => {
     setAddFriendModalFlag(false);
   }
 
-	const canvasRef = useRef<HTMLCanvasElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-	// 스크롤바 숨김
-	useEffect(() => {
-    document.body.style.overflow = "hidden"
+  // 스크롤바 숨김
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
   }, []);
 
-
+	const location = useLocation()
 
   return (
-    <div  style={{ width: '100%', height: '100vh' }}>
-			<div className={stopAni? "": styles.holedown}></div>
+    <div style={{ width: "100%", height: "100vh" }}>
+      {/* <div
+        className={
+          stopAni === false && isLogged === false ? "styles.holedown" : ""
+        }
+      ></div> */}
+			{/* <div className={(location.state.from === "/login" )? `${styles.holedown}` : ""}></div> */}
       <Canvas
         ref={canvasRef}
-				
+
         // style={{ width: '100%', height: '100%' }}
         // onCreated={({ gl }) => {
         //   canvasRef.current = gl.domElement
         // }}
-
       >
         <ambientLight intensity={0.8} />
-        {/* <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} /> */}
-        {/* <pointLight position={[-10, -10, -10]} /> */}
 
         {/* <OrbitControls /> */}
         {cha_name === "AK" && <AKDefault position={[-3, 0.2, 0]} />}
@@ -198,7 +200,10 @@ const Home = () => {
           position={[2, 0, 0]}
           rotation={[Math.PI / 2, 0, Math.PI / 6]}
           // onClick={toQuickStart}
-          onClick={() => buttonClick()}
+          onClick={() => {
+            buttonClick();
+            closeAddFriendModal();
+          }}
         />
         <DeckButton
           position={[3.7, -1.5, 1.3]}
@@ -216,8 +221,20 @@ const Home = () => {
           onClick={() => buttonClick()}
         />
         {/* <Ranking position={[-6.2, 1, 0]} /> */}
-        <FriendBtn position={[-5.8, 1, 0]} onClick={() => {openFriendPopup(); buttonClick();}} />
-        <LogoutBtn position={[-5.8, -0.5, 0]} onClick={() => {logout(); logoutBtn();}} />
+        <FriendBtn
+          position={[-5.8, 1, 0]}
+          onClick={() => {
+            openFriendPopup();
+            buttonClick();
+          }}
+        />
+        <LogoutBtn
+          position={[-5.8, -0.5, 0]}
+          onClick={() => {
+            logout();
+            logoutBtn();
+          }}
+        />
         {/* <LogoutBtn position={[4.6, -2, 1.5]} scale={[0.5, 0.5, 0.5]} /> */}
 
         {/* <BackgroundSpell
