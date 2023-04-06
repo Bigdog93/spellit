@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import API from "@/utils/API"
 
 import { UserType, DeckType } from '@/utils/Types';
+import { Sound } from '@/store/music';
 
 import playCountUp from '../../assets/profile/playCountUp.svg'
 import playCountDown from '../../assets/profile/playCountDown.svg'
@@ -97,6 +98,10 @@ const Profile = () => {
     setHoveredCard(card);
   }
 
+  // Sound Effect
+  const { cardFlip, cardFlipOpt } = Sound();
+
+
   return (
     <div>
       <div className={`${style.bg}`}>
@@ -171,7 +176,7 @@ const Profile = () => {
                   </div>
                 </div>
                 <div className={`${style.smallSize}`}>
-                  {user.profileMsg}
+                  {user.profileMsg? <div>{user.profileMsg}</div>:<div>상태 메세지를 입력하세요.</div>}
                   <div
                     className={`${style.editBtn}`}
                   >
@@ -198,6 +203,7 @@ const Profile = () => {
                       key={index}
                       onMouseOver={(e) => cardInfo(card)}
                       className={`${style.cardContainer}`}
+                      onMouseEnter={() => cardFlip()} onMouseLeave={() => cardFlipOpt.stop()}
                     >
                       <Card key={index} card={card.code} />
                     </div>

@@ -11,6 +11,7 @@ import style from './index.module.css'
 
 import homeBtnImg from '@/assets/ui/homeBtn.svg';
 import characterChangerImg from '@/assets/ui/characterChanges.png'
+import deckChangerImg from '@/assets/ui/cardChanges.png'
 import { useNavigate, useParams } from "react-router-dom";
 
 interface CardType {
@@ -188,9 +189,8 @@ const User = () => {
               </div>
               <button className={`${style.deckBtn} ${style.myDeckSettingBtn}`} disabled={!mode}>
                 <img 
-                  src={require('../../assets/ui/setting.png')}
-                  alt="setting"
-                  // className={`${style.myDeckSettingBtn}`}
+                  className={`${style.cardChangerImg}`} 
+                  src={deckChangerImg} alt="덱변경"
                   onClick={switchHandler}
                 />
               </button>
@@ -198,12 +198,16 @@ const User = () => {
             <br />
             <hr />
             {deck.map((item: CardType, index: number) => (
-              <div>
-                <div
-                  key={index}
-                  onClick={(event) => removeCard(event, index)}
-                >{item.title}</div>
-                <hr />
+              <div className={`${style.selectedCardBtnBox}`}>
+                <div className={`${style.selectedCardBtn}`}>
+                  <div className={`${style.selectedCardBtnImg}`}>
+                    <img src={require(`../../assets/effect/${item.code}.png`)} alt="icon" />
+                  </div>
+                  <div className={`${style.selectedCardtitle}`}
+                    key={index}
+                    onClick={(event) => removeCard(event, index)}
+                  >{item.title}</div>
+                </div>
               </div>
             ))}
           </div>
