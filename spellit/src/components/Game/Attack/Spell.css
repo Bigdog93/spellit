@@ -16,20 +16,45 @@ vbody {
 
     min-width: 1250px;
 
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 
 }
+
+.profileLevelCircle {
+    display: flex;
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    width: 34px;
+    height: 34px;
+
+    background: #000000;
+    box-shadow: 0px 0px 6px #F8FFEE;
+    border-radius: 100%;
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 5;
+}
+
+.profileLevelCircle p {
+    font-size: xx-small;
+}
+
 
 .SpellBox {
     position: relative;
     display: inline-block;
 }
 
-.attack-bottom-itmes {
-    display: flex;
+.attack-bottom-items {
+    display: inline-flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    margin-left: 10rem;
+    margin-right: 10rem;
 }
 
 .SpellandBar {
@@ -54,12 +79,17 @@ vbody {
     padding-left: 10px;    
 }
 
+.p2SkillEffects {
+    display: inline-flex;
+    transform: scaleX(-1);
+}
+
 .myCharacter, .yourCharacter{
     position: relative;
     top: 0;
     /* margin: 50px; */
 
-    animation: UpDown 2s ease-in Infinite Alternate;
+    animation: UpDown 1s ease-in Infinite Alternate;
 }
 
 
@@ -78,11 +108,12 @@ vbody {
     bottom: 100px;
     left: 60px;
     right: 50px;
-    width: '100%';
-    height: '100%';
+    /* width: '100%';
+    height: '100%'; */
     display: 'flex';
     justify-content: 'center';
     align-items: 'center';
+    text-align: center;
 
     font-size: xx-large;
     font-weight: bolder;
@@ -202,3 +233,40 @@ vbody {
 .hiddenEffect {
     visibility: hidden;
 }
+
+.readyText, .startText {
+    position: absolute;
+    text-align: center;
+    left: 145px;
+    top: 50px;
+
+    font-family: 'Maiandra GD';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 120px;
+    line-height: 144px;
+    /* display: flex;
+    align-items: center;
+    text-align: center; */
+    letter-spacing: 0.2em;
+
+    color: #FFFFFF;
+
+    /* border: 2px solid #FFFFFF; */
+    text-shadow: 0px 0px 20px #FFFFFF;
+
+    animation: text-fadeIn 1s;
+    opacity: 0;
+}
+.startText {
+    left: 160px;
+}
+
+@keyframes text-fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }

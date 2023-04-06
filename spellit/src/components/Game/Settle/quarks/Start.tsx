@@ -70,6 +70,14 @@ const Start: React.FC<Props> = ({
 
 	
 
+  // useEffect(() => {
+  //   console.log('useEffect 안에 들어옴!!!!!!!!!!!!!!!!!!!')
+  //   setTimeout(() => {
+  //     handleButton();
+  //     handleSpell();
+  //   }, 2000);
+  // }, [])
+
   // 사운드
   useEffect(() => {
     let audio: HTMLAudioElement | null = null;

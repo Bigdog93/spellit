@@ -40,6 +40,8 @@
 .settle-bottom-items {
 	display: flex;
 	justify-content: space-between;
+	margin-left: 5rem;
+	margin-right: 5rem;
 }
 
 .settle-p1Box {
@@ -50,6 +52,10 @@
 .settle-p2Box {
 	display: flex;
 	flex-direction: column;
+}
+
+.settle-p2Box div {
+	transform:scaleX(-1);
 }
 
 .first-player, .second-player {

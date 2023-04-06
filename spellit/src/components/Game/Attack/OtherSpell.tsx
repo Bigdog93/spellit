@@ -17,7 +17,7 @@ interface Spell {
     time: number;
 }
 
-const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
+const OtherSpell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   const dispatch = useDispatch();
   const { send } = useContext(WebSocketContext);
 
@@ -26,7 +26,17 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   const p1Character = useSelector((state: RootState) => state.player.p1!.gameCharacterEntity.englishName);
   const p2Character = useSelector((state: RootState) => state.player.p2!.gameCharacterEntity.englishName);
 
+  const comboTurn = useSelector((state: RootState) => state.game.comboTurn)
   const attackCardList = useSelector((state: RootState) => state.game.attacks);
+  const p1Combo = useSelector((state: RootState) => (state.settle.p1Combo))
+
+  const p1Level = useSelector((state: RootState) => (state.player.p1!.level));
+  const p2Level = useSelector((state: RootState) => (state.player.p2!.level));
+
+  const [showReady, setShowReady] = useState(false);
+  const [showStart, setShowStart] = useState(false);
+
+  const transIdx = useSelector((state: RootState) => state.attack.transcriptIdx);
 
   console.log('attack ', attack)
   console.log('spell ', attack.card.spell)
@@ -61,12 +71,12 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   const attacks = useSelector((state: RootState) => (state.game.attacks));
   // const card = attack.card
   // const isMine = attack.isMine
-
-
+  
   // // 주문 버튼 클릭시 음성 인식 시작
   const handleClick = (attack: AttackType) => {
     const isMine = attack.isMine
     const card = attack.card
+  
     let spellLength = 0; // 띄어쓰기 제거한 주문의 길이
     for (let i = 0; i < card.spell.length; i++) {
       let spanClassName = `spell`;
@@ -80,56 +90,9 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
         spanList.push(newSpanEl);
     }
     setSpanEl(spanList);
+    
 
-  //   const trimText = card.spell.replaceAll(" ", ""); // 띄어쓰기 제거한 주문
-  //   // console.log(trimText);
-
-  //   recognition.addEventListener("result", (e) => {
-  //       console.log("말하는 중이잖아요?");
-  //       console.log(e)
-  //       let transcript = e.results[0][0].transcript; // 인식된 음성 글자
-  //       transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
-  //       // console.log(transcript);
-  //       if (isMine){
-  //         // let transcript = e.results[0][0].transcript; // 인식된 음성 글자
-  //         // transcript = transcript.replaceAll(" ", ""); // 띄어쓰기 제거한 음성 인식 글자
-  //         // console.log(transcript);
-  //         send({
-  //           event: 'spell',
-  //           roomId: roomId,
-  //           memberId: memberId,
-  //           data:  transcript,
-  //         })
-  //         console.log(transcript)
-  //       } else {
-  //         console.log('isMine은 false다.')
-  //       }
-
-
-        // let correct = 0;
-  //       console.log("------------------------------------------------");
-  //       for (let i = 0; i < transcript.length; i++) {
-  //         console.log('for 문 안이다!')
-  //           if (transcript[i] == trimText[i]) {
-  //               const element = document.getElementById(`spell-${i}`);
-
-  //               const correctColor = `correct${card.attribute}`;
-  //               element?.classList.add(correctColor);
-  //               correct++;
-  //               console.log('------')
-  //               console.log(element);
-  //               console.log('------')
-  //           }
-  //       }
-  //       // const percentEl = document.getElementById("percent") as HTMLDivElement;
-  //       const correctPercent = Math.round((correct / spellLength) * 100);
-  //       // percentEl.innerText = `총 ${spellLength}개 중 ${correct}개 맞음 : ${correctPercent} %`;
-  //   });
-
-    // 음성 인식 시작
     setSec(card.cost);
-    // recognition.start();
-    // console.log('SpeechRecognition start!')
 
     // 타이머
     const interval = setInterval(() => {
@@ -138,41 +101,56 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
         console.log('============')
         console.log('sec : ', sec)
         console.log('============')
-    }, 1000)
-    
 
+      }, 1000)
 
     // 주문 제한 시간 흐른 후 음성인식 종료
     setTimeout(() => {
         // recognition.stop();
         clearInterval(interval);
 
-        // 마지막 인덱스면 defense 턴 시작
-        if(idx+1 === attacks.length){
-          send({
-            event: 'defenseTurn',
-            roomId: roomId,
-            memberId: memberId,
-            data: ''
-          })
-        }
-        // 마지막 턴 아니면 인덱스 올려주기
+        ///////////////////////////// 콤보 체크 /////////////////////////////
+        // if (idx + 1 === attacks.length) {
+        //   send({
+        //     event: 'defenseTurn',
+        //     roomId: roomId,
+        //     memberId: memberId,
+        //     data: {combo: p1Combo}
+        //   })
         // } else {
-        // dispatch(gameActions.setIdx())
+        //   dispatch(gameActions.setIdx())
         // }
 
-        console.log('SpeechRecognition end!')
-        setTimeout(() => {
-          dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
-        }, 3000);
+        // console.log('SpeechRecognition end!')
+        // setSpanEl([]);
+        // setTimeout(() => {
+        //   dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
+        // }, 2000);
 
     }, card.cost*1000);
-    
+      
   };
 
   useEffect(()=>{
-    handleClick(attack);
+    setShowReady(true);
+    setTimeout(() => {
+      setShowReady(false);
+      setShowStart(true);
+      setTimeout(() => {
+        setShowStart(false);
+        handleClick(attack);
+      }, 1200)
+    }, 2000)
   }, [attack])
+
+  useEffect(() => {
+    console.log('otherspell에서 받아오는 transIdx : ', transIdx);
+    const element = document.querySelector(`#spell-${transIdx}`);
+    element?.classList.add(`correct${attack.card.attribute}`)
+    console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    console.log('element 찍히는지 확인', element)
+    console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+  }, [transIdx])
 
     const defaultHP = useSelector((state: RootState) => (state.attack.defaultHp));
     const p1Hp = useSelector((state: RootState) => (state.player.p1!.hp));
@@ -194,21 +172,23 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
       <div className="attack-bg">
         <div className="attack-top-items">
           <div className='first-hp-box'>
-              <ProfileHp character={p1Character}></ProfileHp>
+              <ProfileHp character={p1Character} level={p1Level}></ProfileHp>
               <div className="first-hp-bar" style={p1HpStyle}></div>
             </div>
             <Timer time={sec}></Timer>
             <div className='second-hp-box'>
-              <ProfileHp character={p2Character}></ProfileHp>
+              <ProfileHp character={p2Character} level={p2Level}></ProfileHp>
               <div className="second-hp-bar" style={p2HpStyle}></div>
           </div>
         </div>
 
-        <div className="attack-bottom-itmes">
+        <div className="attack-bottom-items">
           {attack.isMine && <img className="myCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p1Character}_attack.png`)} alt="" /> }
           <div className="SpellandBar">
             <div className="SpellBox">
               <img style={{ width: 800, height: 400}} src={require(`../../../assets/InGame/SpellBox.png`)} alt="" />
+              {showReady && <h1 className="readyText">READY</h1>}
+              {showStart && <h1 className="startText">START</h1>}
               <div id='origin'>{spanEl}</div>
             </div>
             <div className="spell-bar-box">
@@ -229,4 +209,4 @@ const Spell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   )
 }
 
-export default Spell;
+export default OtherSpell;

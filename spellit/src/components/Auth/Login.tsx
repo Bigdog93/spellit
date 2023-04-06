@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { userActions } from "@/store/user";
 import { friendsActions } from "@/store/friends";
 import { WebSocketContext } from "@/store/websocket";
+import { MusicContext } from "@/store/music";
 import API from "@/utils/API";
 import "./Login.css";
 import { UserEntityType } from "@/utils/Types";
@@ -122,8 +123,10 @@ const Login = () => {
     navigate("/home");
   };
 
+  const { setMusic } = useContext(MusicContext);
   // 스크롤바 숨김
 	useEffect(() => {
+    setMusic("login");
     document.body.style.overflow = "hidden"
   }, []);
 

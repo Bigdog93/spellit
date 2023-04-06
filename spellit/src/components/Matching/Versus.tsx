@@ -26,7 +26,7 @@ const Versus = () => {
   return (
     <div>
       <div className="flex-container">
-        <div className="player">
+        <div className="player leftSlider">
           <img src={require(`../../assets/character/${p1?.gameCharacterEntity.englishName}_win.png`)} alt="1P-character"/>
           <div className="player-info">
             <img src={MatchFrame_red} alt="1P"/>
@@ -46,17 +46,17 @@ const Versus = () => {
 
         <img src={VS} alt="vs" className="vs"/>
 
-        <div className="player">
+        <div className="player rightSlider">
           <img src={require(`../../assets/character/${p2?.gameCharacterEntity.englishName}_win.png`)} alt="2P-character"/>
           <div className="player-info">
             <img src={MatchFrame_blue} alt="2P"/>
             <div className="player2">
               <div className="upper-info">
                 <div>
-                  { p2?.nickname }승
+                  { p2?.nickname }
                 </div>
                 <div>
-                  { p2?.winCount }
+                  { p2?.winCount }승
                 </div>
               </div>
               { p2?.profileMsg }

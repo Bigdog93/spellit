@@ -1,5 +1,5 @@
 // import * as THREE from "three";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
@@ -29,20 +29,41 @@ import MatchRequestModal from "./Friend/MatchRequestModal";
 import API from "@/utils/API";
 import { UserEntityType } from "@/utils/Types";
 import { friendsActions } from "@/store/friends";
+import { authActions } from "@/store/auth";
 import { useNavigate } from "react-router-dom";
 
 import styles from "./Home.module.css";
+import { userActions } from '../store/user';
+import { WebSocketContext } from '@/store/websocket';
+import { MusicContext } from '@/store/music';
 
 const Home = () => {
   const navigate = useNavigate();
   const isLogged = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
+  const { send } = useContext(WebSocketContext);
   useEffect(() => {
     if (!isLogged) {
       navigate("/login");
     }
   }, []);
+
+  const { setMusic } = useContext(MusicContext);
+  useEffect(() => {
+    setMusic("home");
+  }, [])
+
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    dispatch(userActions.logout());
+    dispatch(authActions.logout());
+    send({
+      event: "logout",
+      data: ''
+    })
+    navigate("/login");
+  }
 
   // 기본 카메라 위치
   // Vector3 {x: 0, y: 3.061616997868383e-16, z: 5}
@@ -182,7 +203,7 @@ const Home = () => {
         />
         {/* <Ranking position={[-6.2, 1, 0]} /> */}
         <FriendBtn position={[-5.8, 1, 0]} onClick={openFriendPopup} />
-        <LogoutBtn position={[-5.8, -0.5, 0]} />
+        <LogoutBtn position={[-5.8, -0.5, 0]} onClick={logout} />
         {/* <LogoutBtn position={[4.6, -2, 1.5]} scale={[0.5, 0.5, 0.5]} /> */}
 
         {/* <BackgroundSpell

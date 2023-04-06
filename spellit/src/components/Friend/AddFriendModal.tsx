@@ -20,18 +20,18 @@ function AddFriendModal({ closeAddFriendModal }: Props) {
 	
 	const token = sessionStorage.getItem('token');
 
-	const [friendEmail, setFriendEmail] = useState<string>('');
+	const [friendNickname, setFriendNickname] = useState<string>('');
 	const me = useSelector((state: RootState) => state.user);
 
 	function changeEmailInput(e:React.ChangeEvent<HTMLInputElement>) {
 		const email = e.target.value;
-		setFriendEmail(email);
-		console.log(friendEmail);
+		setFriendNickname(email);
+		console.log(friendNickname);
 	}
 
 	function addFriendRequest() {
 		API.post('member/friend/ask', {
-			friendEmail: friendEmail,
+			friendNickname: friendNickname,
 			friendId: 0,
 		},
 			{ headers: { Authorization: `Bearer ${token}` } })
@@ -62,7 +62,7 @@ function AddFriendModal({ closeAddFriendModal }: Props) {
 						친구 추가
 					</div>
 					<div className={`${style.addFriendModalRow}`}>
-						<div className={`${style.addFriendModalEmail}>`}>E-MAIL</div>
+						<div className={`${style.addFriendModalEmail}>`}>NickName</div>
 						<input type="email" className={`${style.addFriendModalInput}`} onChange={changeEmailInput}></input>
 					</div>
 					<div className={`${style.addFriendModalRow}`}>

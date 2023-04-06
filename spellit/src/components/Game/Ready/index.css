@@ -14,7 +14,9 @@ body {
   90% { transform: translateX(-10px); }
   100% { transform: translateX(0); }
 }
-
+.red {
+  color: rgb(255, 74, 74);
+}
 .shake {
   animation: shake 0.5s;
 }
@@ -28,15 +30,27 @@ body {
 .cost{
   font-size: 32px;
   width: 20vw;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 .confirmBtn {
   width: 20vw;
+  display: flex;
+  align-items: center;
 }
 .confirmBtn img {
   width: 20vw;
+  cursor: pointer;
 }
-
+.confirmBtn img.activate {
+  filter: drop-shadow(0px 0px 1px #ff64db)
+}
+.otherState {
+  text-align: center;
+  color: #b8b8b8;
+}
 .selectedCardBox {
   position: relative;
   display: flex;
@@ -44,7 +58,17 @@ body {
   height: 60vh;
   
 }
+.noCardAlert {
+  font-size: 1.5rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50vw;
+  text-align: center;
+}
 .selectedCardBox > img{
+  min-width: 660px;
   width: 60vw;  
   position: absolute;
   /* justify-content: space-between; */

@@ -10,6 +10,7 @@ import Characters from "./Characters";
 import style from './index.module.css'
 
 import homeBtnImg from '@/assets/ui/homeBtn.svg';
+import characterChangerImg from '@/assets/ui/characterChanges.png'
 import { useNavigate, useParams } from "react-router-dom";
 
 interface CardType {
@@ -166,13 +167,14 @@ const User = () => {
         {/* 선택된 캐릭터 */}
         {/* <div className={isShaking ? `${style.shake}`  : `${style.cardselectcontainer}`}> */}
           <div className={`${style.selectedCharacter}`}>
-            <button className={`${style.deckBtn} ${style.characterkBtn}`} disabled={mode}>
-            {character && <img
+            <div className={` ${style.characterkBtn}`}>
+            {character && <img className={`${style.characterPort}`}
               src={require(`../../assets/character/${character?.englishName}_portrait.png`)}
               alt="portrait"
-              onClick={switchHandler}
             />}
-              </button>
+            {character && <img className={`${style.characterChangerImg}`} src={characterChangerImg} alt="캐릭터변경"
+              onClick={switchHandler}></img>}
+              </div>
           </div>
 
 

@@ -85,6 +85,7 @@ const Profile = () => {
       // 수정 필요
       console.log(res.data)
       setUser(res.data)
+      setHoveredCard(res.data.deck[0])
       return user;
     }).then((res) => {
       console.log(res);
@@ -158,14 +159,14 @@ const Profile = () => {
                   {user.nickname}
                   <div
                     className={`${style.editBtn}`}
-                    onClick={(e) => {
-                      openModal("nickname");
-                    }}
                   >
                     <img
                       className={`${style.editBtnImg}`}
                       src={editBtnImg}
                       alt="editBtn.svg"
+                      onClick={(e) => {
+                        openModal("nickname");
+                      }}
                     />
                   </div>
                 </div>
@@ -173,14 +174,14 @@ const Profile = () => {
                   {user.profileMsg}
                   <div
                     className={`${style.editBtn}`}
-                    onClick={(e) => {
-                      openModal("profileMsg");
-                    }}
                   >
                     <img
                       className={`${style.editBtnImg}`}
                       src={editBtnImg}
                       alt="editBtn.svg"
+                      onClick={(e) => {
+                        openModal("profileMsg");
+                      }}
                     />
                   </div>
                 </div>
@@ -203,32 +204,34 @@ const Profile = () => {
                   ))}
                 </div>
               </div>
-              <div className={`${style.infoRow}`}>
-                <div className={`${style.infoTitle}`}>마법명</div>
-                <div className={`${style.cardTitle}`}>{hoveredCard?.title}</div>
-              </div>
-              <div className={`${style.infoRow}`}>
-                <div className={`${style.infoTitle}`}>마법주문</div>
-                <div className={`${style.cardInfo} ${style.cardInfoTitle}`}>
-                  {hoveredCard?.spell}
+              {hoveredCard && <>
+                <div className={`${style.infoRow}`}>
+                  <div className={`${style.infoTitle}`}>마법명</div>
+                  <div className={`${style.cardTitle}`}>{hoveredCard?.title}</div>
                 </div>
-              </div>
-              <div className={`${style.infoRow}`}>
-                <div className={`${style.infoTitle}`}>피해량</div>
-                <div className={`${style.cardInfo}`}>{hoveredCard?.damage}</div>
-              </div>
-              <div className={`${style.infoRow}`}>
-                <div className={`${style.infoTitle}`}>마나 소모</div>
-                <div className={`${style.cardInfo}`}>
-                  {hoveredCard?.cost} cost
+                <div className={`${style.infoRow}`}>
+                  <div className={`${style.infoTitle}`}>마법주문</div>
+                  <div className={`${style.cardInfo} ${style.cardInfoTitle}`}>
+                    {hoveredCard?.spell}
+                  </div>
                 </div>
-              </div>
-              <div className={`${style.infoRow}`}>
-                <div className={`${style.infoTitle}`}>속성</div>
-                <div className={`${style.cardInfo}`}>
-                  {korAttributes[hoveredCard?.attribute]}
+                <div className={`${style.infoRow}`}>
+                  <div className={`${style.infoTitle}`}>피해량</div>
+                  <div className={`${style.cardInfo}`}>{hoveredCard?.damage}</div>
                 </div>
-              </div>
+                <div className={`${style.infoRow}`}>
+                  <div className={`${style.infoTitle}`}>마나 소모</div>
+                  <div className={`${style.cardInfo}`}>
+                    {hoveredCard?.cost} cost
+                  </div>
+                </div>
+                <div className={`${style.infoRow}`}>
+                  <div className={`${style.infoTitle}`}>속성</div>
+                  <div className={`${style.cardInfo}`}>
+                    {korAttributes[hoveredCard?.attribute]}
+                  </div>
+                </div>
+              </>}
             </div>
           </div>
         </div>}

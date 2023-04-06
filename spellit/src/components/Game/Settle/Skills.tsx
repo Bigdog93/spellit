@@ -20,9 +20,8 @@ import SnowStorm from "./quarks/SnowStorm";
 
 import "./Skills.css";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store";
 import { settleActions } from "@/store/settle";
-import { truncate } from "fs/promises";
+import { RootState } from "@/store";
 
 type props = {
   code: string;
