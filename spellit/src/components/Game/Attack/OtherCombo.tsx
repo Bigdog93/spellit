@@ -228,8 +228,10 @@ const OtherCombo = ({ attack }: { attack: AttackType }) => {
                     src={require(`../../../assets/character/${p2Character}_combo.png`)}
                     alt=""
                   />
-                  <div>추가타!!</div>
-                  <div>분노의 외침을 들려주세요</div>
+                  <div className="prior">
+                    <div>COMBO!!</div>
+                    <div>상대가 추가영창을 합니다.</div>
+                  </div>
                 </div>
               </div>
             </div>

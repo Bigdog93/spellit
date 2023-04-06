@@ -35,7 +35,7 @@ type initialAttackType = {
 
 const initialAttack: initialAttackType = {
   startGame: false,
-  defaultHp: 600,   // hp 초기값
+  defaultHp: 300,   // hp 초기값
   playersDeck: [],  // 플레이어의 카드 선택 정보가 담긴 리스트
   p1Deck: [],       // p1 선택한 덱 리스트
   p2Deck: [],       // p2 선택한 덱 리스트
