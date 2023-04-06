@@ -25,8 +25,6 @@ interface PropsType {
 
 const Cards = ({cards, selectCard}: PropsType) => {
 
-  const dispatch = useDispatch();
-
   const onSelectCard = (data:any)=>{
     selectCard(data);
     console.log(data)

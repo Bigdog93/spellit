@@ -5,7 +5,9 @@
   background-color: transparent;
   border: 0;
 }
+
 .homeBtn {
+  z-index: 50;
   position: absolute; 
   bottom: 10px;
   right: 10px;

@@ -114,9 +114,9 @@ const Profile = () => {
   return (
     <div>
       <div className={`${style.bg}`}>
-      <button type="button" className={`${style.btn} ${style.homeBtn}`} onClick={() => {toHome();buttonClick();}}>
-        <img src={homeBtnImg} alt="home"></img>
-      </button> 
+        <button type="button" className={`${style.btn} ${style.homeBtn}`} onClick={() => {toHome();buttonClick();}}>
+          <img src={homeBtnImg} alt="home"></img>
+        </button> 
         {!modifyPasswordModal && <div className={`${style.myInfo}`}>
           <div className={`${style.sidebar}`}>
             <div className={`${style.selectedCharacter}`}>
