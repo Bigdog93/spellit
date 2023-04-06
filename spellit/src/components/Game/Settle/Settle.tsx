@@ -13,6 +13,7 @@ import player, { playerActions } from "@/store/player";
 import { settleActions } from "@/store/settle";
 import { gameActions } from "@/store/game";
 import Skills from "./Skills";
+import { dispose } from "@react-three/fiber";
 
 function Settle() {
   const dispatch = useDispatch();
@@ -51,6 +52,13 @@ function Settle() {
   const [idx, setIdx] = useState(0);
   const [isCanvas, setIsCanvas] = useState(false);
 
+	const handleIdxChange= (newIdx:number) => {
+		setIdx(newIdx)
+	}
+
+ 
+  const aniStart = useSelector((state: RootState) => state.settle.aniStart);
+  console.log(aniStart, "아ㅣㄴ");
   const p1HpStyle = {
     width: `${(p1Hp / defaultHP) * 385}px`,
     backgroundColor: p1Hp > 100 ? "#FFF500" : "#FF0000",
@@ -71,8 +79,11 @@ function Settle() {
     setTimeout(() => {
       spellEffect?.classList.add("hidden-effect");
       setTimeout(() => {
+        // setStart(!start)
         // canvas 실행
         setIsCanvas(true);
+        dispatch(settleActions.setAniStart());
+
         setTimeout(() => {
           if (attacks[idx].isMine) {
             console.log("내가 공격중!!");
@@ -84,6 +95,7 @@ function Settle() {
             }
             setTimeout(() => {
               setIsCanvas(false);
+              console.log("???????");
               dispatch(playerActions.p2HpDecrese(d));
             }, 3000);
           } else {
@@ -100,7 +112,8 @@ function Settle() {
             }, 3000);
           }
           // 애니메이션 유지시간
-        }, 20000);
+        }, 10000);
+        dispatch(settleActions.setAniStart());
       }, 1000);
     }, 2000);
   }
@@ -118,8 +131,10 @@ function Settle() {
 
       // idx 증가
       setTimeout(() => {
+        dispatch(settleActions.setAniStart());
+        // setStart(!start)
         setIdx(idx + 1);
-      }, 5000);
+      }, 10000);
       // 모든 스펠 정산 끝
     } else {
       setTimeout(() => {
@@ -137,7 +152,7 @@ function Settle() {
           // 피가 남아 있으면 ready 턴으로 이동
         } else {
           dispatch(settleActions.percentListClear());
-          // dispatch(gameActions.endSettle());
+          dispatch(gameActions.endSettle());
           console.log("Go to Next Turn!");
           // send({
           //     event: 'readyTurn',
@@ -162,10 +177,15 @@ function Settle() {
     <>
       {isCanvas && idx < attacks.length ? (
         <Skills
+      
           code={attacks[idx].card.code}
           isMine={attacks[idx].isMine}
           p1Character={p1Character}
           p2Character={p2Character}
+					check={true}
+					idx={idx}
+					onTrigger={() => handleIdxChange(idx + 1)} 
+	
         ></Skills>
       ) : (
         <div className="settle-bg">

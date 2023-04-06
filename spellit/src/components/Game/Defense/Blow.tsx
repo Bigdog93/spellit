@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { gameActions } from "@/store/game";
+import image1 from "@/assets/minigame/Image1.png";
+
 interface onTimeProp {
   onTime: boolean;
   handleTimer: () => void;
@@ -10,7 +12,6 @@ interface onTimeProp {
 }
 
 const Blow = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
-
   const dispatch = useDispatch();
 
   const [count, setCount] = useState<number>(0);
@@ -20,9 +21,9 @@ const Blow = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   // 게임 결과를 store에 저장
-  useEffect(()=> {
-    dispatch(gameActions.setMyDefense(isSuccess))
-  }, [isSuccess])
+  useEffect(() => {
+    dispatch(gameActions.setMyDefense(isSuccess));
+  }, [isSuccess]);
 
   const streamRef = useRef<MediaStream | null>(null);
   const handleMicInput = async (stream: MediaStream) => {
@@ -59,7 +60,7 @@ const Blow = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
     const draw = (level: number) => {
       // 맨처음에 전체 삭제
       ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-      ctx.fillStyle = "green";
+      ctx.fillStyle = "pink";
       ctx.fillRect(0, canvasHeight - level, canvasWidth, level);
     };
 
@@ -75,7 +76,7 @@ const Blow = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
       draw(level);
 
       // 특정 레벨 이상일 때, cnt 증가
-      if (level > 80) {
+      if (level > 60) {
         setCount((prevCount) => prevCount + 1);
       }
     };
@@ -119,8 +120,48 @@ const Blow = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
 
   return (
     <div>
-      <canvas ref={canvasRef} width={50} height={100} />
-      {isDone ? isSuccess ? <div>성공😀</div> : <div>실패🤣</div> : <></>}
+      <div className="attack-bottom-itmes">
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <img
+            className="myCharacter"
+            style={{ width: "400px" }}
+            src={require(`@/assets/character/AK_attack.png`)}
+            // src={require(`../../../assets/character/${p1Character}_attack.png`)}
+            alt=""
+          />
+        </div>
+        <div className="SpellandBar">
+          <div className="SpellBox">
+            <img
+              style={{ width: 800, height: 400 }}
+              src={require(`@/assets/InGame/SpellBox.png`)}
+              alt=""
+            />
+            <div id="origin">
+              <div className="canvas-box">
+                {!onTime && !isDone ? (
+                  // <div>대기시간 후 게임이 시작됩니다</div>
+                  <></>
+                ) : (
+                  <>
+                    <img className="spellimg" src={image1} alt="img" />
+                    <canvas ref={canvasRef} width={5} height={10} />
+                  </>
+                )}
+              </div>
+              {isDone ? (
+                isSuccess ? (
+                  <div className="win-box">성공</div>
+                ) : (
+                  <div className="lose-box">실패</div>
+                )
+              ) : (
+                <></>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

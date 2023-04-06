@@ -98,6 +98,7 @@ const Login = () => {
                 }
             })
           }).then(() => {
+						setAni(!ani)
             setTimeout(() => {
               dispatch(authActions.login());
               navigate("/home");

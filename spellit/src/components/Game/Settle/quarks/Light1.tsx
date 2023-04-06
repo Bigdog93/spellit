@@ -47,10 +47,11 @@ const Light1: React.FC<Props> = ({ handleSpell, isSpell }: Props) => {
       }
     }, 1000);
 
-    setTimeout(() => {
-      handleSpell();
-    }, 4000);
   });
+	
+	setTimeout(() => {
+		handleSpell();
+	}, 4000);
 
   // 사운드
   useEffect(() => {

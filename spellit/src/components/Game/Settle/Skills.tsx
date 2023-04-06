@@ -19,28 +19,58 @@ import Lightning from "./quarks/Lightening";
 import SnowStorm from "./quarks/SnowStorm";
 
 import "./Skills.css";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { settleActions } from "@/store/settle";
+import { truncate } from "fs/promises";
 
 type props = {
-  code: string,
-  isMine: boolean,
-  p1Character: string,
-  p2Character: string,
-}
+  code: string;
+  isMine: boolean;
+  p1Character: string;
+  p2Character: string;
+  check: boolean;
+  idx: number;
+  // handleIdxChange: (idx: number) => void;
+  onTrigger: () => void;
+};
 
+function Skills({
+  code,
+  isMine,
+  p1Character,
+  p2Character,
+  check,
+  idx,
+  onTrigger,
+}: // handleIdxChange,
+props) {
+  const dispatch = useDispatch();
 
-function Skills({code, isMine, p1Character, p2Character}: props) {
+  console.log("------");
+  console.log(check);
+
+  console.log("------");
   // 마법 시전 효과 시작
-  const [isStart, setIsStart] = useState<boolean>(isMine);
+  const [isStart, setIsStart] = useState<boolean>(check);
+  const reSttart = check;
+  console.log(isStart);
+  console.log(reSttart);
+  console.log("------");
+
   // 마법 사용
   const [isSpell, setIsSpell] = useState<boolean>(false);
   // camera
   const cameraNum = useRef<number>(2);
   // 현재턴
-
+  console.log(code, "마법");
   const turn = useRef<number>(Number(isMine));
+
+  const [cnt, setCnt] = useState(0);
 
   const handleButton = () => {
     setIsStart(!isStart);
+    console.log("state 값변경");
   };
   const handleSpell = () => {
     setIsSpell(!isSpell);
@@ -50,8 +80,28 @@ function Skills({code, isMine, p1Character, p2Character}: props) {
     cameraNum.current = num;
   };
 
-  // console.log(isStart, "isStart");
-  // console.log(isSpell, "isSpell");
+  useEffect(() => {
+    if (!isStart) {
+      onTrigger();
+      setIsStart(true);
+    }
+  }, [onTrigger]);
+
+  // useEffect(() => {
+  //   if (isStart === false) {
+  //     if (cnt === 0) {
+  //       setIsStart(() => true);
+  // 			setCnt(cnt +1)
+  //     } else {
+  //       setCnt(0)
+  //     }
+  //   }
+  // }, [isStart]);
+
+  console.log("=============================");
+  console.log(isStart, "isStart in skills");
+  console.log(isSpell, "isSpell in skills");
+  console.log("=============================");
 
   return (
     <div className="box2">
@@ -67,15 +117,26 @@ function Skills({code, isMine, p1Character, p2Character}: props) {
         <Background position={[0, 0, 0]} />
 
         {/* 캐릭터 1P*/}
-        {p1Character==='CB' && <CBDefault1 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} /> }
-        {p1Character==='AK' && <AKDefault1 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} /> }
-        {p1Character==='LUNA' && <LUNADefault1 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} /> }
-
+        {p1Character === "CB" && (
+          <CBDefault1 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} />
+        )}
+        {p1Character === "AK" && (
+          <AKDefault1 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} />
+        )}
+        {p1Character === "LUNA" && (
+          <LUNADefault1 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} />
+        )}
 
         {/* 캐릭터 2P */}
-        {p2Character==='CB' && <CBDefault2 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} /> }
-        {p2Character==='AK' && <AKDefault2 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} /> }
-        {p2Character==='LUNA' && <LUNADefault2 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} /> }
+        {p2Character === "CB" && (
+          <CBDefault2 position={[5, -1, 0]} isSpell={isSpell} turn={turn} />
+        )}
+        {p2Character === "AK" && (
+          <AKDefault2 position={[5, -1, 0]} isSpell={isSpell} turn={turn} />
+        )}
+        {p2Character === "LUNA" && (
+          <LUNADefault2 position={[5, -1, 0]} isSpell={isSpell} turn={turn} />
+        )}
 
         {/* 마법 시전 이펙트 */}
         {isStart && (
@@ -91,7 +152,7 @@ function Skills({code, isMine, p1Character, p2Character}: props) {
         {/* 여기서부터 실행되는 마법 */}
         {/* WIND */}
         {/* 남양의 폭풍 camera 0*/}
-        {isSpell && code==='wind3' && (
+        {isSpell && code === "wind3" && (
           <>
             <Tornado
               handleSpell={handleSpell}
@@ -102,18 +163,18 @@ function Skills({code, isMine, p1Character, p2Character}: props) {
           </>
         )}
         {/* 번개 camera 1*/}
-        {isSpell && code==='wind1' && (
+        {isSpell && code === "wind1" && (
           <>
             <Lightning
               handleSpell={handleSpell}
               isSpell={isSpell}
               selectCamera={selectCamera}
-							turn={turn}
+              turn={turn}
             />
           </>
         )}
         {/* WATER */}
-        {isSpell && code==='water1' && (
+        {isSpell && code === "water1" && (
           <>
             <SnowStorm
               handleSpell={handleSpell}
@@ -124,7 +185,7 @@ function Skills({code, isMine, p1Character, p2Character}: props) {
           </>
         )}
         {/* FIRE */}
-        {isSpell && code==='fire1' && (
+        {isSpell && code === "fire1" && (
           <>
             <FireBall
               handleSpell={handleSpell}
@@ -135,30 +196,30 @@ function Skills({code, isMine, p1Character, p2Character}: props) {
           </>
         )}
         {/* EARTH */}
-        {isSpell && code==='earth1' && (
+        {isSpell && code === "earth1" && (
           <>
             <Earth
               handleSpell={handleSpell}
               isSpell={isSpell}
               selectCamera={selectCamera}
-							turn={turn}
+              turn={turn}
             />
           </>
         )}
         {/* LIGHT */}
-        {isSpell && code==='light1' && (
+        {isSpell && code === "light1" && (
           <>
             <Light
               handleSpell={handleSpell}
               isSpell={isSpell}
               selectCamera={selectCamera}
-							turn={turn}
+              turn={turn}
             />
           </>
         )}
         {/* DARK */}
         {/* 무광의 심연 */}
-        {isSpell && code==='dark1' && (
+        {isSpell && code === "dark1" && (
           <>
             <DarkHall
               handleSpell={handleSpell}

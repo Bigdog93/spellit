@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux"
+import { useDispatch } from "react-redux";
+import "@/components/Game/Items/Items.css";
+import TimerImg from "@/assets/InGame/TimerImg.png";
 
 // import { defenseActions } from "@/store/defense";
 interface TimerProps {
   onTime: boolean;
   handleTimer: () => void;
-  isDone:boolean
-  handleResult : ()=>void
+  isDone: boolean;
+  handleResult: () => void;
 }
 
-const Timer = ({ onTime, handleTimer, isDone ,handleResult}: TimerProps) => {
+const Timer = ({ onTime, handleTimer, isDone, handleResult }: TimerProps) => {
   const dispatch = useDispatch();
 
   // 초(sec) 상태를 관리하는 state
@@ -19,26 +21,25 @@ const Timer = ({ onTime, handleTimer, isDone ,handleResult}: TimerProps) => {
   const timeId = useRef<NodeJS.Timeout | null>(null);
 
   // 3,2,1 CountDown 관리 state
-  const [preSec, setPreSec] = useState<number>(3)
+  const [preSec, setPreSec] = useState<number>(3);
 
   const preTime = useRef<number>(3);
   const preTimeId = useRef<NodeJS.Timeout | null>(null);
 
   // 3,2,1 CountDown
-  useEffect(()=> {
-    preTimeId.current = setInterval(()=> {
-      preTime.current -= 1
-      setPreSec(preTime.current % 60)
+  useEffect(() => {
+    preTimeId.current = setInterval(() => {
+      preTime.current -= 1;
+      setPreSec(preTime.current % 60);
       // 0이되면 게임을 시작시킴
       if (preTime.current === 0) {
-        clearInterval(preTimeId.current as NodeJS.Timeout)
-        handleTimer()
+        clearInterval(preTimeId.current as NodeJS.Timeout);
+        handleTimer();
       }
-    }, 1000)
+    }, 1000);
     return () => clearInterval(preTimeId.current as NodeJS.Timeout);
     // eslint-disable-next-line
-  },[])
-
+  }, []);
 
   // 게임 여부를 따져서 타이머 설정
   useEffect(() => {
@@ -61,19 +62,30 @@ const Timer = ({ onTime, handleTimer, isDone ,handleResult}: TimerProps) => {
       clearInterval(timeId.current as NodeJS.Timeout);
       // 시간이 끝났으므로 게임진행여부 false로
       handleTimer();
-      handleResult()
-      console.log('endDefense 타이머 0됐을 때 실행되는 함수 in Timer.tsx')
+      handleResult();
+      console.log("endDefense 타이머 0됐을 때 실행되는 함수 in Timer.tsx");
       // dispatch(defenseActions.endDefense())
     }
     // eslint-disable-next-line
   }, [sec]);
 
   return (
-    <div>
-      {!onTime && !isDone ? <div>{preSec}</div>:<div>시작!</div>}
-      <h3>Timer</h3>
-      <div>{sec}</div>
-    </div>
+    <>
+      <div id="TimerBox">
+        <img src={TimerImg} alt="" style={{ width: "40px", height: "45px" }} />
+        <div>{sec}</div>
+        <div className="presec-box">
+          {!onTime && !isDone ? (
+            <div className={`presec-b ${preSec === 0 ? "hide" : ""}`}>
+              <div className="presec">{preSec}</div>
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
+      </div>
+      {/* 밑으로 내려야함 */}
+    </>
   );
 };
 

@@ -124,6 +124,7 @@ const FireBall: React.FC<Props> = ({
       }
     };
   });
+	
 
   return (
     <>

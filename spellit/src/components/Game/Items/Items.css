@@ -41,3 +41,34 @@
 
     text-shadow: -1.5px -1.5px 0 rgb(255, 255, 255), 1.5px -1.5px 0 rgb(255, 255, 255), -1.5px 1.5px 0 rgb(255, 255, 255), 1.5px 1.5px 0 rgb(255, 255, 255);
 }
+
+.presec-box {
+	position: relative;
+	z-index: 2;
+	
+
+	
+
+}
+.presec-b {
+	position: absolute;
+	top:320px;
+	left:150px;
+	z-index: 2;
+	
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: opacity 0.5s ease-in-out;
+	opacity: 1;
+}
+
+.presec-b.hide {
+  opacity: 0;
+}
+
+.presec {
+	font-size: 40px;
+
+
+}

@@ -1,0 +1,119 @@
+.attack-bg {
+  height: 100vh;
+  background: url(../../../assets/InGame/BgImg.png) no-repeat center;
+  background-size: cover;
+}
+
+.SpellBox {
+  position: relative;
+  width: 100%;
+
+  /* display: inline-block; */
+}
+
+.attack-bottom-itmes {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.SpellandBar {
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.myCharacter,
+.yourCharacter {
+  position: relative;
+  top: 0;
+  /* margin: 50px; */
+
+  animation: UpDown 2s ease-in Infinite Alternate;
+}
+
+@keyframes UpDown {
+  from {
+    top: 0px;
+  }
+  to {
+    top: 50px;
+  }
+}
+
+#origin {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* margin-top:40px; */
+  font-size: xx-large;
+  font-weight: bolder;
+  color: #fff;
+  text-shadow: 0 0 2px rgb(0, 0, 0), 0 0 2px rgb(0, 0, 0), 0 0 5px #ffffff,
+    0 0 5px #ffffff, 0 0 5px #ffffff, 0 0 5px #ffffff, 0 0 5px #ffffff,
+    0 0 5px #ffffff;
+}
+
+.spellimg {
+  position: relative;
+  width: 300px;
+  height: 300px;
+	animation: glow 0.5s;
+}
+
+
+.explain {
+  position: absolute;
+  font-size: 20px;
+  z-index: 2;
+}
+
+.win-box {
+  position: absolute;
+  font-size: 50px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgb(11, 7, 233) 0%,
+    rgba(161, 7, 7, 0.001) 70%,
+    rgba(223, 11, 11, 0.05) 100%
+  );
+}
+
+.lose-box {
+  position: absolute;
+  font-size: 50px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+		rgb(233, 7, 7) 0%,
+    rgba(161, 7, 7, 0.001) 70%,
+    rgba(223, 11, 11, 0.05) 100%
+  );
+}
+
+
+
+
+
+
+
+.canvas-box{
+	width:100px;
+	height:100px;
+}

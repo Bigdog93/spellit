@@ -45,9 +45,9 @@ function App() {
           <Route path="game/:roomId" element={<Game />} />
           <Route path="matching" element={<Matching />} />
           <Route path="deck/:modeParam" element={<Deck />} />
-          {/* <Route path="ready" element={<Ready />} />
+          {/* <Route path="ready" element={<Ready />} /> */}
           <Route path="defense" element={<Defence />} />
-          <Route path="attack" element={<Attack />} /> */}
+          {/* <Route path="attack" element={<Attack />} /> */}
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
           {/* <Route path="oath" element={<OAuth />} /> */}

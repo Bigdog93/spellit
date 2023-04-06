@@ -48,6 +48,8 @@ const Start: React.FC<Props> = ({
     }
   }, [size]);
 
+	// console.log(isStart, "is Start in START")
+
   // scene 애니메이션
   useFrame((state, delta) => {
     const batchSystem = batchSystemRef.current;
@@ -56,11 +58,17 @@ const Start: React.FC<Props> = ({
       batchSystem.update(delta);
     }
 
-    setTimeout(() => {
-      handleButton();
-      handleSpell();
-    }, 2000);
   });
+	
+	useEffect(()=> {
+		setTimeout(() => {
+			console.log("happengin?")
+			handleSpell();
+			handleButton();
+		}, 2000);
+	}, [])
+
+	
 
   // 사운드
   useEffect(() => {
