@@ -89,6 +89,8 @@ const User = () => {
   // 내가 선택한 카드
   // const [deck, setDeck] = useState<Array<CardType>>([]);
   const deck = useSelector((state: RootState) => state.user.deck);
+  
+  const numToAtt = ["wind", "water", "fire", "earth", "light", "dark"]
 
   // 전체 카드 목록
   const [cards, setCards] = useState<Array<CardType>>([]);
@@ -134,6 +136,7 @@ const User = () => {
   
   // 선택한 카드 삭제
   const removeCard = (event: React.MouseEvent<HTMLDivElement>, index: number) => {
+    if (mode) return;
     dispatch(userActions.removeCard(index));
     navigator.vibrate(200);
   };
@@ -151,7 +154,10 @@ const User = () => {
     console.log('btn click')
     setMode(!mode)
   };
-
+  const toCharacterChange = () => {
+    if (mode) return;
+    setMode(true);
+  }
   const toHome = () => {
     navigate('/home');
   }
@@ -177,8 +183,8 @@ const User = () => {
               src={require(`../../assets/character/${character?.englishName}_portrait.png`)}
               alt="portrait"
             />}
-            {character && <img className={`${style.characterChangerImg}`} src={characterChangerImg} alt="캐릭터변경"
-              onClick={switchHandler}></img>}
+            {character && <img className={`${style.characterChangerImg} ${!mode ? style.activate : null}`} src={characterChangerImg} alt="캐릭터변경"
+                onClick={toCharacterChange}></img>}
               </div>
           </div>
 
@@ -193,7 +199,7 @@ const User = () => {
               </div>
               <button className={`${style.deckBtn} ${style.myDeckSettingBtn}`} disabled={!mode}>
                 <img 
-                  className={`${style.cardChangerImg}`} 
+                  className={`${style.cardChangerImg} ${mode ? style.activate : null}`} 
                   src={deckChangerImg} alt="덱변경"
                   onClick={switchHandler}
                 />
@@ -202,14 +208,16 @@ const User = () => {
             <br />
             <hr />
             {deck.map((item: CardType, index: number) => (
-              <div className={`${style.selectedCardBtnBox}`}>
+              <div className={`${style.selectedCardBtnBox} 
+              ${!mode ? style[numToAtt[item.attribute]] : null} 
+              ${!mode ? style.pointer : null}`}
+              onClick={(event) => removeCard(event, index)}>
                 <div className={`${style.selectedCardBtn}`}>
                   <div className={`${style.selectedCardBtnImg}`}>
                     <img src={require(`../../assets/effect/${item.code}.png`)} alt="icon" />
                   </div>
                   <div className={`${style.selectedCardtitle}`}
                     key={index}
-                    onClick={(event) => removeCard(event, index)}
                   >{item.title}</div>
                 </div>
               </div>
