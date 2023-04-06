@@ -62,7 +62,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 		String nickname = myParser.getString("nickname", input);
 		JsonElement data = input.get("data");
 		Object dataObj = myParser.getBackData(data);
-		logger.info("*************************data 값이다!! : " + data);
+		logger.info("*************************event, data 값이다!! : " + event + ", " + data);
 		Map<String, Object> infoMap = new HashMap<>();
 		if(event.equals("test")) {
 			List<CardEntity> cardList = new ArrayList<>();
@@ -332,6 +332,7 @@ public class SocketRoomHandler extends TextWebSocketHandler {
 		PlayerDto leavePlayer = new PlayerDto();
 		PlayerDto remainPlayer = null;
 		if(players == null) {
+//			System.out.println("나중에 지울것" + allPlayers.keySet());
 			for(Long key : allPlayers.keySet()) {
 				if(allPlayers.get(key) == session) {
 					leavePlayer = new PlayerDto();
