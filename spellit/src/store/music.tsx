@@ -13,6 +13,9 @@ import LogoutSound from '@/assets/soundeffect/Logout.mp3'
 import QuickMatchSound from '@/assets/soundeffect/QuickStart.mp3'
 import CoinFlipSound from '@/assets/soundeffect/CoinFlip.mp3'
 import VersusSound from '@/assets/soundeffect/Versus.mp3'
+import WinSound from '@/assets/soundeffect/Win.mp3'
+import DrawSound from '@/assets/soundeffect/Draw.mp3'
+import LoseSound from '@/assets/soundeffect/Lose.mp3'
 
 import Module from 'module';
 
@@ -66,6 +69,9 @@ export const MusicProvider = ({ children }: { children: React.ReactNode }) => {
     const [quickStart, quickStartOpt ] = useSound(QuickMatchSound);
     const [coinFlip, coinFlipOpt ] = useSound(CoinFlipSound);
     const [versus, versusOpt ] = useSound(VersusSound);
+    const [winSound, winSoundOpt ] = useSound(WinSound);
+    const [drawSound, drawSoundOpt ] = useSound(DrawSound);
+    const [loseSound, loseSoundOpt ] = useSound(LoseSound);
 
     return (
         <MusicContext.Provider value={{
@@ -83,6 +89,9 @@ export const MusicProvider = ({ children }: { children: React.ReactNode }) => {
             quickStart, quickStartOpt,
             coinFlip, coinFlipOpt,
             versus, versusOpt,
+            winSound, winSoundOpt,
+            drawSound, drawSoundOpt,
+            loseSound, loseSoundOpt,
         }}>
             {children}
             {/* {loginBGM && (
