@@ -4,12 +4,13 @@ import { BatchedRenderer, QuarksLoader } from "three.quarks";
 import { Group } from "three";
 import * as THREE from "three";
 
-
 interface Props {
   handleSpell: () => void;
   isSpell: boolean;
   selectCamera: (num: number) => void;
-  turn: React.RefObject<number>;
+  turn: boolean;
+	handleIdx:()=> void
+	setIsStart:(item:boolean)=> void
 }
 
 const Earth: React.FC<Props> = ({
@@ -17,10 +18,14 @@ const Earth: React.FC<Props> = ({
   isSpell,
   selectCamera,
   turn,
+	handleIdx,
+	setIsStart
 }: Props) => {
   const { size } = useThree();
   const sceneRef = useRef<Group>(null);
   const batchSystemRef = useRef<BatchedRenderer>();
+
+ 
 
   // scene 렌더링
   useLayoutEffect(() => {
@@ -40,11 +45,11 @@ const Earth: React.FC<Props> = ({
             batchSystem.addSystem((child as any).system);
           }
         });
-        if (turn.current === 1) {
+        if (turn) {
           obj.position.set(4, 0, 0);
         } else {
-					obj.position.set(-4, 0, 0);
-				}
+          obj.position.set(-4, 0, 0);
+        }
         obj.scale.set(0.2, 0.2, 0.2);
         obj.name = "rock"; // obj의 이름을 설정합니다.
         scene.add(obj);
@@ -62,9 +67,13 @@ const Earth: React.FC<Props> = ({
     }, 1000);
   });
 
-  setTimeout(() => {
-    handleSpell();
-  }, 5500);
+  useEffect(() => {
+    setTimeout(() => {
+      handleIdx()
+      handleSpell();
+			setIsStart(true)
+    }, 5500);
+  }, []);
 
   // 사운드
   useEffect(() => {

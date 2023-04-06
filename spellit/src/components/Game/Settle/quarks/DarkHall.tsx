@@ -7,7 +7,9 @@ interface Props {
   handleSpell: () => void;
   isSpell: boolean;
   selectCamera: (num: number) => void;
-  turn: React.RefObject<number>;
+  turn: boolean;
+  handleIdx: () => void;
+  setIsStart: (item: boolean) => void;
 }
 
 const DarkHall: React.FC<Props> = ({
@@ -15,10 +17,14 @@ const DarkHall: React.FC<Props> = ({
   isSpell,
   selectCamera,
   turn,
+  handleIdx,
+  setIsStart,
 }: Props) => {
   const { size } = useThree();
   const sceneRef = useRef<Group>(null);
   const batchSystemRef = useRef<BatchedRenderer>();
+
+
 
   // scene 렌더링
   useLayoutEffect(() => {
@@ -39,7 +45,7 @@ const DarkHall: React.FC<Props> = ({
           }
         });
         scene.add(obj);
-        if (turn.current === 1) {
+        if (turn) {
           scene.position.set(2, -0.5, 0);
         } else {
           scene.position.set(-2, -0.5, 0);
@@ -58,9 +64,13 @@ const DarkHall: React.FC<Props> = ({
     }, 1000);
   });
 
-  setTimeout(() => {
-    handleSpell();
-  }, 5500);
+  useEffect(() => {
+    setTimeout(() => {
+      handleIdx();
+      handleSpell();
+      setIsStart(true);
+    }, 5500);
+  }, []);
 
   // 사운드
   useEffect(() => {

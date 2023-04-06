@@ -26,6 +26,8 @@ type initialSettleType = {
   turnCount: number;
   trigger: boolean;
   endSpell: boolean;
+	
+	idx: number;
 };
 
 const initialSettle: initialSettleType = {
@@ -37,6 +39,8 @@ const initialSettle: initialSettleType = {
   turnCount: 0,
   trigger: true,
   endSpell: false,
+
+	idx: 0,
 };
 
 const settleSlice = createSlice({
@@ -73,6 +77,10 @@ const settleSlice = createSlice({
     setEndSpell(state) {
       state.endSpell = !state.endSpell;
     },
+
+		addIdx(state){
+			state.idx += 1
+		}
   },
 });
 

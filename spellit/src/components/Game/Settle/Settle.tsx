@@ -51,8 +51,10 @@ function Settle() {
   // console.log("percentList : ", percentList);
 
   // const settleTurn = useSelector((state: RootState) => state.game.settleTurn)
-  // const idx = useSelector((state: RootState) => (state.game.idx));
+  
+	// const idx = useSelector((state: RootState) => (state.settle.idx));
   const [idx, setIdx] = useState(0);
+
   const [isCanvas, setIsCanvas] = useState(false);
 
   // const aniStart = useSelector((state: RootState) => state.settle.aniStart);
@@ -62,6 +64,7 @@ function Settle() {
 
 	const handleIdx = ()=> {
 		console.log("작동함?")
+		// dispatch(settleActions.addIdx())
 		setIdx((prev)=> prev+1)
 	}
 

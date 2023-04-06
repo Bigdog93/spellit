@@ -27,8 +27,7 @@ type props = {
   p2Character: string;
   check: boolean;
   idx: number;
-	handleIdx: ()=> void
-
+  handleIdx: () => void;
 };
 
 function Skills({
@@ -38,18 +37,17 @@ function Skills({
   p2Character,
   check,
   idx,
-	handleIdx
+  handleIdx,
+}: //
 
-}: // handleIdxChange,
+// handleIdxChange,
 props) {
-
- 
-	console.log("------");
-	console.log(idx,"idx")
+  console.log("------");
+  console.log(idx, "idx");
   console.log(code, "마법");
-	console.log(isMine, "누구냐!!!!!!!!!!!!!!!!!!!!!1111")
-	
-	console.log("------");
+  console.log(isMine, "누구냐!!!!!!!!!!!!!!!!!!!!!1111");
+
+  console.log("------");
   // 마법 시전 효과 시작
   const [isStart, setIsStart] = useState<boolean>(true);
 
@@ -61,15 +59,13 @@ props) {
 
   const turn = useRef<number>(Number(isMine));
 
-	console.log(turn, "누구 타임이냐")
+  console.log(turn, "누구 타임이냐");
 
-;
-
-// check
-useEffect(()=> {
-	console.log(idx)
-	console.log("idx가 변함!!!!")
-},[idx])
+  // check
+  useEffect(() => {
+    console.log(idx);
+    console.log("idx가 변함!!!!");
+  }, [idx]);
 
   const handleButton = () => {
     setIsStart(!isStart);
@@ -81,8 +77,6 @@ useEffect(()=> {
   const selectCamera = (num: number) => {
     cameraNum.current = num;
   };
-
- 
 
   console.log("=============================");
   console.log(isStart, "isStart in skills");
@@ -104,24 +98,28 @@ useEffect(()=> {
 
         {/* 캐릭터 1P*/}
         {p1Character === "CB" && (
-          <CBDefault1 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} />
+          <CBDefault1 position={[-5, -1, 0]} isSpell={isSpell} turn={isMine} />
         )}
         {p1Character === "AK" && (
-          <AKDefault1 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} />
+          <AKDefault1 position={[-5, -1, 0]} isSpell={isSpell} turn={isMine} />
         )}
         {p1Character === "LUNA" && (
-          <LUNADefault1 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} />
+          <LUNADefault1
+            position={[-5, -1, 0]}
+            isSpell={isSpell}
+            turn={isMine}
+          />
         )}
 
         {/* 캐릭터 2P */}
         {p2Character === "CB" && (
-          <CBDefault2 position={[5, -1, 0]} isSpell={isSpell} turn={turn} />
+          <CBDefault2 position={[5, -1, 0]} isSpell={isSpell} turn={isMine} />
         )}
         {p2Character === "AK" && (
-          <AKDefault2 position={[5, -1, 0]} isSpell={isSpell} turn={turn} />
+          <AKDefault2 position={[5, -1, 0]} isSpell={isSpell} turn={isMine} />
         )}
         {p2Character === "LUNA" && (
-          <LUNADefault2 position={[5, -1, 0]} isSpell={isSpell} turn={turn} />
+          <LUNADefault2 position={[5, -1, 0]} isSpell={isSpell} turn={isMine} />
         )}
 
         {/* 마법 시전 이펙트 */}
@@ -141,81 +139,93 @@ useEffect(()=> {
         {isSpell && code === "wind3" && (
           <>
             <Tornado
+              handleIdx={handleIdx}
               handleSpell={handleSpell}
               isSpell={isSpell}
               selectCamera={selectCamera}
               turn={isMine}
-							handleIdx={handleIdx}
-							setIsStart={setIsStart}
+              setIsStart={setIsStart}
             />
           </>
         )}
         {/* 번개 camera 1*/}
-        {isSpell && code === "wind1" && (
+        {isSpell && (code === "wind1" || code === "wind2") && (
           <>
             <Lightning
+              handleIdx={handleIdx}
               handleSpell={handleSpell}
               isSpell={isSpell}
               selectCamera={selectCamera}
-              turn={turn}
-							handleIdx={handleIdx}
-							setIsStart={setIsStart}
+              turn={isMine}
+              setIsStart={setIsStart}
             />
           </>
         )}
         {/* WATER */}
-        {isSpell && code === "water1" && (
-          <>
-            <SnowStorm
-              handleSpell={handleSpell}
-              isSpell={isSpell}
-              selectCamera={selectCamera}
-              turn={turn}
-            />
-          </>
-        )}
+        {isSpell &&
+          (code === "water1" || code === "water2" || code === "water3") && (
+            <>
+              <SnowStorm
+                handleIdx={handleIdx}
+                handleSpell={handleSpell}
+                isSpell={isSpell}
+                selectCamera={selectCamera}
+                turn={isMine}
+                setIsStart={setIsStart}
+              />
+            </>
+          )}
         {/* FIRE */}
-        {isSpell && code === "fire1" && (
-          <>
-            <FireBall
-              handleSpell={handleSpell}
-              isSpell={isSpell}
-              selectCamera={selectCamera}
-              turn={turn}
-            />
-          </>
-        )}
+        {isSpell &&
+          (code === "fire1" || code === "fire2" || code === "fire3") && (
+            <>
+              <FireBall
+                handleIdx={handleIdx}
+                handleSpell={handleSpell}
+                isSpell={isSpell}
+                selectCamera={selectCamera}
+                turn={isMine}
+                setIsStart={setIsStart}
+              />
+            </>
+          )}
         {/* EARTH */}
-        {isSpell && code === "earth1" && (
+        {isSpell && (code === "earth1" || code === "earth2") && (
           <>
             <Earth
+              handleIdx={handleIdx}
               handleSpell={handleSpell}
               isSpell={isSpell}
               selectCamera={selectCamera}
-              turn={turn}
+              turn={isMine}
+              setIsStart={setIsStart}
             />
           </>
         )}
         {/* LIGHT */}
-        {isSpell && code === "light1" && (
+        {isSpell && (code === "light1" || code === "light2") && (
           <>
             <Light
+              handleIdx={handleIdx}
               handleSpell={handleSpell}
               isSpell={isSpell}
               selectCamera={selectCamera}
-              turn={turn}
+              turn={isMine}
+              setIsStart={setIsStart}
             />
           </>
         )}
         {/* DARK */}
         {/* 무광의 심연 */}
-        {isSpell && code === "dark1" && (
+        {isSpell && (code === "dark1" || code === "dark2") && (
           <>
             <DarkHall
+              handleIdx={handleIdx}
               handleSpell={handleSpell}
               isSpell={isSpell}
               selectCamera={selectCamera}
-              turn={turn}
+              turn={isMine}
+              setIsStart={setIsStart}
             />
           </>
         )}

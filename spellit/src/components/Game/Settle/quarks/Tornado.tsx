@@ -2,8 +2,7 @@ import { useLayoutEffect, useRef, useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { BatchedRenderer, QuarksLoader } from "three.quarks";
 import { Group } from "three";
-import { useDispatch } from "react-redux";
-import { settleActions } from "@/store/settle";
+
 
 interface Props {
   handleSpell: () => void;
@@ -26,7 +25,7 @@ const Tornado: React.FC<Props> = ({
   const sceneRef = useRef<Group>(null);
   const batchSystemRef = useRef<BatchedRenderer>();
 
-  const dispatch = useDispatch();
+
 
   // scene 렌더링
   useLayoutEffect(() => {
@@ -72,7 +71,7 @@ const Tornado: React.FC<Props> = ({
       handleIdx()
       handleSpell();
 			setIsStart(true)
-    }, 2000);
+    }, 4000);
 	},[])
 
   // 사운드
