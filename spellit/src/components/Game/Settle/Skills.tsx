@@ -19,9 +19,6 @@ import Lightning from "./quarks/Lightening";
 import SnowStorm from "./quarks/SnowStorm";
 
 import "./Skills.css";
-import { useDispatch, useSelector } from "react-redux";
-import { settleActions } from "@/store/settle";
-import { RootState } from "@/store";
 
 type props = {
   code: string;
@@ -30,8 +27,7 @@ type props = {
   p2Character: string;
   check: boolean;
   idx: number;
-  // handleIdxChange: (idx: number) => void;
-  onTrigger: () => void;
+  handleIdx: () => void;
 };
 
 function Skills({
@@ -41,35 +37,38 @@ function Skills({
   p2Character,
   check,
   idx,
-  onTrigger,
-}: // handleIdxChange,
-props) {
-  const dispatch = useDispatch();
+  handleIdx,
+}: //
 
+// handleIdxChange,
+props) {
   console.log("------");
-  console.log(check);
+  console.log(idx, "idx");
+  console.log(code, "마법");
+  console.log(isMine, "누구냐!!!!!!!!!!!!!!!!!!!!!1111");
 
   console.log("------");
   // 마법 시전 효과 시작
-  const [isStart, setIsStart] = useState<boolean>(check);
-  const reSttart = check;
-  console.log(isStart);
-  console.log(reSttart);
-  console.log("------");
+  const [isStart, setIsStart] = useState<boolean>(true);
 
   // 마법 사용
   const [isSpell, setIsSpell] = useState<boolean>(false);
   // camera
   const cameraNum = useRef<number>(2);
   // 현재턴
-  console.log(code, "마법");
+
   const turn = useRef<number>(Number(isMine));
 
-  const [cnt, setCnt] = useState(0);
+  console.log(turn, "누구 타임이냐");
+
+  // check
+  useEffect(() => {
+    console.log(idx);
+    console.log("idx가 변함!!!!");
+  }, [idx]);
 
   const handleButton = () => {
     setIsStart(!isStart);
-    console.log("state 값변경");
   };
   const handleSpell = () => {
     setIsSpell(!isSpell);
@@ -78,24 +77,6 @@ props) {
   const selectCamera = (num: number) => {
     cameraNum.current = num;
   };
-
-  useEffect(() => {
-    if (!isStart) {
-      onTrigger();
-      setIsStart(true);
-    }
-  }, [onTrigger]);
-
-  // useEffect(() => {
-  //   if (isStart === false) {
-  //     if (cnt === 0) {
-  //       setIsStart(() => true);
-  // 			setCnt(cnt +1)
-  //     } else {
-  //       setCnt(0)
-  //     }
-  //   }
-  // }, [isStart]);
 
   console.log("=============================");
   console.log(isStart, "isStart in skills");
@@ -117,24 +98,28 @@ props) {
 
         {/* 캐릭터 1P*/}
         {p1Character === "CB" && (
-          <CBDefault1 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} />
+          <CBDefault1 position={[-5, -1, 0]} isSpell={isSpell} turn={isMine} />
         )}
         {p1Character === "AK" && (
-          <AKDefault1 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} />
+          <AKDefault1 position={[-5, -1, 0]} isSpell={isSpell} turn={isMine} />
         )}
         {p1Character === "LUNA" && (
-          <LUNADefault1 position={[-5, -1, 0]} isSpell={isSpell} turn={turn} />
+          <LUNADefault1
+            position={[-5, -1, 0]}
+            isSpell={isSpell}
+            turn={isMine}
+          />
         )}
 
         {/* 캐릭터 2P */}
         {p2Character === "CB" && (
-          <CBDefault2 position={[5, -1, 0]} isSpell={isSpell} turn={turn} />
+          <CBDefault2 position={[5, -1, 0]} isSpell={isSpell} turn={isMine} />
         )}
         {p2Character === "AK" && (
-          <AKDefault2 position={[5, -1, 0]} isSpell={isSpell} turn={turn} />
+          <AKDefault2 position={[5, -1, 0]} isSpell={isSpell} turn={isMine} />
         )}
         {p2Character === "LUNA" && (
-          <LUNADefault2 position={[5, -1, 0]} isSpell={isSpell} turn={turn} />
+          <LUNADefault2 position={[5, -1, 0]} isSpell={isSpell} turn={isMine} />
         )}
 
         {/* 마법 시전 이펙트 */}
@@ -144,7 +129,7 @@ props) {
               handleButton={handleButton}
               handleSpell={handleSpell}
               isStart={isStart}
-              turn={turn}
+              turn={isMine}
             />
           </>
         )}
@@ -154,77 +139,93 @@ props) {
         {isSpell && code === "wind3" && (
           <>
             <Tornado
+              handleIdx={handleIdx}
               handleSpell={handleSpell}
               isSpell={isSpell}
               selectCamera={selectCamera}
-              turn={turn}
+              turn={isMine}
+              setIsStart={setIsStart}
             />
           </>
         )}
         {/* 번개 camera 1*/}
-        {isSpell && code === "wind1" && (
+        {isSpell && (code === "wind1" || code === "wind2") && (
           <>
             <Lightning
+              handleIdx={handleIdx}
               handleSpell={handleSpell}
               isSpell={isSpell}
               selectCamera={selectCamera}
-              turn={turn}
+              turn={isMine}
+              setIsStart={setIsStart}
             />
           </>
         )}
         {/* WATER */}
-        {isSpell && code === "water1" && (
-          <>
-            <SnowStorm
-              handleSpell={handleSpell}
-              isSpell={isSpell}
-              selectCamera={selectCamera}
-              turn={turn}
-            />
-          </>
-        )}
+        {isSpell &&
+          (code === "water1" || code === "water2" || code === "water3") && (
+            <>
+              <SnowStorm
+                handleIdx={handleIdx}
+                handleSpell={handleSpell}
+                isSpell={isSpell}
+                selectCamera={selectCamera}
+                turn={isMine}
+                setIsStart={setIsStart}
+              />
+            </>
+          )}
         {/* FIRE */}
-        {isSpell && code === "fire1" && (
-          <>
-            <FireBall
-              handleSpell={handleSpell}
-              isSpell={isSpell}
-              selectCamera={selectCamera}
-              turn={turn}
-            />
-          </>
-        )}
+        {isSpell &&
+          (code === "fire1" || code === "fire2" || code === "fire3") && (
+            <>
+              <FireBall
+                handleIdx={handleIdx}
+                handleSpell={handleSpell}
+                isSpell={isSpell}
+                selectCamera={selectCamera}
+                turn={isMine}
+                setIsStart={setIsStart}
+              />
+            </>
+          )}
         {/* EARTH */}
-        {isSpell && code === "earth1" && (
+        {isSpell && (code === "earth1" || code === "earth2") && (
           <>
             <Earth
+              handleIdx={handleIdx}
               handleSpell={handleSpell}
               isSpell={isSpell}
               selectCamera={selectCamera}
-              turn={turn}
+              turn={isMine}
+              setIsStart={setIsStart}
             />
           </>
         )}
         {/* LIGHT */}
-        {isSpell && code === "light1" && (
+        {isSpell && (code === "light1" || code === "light2") && (
           <>
             <Light
+              handleIdx={handleIdx}
               handleSpell={handleSpell}
               isSpell={isSpell}
               selectCamera={selectCamera}
-              turn={turn}
+              turn={isMine}
+              setIsStart={setIsStart}
             />
           </>
         )}
         {/* DARK */}
         {/* 무광의 심연 */}
-        {isSpell && code === "dark1" && (
+        {isSpell && (code === "dark1" || code === "dark2") && (
           <>
             <DarkHall
+              handleIdx={handleIdx}
               handleSpell={handleSpell}
               isSpell={isSpell}
               selectCamera={selectCamera}
-              turn={turn}
+              turn={isMine}
+              setIsStart={setIsStart}
             />
           </>
         )}
@@ -233,7 +234,7 @@ props) {
           isStart={isStart}
           isSpell={isSpell}
           cameraNum={cameraNum}
-          turn={turn}
+          turn={isMine}
         />
       </Canvas>
     </div>
@@ -247,7 +248,7 @@ type MyCameraProps = {
   isStart: boolean;
   isSpell: boolean;
   cameraNum: React.RefObject<number>;
-  turn: React.RefObject<number>;
+  turn: boolean;
 };
 
 function MyCamera({ isStart, isSpell, cameraNum, turn }: MyCameraProps) {
@@ -257,7 +258,7 @@ function MyCamera({ isStart, isSpell, cameraNum, turn }: MyCameraProps) {
 
   // player1
   useEffect(() => {
-    if (turn.current === 1) {
+    if (turn) {
       if (cameraNum.current === 0) {
         // 카메라 이동(처음만 확대) 0
         if (isStart) {
@@ -323,7 +324,7 @@ function MyCamera({ isStart, isSpell, cameraNum, turn }: MyCameraProps) {
 
   // player2
   useEffect(() => {
-    if (turn.current === 0) {
+    if (!turn) {
       if (cameraNum.current === 0) {
         // 카메라 이동(처음만 확대) 0
         if (isStart) {

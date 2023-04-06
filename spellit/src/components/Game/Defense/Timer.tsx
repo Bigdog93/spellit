@@ -74,7 +74,7 @@ const Timer = ({ onTime, handleTimer, isDone, handleResult }: TimerProps) => {
       <div id="TimerBox">
         <img src={TimerImg} alt="" style={{ width: "40px", height: "45px" }} />
         <div>{sec}</div>
-        <div className="presec-box">
+        {/* <div className="presec-box">
           {!onTime && !isDone ? (
             <div className={`presec-b ${preSec === 0 ? "hide" : ""}`}>
               <div className="presec">{preSec}</div>
@@ -82,7 +82,7 @@ const Timer = ({ onTime, handleTimer, isDone, handleResult }: TimerProps) => {
           ) : (
             <></>
           )}
-        </div>
+        </div> */}
       </div>
       {/* 밑으로 내려야함 */}
     </>

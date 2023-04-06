@@ -3,11 +3,14 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { BatchedRenderer, QuarksLoader } from "three.quarks";
 import { Group } from "three";
 
+
 interface Props {
   handleSpell: () => void;
   isSpell: boolean;
   selectCamera: (num: number) => void;
-  turn: React.RefObject<number>;
+  turn: boolean;
+	handleIdx:()=> void
+	setIsStart:(item:boolean)=> void
 }
 
 const FireBall: React.FC<Props> = ({
@@ -15,10 +18,14 @@ const FireBall: React.FC<Props> = ({
   isSpell,
   selectCamera,
   turn,
+	handleIdx,
+	setIsStart
 }: Props) => {
   const { size } = useThree();
   const sceneRef = useRef<Group>(null);
   const batchSystemRef = useRef<BatchedRenderer>();
+
+
 
   // scene 렌더링
   useLayoutEffect(() => {
@@ -37,12 +44,12 @@ const FireBall: React.FC<Props> = ({
             batchSystem.addSystem((child as any).system);
           }
         });
-        if (turn.current === 1) {
+        if (turn) {
           obj.position.set(-2, 0, 0);
         } else {
-					obj.position.set(2, 0, 0);
-					obj.rotation.set(0, Math.PI, 0)
-				}
+          obj.position.set(2, 0, 0);
+          obj.rotation.set(0, Math.PI, 0);
+        }
         obj.name = "light"; // obj의 이름을 설정합니다.
         scene.add(obj);
       });
@@ -58,16 +65,12 @@ const FireBall: React.FC<Props> = ({
       }
     }, 1000);
 
-    setTimeout(() => {
-      handleSpell();
-    }, 4500);
-
     // obj 애니메이션
     const scene = sceneRef.current;
     if (scene) {
       const obj = scene.getObjectByName("light");
       if (obj) {
-        if (turn.current === 1) {
+        if (turn) {
           const maxX = 7;
           const minX = -5;
           const speed = 15;
@@ -105,6 +108,14 @@ const FireBall: React.FC<Props> = ({
   });
 
   useEffect(() => {
+    setTimeout(() => {
+			handleIdx()
+      handleSpell();
+			setIsStart(true)
+    }, 4500);
+  }, []);
+
+  useEffect(() => {
     let sound: HTMLAudioElement | null = null;
     if (isSpell) {
       const test = setInterval(() => {
@@ -124,7 +135,6 @@ const FireBall: React.FC<Props> = ({
       }
     };
   });
-	
 
   return (
     <>

@@ -3,11 +3,14 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { BatchedRenderer, QuarksLoader } from "three.quarks";
 import { Group } from "three";
 
+
 interface Props {
   handleSpell: () => void;
   isSpell: boolean;
   selectCamera: (num: number) => void;
-  turn: React.RefObject<number>;
+  turn: boolean;
+	handleIdx:()=> void
+	setIsStart:(item:boolean)=> void
 }
 
 const Tornado: React.FC<Props> = ({
@@ -15,10 +18,14 @@ const Tornado: React.FC<Props> = ({
   isSpell,
   selectCamera,
   turn,
+	handleIdx,
+	setIsStart
 }: Props) => {
   const { size } = useThree();
   const sceneRef = useRef<Group>(null);
   const batchSystemRef = useRef<BatchedRenderer>();
+
+
 
   // scene 렌더링
   useLayoutEffect(() => {
@@ -39,11 +46,11 @@ const Tornado: React.FC<Props> = ({
           }
         });
         scene.add(obj);
-        if (turn.current === 1) {
+        if (turn) {
           scene.position.set(2, -1, 0);
         } else {
-					scene.position.set(-2, -1, 0);
-				}
+          scene.position.set(-2, -1, 0);
+        }
       });
     }
   }, [size]);
@@ -56,11 +63,16 @@ const Tornado: React.FC<Props> = ({
         batchSystem.update(delta);
       }
     }, 1000);
-
-    setTimeout(() => {
-      handleSpell();
-    }, 4000);
+  
   });
+
+	useEffect(()=>{
+		setTimeout(() => {
+      handleIdx()
+      handleSpell();
+			setIsStart(true)
+    }, 4000);
+	},[])
 
   // 사운드
   useEffect(() => {

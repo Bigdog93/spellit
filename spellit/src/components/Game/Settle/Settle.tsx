@@ -48,22 +48,25 @@ function Settle() {
   const percentList = useSelector(
     (state: RootState) => state.settle.percentList
   );
-  console.log("percentList : ", percentList);
+  // console.log("percentList : ", percentList);
 
   // const settleTurn = useSelector((state: RootState) => state.game.settleTurn)
-
-  // const idx = useSelector((state: RootState) => (state.game.idx));
+  
+	// const idx = useSelector((state: RootState) => (state.settle.idx));
   const [idx, setIdx] = useState(0);
-  const [isCanvas, setIsCanvas] = useState(false);
 
-  const handleIdxChange = (newIdx: number) => {
-    setIdx(newIdx);
-  };
+  const [isCanvas, setIsCanvas] = useState(false);
 
   // const aniStart = useSelector((state: RootState) => state.settle.aniStart);
   // console.log(aniStart, "아ㅣㄴ");
 
   const token = sessionStorage.getItem("token");
+
+	const handleIdx = ()=> {
+		console.log("작동함?")
+		// dispatch(settleActions.addIdx())
+		setIdx((prev)=> prev+1)
+	}
 
   const p1HpStyle = {
     width: `${(p1Hp / defaultHP) * 385}px`,
@@ -150,7 +153,7 @@ function Settle() {
               dispatch(playerActions.p1HpDecrese(d));
             }, 3000);
           }
-        }, 10000);
+        }, 15000);
         console.log("===========");
         console.log("데미지 : ", d);
         console.log("===========");
@@ -216,8 +219,8 @@ function Settle() {
 
       // idx 증가
       setTimeout(() => {
-        setIdx(idx + 1);
-      }, 5000);
+        // setIdx(idx + 1);
+      }, 15000);
       // 모든 스펠 정산 끝
     } else {
       setTimeout(() => {
@@ -258,6 +261,8 @@ function Settle() {
     }
   }, [idx]);
 
+	console.log(attacks, "attackS!!!!!!!!!!!!")
+	console.log(attacks[idx], "attacks idx!!!!!!!!!!!1")
   return (
     <>
       {isCanvas && idx < attacks.length ? (
@@ -268,7 +273,8 @@ function Settle() {
           p2Character={p2Character}
           check={true}
           idx={idx}
-          onTrigger={() => handleIdxChange(idx + 1)}
+					handleIdx={handleIdx}
+ 
         ></Skills>
       ) : (
         <div className="settle-bg">

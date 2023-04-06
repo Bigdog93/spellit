@@ -1,26 +1,27 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit'
-import { AttackType } from '@/utils/Types'
+import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { AttackType } from "@/utils/Types";
 
 type initialGameType = {
-  game: boolean
-  readyTurn: boolean,
-  attackTurn: boolean,
-  comboTurn: boolean,
-  defenseTurn: boolean,
-  settleTurn: boolean,
-  resultTurn: boolean,
-  attacks: AttackType[],
-  idx: number,
-  accuracy: number,
+  game: boolean;
+  readyTurn: boolean;
+  attackTurn: boolean;
+  comboTurn: boolean;
+  defenseTurn: boolean;
+  settleTurn: boolean;
+  resultTurn: boolean;
+  attacks: AttackType[];
+  idx: number;
+  accuracy: number;
   // combo: boolean,
-  attackCheck: boolean,
-  transcript: string,
-  myAttackTurn: boolean|null,
-  myDefense: boolean,
-  otherDefense: boolean,
-  result: string
-}
+  attackCheck: boolean;
+  transcript: string;
+  myAttackTurn: boolean | null;
+  myDefense: boolean;
+  otherDefense: boolean;
+  result: string;
+  spellIdx: number;
+};
 const initialGameState: initialGameType = {
   game: false,
   readyTurn: false,
@@ -34,15 +35,16 @@ const initialGameState: initialGameType = {
   accuracy: 0,
   // combo: false,
   attackCheck: true, // idx가 다시 0이 됐을 때, 실행되는 것 방지하는 용도
-  transcript: '',
+  transcript: "",
   myAttackTurn: null,
   myDefense: false,
   otherDefense: false,
-  result: '',
+  result: "",
+  spellIdx: 0,
 };
 
 const gameSlice = createSlice({
-  name: 'authentication',
+  name: "authentication",
   initialState: initialGameState,
   reducers: {
     startGame(state) {
@@ -83,62 +85,75 @@ const gameSlice = createSlice({
     },
     // toAttack에서 받아온 전체 attack 리스트 업뎃
     setAttacks(state, action: PayloadAction<Array<AttackType>>) {
-      state.attacks = action.payload
-      console.log(action.payload)
+      state.attacks = action.payload;
+      console.log(action.payload);
     },
     setIdx(state) {
       // if (state.attackTurn){
-        if (state.idx === state.attacks.length-1) {
-          state.idx = 0;
-          state.attackCheck = false;
-          // state.attackTurn = false
-          // state.defenseTurn = true
-          console.log('idx 끝')
-        } else {
-          state.idx += 1;
-          console.log('idx +1 해줌')
-        }
+      if (state.idx === state.attacks.length - 1) {
+        state.idx = 0;
+        state.attackCheck = false;
+        // state.attackTurn = false
+        // state.defenseTurn = true
+        console.log("idx 끝");
+      } else {
+        state.idx += 1;
+        console.log("idx +1 해줌");
+      }
       // }
     },
     setIdxZero(state) {
       state.idx = 0;
     },
-    setAttackCheck(state){
-      state.attackCheck = true
-      console.log('setAttackCheckTrue에서 찍는다', state.attackCheck)
+    setAttackCheck(state) {
+      state.attackCheck = true;
+      console.log("setAttackCheckTrue에서 찍는다", state.attackCheck);
     },
     // setAttackCheckFalse(state){
     //   state.attackCheck = false
     //   console.log('setAttackCheckFalse에서 찍는다', state.attackCheck)
     // },
-    setTranscript(state, action: PayloadAction<string>){
-      state.transcript = action.payload
+    setTranscript(state, action: PayloadAction<string>) {
+      state.transcript = action.payload;
     },
     setMyAttackTurn(state, action: PayloadAction<boolean>) {
-      state.myAttackTurn = action.payload
-      console.log('game reduer에서 setMyAttackTurn 찍는 isMine', state.myAttackTurn)
+      state.myAttackTurn = action.payload;
+      console.log(
+        "game reduer에서 setMyAttackTurn 찍는 isMine",
+        state.myAttackTurn
+      );
     },
-    setMyDefense(state, action: PayloadAction<boolean>){
-      state.myDefense = action.payload
+    setMyDefense(state, action: PayloadAction<boolean>) {
+      state.myDefense = action.payload;
     },
-    setOtherDefense(state, action: PayloadAction<boolean>){
-      state.otherDefense = action.payload
+    setOtherDefense(state, action: PayloadAction<boolean>) {
+      state.otherDefense = action.payload;
     },
-    setResult(state, action: PayloadAction<string>){
-      state.result = action.payload
+    setResult(state, action: PayloadAction<string>) {
+      state.result = action.payload;
     },
-    addAccuracy(state, action: PayloadAction<number>){
-      state.accuracy += action.payload
+    addAccuracy(state, action: PayloadAction<number>) {
+      state.accuracy += action.payload;
     },
-    clearAccuracy(state){
-      state.accuracy = 0
+    clearAccuracy(state) {
+      state.accuracy = 0;
     },
     startCombo(state) {
       state.comboTurn = true;
     },
     endCombo(state) {
       state.comboTurn = false;
-    }
+    },
+    setSpellIdx(state) {
+      if (state.spellIdx === state.attacks.length) {
+        state.spellIdx = 0;
+
+        console.log("spell idx 끝");
+      } else {
+        state.idx += 1;
+        console.log("spell idx +1 해줌");
+      }
+    },
   },
 });
 

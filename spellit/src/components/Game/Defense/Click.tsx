@@ -24,7 +24,7 @@ interface onTimeProp {
 }
 
 // 성공 클릭수 설정(50~110, 플레이타임 10초 기준)
-const end = Math.round(Math.random() * 60 + 50);
+const end = Math.round(Math.random() * 30 + 50);
 // const end = 10
 let oneTwo = end * 0.25;
 let twoThree = end * 0.5;
@@ -35,6 +35,7 @@ const Click = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
 
   // 게임의 성공/실패를 관리하는 state(기본이 실패)
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
+
 
   // 게임 결과를 store에 저장
   useEffect(() => {
@@ -49,6 +50,7 @@ const Click = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
 
   // 클릭신호를 받는 useRef
   const clickedSpell = useRef<HTMLDivElement>(null);
+  const circleRef = useRef<HTMLImageElement>(null);
 
   // 시작부터 자동 focus
   useEffect(() => {
@@ -59,8 +61,14 @@ const Click = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
   const addClick = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.code === "Space" && onTime) {
       setClicked(clicked + 1);
+      circleRef.current?.classList.remove("active");
     }
   };
+  const glowCircle = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.code === "Space" && onTime) {
+      circleRef.current?.classList.add("active");
+    }
+  }
 
   // 이미지 변경
   useEffect(() => {
@@ -93,7 +101,7 @@ const Click = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
   return (
     <>
       <div>
-        <div ref={clickedSpell} tabIndex={0} onKeyUp={addClick}></div>
+        <div ref={clickedSpell} tabIndex={0} onKeyUp={addClick} onKeyDown={glowCircle}></div>
       </div>
       <div className="attack-bottom-itmes">
         <div style={{ display: "flex", flexDirection: "column" }}>
@@ -115,14 +123,14 @@ const Click = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
             <div id="origin">
               <div className="explain">
                 {/* {onTime ? <div>{clicked}</div> : <></>} */}
-                {onTime && <div>스페이스바를 연타하여 마법진을 파괴하세요</div>}
+                {onTime && clicked === 0 && <div>스페이스바를 연타하여 마법진을 파괴하세요</div>}
               </div>
               <div>
                 {!onTime && !isDone ? (
-                  // <div>대기시간 후 게임이 시작됩니다</div>
-                  <></>
+                  <div>상대의 마법을 약화시키세요</div>
+                  // <></>
                 ) : (
-                  <img className="spellimg" src={spellImg} alt="img" />
+                  <img className="spellimg" src={spellImg} alt="img" ref={circleRef} />
                 )}
               </div>
               {isDone ? (

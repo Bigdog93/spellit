@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 
 import { gameActions } from "@/store/game";
 import image1 from "@/assets/minigame/Image1.png";
+import "./Blow.css";
 
 interface onTimeProp {
   onTime: boolean;
@@ -16,6 +17,7 @@ const Blow = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
 
   const [count, setCount] = useState<number>(0);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const circleRef = useRef<HTMLImageElement>(null);
   // console.log(count);
 
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
@@ -61,6 +63,7 @@ const Blow = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
       // 맨처음에 전체 삭제
       ctx.clearRect(0, 0, canvasWidth, canvasHeight);
       ctx.fillStyle = "pink";
+      level = level * canvasHeight / 100;
       ctx.fillRect(0, canvasHeight - level, canvasWidth, level);
     };
 
@@ -77,7 +80,10 @@ const Blow = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
 
       // 특정 레벨 이상일 때, cnt 증가
       if (level > 60) {
+        circleRef.current?.classList.add("active");
         setCount((prevCount) => prevCount + 1);
+      } else {
+        circleRef.current?.classList.remove("active");
       }
     };
     drawFrame();
@@ -138,14 +144,18 @@ const Blow = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
               alt=""
             />
             <div id="origin">
+              <div className="explain">
+                {/* {onTime ? <div>{clicked}</div> : <></>} */}
+                {onTime && count === 0 && <div>바람을 불어 마법진을 파괴하세요</div>}
+              </div>
               <div className="canvas-box">
                 {!onTime && !isDone ? (
-                  // <div>대기시간 후 게임이 시작됩니다</div>
-                  <></>
+                  <div>상대의 마법을 약화시키세요</div>
+                  // <></>
                 ) : (
                   <>
-                    <img className="spellimg" src={image1} alt="img" />
-                    <canvas ref={canvasRef} width={5} height={10} />
+                    <img className="spellimg" src={image1} alt="img" ref={circleRef} />
+                    <canvas className="blowBar" ref={canvasRef} width={2} height={2} />
                   </>
                 )}
               </div>

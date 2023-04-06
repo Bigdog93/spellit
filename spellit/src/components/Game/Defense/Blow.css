@@ -1,0 +1,14 @@
+.blowBar {
+    position: absolute;
+    top: 50%;
+    left: 80%;
+    transform: translate(0, -50%);
+    width: 100px;
+    height: 300px;
+}
+.spellimg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

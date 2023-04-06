@@ -3,12 +3,16 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { BatchedRenderer, QuarksLoader } from "three.quarks";
 import { Group } from "three";
 import * as THREE from "three";
+import { useDispatch } from "react-redux";
+import { settleActions } from "@/store/settle";
 
 interface Props {
   handleSpell: () => void;
   isSpell: boolean;
   selectCamera: (num: number) => void;
-  turn: React.RefObject<number>;
+  turn: boolean;
+  handleIdx: () => void;
+  setIsStart: (item: boolean) => void;
 }
 
 const Light: React.FC<Props> = ({
@@ -16,6 +20,8 @@ const Light: React.FC<Props> = ({
   isSpell,
   selectCamera,
   turn,
+  handleIdx,
+  setIsStart,
 }: Props) => {
   const { size } = useThree();
   const sceneRef = useRef<Group>(null);
@@ -38,7 +44,7 @@ const Light: React.FC<Props> = ({
             batchSystem.addSystem((child as any).system);
           }
         });
-        if (turn.current === 1) {
+        if (turn) {
           obj.position.set(-4, 0, 0);
         } else {
           obj.position.set(4, 0, 0);
@@ -59,16 +65,12 @@ const Light: React.FC<Props> = ({
       }
     }, 1000);
 
-    setTimeout(() => {
-      handleSpell();
-    }, 4500);
-
     // obj 애니메이션
     const scene = sceneRef.current;
     if (scene) {
       const obj = scene.getObjectByName("light");
       if (obj) {
-        if (turn.current === 1) {
+        if (turn) {
           const start = new THREE.Vector3(-20, 10, -20);
           const end = new THREE.Vector3(3, -0.5, 0.3);
           const speed = 29;
@@ -110,6 +112,14 @@ const Light: React.FC<Props> = ({
       }
     }
   });
+
+  useEffect(() => {
+    setTimeout(() => {
+      handleIdx();
+      handleSpell();
+      setIsStart(true);
+    }, 4500);
+  }, []);
 
   useEffect(() => {
     let sound: HTMLAudioElement | null = null;

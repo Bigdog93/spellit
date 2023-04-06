@@ -20,7 +20,7 @@ type AllGLTFResult = GLTF & {
 
 interface Props {
   isSpell: boolean;
-  turn: React.RefObject<number>;
+  turn: boolean;
 }
 
 export function CBDefault2(props: Props & JSX.IntrinsicElements["group"]) {
@@ -43,9 +43,9 @@ export function CBDefault2(props: Props & JSX.IntrinsicElements["group"]) {
 	// console.log(props.turn.current)
 
   useFrame((state) => {
-		console.log("????")
-    if (props.turn.current === 1) {
-			console.log("@@@@@")
+
+    if (props.turn) {
+
       setTimeout(() => {
         if (props.isSpell) {
           const time = state.clock.getElapsedTime() - 2;
@@ -57,7 +57,6 @@ export function CBDefault2(props: Props & JSX.IntrinsicElements["group"]) {
 
           const color = new THREE.Color("#ff4040");
           materials.CB_default.color = color;
-					console.log("why?")
         } else {
         }
       }, 2000);
@@ -79,7 +78,7 @@ export function CBDefault2(props: Props & JSX.IntrinsicElements["group"]) {
 
   // 사운드
   useEffect(() => {
-		if (props.turn.current === 1) {
+		if (props.turn) {
 			let attacked: HTMLAudioElement | null = null;
 			if (props.isSpell) {
 				setTimeout(() => {
@@ -137,7 +136,7 @@ export function AKDefault2(props: Props & JSX.IntrinsicElements["group"]) {
 
 
   useFrame((state) => {
-    if (props.turn.current === 1) {
+    if (props.turn) {
       setTimeout(() => {
         if (props.isSpell) {
           const time = state.clock.getElapsedTime() - 2;
@@ -170,7 +169,7 @@ export function AKDefault2(props: Props & JSX.IntrinsicElements["group"]) {
 
   // 사운드
   useEffect(() => {
-		if (props.turn.current === 1) {
+		if (props.turn) {
 			let attacked: HTMLAudioElement | null = null;
 			if (props.isSpell) {
 				setTimeout(() => {
@@ -228,7 +227,7 @@ export function LUNADefault2(props: Props & JSX.IntrinsicElements["group"]) {
 	
 
   useFrame((state) => {
-    if (props.turn.current === 1) {
+    if (props.turn) {
       setTimeout(() => {
         if (props.isSpell) {
           const time = state.clock.getElapsedTime() - 2;
@@ -261,7 +260,7 @@ export function LUNADefault2(props: Props & JSX.IntrinsicElements["group"]) {
 
   // 사운드
   useEffect(() => {
-		if (props.turn.current === 1) {
+		if (props.turn) {
 			let attacked: HTMLAudioElement | null = null;
 			if (props.isSpell) {
 				setTimeout(() => {

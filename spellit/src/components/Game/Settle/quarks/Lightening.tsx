@@ -2,12 +2,16 @@ import { useEffect, useLayoutEffect, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Sprite, SpriteMaterial } from "three";
 import * as THREE from "three";
+import { useDispatch } from "react-redux";
+import { settleActions } from "@/store/settle";
 
 interface Props {
   handleSpell: () => void;
   isSpell: boolean;
   selectCamera: (num: number) => void;
-  turn: React.RefObject<number>;
+  turn: boolean;
+	handleIdx:()=> void
+	setIsStart:(item:boolean)=> void
 }
 
 const Lightning: React.FC<Props> = ({
@@ -15,10 +19,13 @@ const Lightning: React.FC<Props> = ({
   isSpell,
   selectCamera,
   turn,
+	handleIdx,
+	setIsStart
 }: Props) => {
   const { size } = useThree();
   const sceneRef = useRef<THREE.Group>(null);
   const lightningRef = useRef<Sprite>();
+	const dispatch = useDispatch();
 
   useLayoutEffect(() => {
     const scene = sceneRef.current;
@@ -51,7 +58,7 @@ const Lightning: React.FC<Props> = ({
   useFrame((state, delta) => {
     const lightning = lightningRef.current;
     if (lightning) {
-      if (turn.current === 1) {
+      if (turn) {
         const x = Math.random() * 20;
 				const y = Math.random() * 20 - 10;
 				lightning.position.set(x, y, 0.1);
@@ -69,9 +76,14 @@ const Lightning: React.FC<Props> = ({
     }
   });
 
-  setTimeout(() => {
-    handleSpell();
-  }, 4500);
+	useEffect(()=> {
+		setTimeout(() => {
+			handleIdx()
+      handleSpell();
+			setIsStart(true)
+		}, 4500);
+	},[])
+
 
   useEffect(() => {
     let thunder: HTMLAudioElement | null = null;

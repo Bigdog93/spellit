@@ -255,8 +255,11 @@ vbody {
     /* border: 2px solid #FFFFFF; */
     text-shadow: 0px 0px 20px #FFFFFF;
 
-    animation: text-fadeIn 1s;
+    animation: text-fadeIn 2s;
     opacity: 0;
+}
+.readyText {
+    font-size: 40px;
 }
 .startText {
     left: 160px;
