@@ -36,6 +36,9 @@ const Click = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
   // 게임의 성공/실패를 관리하는 state(기본이 실패)
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
+  const p1Character = useSelector(
+    (state: RootState) => state.player.p1!.gameCharacterEntity.englishName
+  );
 
   // 게임 결과를 store에 저장
   useEffect(() => {
@@ -108,8 +111,8 @@ const Click = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
           <img
             className="myCharacter"
             style={{ width: "400px" }}
-            src={require(`@/assets/character/AK_attack.png`)}
-            // src={require(`../../../assets/character/${p1Character}_attack.png`)}
+            // src={require(`@/assets/character/AK_attack.png`)}
+            src={require(`../../../assets/character/${p1Character}_attack.png`)}
             alt=""
           />
         </div>

@@ -136,7 +136,7 @@ props) {
         {/* 여기서부터 실행되는 마법 */}
         {/* WIND */}
         {/* 남양의 폭풍 camera 0*/}
-        {isSpell && code === "wind3" && (
+        {isSpell && (code === "wind3" || code === "wind2") && (
           <>
             <Tornado
               handleIdx={handleIdx}
@@ -149,7 +149,7 @@ props) {
           </>
         )}
         {/* 번개 camera 1*/}
-        {isSpell && (code === "wind1" || code === "wind2") && (
+        {isSpell && (code === "wind1") && (
           <>
             <Lightning
               handleIdx={handleIdx}

@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { gameActions } from "@/store/game";
 import image1 from "@/assets/minigame/Image1.png";
 import "./Blow.css";
+import { RootState } from "@/store";
 
 interface onTimeProp {
   onTime: boolean;
@@ -21,6 +22,10 @@ const Blow = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
   // console.log(count);
 
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
+
+  const p1Character = useSelector(
+    (state: RootState) => state.player.p1!.gameCharacterEntity.englishName
+  );
 
   // 게임 결과를 store에 저장
   useEffect(() => {
@@ -134,8 +139,8 @@ const Blow = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
           <img
             className="myCharacter"
             style={{ width: "400px" }}
-            src={require(`@/assets/character/AK_attack.png`)}
-            // src={require(`../../../assets/character/${p1Character}_attack.png`)}
+            // src={require(`@/assets/character/AK_attack.png`)}
+            src={require(`../../../assets/character/${p1Character}_attack.png`)}
             alt=""
           />
         </div>
