@@ -2,6 +2,8 @@ import { useState } from 'react'
 import style from './Profile.module.css'
 import closeBtn from '@/assets/ui/closeBtn.svg'
 import { UserType } from '@/utils/Types'
+import { Sound } from '@/store/music';
+
 import API from '@/utils/API'
 
 type Props = {
@@ -38,9 +40,13 @@ function PasswordConfig({ backToProfile, user }: Props) {
                 }
         })
     }
+
+    // Sound Effect 
+    const { buttonClick, buttonClickOpt } = Sound();
+    
   return (
     <div className={`${style.passwordConfigContainer}`}>
-        <img className={`${style.closeBtn}`} src={closeBtn} alt='close' onClick={() => backToProfile()}></img>
+        <img className={`${style.closeBtn}`} src={closeBtn} alt='close' onClick={() => {backToProfile(); buttonClick();}}></img>
           <div className={`${style.passwordConfigTitle}`}>
             <div className={`${style.bigSize}`}>개인정보 수정</div>
           </div>
@@ -67,7 +73,7 @@ function PasswordConfig({ backToProfile, user }: Props) {
             }}></input>
           </div>
           <div className={`${style.passwordConfigRow}`}>
-            <button className={`${style.btn} ${style.modPassword}`} onClick={modifyPassword}>비밀번호 변경</button>
+            <button className={`${style.btn} ${style.modPassword}`} onClick={() => {modifyPassword(); buttonClick();}}>비밀번호 변경</button>
           </div>
         </div>
   )

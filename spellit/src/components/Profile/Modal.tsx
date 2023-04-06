@@ -3,6 +3,7 @@ import style from './Profile.module.css'
 import closeBtn from '@/assets/ui/closeBtn.svg'
 import modalBackgroundImg from '@/assets/profile/modalBody.svg'
 import { UserType } from '@/utils/Types';
+import { Sound } from '@/store/music';
 import API from '@/utils/API';
 
 type Props = {
@@ -33,9 +34,12 @@ function Modal({ closeModal, user, modProp, modifyMyInfo }: Props) {
             })
     }
 
+    // Sound Effect 
+    const { buttonClick, buttonClickOpt } = Sound();
+
     return (
         <div className={`${style.modalContainer}`}>
-            <img className={`${style.closeBtn}`} src={closeBtn} alt='close' onClick={() => closeModal()}></img>
+            <img className={`${style.closeBtn}`} src={closeBtn} alt='close' onClick={() => {closeModal(); buttonClick();}}></img>
             <img className={`${style.modalBodyBackgroundImg}`} src={modalBackgroundImg} alt='modalbodyimg' />
             <div className={`${style.modalBody}`}>
                 <div className={`${style.modalTitle} ${style.noDrag}`}>
@@ -61,8 +65,8 @@ function Modal({ closeModal, user, modProp, modifyMyInfo }: Props) {
                         </div>
                     </div>}
                 <div className={`${style.modalInputRow}`}>
-                    <div className={`${style.modalBtn} ${style.cancleBtn} ${style.noDrag}`} onClick={() => { closeModal() }}>취소</div>
-                    <div className={`${style.modalBtn} ${style.confirmBtn} ${style.noDrag}`} onClick={(e) => { modProfile() }} >변경</div>
+                    <div className={`${style.modalBtn} ${style.cancleBtn} ${style.noDrag}`} onClick={() => { closeModal(); buttonClick();}}>취소</div>
+                    <div className={`${style.modalBtn} ${style.confirmBtn} ${style.noDrag}`} onClick={(e) => { modProfile(); buttonClick();}} >변경</div>
                 </div>
             </div>
         </div>

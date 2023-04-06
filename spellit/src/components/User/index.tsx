@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux"
 
 import { userActions } from "@/store/user"
 import { RootState } from "@/store/";
+import { Sound } from '@/store/music';
 import API from "@/utils/API";
 
 import Cards from './Cards'
@@ -11,6 +12,7 @@ import style from './index.module.css'
 
 import homeBtnImg from '@/assets/ui/homeBtn.svg';
 import characterChangerImg from '@/assets/ui/characterChanges.png'
+import deckChangerImg from '@/assets/ui/cardChanges.png'
 import { useNavigate, useParams } from "react-router-dom";
 
 interface CardType {
@@ -154,9 +156,12 @@ const User = () => {
     navigate('/home');
   }
 
+  // Sound Effect 
+  const { buttonClick, buttonClickOpt } = Sound();
+
   return (
     <div className={`${style.bg}`}>
-      <button type="button" className={`${style.btn} ${style.homeBtn}`} onClick={toHome}>
+      <button type="button" className={`${style.btn} ${style.homeBtn}`} onClick={()=>{toHome(); buttonClick();}}>
         <img src={homeBtnImg} alt="home"></img>
       </button>      {/* { !mode &&  <Cards cards={cards} selectCard={selectCard}/>} */}
       { !mode && <div className={`${style.cardsContainer}`}>
@@ -188,9 +193,8 @@ const User = () => {
               </div>
               <button className={`${style.deckBtn} ${style.myDeckSettingBtn}`} disabled={!mode}>
                 <img 
-                  src={require('../../assets/ui/setting.png')}
-                  alt="setting"
-                  // className={`${style.myDeckSettingBtn}`}
+                  className={`${style.cardChangerImg}`} 
+                  src={deckChangerImg} alt="덱변경"
                   onClick={switchHandler}
                 />
               </button>
@@ -198,12 +202,16 @@ const User = () => {
             <br />
             <hr />
             {deck.map((item: CardType, index: number) => (
-              <div>
-                <div
-                  key={index}
-                  onClick={(event) => removeCard(event, index)}
-                >{item.title}</div>
-                <hr />
+              <div className={`${style.selectedCardBtnBox}`}>
+                <div className={`${style.selectedCardBtn}`}>
+                  <div className={`${style.selectedCardBtnImg}`}>
+                    <img src={require(`../../assets/effect/${item.code}.png`)} alt="icon" />
+                  </div>
+                  <div className={`${style.selectedCardtitle}`}
+                    key={index}
+                    onClick={(event) => removeCard(event, index)}
+                  >{item.title}</div>
+                </div>
               </div>
             ))}
           </div>

@@ -14,6 +14,7 @@ import turnsImg from "../../../assets/result/turnsImg.png";
 import friendaddBtn from "../../../assets/result/friendaddBtn.png";
 import { playerActions } from "@/store/player";
 import { gameActions } from "@/store/game";
+import { Sound } from '@/store/music';
 
 const Result = () => {
   const navigate = useNavigate();
@@ -85,8 +86,21 @@ const Result = () => {
     })
   }
 
+  // Sound Effect 
+  const { winSound, winSoundOpt } = Sound();
+  const { drawSound, drawSoundOpt } = Sound();
+  const { loseSound, loseSoundOpt } = Sound();
+
   useEffect(() => {
     playRecord(result)
+    if (result === 'win') {
+      winSound();
+    } else if (result === 'draw') {
+      drawSound();
+    } else {
+      loseSound();
+    }
+
   }, [p1User, p2Info])
 
   // useEffect(() => {

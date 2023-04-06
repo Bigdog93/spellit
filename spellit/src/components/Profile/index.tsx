@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import API from "@/utils/API"
 
 import { UserType, DeckType } from '@/utils/Types';
+import { Sound } from '@/store/music';
 
 import playCountUp from '../../assets/profile/playCountUp.svg'
 import playCountDown from '../../assets/profile/playCountDown.svg'
@@ -105,10 +106,15 @@ const Profile = () => {
     setHoveredCard(card);
   }
 
+  // Sound Effect
+  const { cardFlip, cardFlipOpt } = Sound();
+  const { buttonClick, buttonClickOpt } = Sound();
+
+
   return (
     <div>
       <div className={`${style.bg}`}>
-      <button type="button" className={`${style.btn} ${style.homeBtn}`} onClick={toHome}>
+      <button type="button" className={`${style.btn} ${style.homeBtn}`} onClick={() => {toHome();buttonClick();}}>
         <img src={homeBtnImg} alt="home"></img>
       </button> 
         {!modifyPasswordModal && <div className={`${style.myInfo}`}>
@@ -174,13 +180,14 @@ const Profile = () => {
                       alt="editBtn.svg"
                       onClick={(e) => {
                         openModal("nickname");
+                        buttonClick();
                       }}
                     />
                   </div>}
                 </div>
                 <div className={`${style.smallSize}`}>
-                  {user.profileMsg}
-                  {isMyProfile && <div
+                  {user.profileMsg? <div>{user.profileMsg}</div>:<div>상태 메세지를 입력하세요.</div>}
+                  <div
                     className={`${style.editBtn}`}
                   >
                     <img
@@ -189,11 +196,12 @@ const Profile = () => {
                       alt="editBtn.svg"
                       onClick={(e) => {
                         openModal("profileMsg");
+                        buttonClick();
                       }}
                     />
                   </div>}
                 </div>
-                {isMyProfile && <div className={`${style.passWordConfigBtnDiv}`} onClick={openPassConfig}>
+                <div className={`${style.passWordConfigBtnDiv}`} onClick={()=>{openPassConfig(); buttonClick();}}>
                   <img src={passwordConfigImg} alt='password config'></img>
                 </div>}
               </div>
@@ -206,6 +214,7 @@ const Profile = () => {
                       key={index}
                       onMouseOver={(e) => cardInfo(card)}
                       className={`${style.cardContainer}`}
+                      onMouseEnter={() => cardFlip()} onMouseLeave={() => cardFlipOpt.stop()}
                     >
                       <Card key={index} card={card.code} />
                     </div>

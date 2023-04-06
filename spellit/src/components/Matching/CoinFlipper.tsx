@@ -5,6 +5,7 @@ import './CoinFlipper.css';
 import { matchingActions } from '@/store/matching';
 import { WebSocketContext } from '@/store/websocket'
 import { RootState } from '@/store';
+import { Sound } from '@/store/music';
 
 interface coinType {
   coin: 0 | 1 | undefined
@@ -47,15 +48,24 @@ function CoinFlipper(coin: coinType) {
   }
 
 
+  // Sound Effect 
+  const { coinFlip, coinFlipOpt } = Sound();
+  const { versus, versusOpt } = Sound();
+
+
   const rollingHandler = (): void => {
     order();
+    coinFlip();
 
-    // 5초 후 동전 던지기 끝냄
+
+    // 3초 후 동전 던지기 끝냄
     setTimeout(() => {
       console.log('동전 던지기 타이머 on')
       setIsRolling(false) 
+      coinFlipOpt.stop()
+      versusOpt.stop()
       rollingEnd()}
-      , 5000
+      , 3000
     );
   };
 

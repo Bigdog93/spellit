@@ -47,7 +47,7 @@
 }
 .characterChangerImg {
   box-sizing: border-box;
-  background-color: rgba(47, 40, 77, 0.874);
+  background-color: rgba(47, 40, 77, 1);
   width: 50px;
   padding: 4px;
   border-radius: 50%;
@@ -60,6 +60,19 @@
 }
 .characterChangerImg:hover {
   background-color: rgb(69, 51, 129);
+}
+.cardChangerImg {
+  box-sizing: border-box;
+  background-color: rgba(47, 40, 77, 1);
+  width: 50px;
+  padding: 4px;
+  border-radius: 50%;
+  border: 1px solid rgb(0, 0, 0);
+  position: absolute;
+  /* bottom: 8%;
+  right: 15%; */
+  cursor: pointer;
+  transition: .2s all;
 }
 .sidebar{
   width: 30vw;
@@ -239,4 +252,25 @@
 }
 .characterStory {
   color: rgb(211, 211, 211)
+}
+
+.selectedCardBtnBox{
+  /* display: flex;
+  flex-direction: column;
+  width: 100%; */
+}
+.selectedCardBtn{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 2rem;
+}
+
+.selectedCardBtnImg img{
+  width: 2rem;
+  height: 2rem;
+}
+
+.selectedCardtitle{
+  align-items: center;
 }
