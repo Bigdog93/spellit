@@ -187,7 +187,7 @@ const Profile = () => {
                 </div>
                 <div className={`${style.smallSize}`}>
                   {user.profileMsg? <div>{user.profileMsg}</div>:<div>상태 메세지를 입력하세요.</div>}
-                  <div
+                  {isMyProfile && <div
                     className={`${style.editBtn}`}
                   >
                     <img
@@ -201,7 +201,7 @@ const Profile = () => {
                     />
                   </div>}
                 </div>
-                <div className={`${style.passWordConfigBtnDiv}`} onClick={()=>{openPassConfig(); buttonClick();}}>
+                {isMyProfile && <div className={`${style.passWordConfigBtnDiv}`} onClick={()=>{openPassConfig(); buttonClick();}}>
                   <img src={passwordConfigImg} alt='password config'></img>
                 </div>}
               </div>
