@@ -8,6 +8,9 @@
 	position: relative;
   background-repeat: no-repeat;
 }
+.loginLogo{
+  width: 200px;
+}
 
 .login-box {
   display: flex;

@@ -10,8 +10,9 @@ import API from "@/utils/API";
 import "./Login.css";
 import { UserEntityType } from "@/utils/Types";
 import { authActions } from "@/store/auth";
-
 import SoundToggleBtn from "@/components/Modules/SoundBtn"
+
+import Logo from '../../assets/ui/logo.png'
 
 const Login = () => {
   const { send } = useContext(WebSocketContext);
@@ -144,6 +145,8 @@ const Login = () => {
     <div className="auth-bg">
       <div className={ani ? "holedown" : ""}></div>
       <div className="login-box">
+        <img src={Logo} alt="logo" className="loginLogo"/>
+        <br />
         <form action="submit" className="login-form" onSubmit={submitHandler}>
           <div className="signupRow">
             <div>
