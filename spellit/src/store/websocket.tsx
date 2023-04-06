@@ -35,43 +35,49 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
   const memberId = useSelector((state: RootState) => state.user.id)
   const p1Combo = useSelector((state: RootState) => (state.settle.p1Combo))
 
+  const webSocketConnect = () => {
+    if (!ws) {
+      ws = new WebSocket(webSocketUrl);
 
-  if (!ws) {
-    ws = new WebSocket(webSocketUrl);
+      ws.onopen = () => {
+        console.log("connected to " + webSocketUrl);
+      }
 
-    ws.onopen = () => {
-      console.log("connected to " + webSocketUrl);
-    }
+      ws.onclose = error => {
+        console.log("disconnect from " + webSocketUrl);
+        console.log(error);
+        setTimeout(() => {
+          webSocketConnect();
+        }, 500)
+      };
 
-    ws.onclose = error => {
-      console.log("disconnect from " + webSocketUrl);
-      console.log(error);
-    };
+      ws.onerror = error => {
+        console.log("connection error " + webSocketUrl);
+        console.log(error);
+        setTimeout(() => {
+          webSocketConnect();
+        }, 500)
+      };
 
-    ws.onerror = error => {
-      console.log("connection error " + webSocketUrl);
-      console.log(error);
-    };
-
-    ws.onmessage = (e) => {
-      console.log(e);
-      const content = JSON.parse(e.data);
-      const type = content.type;
-      const info = content.info;
-      if (type === 'test') {
-        console.log('test입니다.')
-        // dispatch(costActions.set(info.data));
-        console.log(content);
+      ws.onmessage = (e) => {
+        console.log(e);
+        const content = JSON.parse(e.data);
+        const type = content.type;
+        const info = content.info;
+        if (type === 'test') {
+          console.log('test입니다.')
+          // dispatch(costActions.set(info.data));
+          console.log(content);
         
-      } else if (type === 'entQueue') {
-        console.log('entQueue 입니다.')
+        } else if (type === 'entQueue') {
+          console.log('entQueue 입니다.')
 
-      } else if (type === 'connected') {
+        } else if (type === 'connected') {
           console.log('connected 입니다.')
           console.log('roomInfo있나 확인', info.room)
           console.log(info)
           // 매칭 성공했을 때 player의 p1은 나, p2는 상대방에 넣음
-          if (info.roomInfo.playerList[0].memberId === state.user.id ) {
+          if (info.roomInfo.playerList[0].memberId === state.user.id) {
             dispatch(playerActions.setP1(info.roomInfo.playerList[0]))
             dispatch(playerActions.setP2(info.roomInfo.playerList[1]))
           } else {
@@ -85,205 +91,207 @@ export const WebSocketProvider =  ({ children }: { children: React.ReactNode }) 
           // 턴 수 초기화
           dispatch(settleActions.setTurnCount());
 
-      } else if (type === 'loaded') {
-        console.log('loaded 입니다.')
-        console.log(info);
-        dispatch(matchingActions.p2Loading())
-        // dispatch(gameActions.endReady())
+        } else if (type === 'loaded') {
+          console.log('loaded 입니다.')
+          console.log(info);
+          dispatch(matchingActions.p2Loading())
+          // dispatch(gameActions.endReady())
 
-      } else if (type === 'otherReady'){
-        console.log('otherReady 입니다.') 
-        dispatch(matchingActions.setOtherReady(true))
-        dispatch(gameActions.endSettle)
+        } else if (type === 'otherReady') {
+          console.log('otherReady 입니다.')
+          dispatch(matchingActions.setOtherReady(true))
+          dispatch(gameActions.endSettle)
         
-      }else if (type === 'toReady') {
-        console.log('toReady 입니다.')
-        dispatch(gameActions.endAttack())
-        dispatch(gameActions.endCombo())
-        dispatch(gameActions.endSettle())
-        dispatch(gameActions.startReady())
-        dispatch(gameActions.setIdxZero())
-        dispatch(matchingActions.setOtherReady(false))
-        dispatch(settleActions.clearP1Combo())
-        dispatch(settleActions.clearP2Combo())
-        dispatch(gameActions.clearAccuracy())
-        dispatch(costActions.set(info.cost))
-        console.log('toReady에서 info.cost로 받은 cost', info.cost)
+        } else if (type === 'toReady') {
+          console.log('toReady 입니다.')
+          dispatch(gameActions.endAttack())
+          dispatch(gameActions.endCombo())
+          dispatch(gameActions.endSettle())
+          dispatch(gameActions.startReady())
+          dispatch(gameActions.setIdxZero())
+          dispatch(matchingActions.setOtherReady(false))
+          dispatch(settleActions.clearP1Combo())
+          dispatch(settleActions.clearP2Combo())
+          dispatch(gameActions.clearAccuracy())
+          dispatch(costActions.set(info.cost))
+          console.log('toReady에서 info.cost로 받은 cost', info.cost)
         
-      } else if (type === 'toAttack') {
-        console.log('toAttack 입니다.')
+        } else if (type === 'toAttack') {
+          console.log('toAttack 입니다.')
         
-        // 이번 턴에 진행될 공격들 셋팅
-        // dispatch(attackActions.playersDeckList(info.attackCards));
-        dispatch(gameActions.setAttacks(info.attackCards))
+          // 이번 턴에 진행될 공격들 셋팅
+          // dispatch(attackActions.playersDeckList(info.attackCards));
+          dispatch(gameActions.setAttacks(info.attackCards))
         
-        // readyTurn 끝냄
-        dispatch(gameActions.endReady())
+          // readyTurn 끝냄
+          dispatch(gameActions.endReady())
 
-        // attackTurn 시작
-        dispatch(gameActions.startAttack())
-        // setTimeout(() => {
-        // }, 1000);
+          // attackTurn 시작
+          dispatch(gameActions.startAttack())
+          // setTimeout(() => {
+          // }, 1000);
 
-        // console.log('toAttack에 websocket에서 찍는',info)
-        // setTimeout(() => {
-        // }, 1000);
+          // console.log('toAttack에 websocket에서 찍는',info)
+          // setTimeout(() => {
+          // }, 1000);
 
-      } else if (type === 'otherSpell') {
-        console.log('otherSpell 입니다.')
-        console.log(info)
-        console.log(info.damage)
-        // ranscript idx만 필요
-        if(info.damage.damage === -1) {
-          // console.log('===================dasdasdasd==================')
-          // console.log('transcriptIdx : ', info.damage.transcriptIdx)
-          // console.log('=================asdasda====================')
-          dispatch(attackActions.setTranIdx(info.damage.transcriptIdx));
-        // damage 값만 필요
-        } else {
-          dispatch(settleActions.percentList(info.damage.damage));
-        }
-        // dispatch(attackActions.attackInfo(info.spell));
+        } else if (type === 'otherSpell') {
+          console.log('otherSpell 입니다.')
+          console.log(info)
+          console.log(info.damage)
+          // ranscript idx만 필요
+          if (info.damage.damage === -1) {
+            // console.log('===================dasdasdasd==================')
+            // console.log('transcriptIdx : ', info.damage.transcriptIdx)
+            // console.log('=================asdasda====================')
+            dispatch(attackActions.setTranIdx(info.damage.transcriptIdx));
+            // damage 값만 필요
+          } else {
+            dispatch(settleActions.percentList(info.damage.damage));
+          }
+          // dispatch(attackActions.attackInfo(info.spell));
         
-      } else if (type === 'combo') {
-        console.log('combo 입니다.')
-        dispatch(gameActions.startCombo())
+        } else if (type === 'combo') {
+          console.log('combo 입니다.')
+          dispatch(gameActions.startCombo())
 
-      } else if (type === 'comboEnd') {
-        console.log('comboEnd 입니다.')
-        dispatch(gameActions.endCombo());
-        dispatch(gameActions.setIdx());
-      } else if (type === 'spellEnd') {
-        dispatch(gameActions.setIdx());
-      } else if (type === 'toDefense') {
-        console.log('toDefense 입니다.')
-        console.log('toDefense에 들어오는 combo',info.combo)
-        dispatch(settleActions.setP2Combo(info.combo))
-        dispatch(gameActions.endAttack())
-        dispatch(gameActions.endCombo())
-        dispatch(gameActions.startDefense())
+        } else if (type === 'comboEnd') {
+          console.log('comboEnd 입니다.')
+          dispatch(gameActions.endCombo());
+          dispatch(gameActions.setIdx());
+        } else if (type === 'spellEnd') {
+          dispatch(gameActions.setIdx());
+        } else if (type === 'toDefense') {
+          console.log('toDefense 입니다.')
+          console.log('toDefense에 들어오는 combo', info.combo)
+          dispatch(settleActions.setP2Combo(info.combo))
+          dispatch(gameActions.endAttack())
+          dispatch(gameActions.endCombo())
+          dispatch(gameActions.startDefense())
 
-        // 애매하지만 이쯤에서 setAttackCheck 리셋
-        dispatch(gameActions.setAttackCheck())
+          // 애매하지만 이쯤에서 setAttackCheck 리셋
+          dispatch(gameActions.setAttackCheck())
       
-      } else if (type === 'toSettle') {
-      // } else if (type === 'settle') {
-        console.log('toSettle 입니다.')
-        dispatch(gameActions.setOtherDefense(info.defense))
-        dispatch(gameActions.endDefense())
-        dispatch(gameActions.startSettle())
+        } else if (type === 'toSettle') {
+          // } else if (type === 'settle') {
+          console.log('toSettle 입니다.')
+          dispatch(gameActions.setOtherDefense(info.defense))
+          dispatch(gameActions.endDefense())
+          dispatch(gameActions.startSettle())
 
         
-      } else if (type === 'gameOver') {
-        console.log('gameOver입니다.')
-        dispatch(settleActions.percentListClear());
-        dispatch(gameActions.endSettle())
-        // dispatch(gameActions.endGame())
-        dispatch(gameActions.startResult())
-        console.log('gameOver에서 찍는', info.result)
-        dispatch(gameActions.setResult(info.result))
+        } else if (type === 'gameOver') {
+          console.log('gameOver입니다.')
+          dispatch(settleActions.percentListClear());
+          dispatch(gameActions.endSettle())
+          // dispatch(gameActions.endGame())
+          dispatch(gameActions.startResult())
+          console.log('gameOver에서 찍는', info.result)
+          dispatch(gameActions.setResult(info.result))
 
-      } else if (type === 'friendLogin') {
-        const friendId = info.friendId;
-        const friendNickname = info.friendNickname;
-        console.log(friendNickname + '님이 접속하였습니다.');
-        dispatch(friendsActions.loginFriend(friendId));
+        } else if (type === 'friendLogin') {
+          const friendId = info.friendId;
+          const friendNickname = info.friendNickname;
+          console.log(friendNickname + '님이 접속하였습니다.');
+          dispatch(friendsActions.loginFriend(friendId));
 
-      } else if (type === 'friendLogout') {
-        const friendId = info.friendId;
-        const friendNickname = info.friendNickname;
-        console.log(friendNickname + '님이 로그아웃 하였습니다.');
-        dispatch(friendsActions.logoutFriend(friendId));
+        } else if (type === 'friendLogout') {
+          const friendId = info.friendId;
+          const friendNickname = info.friendNickname;
+          console.log(friendNickname + '님이 로그아웃 하였습니다.');
+          dispatch(friendsActions.logoutFriend(friendId));
 
-      } else if (type === 'friendRequest') {
-        const f = info.friend;
-        const friend: UserEntityType = {
-          deck: [],
-          email: f.email,
-          exp: f.exp,
-          gameCharacterEntity: f.gameCharacter,
-          id: f.id,
-          level: f.level,
-          nickname: f.nickname,
-          playCount: f.playCount,
-          winCount: f.winCount,
-          loseCount: f.loseCount,
-          drawCount: f.drawCount,
-          profileMsg: f.profileMsh,
-          isOnline: f.isOnline,
-          isPlaying: f.isPlaying
+        } else if (type === 'friendRequest') {
+          const f = info.friend;
+          const friend: UserEntityType = {
+            deck: [],
+            email: f.email,
+            exp: f.exp,
+            gameCharacterEntity: f.gameCharacter,
+            id: f.id,
+            level: f.level,
+            nickname: f.nickname,
+            playCount: f.playCount,
+            winCount: f.winCount,
+            loseCount: f.loseCount,
+            drawCount: f.drawCount,
+            profileMsg: f.profileMsh,
+            isOnline: f.isOnline,
+            isPlaying: f.isPlaying
+          }
+          dispatch(friendsActions.fillFriendWaitsList(friend));
+
+        } else if (type === 'friendResponse') {
+          const f = info.friend;
+          const friend: UserEntityType = {
+            deck: [],
+            email: f.email,
+            exp: f.exp,
+            gameCharacterEntity: f.gameCharacter,
+            id: f.id,
+            level: f.level,
+            nickname: f.nickname,
+            playCount: f.playCount,
+            winCount: f.winCount,
+            loseCount: f.loseCount,
+            drawCount: f.drawCount,
+            profileMsg: f.profileMsh,
+            isOnline: f.isOnline,
+            isPlaying: f.isPlaying
+          }
+          dispatch(friendsActions.fillFriendsList(friend))
+        } else if (type === 'playStart') {
+          const friendId = info.friendId;
+          const friendNickname = info.friendNickname;
+          console.log(friendNickname + '님이 게임을 시작하였습니다.');
+          dispatch(friendsActions.playStartFriend(friendId));
+        } else if (type === 'playEnd') {
+          const friendId = info.friendId;
+          const friendNickname = info.friendNickname;
+          console.log(friendNickname + '님이 게임을 시작하였습니다.');
+          dispatch(friendsActions.playEndFriend(friendId));
+        } else if (type === 'matchRequest') {
+          const roomId = info.roomId;
+          const f = info.friend;
+          const friend: UserEntityType = {
+            deck: [],
+            email: f.email,
+            exp: f.exp,
+            gameCharacterEntity: f.gameCharacter,
+            id: f.id,
+            level: f.level,
+            nickname: f.nickname,
+            playCount: f.playCount,
+            winCount: f.winCount,
+            loseCount: f.loseCount,
+            drawCount: f.drawCount,
+            profileMsg: f.profileMsh,
+            isOnline: f.isOnline,
+            isPlaying: f.isPlaying
+          }
+          dispatch(friendsActions.setMatchRequestPlayer(friend));
+          dispatch(friendsActions.setMatchRequestRoomId(roomId));
+          dispatch(friendsActions.setMatchRequestModalFlag(true));
+        } else if (type === 'matchRefuse') {
+          console.log('상대방이 도전을 거부하였습니다.');
         }
-        dispatch(friendsActions.fillFriendWaitsList(friend));
-
-      } else if (type === 'friendResponse') {
-        const f = info.friend;
-        const friend: UserEntityType = {
-          deck: [],
-          email: f.email,
-          exp: f.exp,
-          gameCharacterEntity: f.gameCharacter,
-          id: f.id,
-          level: f.level,
-          nickname: f.nickname,
-          playCount: f.playCount,
-          winCount: f.winCount,
-          loseCount: f.loseCount,
-          drawCount: f.drawCount,
-          profileMsg: f.profileMsh,
-          isOnline: f.isOnline,
-          isPlaying: f.isPlaying
+        else {
+          console.log('그런 이벤트는 없습니다.')
         }
-        dispatch(friendsActions.fillFriendsList(friend))
-      } else if (type === 'playStart') {
-        const friendId = info.friendId;
-        const friendNickname = info.friendNickname;
-        console.log(friendNickname + '님이 게임을 시작하였습니다.');
-        dispatch(friendsActions.playStartFriend(friendId));
-      } else if (type === 'playEnd') {
-        const friendId = info.friendId;
-        const friendNickname = info.friendNickname;
-        console.log(friendNickname + '님이 게임을 시작하였습니다.');
-        dispatch(friendsActions.playEndFriend(friendId));
-      } else if (type === 'matchRequest') {
-        const roomId = info.roomId;
-        const f = info.friend;
-        const friend: UserEntityType = {
-          deck: [],
-          email: f.email,
-          exp: f.exp,
-          gameCharacterEntity: f.gameCharacter,
-          id: f.id,
-          level: f.level,
-          nickname: f.nickname,
-          playCount: f.playCount,
-          winCount: f.winCount,
-          loseCount: f.loseCount,
-          drawCount: f.drawCount,
-          profileMsg: f.profileMsh,
-          isOnline: f.isOnline,
-          isPlaying: f.isPlaying
-        }
-        dispatch(friendsActions.setMatchRequestPlayer(friend));
-        dispatch(friendsActions.setMatchRequestRoomId(roomId));
-        dispatch(friendsActions.setMatchRequestModalFlag(true));
-      } else if (type === 'matchRefuse') {
-        console.log('상대방이 도전을 거부하였습니다.');
       }
-      else {
-        console.log('그런 이벤트는 없습니다.')
-      }
-    }
 
-    send = (data: any) => {
-      if (ws && ws?.readyState === ws?.OPEN) {
-        ws.send(JSON.stringify(data));
-      } else {
-        setTimeout(() => {
-          if(send !== undefined) send(data);
-        }, 200)
+      send = (data: any) => {
+        if (ws && ws?.readyState === ws?.OPEN) {
+          ws.send(JSON.stringify(data));
+        } else {
+          setTimeout(() => {
+            if (send !== undefined) send(data);
+          }, 200)
+        }
       }
     }
   }
+  webSocketConnect();
 
   return (
     <WebSocketContext.Provider value={{ ws, send }}>

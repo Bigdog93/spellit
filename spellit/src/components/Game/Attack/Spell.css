@@ -104,15 +104,13 @@ vbody {
 
 #origin {
     position: absolute;
-    top: 130px;
-    bottom: 100px;
-    left: 60px;
-    right: 50px;
-    /* width: '100%';
-    height: '100%'; */
-    display: 'flex';
-    justify-content: 'center';
-    align-items: 'center';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
 
     font-size: xx-large;
