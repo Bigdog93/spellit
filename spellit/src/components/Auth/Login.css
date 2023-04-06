@@ -6,6 +6,10 @@
   justify-content: center;
   align-items: center;
 	position: relative;
+  background-repeat: no-repeat;
+}
+.loginLogo{
+  width: 200px;
 }
 
 .login-box {
