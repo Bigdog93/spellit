@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { RootState } from "@/store";
+import { Sound } from "@/store/music";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -26,6 +27,8 @@ export default function MypageButton(props: JSX.IntrinsicElements["group"]) {
   const myPageRef = useRef<THREE.Mesh>(null);
   const [hover, setHover] = useState(false);
   const [y, setY] = useState(0);
+
+  const { buttonClick, buttonClickOpt } = Sound();
 
   useFrame(() => {
     if (hover) {
@@ -48,7 +51,7 @@ export default function MypageButton(props: JSX.IntrinsicElements["group"]) {
   };
 
   return (
-    <group {...props} dispose={null} scale={[1.5, 1.5, 1.5]} onClick={toMypage}>
+    <group {...props} dispose={null} scale={[1.5, 1.5, 1.5]} onClick={()=>{toMypage();buttonClick();}}>
       <mesh
         ref={myPageRef}
         geometry={nodes["Group_68_(1)"].geometry}

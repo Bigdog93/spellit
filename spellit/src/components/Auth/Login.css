@@ -100,7 +100,7 @@ input {
 	height: 100px;
 	box-shadow: 0 0 0 99999px #201c2c;
 	z-index: 3;
-	animation: resizedown 2s ease-in-out
+	animation: resizedown .9s ease-in-out;
 }
 
 @keyframes resizedown {
@@ -109,7 +109,7 @@ input {
   }
 	
   100% {
-    transform: scale(0.3);
+    transform: scale(0);
   }
 }
 .disabled {

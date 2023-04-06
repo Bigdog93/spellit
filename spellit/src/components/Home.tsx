@@ -39,7 +39,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Home.module.css";
 import { userActions } from '../store/user';
 import { WebSocketContext } from '@/store/websocket';
-import { MusicContext } from '@/store/music';
+import { MusicContext, Sound } from '@/store/music';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -57,6 +57,11 @@ const Home = () => {
   useEffect(() => {
     setMusic("home");
   }, [])
+
+  // Sound Effect
+  const { buttonClick, buttonClickOpt } = Sound();
+  const { logoutBtn, logoutOpt } = Sound();
+
 
   const logout = () => {
     sessionStorage.removeItem("token");
@@ -193,22 +198,26 @@ const Home = () => {
           position={[2, 0, 0]}
           rotation={[Math.PI / 2, 0, Math.PI / 6]}
           // onClick={toQuickStart}
+          onClick={() => buttonClick()}
         />
         <DeckButton
           position={[3.7, -1.5, 1.3]}
           rotation={[Math.PI / 2, 0, Math.PI / 6]}
+          onClick={() => buttonClick()}
         />
         <MypageButton
           position={[-0.1, -1.5, -1]}
           rotation={[Math.PI / 2, 0, Math.PI / 6]}
+          onClick={() => buttonClick()}
         />
         <CharacterButton
           position={[1.8, 2.5, 0.1]}
           rotation={[Math.PI / 2, 0, Math.PI / 6]}
+          onClick={() => buttonClick()}
         />
         {/* <Ranking position={[-6.2, 1, 0]} /> */}
-        <FriendBtn position={[-5.8, 1, 0]} onClick={openFriendPopup} />
-        <LogoutBtn position={[-5.8, -0.5, 0]} onClick={logout} />
+        <FriendBtn position={[-5.8, 1, 0]} onClick={() => {openFriendPopup(); buttonClick();}} />
+        <LogoutBtn position={[-5.8, -0.5, 0]} onClick={() => {logout(); logoutBtn();}} />
         {/* <LogoutBtn position={[4.6, -2, 1.5]} scale={[0.5, 0.5, 0.5]} /> */}
 
         {/* <BackgroundSpell
