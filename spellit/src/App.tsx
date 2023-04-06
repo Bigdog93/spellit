@@ -14,12 +14,14 @@ import Result from "./components/Game/Result/Result";
 import Profile from "./components/Profile";
 import Deck from './components/User';
 // 임시
+import Defense from "./components/Game/Defense";
 import Skills from "./components/Settle/Skills";
 import Test from "./components/Test";
 import Particle from "./components/Test";
 import OtherSpell from './components/Game/Attack';
 // import Combo from "./components/Game/Attack/Combo";
 import NotFound404 from "./NotFound404";
+
 
 
 function App() {
@@ -40,7 +42,7 @@ function App() {
           <Route path="matching" element={<Matching />} />
           <Route path="deck/:modeParam" element={<Deck />} />
           {/* <Route path="ready" element={<Ready />} /> */}
-          <Route path="defense" element={<Defence />} />
+          <Route path="defense" element={<Defense />} />
           {/* <Route path="attack" element={<Attack />} /> */}
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />

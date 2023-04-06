@@ -101,6 +101,8 @@ const Defense = () => {
     width: `${(p2Hp / defaultHP) * 385}px`,
     backgroundColor: p2Hp > 100 ? "#FFF500" : "#FF0000",
   };
+	const p1Level = useSelector((state: RootState) => state.player.p1!.level);
+  const p2Level = useSelector((state: RootState) => state.player.p2!.level);
 
   return (
     <div className="attack-bg">
@@ -113,7 +115,7 @@ const Defense = () => {
       ></div> */}
       <div className="attack-top-items">
         <div className="first-hp-box">
-          <ProfileHp character={p1Character}></ProfileHp>
+          <ProfileHp character={p1Character} level={p1Level}></ProfileHp>
           <div className="first-hp-bar" style={p1HpStyle}></div>
         </div>
         <Timer
@@ -123,7 +125,7 @@ const Defense = () => {
           isDone={isDone}
         />
         <div className="second-hp-box">
-          <ProfileHp character={p2Character}></ProfileHp>
+          <ProfileHp character={p2Character} level={p2Level}></ProfileHp>
           <div className="second-hp-bar" style={p2HpStyle}></div>
         </div>
       </div>
