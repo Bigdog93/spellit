@@ -6,6 +6,7 @@ import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { GLTF } from "three-stdlib";
 import { useNavigate } from "react-router-dom";
+import { Sound } from '@/store/music';
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -25,6 +26,8 @@ export default function DeckButton(props: JSX.IntrinsicElements["group"]) {
   const [hover, setHover] = useState(false);
   const [y, setY] = useState(0);
 
+  const { buttonClick, buttonClickOpt } = Sound();
+
   useFrame(() => {
     if (hover) {
       setY((y) => THREE.MathUtils.lerp(y, 0.1, 0.05));
@@ -43,7 +46,7 @@ export default function DeckButton(props: JSX.IntrinsicElements["group"]) {
   };
 
   return (
-    <group {...props} dispose={null} scale={[1.5, 1.5, 1.5]} onClick={toDeck}>
+    <group {...props} dispose={null} scale={[1.5, 1.5, 1.5]} onClick={() => { toDeck(); buttonClick();}}>
       <mesh
         ref={deckRef}
         geometry={nodes.Group_88.geometry}

@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { userActions } from "@/store/user";
 import { friendsActions } from "@/store/friends";
 import { WebSocketContext } from "@/store/websocket";
-import { MusicContext } from "@/store/music";
+import { MusicContext, Sound } from '@/store/music';
 import API from "@/utils/API";
 import "./Login.css";
 import { UserEntityType } from "@/utils/Types";
@@ -19,6 +19,12 @@ const Login = () => {
   const dispatch = useDispatch();
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
+
+  // Sound Effect
+  const { login, loginOpt } = Sound();
+
+
+
   // 애니메이션용
   const [ani, setAni] = useState(false);
 
@@ -36,6 +42,7 @@ const Login = () => {
     // 로그인
     API.post<any>("auth/login", { email: id, password: pw })
       .then((res) => {
+        setAni(true);
         console.log(res);
         const token = res.data.accessToken;
         console.log(token);
@@ -105,7 +112,7 @@ const Login = () => {
             setTimeout(() => {
               dispatch(authActions.login());
               navigate("/home");
-            }, 1800);
+            }, 700);
           })
           .catch((err) => {
             console.log(err);
@@ -164,7 +171,7 @@ const Login = () => {
             </div>
           </div>
           <div className="signupRow">
-            <button type="submit" className="signupBtn">
+            <button type="submit" className="signupBtn" onClick={() => login()}>
               LOGIN
             </button>
           </div>

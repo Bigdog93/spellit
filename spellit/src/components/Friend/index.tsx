@@ -10,6 +10,7 @@ import addFriendIcon from '@/assets/ui/addFriend.svg';
 import closeBtn from '@/assets/ui/closeBtn.svg'
 import AddFriendModal from './AddFriendModal';
 import { friendsActions } from '../../store/friends';
+import { Sound } from '@/store/music';
 
 
 type Props = {
@@ -41,6 +42,9 @@ function Friend({ openAddFriendModal, closeFriendPopup } : Props) {
         dispatch(friendsActions.acceptFriendRequest(friend))
     }
 
+    // Sound Effect
+    const { buttonClick, buttonClickOpt } = Sound();
+
     return (
       <div className={`${style.friendPopupWindow}`}>
         <img
@@ -48,7 +52,7 @@ function Friend({ openAddFriendModal, closeFriendPopup } : Props) {
           src={friendPopupFrameImg}
           alt="friendPopupFrameImg"
             />
-            <div className={`${style.closeBtnDiv}`} onClick={() => { closeFriendPopup() }}>
+            <div className={`${style.closeBtnDiv}`} onClick={() => { closeFriendPopup(); buttonClick() }}>
                 <img src={closeBtn} className={`${style.closeBtn}`} alt=''></img>
             </div>
         <div className={`${style.friendPopupContainer}`}>
