@@ -289,6 +289,7 @@ vbody {
     left: 60%;
     transform: translate(-50%, -50%);
     z-index: 10;
+    clip-path: polygon(20% 0, 100% 0, 80% 100%, 0 100%);
 
     /* 애니메이션 이름 */
     animation-name: upperSlide;
