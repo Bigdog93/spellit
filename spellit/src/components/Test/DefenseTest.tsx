@@ -16,12 +16,13 @@ import Click from "@/components/Game/Defense/Click";
 import Blow from "@/components/Game/Defense/Blow";
 import ProfileHp from "@/components/Game/Items/ProfileHp";
 
-import styles from "./index.module.css";
+import styles from "@/components/Game/Defense/index.module.css";
 import { gameActions } from "@/store/game";
 
 import "@/components/Game/Attack/Spell.css";
 
 const Defense = () => {
+  console.log("디펜스가 렌더링 되고 이씀");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { send } = useContext(WebSocketContext);
@@ -76,22 +77,22 @@ const Defense = () => {
     setGameSelect(gameTypes[randomIdx]);
   }, []);
 
-  // const p1Character = "AK"
+  const p1Character = "AK"
 
-  // const p2Character ="LUNA"
-  const p1Character = useSelector(
-    (state: RootState) => state.player.p1!.gameCharacterEntity.englishName
-  );
-  const p2Character = useSelector(
-    (state: RootState) => state.player.p2!.gameCharacterEntity.englishName
-  );
+  const p2Character ="LUNA"
+  // const p1Character = useSelector(
+  //   (state: RootState) => state.player.p1!.gameCharacterEntity.englishName
+  // );
+  // const p2Character = useSelector(
+  //   (state: RootState) => state.player.p2!.gameCharacterEntity.englishName
+  // );
 
-  // const defaultHP = 600
-  // const p1Hp = 200
-  // const p2Hp = 200
-  const defaultHP = useSelector((state: RootState) => state.attack.defaultHp);
-  const p1Hp = useSelector((state: RootState) => state.player.p1!.hp);
-  const p2Hp = useSelector((state: RootState) => state.player.p2!.hp);
+  const defaultHP = 600
+  const p1Hp = 200
+  const p2Hp = 21
+  // const defaultHP = useSelector((state: RootState) => state.attack.defaultHp);
+  // const p1Hp = useSelector((state: RootState) => state.player.p1!.hp);
+  // const p2Hp = useSelector((state: RootState) => state.player.p2!.hp);
 
   const p1HpStyle = {
     width: `${(p1Hp / defaultHP) * 385}px`,
@@ -101,12 +102,14 @@ const Defense = () => {
     width: `${(p2Hp / defaultHP) * 385}px`,
     backgroundColor: p2Hp > 100 ? "#FFF500" : "#FF0000",
   };
-	const p1Level = useSelector((state: RootState) => state.player.p1!.level);
-  const p2Level = useSelector((state: RootState) => state.player.p2!.level);
+    // const p1Level = useSelector((state: RootState) => state.player.p1!.level);
+    // const p2Level = useSelector((state: RootState) => state.player.p2!.level);
+    const p1Level = 4;
+    const p2Level = 93;
 
   return (
     <div className="attack-bg">
-			{/* 클릭방지 구간 */}
+      {/* 클릭방지 구간 */}
       <div
         className={styles.box}
         ref={preventMouseRef}
@@ -130,7 +133,7 @@ const Defense = () => {
         </div>
       </div>
       <div className="attack-bottom-itmes">
-        {gameSelect === "click" ? (
+        {gameSelect === "click" && (
           <Click
             handleTimer={handleTimer}
             onTime={onTime}
@@ -138,14 +141,15 @@ const Defense = () => {
             isDone={isDone}
             // success={onSuccess}
           />
-        ) : gameSelect === "blow" ? (
+        )}
+        {gameSelect === "blow" && (
           <Blow
             handleTimer={handleTimer}
             onTime={onTime}
             handleResult={handleResult}
             isDone={isDone}
           />
-        ) : null}
+        )}
       </div>
     </div>
   );
