@@ -22,11 +22,15 @@ import LUNADefault from "@/assets/models/LUNA_default";
 import FriendBtn from "@/assets/models/FriendBtn";
 import LogoutBtn from "@/assets/models/LogoutBtn";
 
+
 import Friend from "./Friend";
 
 import AddFriendModal from "./Friend/AddFriendModal";
 import MatchRequestModal from "./Friend/MatchRequestModal";
+import SoundToggleBtn from "@/components/Modules/SoundBtn"
+
 import API from "@/utils/API";
+
 import { UserEntityType } from "@/utils/Types";
 import { friendsActions } from "@/store/friends";
 import { authActions } from "@/store/auth";
@@ -49,7 +53,7 @@ const Home = () => {
     }
   }, []);
 
-  const { setMusic } = useContext(MusicContext);
+  const { setMusic, bgmOn, setBgmOn, stop } = useContext(MusicContext);
   useEffect(() => {
     setMusic("home");
   }, [])
@@ -77,7 +81,8 @@ const Home = () => {
   const dispatch = useDispatch();
   const [addFriendModalFlag, setAddFriendModalFlag] = useState<boolean>(false);
   const [friendPopupFlag, setFriendPopupFlag] = useState<boolean>(false);
-	const [stopAni, setStopani] = useState(false)
+  const [stopAni, setStopani] = useState(false)
+  
 
 	useEffect(()=> {
 		setTimeout(()=> {
@@ -221,6 +226,7 @@ const Home = () => {
         <AddFriendModal closeAddFriendModal={closeAddFriendModal} />
       )}
       {matchRequestModalFlag && <MatchRequestModal />}
+      <SoundToggleBtn></SoundToggleBtn>
     </div>
   );
 };

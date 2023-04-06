@@ -15,7 +15,7 @@ export { MusicContext }
 
 export const MusicProvider = ({ children }: { children: React.ReactNode }) => {
     const [musicName, setMusicName] = useState<string>(LoginBGM);
-    const [bgmOn, setBGMOn] = useState<boolean>(false);
+    const [bgmOn, setBgmOn] = useState<boolean>(true);
     const [playBGM, { stop }] = useSound(musicName, {
         interrupt: true,
         loop: true,
@@ -52,7 +52,8 @@ export const MusicProvider = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <MusicContext.Provider value={{
-            setBGMOn,
+            bgmOn,
+            setBgmOn,
             playBGM,
             stop,
             setMusic,
