@@ -259,7 +259,12 @@
 .characterStory {
   color: rgb(211, 211, 211)
 }
-
+.myDeckContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: calc(40vh - 70px);
+}
 .selectedCardBtnBox{
   /* display: flex;
   flex-direction: column;
@@ -267,8 +272,7 @@
   box-sizing: border-box;
   cursor: default;
   transition: .2s all;
-  padding: 5px 0;
-  margin: 5px;
+  padding: 2px 0;
   border-radius: 10px;
   border: 1px solid transparent;
 }

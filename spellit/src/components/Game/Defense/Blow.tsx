@@ -29,6 +29,9 @@ const Blow = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
 
   const streamRef = useRef<MediaStream | null>(null);
   const handleMicInput = async (stream: MediaStream) => {
+    if (isDone) {
+      return;
+    }
     // audioctx를 만들어 web audio api를 사용할 수 있도록 함
     const audioContext = new AudioContext();
     audioContext.resume();

@@ -207,6 +207,7 @@ const User = () => {
             </div>
             <br />
             <hr />
+            <div className={`${style.myDeckContainer}`}>
             {deck.map((item: CardType, index: number) => (
               <div className={`${style.selectedCardBtnBox} 
               ${!mode ? style[numToAtt[item.attribute]] : null} 
@@ -222,6 +223,7 @@ const User = () => {
                 </div>
               </div>
             ))}
+              </div>
           </div>
         </div>
       </div>
