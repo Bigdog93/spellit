@@ -1,9 +1,6 @@
+import './Result.css';
 import { RootState } from "@/store"
 import { useDispatch, useSelector } from "react-redux"
-import Draw from "./Draw";
-import Lose from "./Lose";
-import Win from "./Win";
-import './Result.css';
 import { useNavigate } from "react-router-dom";
 import API from '@/utils/API';
 import { WebSocketContext } from '@/store/websocket';
