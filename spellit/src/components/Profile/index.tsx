@@ -16,6 +16,8 @@ import PasswordConfig from './PasswordConfig';
 import style from './Profile.module.css'
 import Card from './Card';
 import Modal from './Modal';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 
 const Profile = () => {
@@ -24,6 +26,8 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const korAttributes = ['바람', '물', '불', '땅', '빛', '어둠'];
+
+  const me = useSelector((state: RootState) => state.user );
 
   const [user, setUser] = useState<UserType>({
     deck: [],
@@ -45,8 +49,9 @@ const Profile = () => {
 
   const [openModalFlag, setOpenModalFlag] = useState<boolean>(false);
   const [modifyPasswordModal, setModifyPasswordModal] = useState<boolean>(false);
-
   const [modProp, setModProp] = useState<string>('');
+
+  const [isMyProfile, setIsMyProfile] = useState<boolean>(false);
 
   
   const toHome = () => {
@@ -86,8 +91,11 @@ const Profile = () => {
       console.log(res.data)
       setUser(res.data)
       setHoveredCard(res.data.deck[0])
-      return user;
+      return res.data;
     }).then((res) => {
+      if (res.id === me.id) {
+        setIsMyProfile(true);
+      }
       console.log(res);
     })
     console.log(id)
@@ -157,7 +165,7 @@ const Profile = () => {
               <div className={`${style.userTextContainer}`}>
                 <div className={`${style.bigSize}`}>
                   {user.nickname}
-                  <div
+                  {isMyProfile && <div
                     className={`${style.editBtn}`}
                   >
                     <img
@@ -168,11 +176,11 @@ const Profile = () => {
                         openModal("nickname");
                       }}
                     />
-                  </div>
+                  </div>}
                 </div>
                 <div className={`${style.smallSize}`}>
                   {user.profileMsg}
-                  <div
+                  {isMyProfile && <div
                     className={`${style.editBtn}`}
                   >
                     <img
@@ -183,11 +191,11 @@ const Profile = () => {
                         openModal("profileMsg");
                       }}
                     />
-                  </div>
+                  </div>}
                 </div>
-                <div className={`${style.passWordConfigBtnDiv}`} onClick={openPassConfig}>
+                {isMyProfile && <div className={`${style.passWordConfigBtnDiv}`} onClick={openPassConfig}>
                   <img src={passwordConfigImg} alt='password config'></img>
-                </div>
+                </div>}
               </div>
               <div className={`${style.infoRow}`}>
                 <div className={`${style.infoTitle}`}>덱</div>

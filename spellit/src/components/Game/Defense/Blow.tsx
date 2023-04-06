@@ -150,8 +150,8 @@ const Blow = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
               </div>
               <div className="canvas-box">
                 {!onTime && !isDone ? (
-                  // <div>대기시간 후 게임이 시작됩니다</div>
-                  <></>
+                  <div>상대의 마법을 약화시키세요</div>
+                  // <></>
                 ) : (
                   <>
                     <img className="spellimg" src={image1} alt="img" ref={circleRef} />

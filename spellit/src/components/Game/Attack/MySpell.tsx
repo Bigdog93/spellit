@@ -389,7 +389,7 @@ const MySpell = ({attack, idx}: {attack: AttackType, idx: number}) => {
           <div className="SpellandBar">
             <div className="SpellBox">
               <img style={{ width: 800, height: 400}} src={require(`../../../assets/InGame/SpellBox.png`)} alt="" />
-              {showReady && <h1 className="readyText">READY</h1>}
+              {showReady && <h1 className="readyText">주문을 영창하세요</h1>}
               {showStart && <h1 className="startText">START</h1>}
               <div id='origin'>{spanEl}</div>
             </div>
