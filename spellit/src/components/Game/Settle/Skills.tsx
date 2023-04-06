@@ -17,6 +17,7 @@ import Earth from "./quarks/Earth";
 import FireBall from "./quarks/FireBall";
 import Lightning from "./quarks/Lightening";
 import SnowStorm from "./quarks/SnowStorm";
+import BgImg from "./characters/BgImg";
 
 import "./Skills.css";
 
@@ -46,7 +47,6 @@ props) {
   console.log(idx, "idx");
   console.log(code, "마법");
   console.log(isMine, "누구냐!!!!!!!!!!!!!!!!!!!!!1111");
-
   console.log("------");
   // 마법 시전 효과 시작
   const [isStart, setIsStart] = useState<boolean>(true);
@@ -94,7 +94,8 @@ props) {
         <ambientLight intensity={0.8} />
 
         {/* 배경이미지 */}
-        <Background position={[0, 0, 0]} />
+        {/* <Background position={[0, 0, 0]} /> */}
+        <BgImg position={[0, 0, 0]} />
 
         {/* 캐릭터 1P*/}
         {p1Character === "CB" && (
