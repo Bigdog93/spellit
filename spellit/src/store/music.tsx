@@ -10,6 +10,9 @@ import NegativeButtonClickSound from '@/assets/soundeffect/NegativeButtonClick.m
 import SetDeckSound from '@/assets/soundeffect/SetDeck.mp3'
 import LoginSound from '@/assets/soundeffect/Login.mp3'
 import LogoutSound from '@/assets/soundeffect/Logout.mp3'
+import QuickMatchSound from '@/assets/soundeffect/QuickStart.mp3'
+import CoinFlipSound from '@/assets/soundeffect/CoinFlip.mp3'
+import VersusSound from '@/assets/soundeffect/Versus.mp3'
 
 import Module from 'module';
 
@@ -60,6 +63,9 @@ export const MusicProvider = ({ children }: { children: React.ReactNode }) => {
     const [setDeck, setDeckOpt ] = useSound(SetDeckSound);
     const [login, loginOpt ] = useSound(LoginSound);
     const [logoutBtn, logoutOpt ] = useSound(LogoutSound);
+    const [quickStart, quickStartOpt ] = useSound(QuickMatchSound);
+    const [coinFlip, coinFlipOpt ] = useSound(CoinFlipSound);
+    const [versus, versusOpt ] = useSound(VersusSound);
 
     return (
         <MusicContext.Provider value={{
@@ -74,7 +80,9 @@ export const MusicProvider = ({ children }: { children: React.ReactNode }) => {
             setDeck, setDeckOpt,
             login, loginOpt,
             logoutBtn,logoutOpt,
-
+            quickStart, quickStartOpt,
+            coinFlip, coinFlipOpt,
+            versus, versusOpt,
         }}>
             {children}
             {/* {loginBGM && (

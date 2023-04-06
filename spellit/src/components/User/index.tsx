@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux"
 
 import { userActions } from "@/store/user"
 import { RootState } from "@/store/";
+import { Sound } from '@/store/music';
 import API from "@/utils/API";
 
 import Cards from './Cards'
@@ -155,9 +156,12 @@ const User = () => {
     navigate('/home');
   }
 
+  // Sound Effect 
+  const { buttonClick, buttonClickOpt } = Sound();
+
   return (
     <div className={`${style.bg}`}>
-      <button type="button" className={`${style.btn} ${style.homeBtn}`} onClick={toHome}>
+      <button type="button" className={`${style.btn} ${style.homeBtn}`} onClick={()=>{toHome(); buttonClick();}}>
         <img src={homeBtnImg} alt="home"></img>
       </button>      {/* { !mode &&  <Cards cards={cards} selectCard={selectCard}/>} */}
       { !mode && <div className={`${style.cardsContainer}`}>

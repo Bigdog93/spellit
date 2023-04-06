@@ -100,12 +100,13 @@ const Profile = () => {
 
   // Sound Effect
   const { cardFlip, cardFlipOpt } = Sound();
+  const { buttonClick, buttonClickOpt } = Sound();
 
 
   return (
     <div>
       <div className={`${style.bg}`}>
-      <button type="button" className={`${style.btn} ${style.homeBtn}`} onClick={toHome}>
+      <button type="button" className={`${style.btn} ${style.homeBtn}`} onClick={() => {toHome();buttonClick();}}>
         <img src={homeBtnImg} alt="home"></img>
       </button> 
         {!modifyPasswordModal && <div className={`${style.myInfo}`}>
@@ -171,6 +172,7 @@ const Profile = () => {
                       alt="editBtn.svg"
                       onClick={(e) => {
                         openModal("nickname");
+                        buttonClick();
                       }}
                     />
                   </div>
@@ -186,11 +188,12 @@ const Profile = () => {
                       alt="editBtn.svg"
                       onClick={(e) => {
                         openModal("profileMsg");
+                        buttonClick();
                       }}
                     />
                   </div>
                 </div>
-                <div className={`${style.passWordConfigBtnDiv}`} onClick={openPassConfig}>
+                <div className={`${style.passWordConfigBtnDiv}`} onClick={()=>{openPassConfig(); buttonClick();}}>
                   <img src={passwordConfigImg} alt='password config'></img>
                 </div>
               </div>
