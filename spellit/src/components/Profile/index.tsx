@@ -146,7 +146,7 @@ const Profile = () => {
               </div>
               <div className={`${style.winRateDiv}`}>
                 <div className={`${style.midSize}`}>
-                  {user.winCount / user.playCount === 0 ? 1 : user.playCount}
+                  {user.playCount === 0 ? 0 : Math.round(user.winCount * 100 / user.playCount)}%
                 </div>
                 <div>승률</div>
               </div>
