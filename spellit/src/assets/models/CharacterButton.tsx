@@ -5,6 +5,7 @@ import { GLTF } from "three-stdlib";
 import { useFrame } from "@react-three/fiber";
 import { MathUtils } from "three";
 import { useNavigate } from 'react-router-dom';
+import { Sound } from "@/store/music";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -25,6 +26,7 @@ export default function CharacterButton(props: JSX.IntrinsicElements["group"]) {
 
   const navigate = useNavigate();
   
+  const { buttonClick, buttonClickOpt } = Sound();
 
   useFrame(() => {
     if (hover) {
@@ -42,7 +44,7 @@ export default function CharacterButton(props: JSX.IntrinsicElements["group"]) {
   }
 
   return (
-    <group {...props} dispose={null} scale={[1.5, 1.5, 1.5]} onClick={toCharacter}>
+    <group {...props} dispose={null} scale={[1.5, 1.5, 1.5]} onClick={() => {toCharacter(); buttonClick()}}>
       <mesh
         ref={characterRef}
         geometry={nodes.character.geometry}
