@@ -191,7 +191,9 @@ const OtherSpell = ({attack, idx}: {attack: AttackType, idx: number}) => {
               <img style={{ width: 800, height: 400}} src={require(`../../../assets/InGame/SpellBox.png`)} alt="" />
               {showReady && <h1 className="readyText">{p2nickname}님이 주문을 외웁니다</h1>}
               {showStart && <h1 className="startText">START</h1>}
-              <div id='origin'>{spanEl}</div>
+              <div id='origin'>
+              <div className="originSpellBox">{spanEl}</div>
+            </div>
             </div>
             <div className="spell-bar-box">
               <img src={require(`../../../assets/InGame/SkillBar.png`)} alt="" style={{width: '100%', height: '140px'}} />

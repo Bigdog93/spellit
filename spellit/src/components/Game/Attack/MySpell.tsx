@@ -301,7 +301,7 @@ const MySpell = ({attack, idx}: {attack: AttackType, idx: number}) => {
               dispatch(gameActions.setIdx())
             }
           }
-          // setSpanEl([]);
+          setSpanEl([]);
           // dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
           
           // // combo 일 때
@@ -389,9 +389,11 @@ const MySpell = ({attack, idx}: {attack: AttackType, idx: number}) => {
           <div className="SpellandBar">
             <div className="SpellBox">
               <img style={{ width: 800, height: 400}} src={require(`../../../assets/InGame/SpellBox.png`)} alt="" />
-              {showReady && <h1 className="readyText">READY</h1>}
+              {showReady && <h1 className="readyText">주문을 영창하세요</h1>}
               {showStart && <h1 className="startText">START</h1>}
-              <div id='origin'>{spanEl}</div>
+            <div id='origin'>
+              <div className="originSpellBox">{spanEl}</div>
+            </div>
             </div>
             <div className="spell-bar-box">
               <img src={require(`../../../assets/InGame/SkillBar.png`)} alt="" style={{width: '100%', height: '140px'}} />
