@@ -17,7 +17,6 @@ type AllGLTFResult = GLTF & {
   };
 };
 
-
 interface Props {
   isSpell: boolean;
   turn: boolean;
@@ -30,22 +29,21 @@ export function CBDefault2(props: Props & JSX.IntrinsicElements["group"]) {
 
   // 타격 관련 로직
   // 시각적 애니메이션
-  const originalColor = useRef<THREE.Color>(
-    new THREE.Color(materials.CB_default.color)
-  );
+  // const originalColor = useRef<THREE.Color>(
+  //   new THREE.Color(materials.CB_default.color)
+  // );
 
+  const originalColor = useRef<THREE.Color>(new THREE.Color().setRGB(1, 1, 1));
   const meshRef = useRef<THREE.Mesh>(null);
   const positionRef = useRef<{ x: number; y: number; z: number }>({
     x: 0,
     y: 0,
     z: 0,
   });
-	// console.log(props.turn.current)
+  // console.log(props.turn.current)
 
   useFrame((state) => {
-
     if (props.turn) {
-
       setTimeout(() => {
         if (props.isSpell) {
           const time = state.clock.getElapsedTime() - 2;
@@ -72,29 +70,42 @@ export function CBDefault2(props: Props & JSX.IntrinsicElements["group"]) {
           positionRef.current.z
         );
       }
+    } else {
+      if (!props.isSpell) {
+        materials.CB_default.color = originalColor.current;
+        positionRef.current.x = 0;
+      }
+
+      if (meshRef.current) {
+        meshRef.current.position.set(
+          positionRef.current.x,
+          positionRef.current.y,
+          positionRef.current.z
+        );
+      }
     }
   });
   // 시각적 애니메이션
 
   // 사운드
   useEffect(() => {
-		if (props.turn) {
-			let attacked: HTMLAudioElement | null = null;
-			if (props.isSpell) {
-				setTimeout(() => {
-					const test = setInterval(() => {
-						if (props.isSpell) {
-							attacked = new Audio("/bgm/damaged.mp3");
-							attacked.play();
-						}
-					}, 500);
-					setTimeout(() => {
-						clearInterval(test);
-						attacked = null;
-					}, 2000);
-				}, 1500);
-			}
-		}
+    if (props.turn) {
+      let attacked: HTMLAudioElement | null = null;
+      if (props.isSpell) {
+        setTimeout(() => {
+          const test = setInterval(() => {
+            if (props.isSpell) {
+              attacked = new Audio("/bgm/damaged.mp3");
+              attacked.play();
+            }
+          }, 500);
+          setTimeout(() => {
+            clearInterval(test);
+            attacked = null;
+          }, 2000);
+        }, 1500);
+      }
+    }
   }, [props.isSpell]);
   // 사운드
 
@@ -114,18 +125,18 @@ export function CBDefault2(props: Props & JSX.IntrinsicElements["group"]) {
   );
 }
 
-
-
 export function AKDefault2(props: Props & JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF(
     "/models/settleglb/AK_default2.glb"
   ) as AllGLTFResult;
 
-    // 타격 관련 로직
+  // 타격 관련 로직
   // 시각적 애니메이션
-  const originalColor = useRef<THREE.Color>(
-    new THREE.Color(materials.AK_default.color)
-  );
+  const originalColor = useRef<THREE.Color>(new THREE.Color().setRGB(1, 1, 1));
+
+  // const originalColor = useRef<THREE.Color>(
+  //   new THREE.Color(materials.AK_default.color)
+  // );
 
   const meshRef = useRef<THREE.Mesh>(null);
   const positionRef = useRef<{ x: number; y: number; z: number }>({
@@ -133,7 +144,6 @@ export function AKDefault2(props: Props & JSX.IntrinsicElements["group"]) {
     y: 0,
     z: 0,
   });
-
 
   useFrame((state) => {
     if (props.turn) {
@@ -163,29 +173,42 @@ export function AKDefault2(props: Props & JSX.IntrinsicElements["group"]) {
           positionRef.current.z
         );
       }
+    } else {
+      if (!props.isSpell) {
+        materials.AK_default.color = originalColor.current;
+        positionRef.current.x = 0;
+      }
+
+      if (meshRef.current) {
+        meshRef.current.position.set(
+          positionRef.current.x,
+          positionRef.current.y,
+          positionRef.current.z
+        );
+      }
     }
   });
   // 시각적 애니메이션
 
   // 사운드
   useEffect(() => {
-		if (props.turn) {
-			let attacked: HTMLAudioElement | null = null;
-			if (props.isSpell) {
-				setTimeout(() => {
-					const test = setInterval(() => {
-						if (props.isSpell) {
-							attacked = new Audio("/bgm/damaged.mp3");
-							attacked.play();
-						}
-					}, 500);
-					setTimeout(() => {
-						clearInterval(test);
-						attacked = null;
-					}, 2000);
-				}, 1500);
-			}
-		}
+    if (props.turn) {
+      let attacked: HTMLAudioElement | null = null;
+      if (props.isSpell) {
+        setTimeout(() => {
+          const test = setInterval(() => {
+            if (props.isSpell) {
+              attacked = new Audio("/bgm/damaged.mp3");
+              attacked.play();
+            }
+          }, 500);
+          setTimeout(() => {
+            clearInterval(test);
+            attacked = null;
+          }, 2000);
+        }, 1500);
+      }
+    }
   }, [props.isSpell]);
   // 사운드
 
@@ -205,18 +228,18 @@ export function AKDefault2(props: Props & JSX.IntrinsicElements["group"]) {
   );
 }
 
-
-
 export function LUNADefault2(props: Props & JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF(
     "/models/settleglb/LUNA_default2.glb"
   ) as AllGLTFResult;
 
-    // 타격 관련 로직
+  // 타격 관련 로직
   // 시각적 애니메이션
-  const originalColor = useRef<THREE.Color>(
-    new THREE.Color(materials.LUNA_default.color)
-  );
+  const originalColor = useRef<THREE.Color>(new THREE.Color().setRGB(1, 1, 1));
+
+  // const originalColor = useRef<THREE.Color>(
+  //   new THREE.Color(materials.LUNA_default.color)
+  // );
 
   const meshRef = useRef<THREE.Mesh>(null);
   const positionRef = useRef<{ x: number; y: number; z: number }>({
@@ -224,7 +247,6 @@ export function LUNADefault2(props: Props & JSX.IntrinsicElements["group"]) {
     y: 0,
     z: 0,
   });
-	
 
   useFrame((state) => {
     if (props.turn) {
@@ -254,29 +276,42 @@ export function LUNADefault2(props: Props & JSX.IntrinsicElements["group"]) {
           positionRef.current.z
         );
       }
+    } else {
+      if (!props.isSpell) {
+        materials.LUNA_default.color = originalColor.current;
+        positionRef.current.x = 0;
+      }
+
+      if (meshRef.current) {
+        meshRef.current.position.set(
+          positionRef.current.x,
+          positionRef.current.y,
+          positionRef.current.z
+        );
+      }
     }
   });
   // 시각적 애니메이션
 
   // 사운드
   useEffect(() => {
-		if (props.turn) {
-			let attacked: HTMLAudioElement | null = null;
-			if (props.isSpell) {
-				setTimeout(() => {
-					const test = setInterval(() => {
-						if (props.isSpell) {
-							attacked = new Audio("/bgm/damaged.mp3");
-							attacked.play();
-						}
-					}, 500);
-					setTimeout(() => {
-						clearInterval(test);
-						attacked = null;
-					}, 2000);
-				}, 1500);
-			}
-		}
+    if (props.turn) {
+      let attacked: HTMLAudioElement | null = null;
+      if (props.isSpell) {
+        setTimeout(() => {
+          const test = setInterval(() => {
+            if (props.isSpell) {
+              attacked = new Audio("/bgm/damaged.mp3");
+              attacked.play();
+            }
+          }, 500);
+          setTimeout(() => {
+            clearInterval(test);
+            attacked = null;
+          }, 2000);
+        }, 1500);
+      }
+    }
   }, [props.isSpell]);
   // 사운드
 

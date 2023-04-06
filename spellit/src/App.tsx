@@ -15,7 +15,6 @@ import Profile from "./components/Profile";
 import Deck from './components/User';
 // 임시
 import Defense from "./components/Game/Defense";
-import Skills from "./components/Settle/Skills";
 import Test from "./components/Test";
 import Particle from "./components/Test";
 import OtherSpell from './components/Game/Attack';
@@ -52,7 +51,6 @@ function App() {
           <Route path="settle" element={<Settle />} />
           <Route path="result" element={<Result />} />
           {/* <Route path="spell" element={<Spell />} /> */}
-          <Route path="skills" element={<Skills />} />
           <Route path="profile/:id" element={<Profile />} />
           <Route path="particle" element={<Particle />} />
           <Route path="otherspell" element={<OtherSpell />} />

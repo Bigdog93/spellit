@@ -170,19 +170,9 @@ const Home = () => {
 
   return (
     <div style={{ width: "100%", height: "100vh" }}>
-      {/* <div
-        className={
-          stopAni === false && isLogged === false ? "styles.holedown" : ""
-        }
-      ></div> */}
-			{/* <div className={(location.state.from === "/login" )? `${styles.holedown}` : ""}></div> */}
+			{/* <div className={(location.state.from === "/login" && !stopAni)? `${styles.holedown}` : ``}></div> */}
       <Canvas
         ref={canvasRef}
-
-        // style={{ width: '100%', height: '100%' }}
-        // onCreated={({ gl }) => {
-        //   canvasRef.current = gl.domElement
-        // }}
       >
         <ambientLight intensity={0.8} />
 

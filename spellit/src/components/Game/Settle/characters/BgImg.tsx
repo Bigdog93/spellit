@@ -17,7 +17,7 @@ export default function BgImg(props: JSX.IntrinsicElements["group"]) {
     "/models/settleglb/bgimg.glb"
   ) as GLTFResult;
   return (
-    <group {...props} dispose={null} scale={[8.4, 8.4, 8.4]}>
+    <group {...props} dispose={null} scale={[8.6, 8.6, 8.6]}>
       <mesh
         geometry={nodes.bgimg.geometry}
         material={materials.bgimg}

@@ -27,13 +27,10 @@ export function CBDefault1(props: Props & JSX.IntrinsicElements["group"]) {
     "/models/settleglb/CB_default.glb"
   ) as AllGLTFResult;
 
-  // 타격 관련 로직
-  // 시각적 애니메이션
-  const originalColor = useRef<THREE.Color>(
-    new THREE.Color(materials.CB_default.color)
-  );
-	
+  // const originalColor = useRef<THREE.Color>(materials.CB_default.color.clone());
+	const originalColor = useRef<THREE.Color>(new THREE.Color().setRGB(1, 1, 1));
 
+  // 타격 관련 로직
   const meshRef = useRef<THREE.Mesh>(null);
   const positionRef = useRef<{ x: number; y: number; z: number }>({
     x: 0,
@@ -42,7 +39,7 @@ export function CBDefault1(props: Props & JSX.IntrinsicElements["group"]) {
   });
 
   useFrame((state) => {
-    if (props.turn) {
+    if (props.turn === false) {
       setTimeout(() => {
         if (props.isSpell) {
           const time = state.clock.getElapsedTime() - 2;
@@ -56,9 +53,9 @@ export function CBDefault1(props: Props & JSX.IntrinsicElements["group"]) {
           materials.CB_default.color = color;
         } else {
         }
-      }, 2000);
+      }, 200);
       if (!props.isSpell) {
-        materials.CB_default.color = originalColor.current;
+        materials.CB_default.color.copy(originalColor.current);
         positionRef.current.x = 0;
       }
 
@@ -69,13 +66,24 @@ export function CBDefault1(props: Props & JSX.IntrinsicElements["group"]) {
           positionRef.current.z
         );
       }
-    }
-  });
-  // 시각적 애니메이션
+    } else {
+			if (!props.isSpell) {
+        materials.CB_default.color.copy(originalColor.current);
+        positionRef.current.x = 0;
+      }
 
-  // 사운드
+      if (meshRef.current) {
+        meshRef.current.position.set(
+          positionRef.current.x,
+          positionRef.current.y,
+          positionRef.current.z
+        );
+      }
+		}
+  });
+
   useEffect(() => {
-    if (props.turn) {
+    if (props.turn === false) {
       let attacked: HTMLAudioElement | null = null;
       if (props.isSpell) {
         setTimeout(() => {
@@ -93,7 +101,6 @@ export function CBDefault1(props: Props & JSX.IntrinsicElements["group"]) {
       }
     }
   }, [props.isSpell]);
-  // 사운드
 
   return (
     <group
@@ -116,11 +123,10 @@ export function AKDefault1(props: Props & JSX.IntrinsicElements["group"]) {
     "/models/settleglb/AK_default.glb"
   ) as AllGLTFResult;
 
+  // const originalColor = useRef<THREE.Color>(materials.AK_default.color.clone());
+  const originalColor = useRef<THREE.Color>(new THREE.Color().setRGB(1, 1, 1));
   // 타격 관련 로직
   // 시각적 애니메이션
-  const originalColor = useRef<THREE.Color>(
-    new THREE.Color(materials.AK_default.color)
-  );
 
   const meshRef = useRef<THREE.Mesh>(null);
   const positionRef = useRef<{ x: number; y: number; z: number }>({
@@ -130,7 +136,7 @@ export function AKDefault1(props: Props & JSX.IntrinsicElements["group"]) {
   });
 
   useFrame((state) => {
-    if (props.turn) {
+    if (props.turn === false) {
       setTimeout(() => {
         if (props.isSpell) {
           const time = state.clock.getElapsedTime() - 2;
@@ -146,7 +152,21 @@ export function AKDefault1(props: Props & JSX.IntrinsicElements["group"]) {
         }
       }, 2000);
       if (!props.isSpell) {
-        materials.AK_default.color = originalColor.current;
+        materials.AK_default.color.copy(originalColor.current);
+        positionRef.current.x = 0;
+      }
+
+      if (meshRef.current) {
+        meshRef.current.position.set(
+          positionRef.current.x,
+          positionRef.current.y,
+          positionRef.current.z
+        );
+      }
+    } else {
+      if (!props.isSpell) {
+        console.log("원래색으로");
+        materials.AK_default.color.copy(originalColor.current);
         positionRef.current.x = 0;
       }
 
@@ -159,11 +179,14 @@ export function AKDefault1(props: Props & JSX.IntrinsicElements["group"]) {
       }
     }
   });
+  console.log(props.turn, "플레이어1");
+  console.log(originalColor.current, "색깔!!");
   // 시각적 애니메이션
 
+  useEffect(() => {}, []);
   // 사운드
   useEffect(() => {
-    if (props.turn) {
+    if (!props.turn) {
       let attacked: HTMLAudioElement | null = null;
       if (props.isSpell) {
         setTimeout(() => {
@@ -206,10 +229,13 @@ export function LUNADefault1(props: Props & JSX.IntrinsicElements["group"]) {
 
   // 타격 관련 로직
   // 시각적 애니메이션
-  const originalColor = useRef<THREE.Color>(
-    new THREE.Color(materials.LUNA_default.color)
-  );
-
+  // const originalColor = useRef<THREE.Color>(
+  //   new THREE.Color(materials.LUNA_default.color)
+  // );
+  // const originalColor = useRef<THREE.Color>(
+  //   materials.LUNA_default.color.clone()
+  // );
+	const originalColor = useRef<THREE.Color>(new THREE.Color().setRGB(1, 1, 1));
   const meshRef = useRef<THREE.Mesh>(null);
   const positionRef = useRef<{ x: number; y: number; z: number }>({
     x: 0,
@@ -218,7 +244,7 @@ export function LUNADefault1(props: Props & JSX.IntrinsicElements["group"]) {
   });
 
   useFrame((state) => {
-    if (props.turn) {
+    if (!props.turn) {
       setTimeout(() => {
         if (props.isSpell) {
           const time = state.clock.getElapsedTime() - 2;
@@ -234,7 +260,22 @@ export function LUNADefault1(props: Props & JSX.IntrinsicElements["group"]) {
         }
       }, 2000);
       if (!props.isSpell) {
-        materials.LUNA_default.color = originalColor.current;
+        console.log("원래색으로");
+        materials.LUNA_default.color.copy(originalColor.current);
+        positionRef.current.x = 0;
+      }
+
+      if (meshRef.current) {
+        meshRef.current.position.set(
+          positionRef.current.x,
+          positionRef.current.y,
+          positionRef.current.z
+        );
+      }
+    } else {
+      if (!props.isSpell) {
+        console.log("원래색으로");
+        materials.LUNA_default.color.copy(originalColor.current);
         positionRef.current.x = 0;
       }
 
@@ -247,6 +288,8 @@ export function LUNADefault1(props: Props & JSX.IntrinsicElements["group"]) {
       }
     }
   });
+  console.log(props.turn, "플레이어1");
+  console.log(originalColor.current, "색깔!!");
   // 시각적 애니메이션
 
   // 사운드
