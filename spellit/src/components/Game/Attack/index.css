@@ -12,3 +12,7 @@
 .attack-character-2p{
   width: 10rem;
 }
+.characterComboImg {
+  position: absolute;
+  height: 400px;
+}

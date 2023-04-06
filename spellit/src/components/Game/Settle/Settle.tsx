@@ -138,7 +138,7 @@ function Settle() {
             }
             setTimeout(() => {
               setIsCanvas(false);
-              dispatch(playerActions.p2HpDecrese(d));
+              // dispatch(playerActions.p2HpDecrese(d));
             }, 3000);
           } else {
             console.log("공격 당하는중,,");
@@ -150,7 +150,7 @@ function Settle() {
             }
             setTimeout(() => {
               setIsCanvas(false);
-              dispatch(playerActions.p1HpDecrese(d));
+              // dispatch(playerActions.p1HpDecrese(d));
             }, 3000);
           }
         }, 15000);
@@ -168,7 +168,7 @@ function Settle() {
     console.log("=========");
     let d: number = 0;
 
-    if (idx !== attacks.length) {
+    if (idx < attacks.length) {
       console.log("아직 정산 진행중...");
       d = settling(idx);
       console.log("p1HP : ", p1Hp);
@@ -218,23 +218,39 @@ function Settle() {
       // }
 
       // idx 증가
-      setTimeout(() => {
-        // setIdx(idx + 1);
-      }, 15000);
+      // setTimeout(() => {
+      //   setIdx(idx + 1);
+      // }, 15000);
       // 모든 스펠 정산 끝
     } else {
+      let totalp1d = 0;
+      let totalp2d = 0;
+      for (let idx = 0; idx < attacks.length; idx++) {
+        let d = attacks[idx].card.damage * percentList[idx];
+        if (attacks[idx].isMine) {
+          if (p2Deffense) {
+            d = d * 0.8;
+          }
+          if (d >= p2Hp) {
+            d = p2Hp;
+          }
+          totalp2d += d;
+          dispatch(playerActions.p2HpDecrese(totalp2d));
+        } else {
+          if (p1Deffense) {
+            d = d * 0.8;
+          }
+          if (d >= p1Hp) {
+            d = p1Hp;
+          }
+          totalp1d += d;
+          dispatch(playerActions.p1HpDecrese(totalp1d));
+        }
+      }
       setTimeout(() => {
         // 피가 한 사람이라도 없으면 result로 이동
-        if (p1Hp - d <= 0 || p2Hp - d <= 0) {
+        if (p1Hp - totalp1d <= 0 || p2Hp - totalp2d <= 0) {
           console.log("게임 끝!! Result로 이동해야지~");
-          send({
-            event: "gameOver",
-            roomId: roomId,
-            memberId: memberId,
-            data: {
-              hp: p1Hp - d,
-            },
-          });
           // 피가 남아 있으면 ready 턴으로 이동
         } else {
           dispatch(settleActions.percentListClear());
@@ -246,15 +262,15 @@ function Settle() {
           //     memberId: memberId,
           //     data: ''
           // })
-          send({
-            event: "gameOver",
-            roomId: roomId,
-            memberId: memberId,
-            data: {
-              hp: p1Hp - d,
-            },
-          });
         }
+        send({
+          event: "gameOver",
+          roomId: roomId,
+          memberId: memberId,
+          data: {
+            hp: p1Hp - totalp1d,
+          },
+        });
         // 턴 수 증가
         dispatch(settleActions.addTurnCount());
       }, 1000);

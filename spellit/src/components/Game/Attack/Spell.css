@@ -274,3 +274,9 @@ vbody {
       opacity: 1;
     }
   }
+
+
+.characterComboImg {
+    position: absolute;
+    height: 400px;
+}
