@@ -209,7 +209,7 @@ const OtherCombo = ({ attack }: { attack: AttackType }) => {
               <img
                 className="myCharacter"
                 style={{ width: "400px" }}
-                src={require(`../../../assets/character/${p1Character}_attack.png`)}
+                src={require(`../../../assets/character/${p2Character}_attack.png`)}
                 alt=""
               />
             )}
@@ -223,8 +223,15 @@ const OtherCombo = ({ attack }: { attack: AttackType }) => {
               />
               <div id="origin">
                 <div>
-                  <div>COMBO!!</div>
-                  <div>퍼펙트를 달성하셨습니다.</div>
+                  <img
+                    className="characterComboImg"
+                    src={require(`../../../assets/character/${p2Character}_combo.png`)}
+                    alt=""
+                  />
+                  <div className="prior">
+                    <div>COMBO!!</div>
+                    <div>상대가 추가영창을 합니다.</div>
+                  </div>
                 </div>
               </div>
             </div>

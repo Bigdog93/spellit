@@ -274,3 +274,35 @@ vbody {
       opacity: 1;
     }
   }
+
+.prior {
+    position: absolute;
+    z-index: 11;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.characterComboImg {
+    position: absolute;
+    height: 850px;
+    top: 50%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    clip-path: polygon(20% 0, 100% 0, 80% 100%, 0 100%);
+
+    /* 애니메이션 이름 */
+    animation-name: upperSlide;
+    animation-duration:3.5s;
+    animation-timing-function: cubic-bezier(0,1,1,.01);
+    animation-direction:alternate;
+    animation-fill-mode: forwards;
+}
+@keyframes upperSlide {
+    0% {
+        left: calc(-100vw);
+    }
+    100% {
+        left: 150vw;
+    }
+}

@@ -125,8 +125,8 @@ const Blow = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
   useEffect(() => {
     if (count >= 600) {
       // 게임 정지
-      handleTimer();
-      handleResult();
+      // handleTimer();
+      // handleResult();
       // 성공 전달
       setIsSuccess(true);
     }

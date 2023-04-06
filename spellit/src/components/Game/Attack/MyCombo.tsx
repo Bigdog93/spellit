@@ -263,8 +263,15 @@ const MyCombo = ({attack}: {attack: AttackType}) => {
               />
               <div id="origin">
                 <div>
-                  <div>COMBO!!</div>
-                  <div>퍼펙트를 달성하셨습니다.</div>
+                  <img
+                    className="characterComboImg"
+                    src={require(`../../../assets/character/${p1Character}_combo.png`)}
+                    alt=""
+                  />
+                  <div className="prior">
+                    <div>추가타!!</div>
+                    <div>분노의 외침을 들려주세요</div>
+                  </div>
                 </div>
               </div>
             </div>
