@@ -7,7 +7,7 @@ interface Props {
   handleButton: () => void;
   handleSpell: () => void;
   isStart: boolean;
-  turn: React.RefObject<number>;
+  turn: boolean;
 }
 
 const Start: React.FC<Props> = ({
@@ -39,7 +39,7 @@ const Start: React.FC<Props> = ({
         scene.add(obj);
         // 초기 위치 설정(반응형)
         scene.scale.set(0.4, 0.4, 0.4);
-        if (turn.current === 1) {
+        if (turn) {
           scene.position.set(-3.5, -0.5, -1);
         } else {
           scene.position.set(3.5, -0.5, -1);
@@ -57,25 +57,26 @@ const Start: React.FC<Props> = ({
     if (batchSystem) {
       batchSystem.update(delta);
     }
+		// setTimeout(() => {
+		// 	// console.log("happengin?")
+		// 	handleSpell();
+		// 	handleButton();
+		// }, 2000);
 
   });
 	
 	useEffect(()=> {
-		setTimeout(() => {
-			console.log("happengin?")
-			handleSpell();
-			handleButton();
-		}, 2000);
+    console.log('useEffect 안에 들어옴!!!!!!!!!!!!!!!!!!!')
+    setTimeout(() => {
+      handleButton();
+      handleSpell();
+    }, 2000);
 	}, [])
 
 	
 
   // useEffect(() => {
-  //   console.log('useEffect 안에 들어옴!!!!!!!!!!!!!!!!!!!')
-  //   setTimeout(() => {
-  //     handleButton();
-  //     handleSpell();
-  //   }, 2000);
+
   // }, [])
 
   // 사운드

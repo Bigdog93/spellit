@@ -19,9 +19,6 @@ import Lightning from "./quarks/Lightening";
 import SnowStorm from "./quarks/SnowStorm";
 
 import "./Skills.css";
-import { useDispatch, useSelector } from "react-redux";
-import { settleActions } from "@/store/settle";
-import { RootState } from "@/store";
 
 type props = {
   code: string;
@@ -30,8 +27,8 @@ type props = {
   p2Character: string;
   check: boolean;
   idx: number;
-  // handleIdxChange: (idx: number) => void;
-  onTrigger: () => void;
+	handleIdx: ()=> void
+
 };
 
 function Skills({
@@ -41,35 +38,41 @@ function Skills({
   p2Character,
   check,
   idx,
-  onTrigger,
+	handleIdx
+
 }: // handleIdxChange,
 props) {
-  const dispatch = useDispatch();
 
-  console.log("------");
-  console.log(check);
-
-  console.log("------");
+ 
+	console.log("------");
+	console.log(idx,"idx")
+  console.log(code, "마법");
+	console.log(isMine, "누구냐!!!!!!!!!!!!!!!!!!!!!1111")
+	
+	console.log("------");
   // 마법 시전 효과 시작
-  const [isStart, setIsStart] = useState<boolean>(check);
-  const reSttart = check;
-  console.log(isStart);
-  console.log(reSttart);
-  console.log("------");
+  const [isStart, setIsStart] = useState<boolean>(true);
 
   // 마법 사용
   const [isSpell, setIsSpell] = useState<boolean>(false);
   // camera
   const cameraNum = useRef<number>(2);
   // 현재턴
-  console.log(code, "마법");
+
   const turn = useRef<number>(Number(isMine));
 
-  const [cnt, setCnt] = useState(0);
+	console.log(turn, "누구 타임이냐")
+
+;
+
+// check
+useEffect(()=> {
+	console.log(idx)
+	console.log("idx가 변함!!!!")
+},[idx])
 
   const handleButton = () => {
     setIsStart(!isStart);
-    console.log("state 값변경");
   };
   const handleSpell = () => {
     setIsSpell(!isSpell);
@@ -79,23 +82,7 @@ props) {
     cameraNum.current = num;
   };
 
-  useEffect(() => {
-    if (!isStart) {
-      onTrigger();
-      setIsStart(true);
-    }
-  }, [onTrigger]);
-
-  // useEffect(() => {
-  //   if (isStart === false) {
-  //     if (cnt === 0) {
-  //       setIsStart(() => true);
-  // 			setCnt(cnt +1)
-  //     } else {
-  //       setCnt(0)
-  //     }
-  //   }
-  // }, [isStart]);
+ 
 
   console.log("=============================");
   console.log(isStart, "isStart in skills");
@@ -144,7 +131,7 @@ props) {
               handleButton={handleButton}
               handleSpell={handleSpell}
               isStart={isStart}
-              turn={turn}
+              turn={isMine}
             />
           </>
         )}
@@ -157,7 +144,9 @@ props) {
               handleSpell={handleSpell}
               isSpell={isSpell}
               selectCamera={selectCamera}
-              turn={turn}
+              turn={isMine}
+							handleIdx={handleIdx}
+							setIsStart={setIsStart}
             />
           </>
         )}
@@ -169,6 +158,8 @@ props) {
               isSpell={isSpell}
               selectCamera={selectCamera}
               turn={turn}
+							handleIdx={handleIdx}
+							setIsStart={setIsStart}
             />
           </>
         )}
@@ -233,7 +224,7 @@ props) {
           isStart={isStart}
           isSpell={isSpell}
           cameraNum={cameraNum}
-          turn={turn}
+          turn={isMine}
         />
       </Canvas>
     </div>
@@ -247,7 +238,7 @@ type MyCameraProps = {
   isStart: boolean;
   isSpell: boolean;
   cameraNum: React.RefObject<number>;
-  turn: React.RefObject<number>;
+  turn: boolean;
 };
 
 function MyCamera({ isStart, isSpell, cameraNum, turn }: MyCameraProps) {
@@ -257,7 +248,7 @@ function MyCamera({ isStart, isSpell, cameraNum, turn }: MyCameraProps) {
 
   // player1
   useEffect(() => {
-    if (turn.current === 1) {
+    if (turn) {
       if (cameraNum.current === 0) {
         // 카메라 이동(처음만 확대) 0
         if (isStart) {
@@ -323,7 +314,7 @@ function MyCamera({ isStart, isSpell, cameraNum, turn }: MyCameraProps) {
 
   // player2
   useEffect(() => {
-    if (turn.current === 0) {
+    if (!turn) {
       if (cameraNum.current === 0) {
         // 카메라 이동(처음만 확대) 0
         if (isStart) {

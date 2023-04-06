@@ -8,6 +8,8 @@ interface Props {
   isSpell: boolean;
   selectCamera: (num: number) => void;
   turn: React.RefObject<number>;
+	handleIdx:()=> void
+	setIsStart:(item:boolean)=> void
 }
 
 const Lightning: React.FC<Props> = ({
@@ -15,6 +17,8 @@ const Lightning: React.FC<Props> = ({
   isSpell,
   selectCamera,
   turn,
+	handleIdx,
+	setIsStart
 }: Props) => {
   const { size } = useThree();
   const sceneRef = useRef<THREE.Group>(null);
@@ -69,9 +73,14 @@ const Lightning: React.FC<Props> = ({
     }
   });
 
-  setTimeout(() => {
-    handleSpell();
-  }, 4500);
+	useEffect(()=> {
+		setTimeout(() => {
+			handleIdx()
+			handleSpell();
+			setIsStart(true)
+		}, 4500);
+	})
+
 
   useEffect(() => {
     let thunder: HTMLAudioElement | null = null;

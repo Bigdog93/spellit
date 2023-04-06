@@ -43,9 +43,9 @@ export function CBDefault2(props: Props & JSX.IntrinsicElements["group"]) {
 	// console.log(props.turn.current)
 
   useFrame((state) => {
-		console.log("????")
+
     if (props.turn.current === 1) {
-			console.log("@@@@@")
+
       setTimeout(() => {
         if (props.isSpell) {
           const time = state.clock.getElapsedTime() - 2;
@@ -57,7 +57,6 @@ export function CBDefault2(props: Props & JSX.IntrinsicElements["group"]) {
 
           const color = new THREE.Color("#ff4040");
           materials.CB_default.color = color;
-					console.log("why?")
         } else {
         }
       }, 2000);
