@@ -75,7 +75,6 @@ const Matching = () => {
   
   return (
     <div>
-      {memberId}
       { !connected && <Loading/> }
       { connected && <Versus/> }
     </div>
