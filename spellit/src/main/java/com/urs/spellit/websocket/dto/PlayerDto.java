@@ -41,7 +41,7 @@ public class PlayerDto {
 		return PlayerDto.builder()
 				.session(session)
 				.memberId(member.getId())
-				.hp(300)
+				.hp(200)
 				.nickname(member.getNickname())
 				.level(member.getLevel())
 				.playCount(member.getPlayCount())
