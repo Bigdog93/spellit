@@ -1,8 +1,13 @@
+.pointer {
+  cursor: pointer !important;
+}
 .deckBtn {
   background-color: transparent;
   border: 0;
 }
+
 .homeBtn {
+  z-index: 50;
   position: absolute; 
   bottom: 10px;
   right: 10px;
@@ -47,7 +52,7 @@
 }
 .characterChangerImg {
   box-sizing: border-box;
-  background-color: rgba(47, 40, 77, 0.874);
+  background-color: rgba(47, 40, 77, 1);
   width: 50px;
   padding: 4px;
   border-radius: 50%;
@@ -55,11 +60,24 @@
   position: absolute;
   bottom: 8%;
   right: 15%;
-  cursor: pointer;
   transition: .2s all;
 }
-.characterChangerImg:hover {
+.activate:hover {
   background-color: rgb(69, 51, 129);
+  cursor: pointer;
+}
+.cardChangerImg {
+  box-sizing: border-box;
+  background-color: rgba(47, 40, 77, 1);
+  width: 50px;
+  padding: 4px;
+  border-radius: 50%;
+  border: 1px solid rgb(0, 0, 0);
+  position: absolute;
+  /* bottom: 8%;
+  right: 15%; */
+  cursor: pointer;
+  transition: .2s all;
 }
 .sidebar{
   width: 30vw;
@@ -67,6 +85,7 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  z-index: 1;
   /* vertical-align: middle; */
 }
 .deckBtn:hover {
@@ -153,7 +172,7 @@
 .selectedCards {
   background-color: rgb(47, 55, 75);
   border: solid 2px white;
-  border-radius: 10%;
+  border-radius: 10px;
   height: 40vh;
   width: 20vw;
 }
@@ -169,9 +188,9 @@
 }
 
 .myDeckSettingBtn{
-  position:absolute;
-  width: 28px;
-  right: 5%;
+  position: absolute;
+  bottom: 10px;
+  right: 15%;
 }
 
 @keyframes shake {
@@ -239,4 +258,59 @@
 }
 .characterStory {
   color: rgb(211, 211, 211)
+}
+.myDeckContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: calc(40vh - 70px);
+}
+.selectedCardBtnBox{
+  /* display: flex;
+  flex-direction: column;
+  width: 100%; */
+  box-sizing: border-box;
+  cursor: default;
+  transition: .2s all;
+  padding: 2px 0;
+  border-radius: 10px;
+  border: 1px solid transparent;
+}
+.selectedCardBtnBox:hover {
+  border: 1px solid rgb(255, 255, 255);
+}
+.fire:hover {
+  background-color: rgba(133, 0, 0, 0.384);
+}
+.water:hover {
+  background-color: rgba(29, 0, 133, 0.384);
+}
+.wind:hover {
+  background-color: rgba(0, 133, 89, 0.384);
+}
+.earth:hover {
+  background-color: rgba(133, 89, 0, 0.384);
+}
+.light:hover {
+  background-color: rgba(255, 255, 255, 0.84);
+  color: black;
+}
+.dark:hover {
+  background-color: rgba(75, 75, 75, 0.384);
+}
+.selectedCardBtn{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.selectedCardBtnImg img{
+  width: 2.1rem;
+  height: 2rem;
+}
+
+.selectedCardtitle{
+  align-items: center;
 }

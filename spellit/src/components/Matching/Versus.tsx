@@ -1,7 +1,9 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 
 import { RootState } from "@/store/";
+import { Sound } from '@/store/music';
+
 import CoinFlipper from './CoinFlipper'
 
 import './Versus.css'
@@ -17,12 +19,20 @@ const Versus = () => {
     setCoin(true)
   }
   
+  useEffect(()=>{
+    setTimeout(()=>{
+      versus()
+    }, 1000)
+  },[])
 
   window.setTimeout(coinHandler, 3000)
 
   const p1 = useSelector((state: RootState) => state.player.p1);
   const p2 = useSelector((state: RootState) => state.player.p2);
-
+  
+  // Sound Effect 
+  const { versus, versusOpt } = Sound();
+  
   return (
     <div>
       <div className="flex-container">

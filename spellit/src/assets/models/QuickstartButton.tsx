@@ -1,10 +1,13 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { MathUtils, Vector3 } from "three";
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { GLTF } from "three-stdlib";
 
-import { useNavigate } from "react-router-dom";
+import { Sound } from '@/store/music';
+
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -91,12 +94,15 @@ export default function QuickstartButton(
     }, 4000);
   };
 
+  // Sound Effect 
+  const { quickStart, quickStartOpt } = Sound();
+
   return (
     <group
       {...props}
       dispose={null}
       scale={[2.5, 2.5, 2.5]}
-      onClick={toQuickStart}
+      onClick={() => {toQuickStart(); quickStart();}}
     >
       <pointLight
         intensity={2}

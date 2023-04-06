@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import API from "@/utils/API"
 
 import { UserType, DeckType } from '@/utils/Types';
+import { Sound } from '@/store/music';
 
 import playCountUp from '../../assets/profile/playCountUp.svg'
 import playCountDown from '../../assets/profile/playCountDown.svg'
@@ -16,6 +17,8 @@ import PasswordConfig from './PasswordConfig';
 import style from './Profile.module.css'
 import Card from './Card';
 import Modal from './Modal';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 
 const Profile = () => {
@@ -24,6 +27,8 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const korAttributes = ['바람', '물', '불', '땅', '빛', '어둠'];
+
+  const me = useSelector((state: RootState) => state.user );
 
   const [user, setUser] = useState<UserType>({
     deck: [],
@@ -45,8 +50,9 @@ const Profile = () => {
 
   const [openModalFlag, setOpenModalFlag] = useState<boolean>(false);
   const [modifyPasswordModal, setModifyPasswordModal] = useState<boolean>(false);
-
   const [modProp, setModProp] = useState<string>('');
+
+  const [isMyProfile, setIsMyProfile] = useState<boolean>(false);
 
   
   const toHome = () => {
@@ -86,8 +92,11 @@ const Profile = () => {
       console.log(res.data)
       setUser(res.data)
       setHoveredCard(res.data.deck[0])
-      return user;
+      return res.data;
     }).then((res) => {
+      if (res.id === me.id) {
+        setIsMyProfile(true);
+      }
       console.log(res);
     })
     console.log(id)
@@ -97,12 +106,17 @@ const Profile = () => {
     setHoveredCard(card);
   }
 
+  // Sound Effect
+  const { cardFlip, cardFlipOpt } = Sound();
+  const { buttonClick, buttonClickOpt } = Sound();
+
+
   return (
     <div>
       <div className={`${style.bg}`}>
-      <button type="button" className={`${style.btn} ${style.homeBtn}`} onClick={toHome}>
-        <img src={homeBtnImg} alt="home"></img>
-      </button> 
+        <button type="button" className={`${style.btn} ${style.homeBtn}`} onClick={() => {toHome();buttonClick();}}>
+          <img src={homeBtnImg} alt="home"></img>
+        </button> 
         {!modifyPasswordModal && <div className={`${style.myInfo}`}>
           <div className={`${style.sidebar}`}>
             <div className={`${style.selectedCharacter}`}>
@@ -157,7 +171,7 @@ const Profile = () => {
               <div className={`${style.userTextContainer}`}>
                 <div className={`${style.bigSize}`}>
                   {user.nickname}
-                  <div
+                  {isMyProfile && <div
                     className={`${style.editBtn}`}
                   >
                     <img
@@ -166,13 +180,14 @@ const Profile = () => {
                       alt="editBtn.svg"
                       onClick={(e) => {
                         openModal("nickname");
+                        buttonClick();
                       }}
                     />
-                  </div>
+                  </div>}
                 </div>
                 <div className={`${style.smallSize}`}>
-                  {user.profileMsg}
-                  <div
+                  {user.profileMsg? <div>{user.profileMsg}</div>:<div>상태 메세지를 입력하세요.</div>}
+                  {isMyProfile && <div
                     className={`${style.editBtn}`}
                   >
                     <img
@@ -181,13 +196,14 @@ const Profile = () => {
                       alt="editBtn.svg"
                       onClick={(e) => {
                         openModal("profileMsg");
+                        buttonClick();
                       }}
                     />
-                  </div>
+                  </div>}
                 </div>
-                <div className={`${style.passWordConfigBtnDiv}`} onClick={openPassConfig}>
+                {isMyProfile && <div className={`${style.passWordConfigBtnDiv}`} onClick={()=>{openPassConfig(); buttonClick();}}>
                   <img src={passwordConfigImg} alt='password config'></img>
-                </div>
+                </div>}
               </div>
               <div className={`${style.infoRow}`}>
                 <div className={`${style.infoTitle}`}>덱</div>
@@ -198,6 +214,7 @@ const Profile = () => {
                       key={index}
                       onMouseOver={(e) => cardInfo(card)}
                       className={`${style.cardContainer}`}
+                      onMouseEnter={() => cardFlip()} onMouseLeave={() => cardFlipOpt.stop()}
                     >
                       <Card key={index} card={card.code} />
                     </div>

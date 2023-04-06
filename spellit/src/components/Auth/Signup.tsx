@@ -6,7 +6,7 @@ import { userActions } from '@/store/user'
 
 import './Login.css'
 import API from "@/utils/API"
-import kakao from '../../assets/ui/kakao_login_medium_narrow.png'
+import Logo from '../../assets/ui/logo.png'
 
 
 const Signup = () => {
@@ -136,6 +136,8 @@ const Signup = () => {
   return (
     <div className="auth-bg">
       <div className="login-box">
+        <img src={Logo} alt="logo" className="loginLogo"/>
+        <br />
         <form action="submit" className="login-form" onSubmit={signupHandler}>
           <div className="signupRow">
             <div>

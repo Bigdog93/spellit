@@ -217,58 +217,105 @@ const MyCombo = ({attack}: {attack: AttackType}) => {
 
     return (
       <div className="attack-bg">
-      <div className="attack-top-items">
-        <div className='first-hp-box'>
+        <div className="attack-top-items">
+          <div className="first-hp-box">
             <ProfileHp character={p1Character} level={p1Level}></ProfileHp>
             <div className="first-hp-bar" style={p1HpStyle}></div>
           </div>
           <Timer time={sec}></Timer>
-          <div className='second-hp-box'>
+          <div className="second-hp-box">
             <ProfileHp character={p2Character} level={p2Level}></ProfileHp>
             <div className="second-hp-bar" style={p2HpStyle}></div>
-        </div>
-      </div>
-
-      <div className="attack-bottom-itmes">
-        <div style={{display: 'flex', flexDirection: 'column'}}>
-          <div style={{display: 'inline-flex'}}>
-            {attackCardList.map((card: AttackType, idx: number) => (
-              card.isMine && <img style={{width: '150px', height: '150px'}} className={`effectImgTag-${idx} hiddenEffect`} key={idx} src={require(`../../../assets/effect/${card.card.code}.png`)} alt="" />
-              ))}
           </div>
-          {attack.isMine && 
-            <img className="myCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p1Character}_attack.png`)} alt="" /> 
-          }
         </div>
-        <div className="SpellandBar">
-          <div className="SpellBox">
-            <img style={{ width: 800, height: 400}} src={require(`../../../assets/InGame/SpellBox.png`)} alt="" />
-            <div id='origin'>
-              <div>COMBO!!</div>
-              <div>퍼펙트를 달성하셨습니다.</div>
+
+        <div className="attack-bottom-itmes">
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div style={{ display: "inline-flex" }}>
+              {attackCardList.map(
+                (card: AttackType, idx: number) =>
+                  card.isMine && (
+                    <img
+                      style={{ width: "150px", height: "150px" }}
+                      className={`effectImgTag-${idx} hiddenEffect`}
+                      key={idx}
+                      src={require(`../../../assets/effect/${card.card.code}.png`)}
+                      alt=""
+                    />
+                  )
+              )}
+            </div>
+            {attack.isMine && (
+              <img
+                className="myCharacter"
+                style={{ width: "400px" }}
+                src={require(`../../../assets/character/${p1Character}_attack.png`)}
+                alt=""
+              />
+            )}
+          </div>
+          <div className="SpellandBar">
+            <div className="SpellBox">
+              <img
+                style={{ width: 800, height: 400 }}
+                src={require(`../../../assets/InGame/SpellBox.png`)}
+                alt=""
+              />
+              <div id="origin">
+                <div>
+                  <div>COMBO!!</div>
+                  <div>퍼펙트를 달성하셨습니다.</div>
+                </div>
+              </div>
+            </div>
+            <div className="spell-bar-box">
+              <img
+                src={require(`../../../assets/InGame/SkillBar.png`)}
+                alt=""
+                style={{ width: "100%", height: "140px" }}
+              />
+              <div className="cardList">
+                {attackCardList.map(
+                  (card: AttackType, idx: number) =>
+                    card.isMine && (
+                      <img
+                        style={{ width: "100px", margin: "10px" }}
+                        key={idx}
+                        src={require(`../../../assets/card/icon/${card.card.code}.png`)}
+                        alt=""
+                      />
+                    )
+                )}
+              </div>
             </div>
           </div>
-          <div className="spell-bar-box">
-            <img src={require(`../../../assets/InGame/SkillBar.png`)} alt="" style={{width: '100%', height: '140px'}} />
-            <div className="cardList">
-              {attackCardList.map((card: AttackType, idx: number) => (
-                card.isMine && <img style={{width: '100px', margin: "10px"}} key={idx} src={require(`../../../assets/card/icon/${card.card.code}.png`)} alt="" />
-              ))}
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div style={{ display: "inline-flex" }}>
+              {attackCardList.map(
+                (card: AttackType, idx: number) =>
+                  !card.isMine && (
+                    <img
+                      style={{ width: "150px", height: "150px" }}
+                      className={`effectImgTag-${idx} hiddenEffect`}
+                      key={idx}
+                      src={require(`../../../assets/effect/${card.card.code}.png`)}
+                      alt=""
+                    />
+                  )
+              )}
             </div>
+            {!attack.isMine && (
+              <img
+                className="yourCharacter"
+                style={{ width: "400px" }}
+                src={require(`../../../assets/character/${p2Character}_attack.png`)}
+                alt=""
+              />
+            )}
           </div>
-        </div>
-        <div style={{display: 'flex', flexDirection: 'column'}}>
-          <div style={{display: 'inline-flex'}}>
-            {attackCardList.map((card: AttackType, idx: number) => (
-                  !card.isMine && <img style={{width: '150px', height: '150px'}} className={`effectImgTag-${idx} hiddenEffect`} key={idx} src={require(`../../../assets/effect/${card.card.code}.png`)} alt="" />
-              ))}
-          </div>
-            {!(attack.isMine) && <img className="yourCharacter" style={{width: '400px'}} src={require(`../../../assets/character/${p2Character}_attack.png`)} alt="" /> }
         </div>
       </div>
-
-    </div>
-    )
+    );
 }
 
 export default MyCombo;

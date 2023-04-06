@@ -56,12 +56,14 @@ const Defense = () => {
         "isDone이 트루라서 내 디펜스 결과 보내고 세틀로 넘어갈 예정: ",
         myDefense
       );
-      send({
-        event: "settleTurn",
-        roomId: roomId,
-        memberId: memberId,
-        data: { defense: myDefense },
-      });
+      setTimeout(() => {
+        send({
+          event: "settleTurn",
+          roomId: roomId,
+          memberId: memberId,
+          data: { defense: myDefense },
+        });
+      }, 1500)
     }
   }, [onTime, isDone, myDefense]);
   // focus가 옮겨가지 않도록 마우스 이벤트를 막기 위한 function

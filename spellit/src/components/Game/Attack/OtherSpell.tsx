@@ -25,6 +25,7 @@ const OtherSpell = ({attack, idx}: {attack: AttackType, idx: number}) => {
   const memberId = useSelector((state: RootState) => state.user.id)
   const p1Character = useSelector((state: RootState) => state.player.p1!.gameCharacterEntity.englishName);
   const p2Character = useSelector((state: RootState) => state.player.p2!.gameCharacterEntity.englishName);
+  const p2nickname = useSelector((state: RootState) => state.player.p2!.nickname);
 
   const comboTurn = useSelector((state: RootState) => state.game.comboTurn)
   const attackCardList = useSelector((state: RootState) => state.game.attacks);
@@ -188,9 +189,11 @@ const OtherSpell = ({attack, idx}: {attack: AttackType, idx: number}) => {
           <div className="SpellandBar">
             <div className="SpellBox">
               <img style={{ width: 800, height: 400}} src={require(`../../../assets/InGame/SpellBox.png`)} alt="" />
-              {showReady && <h1 className="readyText">READY</h1>}
+              {showReady && <h1 className="readyText">{p2nickname}님이 주문을 외웁니다</h1>}
               {showStart && <h1 className="startText">START</h1>}
-              <div id='origin'>{spanEl}</div>
+              <div id='origin'>
+              <div className="originSpellBox">{spanEl}</div>
+            </div>
             </div>
             <div className="spell-bar-box">
               <img src={require(`../../../assets/InGame/SkillBar.png`)} alt="" style={{width: '100%', height: '140px'}} />

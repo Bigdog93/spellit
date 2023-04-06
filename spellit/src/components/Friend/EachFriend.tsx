@@ -67,9 +67,13 @@ function EachFriend({ friend, isFriend, acceptFriendRequest }: Props) {
     }, 200);
   }
 
+  function toProfile() {
+    navigate('/profile/' + friend.id);
+  }
+
   return (
     <div className={`${style.EachFriendContainer}`}>
-      <div className={`${style.friendInfoleft}`}>
+      <div className={`${style.friendInfoleft}`}  onClick={toProfile}>
         <div className={`${style.friendCharacterDiv}`}>
           <img
             className={`${style.friendCharacterImg}`}
