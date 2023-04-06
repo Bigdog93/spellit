@@ -1,0 +1,6 @@
+/* == 음악 on/off 버튼 */
+.soundToggleBtn {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+}

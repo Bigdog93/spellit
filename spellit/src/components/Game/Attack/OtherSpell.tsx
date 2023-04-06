@@ -123,9 +123,10 @@ const OtherSpell = ({attack, idx}: {attack: AttackType, idx: number}) => {
 
         // console.log('SpeechRecognition end!')
         // setSpanEl([]);
-        // setTimeout(() => {
-        //   dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
-        // }, 2000);
+        setTimeout(() => {
+          // dispatch(gameActions.setIdx())  // 다음 주문 영창으로 넘어가는 인터벌
+          setSpanEl([]);
+        }, 2000);
 
     }, card.cost*1000);
       

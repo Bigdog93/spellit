@@ -11,6 +11,8 @@ import "./Login.css";
 import { UserEntityType } from "@/utils/Types";
 import { authActions } from "@/store/auth";
 
+import SoundToggleBtn from "@/components/Modules/SoundBtn"
+
 const Login = () => {
   const { send } = useContext(WebSocketContext);
   const navigate = useNavigate();
@@ -172,6 +174,8 @@ const Login = () => {
           SIGN UP
         </button>
       </div>
+      
+      <SoundToggleBtn></SoundToggleBtn>
     </div>
     // </div>
   );
