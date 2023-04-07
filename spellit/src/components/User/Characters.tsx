@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/index';
 import { MouseEventHandler, useState } from 'react';
 import characterInfoFrame from '@/assets/ui/characterInfoFrame.svg'
+import { Sound } from '@/store/music';
 
 type GameCharacterType = {
   id : number,
@@ -19,8 +20,18 @@ interface PropsType {
   selectCharacter: (res: GameCharacterType) => void;
 };
 
-const Characters = ({characters, selectCharacter}: PropsType) => {
-  const onSelectCharacter = (data:any)=>{
+const Characters = ({ characters, selectCharacter }: PropsType) => {
+  
+  const { LUNAPickPlay, AKPickPlay, CBPickPlay } = Sound()
+
+  const onSelectCharacter = (data: GameCharacterType) => {
+    if (data.englishName === 'LUNA') {
+      LUNAPickPlay() 
+    } else if (data.englishName === 'CB') {
+      CBPickPlay()
+    } else if (data.englishName === 'AK') {
+      AKPickPlay()
+    }
     selectCharacter(data);
     console.log(data)
   }
