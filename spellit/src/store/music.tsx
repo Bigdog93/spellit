@@ -78,7 +78,7 @@ export const MusicProvider = ({ children }: { children: React.ReactNode }) => {
     const [drawSound, drawSoundOpt ] = useSound(DrawSound);
     const [loseSound, loseSoundOpt] = useSound(LoseSound);
     
-    const [LUNAPickPlay, LUNAPickVoiceOpt] = useSound(LUNAPickVoice, {volume: 3.5});
+    const [LUNAPickPlay, LUNAPickVoiceOpt] = useSound(LUNAPickVoice, {volume: 4.5});
     const [CBPickPlay, CBPickVoiceOpt] = useSound(CBPickVoice);
     const [AKPickPlay, AKPickVoiceOpt] = useSound(AKPickVoice, {volume: 1.5});
 
