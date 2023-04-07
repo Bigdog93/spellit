@@ -34,9 +34,6 @@ const Blow = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
 
   const streamRef = useRef<MediaStream | null>(null);
   const handleMicInput = async (stream: MediaStream) => {
-    if (isDone) {
-      return;
-    }
     // audioctx를 만들어 web audio api를 사용할 수 있도록 함
     const audioContext = new AudioContext();
     audioContext.resume();
@@ -87,7 +84,7 @@ const Blow = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
       draw(level);
 
       // 특정 레벨 이상일 때, cnt 증가
-      if (level > 60) {
+      if (level > 50) {
         circleRef.current?.classList.add("active");
         setCount((prevCount) => prevCount + 1);
       } else {
@@ -123,7 +120,7 @@ const Blow = ({ onTime, handleTimer, isDone, handleResult }: onTimeProp) => {
 
   // 일정 count이상을 달성하면 게임 정지
   useEffect(() => {
-    if (count >= 600) {
+    if (count >= 300) {
       // 게임 정지
       // handleTimer();
       // handleResult();
