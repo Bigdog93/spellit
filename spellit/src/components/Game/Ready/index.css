@@ -76,7 +76,7 @@ body {
 
 .selectedCard{
   position: absolute;
-  top: 3rem;
+  top: 4rem;
   width: 50vw;
   display: flex;
   flex-direction: row;

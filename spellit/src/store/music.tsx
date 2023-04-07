@@ -17,6 +17,10 @@ import WinSound from '@/assets/soundeffect/Win.mp3'
 import DrawSound from '@/assets/soundeffect/Draw.mp3'
 import LoseSound from '@/assets/soundeffect/Lose.mp3'
 
+import LUNAPickVoice from '@/assets/voice/LUNA_pickVoice.mp3';
+import AKPickVoice from '@/assets/voice/AK_pickVoice.mp3';
+import CBPickVoice from '@/assets/voice/CB_pickVoice.mp3';
+
 import Module from 'module';
 
 
@@ -32,6 +36,7 @@ export const MusicProvider = ({ children }: { children: React.ReactNode }) => {
         interrupt: true,
         loop: true,
         soundEnabled: bgmOn,
+        volume: 0.3
     })
     playBGM({ forceSoundEnabled: bgmOn });
 
@@ -71,7 +76,11 @@ export const MusicProvider = ({ children }: { children: React.ReactNode }) => {
     const [versus, versusOpt ] = useSound(VersusSound);
     const [winSound, winSoundOpt ] = useSound(WinSound);
     const [drawSound, drawSoundOpt ] = useSound(DrawSound);
-    const [loseSound, loseSoundOpt ] = useSound(LoseSound);
+    const [loseSound, loseSoundOpt] = useSound(LoseSound);
+    
+    const [LUNAPickPlay, LUNAPickVoiceOpt] = useSound(LUNAPickVoice, {volume: 4.5});
+    const [CBPickPlay, CBPickVoiceOpt] = useSound(CBPickVoice);
+    const [AKPickPlay, AKPickVoiceOpt] = useSound(AKPickVoice, {volume: 1.5});
 
     return (
         <MusicContext.Provider value={{
@@ -92,6 +101,9 @@ export const MusicProvider = ({ children }: { children: React.ReactNode }) => {
             winSound, winSoundOpt,
             drawSound, drawSoundOpt,
             loseSound, loseSoundOpt,
+            LUNAPickPlay, LUNAPickVoiceOpt,
+            CBPickPlay, CBPickVoiceOpt,
+            AKPickPlay, AKPickVoiceOpt
         }}>
             {children}
             {/* {loginBGM && (
