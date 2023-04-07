@@ -13,7 +13,8 @@ import Start from "./quarks/Start";
 import Tornado from "./quarks/Tornado";
 import DarkHall from "./quarks/DarkHall";
 import Light from "./quarks/Light";
-import Earth from "./quarks/Earth";
+// import Earth from "./quarks/Earth";
+import Ssafy from "./quarks/Ssafy";
 import FireBall from "./quarks/FireBall";
 import Lightning from "./quarks/Lightening";
 import SnowStorm from "./quarks/SnowStorm";
@@ -193,7 +194,7 @@ props) {
         {/* EARTH */}
         {isSpell && (code === "earth1" || code === "earth2") && (
           <>
-            <Earth
+            <Ssafy
               handleIdx={handleIdx}
               handleSpell={handleSpell}
               isSpell={isSpell}
