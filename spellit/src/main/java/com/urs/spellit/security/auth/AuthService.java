@@ -1,8 +1,13 @@
 package com.urs.spellit.security.auth;
 
 import com.urs.spellit.common.util.SecurityUtil;
+import com.urs.spellit.game.CardRepository;
+import com.urs.spellit.game.DeckRepository;
 import com.urs.spellit.game.GameService;
+import com.urs.spellit.game.entity.CardEntity;
+import com.urs.spellit.game.entity.DeckEntity;
 import com.urs.spellit.member.MemberRepository;
+import com.urs.spellit.member.MemberService;
 import com.urs.spellit.member.model.dto.*;
 import com.urs.spellit.member.model.entity.Member;
 import com.urs.spellit.security.jwt.TokenProvider;
@@ -18,6 +23,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,6 +36,8 @@ public class AuthService {
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
     private final GameService gameService;
+    private final CardRepository cardRepository;
+    private final DeckRepository deckRepository;
 
     @Transactional
     public MemberResponseDto signup(MemberRequestDto memberRequestDto) {
@@ -37,6 +46,15 @@ public class AuthService {
         member.setLevel(1);
         member.setProfileMsg("상태메시지를 설정해주세요.");
         member.setGameCharacterEntity(gameService.getCharacter(1L));
+
+        List<CardEntity> defaultCards=new ArrayList<>();
+        defaultCards.add(cardRepository.findByCode("wind1"));
+        defaultCards.add(cardRepository.findByCode("water1"));
+        defaultCards.add(cardRepository.findByCode("fire1"));
+        defaultCards.add(cardRepository.findByCode("earth1"));
+        defaultCards.add(cardRepository.findByCode("light1"));
+        member.setUserDeck(DeckEntity.toDeck(deckRepository,member,defaultCards));
+
         return MemberResponseDto.of(memberRepository.save(member));
     }
 
