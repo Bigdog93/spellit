@@ -46,170 +46,170 @@ UPDATE
     attribute1=new_record.attribute1,
     attribute2=new_record.attribute2;
 
-INSERT INTO `member`
-(member_id,mod_dt,reg_dt,authority,email,exp,is_deleted,is_online,level,nickname,password,play_count,profile_msg,win_count,character_id,draw_count,lose_count,start_spell)
-VALUES
-    (1,'2023-03-29 04:07:15.873543','2023-03-28 00:50:29.921532','ROLE_USER','aaa@aaa',0,0,0,1,'인의동 대마법사','$2a$10$jztRRiiepvYOpPq6dcf.O.9oqQxNTfw2rP7jw5BDZD7j59dV4KrbG',0,'11연뽑해서 뭐/뭐/뭐/뭐 득했는데 우각하기 귀찮다',0,1,0,0,'0')
-    AS new_record
-ON DUPLICATE KEY
-UPDATE
-    mod_dt=new_record.mod_dt,
-    reg_dt=new_record.reg_dt,
-    authority=new_record.authority,
-    email=new_record.email,
-    exp=new_record.exp,
-    is_deleted=new_record.is_deleted,
-    is_online=new_record.is_online,
-    level=new_record.level,
-    nickname=new_record.nickname,
-    password=new_record.password,
-    play_count=new_record.play_count,
-    profile_msg=new_record.profile_msg,
-    win_count=new_record.win_count,
-    character_id=new_record.character_id,
-    draw_count=new_record.draw_count,
-    lose_count=new_record.lose_count,
-    start_spell=new_record.start_spell;
-
-INSERT INTO `member`
-(member_id,mod_dt,reg_dt,authority,email,exp,is_deleted,is_online,level,nickname,password,play_count,profile_msg,win_count,character_id,draw_count,lose_count,start_spell)
-VALUES
-    (2,'2023-03-28 06:29:13.101507','2023-03-28 00:51:01.170529','ROLE_USER','bbb@bbb',0,0,0,1,'bbb','$2a$10$aiNY1GqapceXdCHUfOw3YOtLcfsL3t2wCq43Ii1DRx4ubKRZi3Tg2',0,NULL,0,1,0,0,'0')
-    AS new_record
-ON DUPLICATE KEY
-UPDATE
-    mod_dt=new_record.mod_dt,
-    reg_dt=new_record.reg_dt,
-    authority=new_record.authority,
-    email=new_record.email,
-    exp=new_record.exp,
-    is_deleted=new_record.is_deleted,
-    is_online=new_record.is_online,
-    level=new_record.level,
-    nickname=new_record.nickname,
-    password=new_record.password,
-    play_count=new_record.play_count,
-    profile_msg=new_record.profile_msg,
-    win_count=new_record.win_count,
-    character_id=new_record.character_id,
-    draw_count=new_record.draw_count,
-    lose_count=new_record.lose_count,
-    start_spell=new_record.start_spell;
-
-INSERT INTO `member`
-(member_id,mod_dt,reg_dt,authority,email,exp,is_deleted,is_online,level,nickname,password,play_count,profile_msg,win_count,character_id,draw_count,lose_count,start_spell)
-VALUES
-    (3,'2023-03-28 13:28:39.159794','2023-03-28 13:28:39.159794','ROLE_USER','',0,0,0,1,'','$2a$10$Eu0Zb9TzxiLuSHftZGnIKe4dVytEP./6/Y3AcnpJQqtMrhgJmuHGe',0,NULL,0,1,0,0,'0')
-    AS new_record
-ON DUPLICATE KEY
-UPDATE
-    mod_dt=new_record.mod_dt,
-    reg_dt=new_record.reg_dt,
-    authority=new_record.authority,
-    email=new_record.email,
-    exp=new_record.exp,
-    is_deleted=new_record.is_deleted,
-    is_online=new_record.is_online,
-    level=new_record.level,
-    nickname=new_record.nickname,
-    password=new_record.password,
-    play_count=new_record.play_count,
-    profile_msg=new_record.profile_msg,
-    win_count=new_record.win_count,
-    character_id=new_record.character_id,
-    draw_count=new_record.draw_count,
-    lose_count=new_record.lose_count,
-    start_spell=new_record.start_spell;
-
-INSERT INTO `member`
-(member_id,mod_dt,reg_dt,authority,email,exp,is_deleted,is_online,level,nickname,password,play_count,profile_msg,win_count,character_id,draw_count,lose_count,start_spell)
-VALUES
-    (4,'2023-03-29 01:07:20.017511','2023-03-29 01:07:20.017511','ROLE_USER','lkc2',0,0,0,1,'absa','$2a$10$tUuQvWmwSa343HnjusQxeurSk8nZinzO3oD9i3MxERY651Ef1n.lG',0,NULL,0,1,0,0,'0')
-    AS new_record
-ON DUPLICATE KEY
-UPDATE
-    mod_dt=new_record.mod_dt,
-    reg_dt=new_record.reg_dt,
-    authority=new_record.authority,
-    email=new_record.email,
-    exp=new_record.exp,
-    is_deleted=new_record.is_deleted,
-    is_online=new_record.is_online,
-    level=new_record.level,
-    nickname=new_record.nickname,
-    password=new_record.password,
-    play_count=new_record.play_count,
-    profile_msg=new_record.profile_msg,
-    win_count=new_record.win_count,
-    character_id=new_record.character_id,
-    draw_count=new_record.draw_count,
-    lose_count=new_record.lose_count,
-    start_spell=new_record.start_spell;
-
-INSERT INTO `member`
-(member_id,mod_dt,reg_dt,authority,email,exp,is_deleted,is_online,level,nickname,password,play_count,profile_msg,win_count,character_id,draw_count,lose_count,start_spell)
-VALUES
-    (5,'2023-03-29 01:15:13.942261','2023-03-29 01:15:13.942261','ROLE_USER','lkc3',0,0,0,1,'absssa','$2a$10$DFqfDCBBSvoFlRhCPGOi8uJO3OqrW29PTqi3msMIlRBeviYTFWYLe',0,NULL,0,1,0,0,'가자가자')
-    AS new_record
-ON DUPLICATE KEY
-UPDATE
-    mod_dt=new_record.mod_dt,
-    reg_dt=new_record.reg_dt,
-    authority=new_record.authority,
-    email=new_record.email,
-    exp=new_record.exp,
-    is_deleted=new_record.is_deleted,
-    is_online=new_record.is_online,
-    level=new_record.level,
-    nickname=new_record.nickname,
-    password=new_record.password,
-    play_count=new_record.play_count,
-    profile_msg=new_record.profile_msg,
-    win_count=new_record.win_count,
-    character_id=new_record.character_id,
-    draw_count=new_record.draw_count,
-    lose_count=new_record.lose_count,
-    start_spell=new_record.start_spell;
-
-INSERT INTO `member`
-(member_id,mod_dt,reg_dt,authority,email,exp,is_deleted,is_online,level,nickname,password,play_count,profile_msg,win_count,character_id,draw_count,lose_count,start_spell)
-VALUES
-    (6,'2023-03-29 01:16:50.870543','2023-03-29 01:16:50.870543','ROLE_USER','lkc34',0,0,0,1,'감자튀김','$2a$10$jFLFElL8bbBPxsuRBI1ykedfpO4ek/7tZCJ9nTTPyvIOsJwzU3URm',0,NULL,0,1,0,0,'가자가자')
-    AS new_record
-ON DUPLICATE KEY
-UPDATE
-    mod_dt=new_record.mod_dt,
-    reg_dt=new_record.reg_dt,
-    authority=new_record.authority,
-    email=new_record.email,
-    exp=new_record.exp,
-    is_deleted=new_record.is_deleted,
-    is_online=new_record.is_online,
-    level=new_record.level,
-    nickname=new_record.nickname,
-    password=new_record.password,
-    play_count=new_record.play_count,
-    profile_msg=new_record.profile_msg,
-    win_count=new_record.win_count,
-    character_id=new_record.character_id,
-    draw_count=new_record.draw_count,
-    lose_count=new_record.lose_count,
-    start_spell=new_record.start_spell;
-
-INSERT INTO `deck`
-(deck_id,card_id,member_id)
-VALUES
-    (1,4,2),
-    (2,5,2),
-    (3,6,2),
-    (4,6,1),
-    (5,1,1),
-    (6,4,1)
-    AS new_record
-ON DUPLICATE KEY
-UPDATE
-    card_id=new_record.card_id,
-    member_id=new_record.member_id;
+-- INSERT INTO `member`
+-- (member_id,mod_dt,reg_dt,authority,email,exp,is_deleted,is_online,level,nickname,password,play_count,profile_msg,win_count,character_id,draw_count,lose_count,start_spell)
+-- VALUES
+--     (1,'2023-03-29 04:07:15.873543','2023-03-28 00:50:29.921532','ROLE_USER','aaa@aaa',0,0,0,1,'인의동 대마법사','$2a$10$jztRRiiepvYOpPq6dcf.O.9oqQxNTfw2rP7jw5BDZD7j59dV4KrbG',0,'11연뽑해서 뭐/뭐/뭐/뭐 득했는데 우각하기 귀찮다',0,1,0,0,'0')
+--     AS new_record
+-- ON DUPLICATE KEY
+-- UPDATE
+--     mod_dt=new_record.mod_dt,
+--     reg_dt=new_record.reg_dt,
+--     authority=new_record.authority,
+--     email=new_record.email,
+--     exp=new_record.exp,
+--     is_deleted=new_record.is_deleted,
+--     is_online=new_record.is_online,
+--     level=new_record.level,
+--     nickname=new_record.nickname,
+--     password=new_record.password,
+--     play_count=new_record.play_count,
+--     profile_msg=new_record.profile_msg,
+--     win_count=new_record.win_count,
+--     character_id=new_record.character_id,
+--     draw_count=new_record.draw_count,
+--     lose_count=new_record.lose_count,
+--     start_spell=new_record.start_spell;
+--
+-- INSERT INTO `member`
+-- (member_id,mod_dt,reg_dt,authority,email,exp,is_deleted,is_online,level,nickname,password,play_count,profile_msg,win_count,character_id,draw_count,lose_count,start_spell)
+-- VALUES
+--     (2,'2023-03-28 06:29:13.101507','2023-03-28 00:51:01.170529','ROLE_USER','bbb@bbb',0,0,0,1,'bbb','$2a$10$aiNY1GqapceXdCHUfOw3YOtLcfsL3t2wCq43Ii1DRx4ubKRZi3Tg2',0,NULL,0,1,0,0,'0')
+--     AS new_record
+-- ON DUPLICATE KEY
+-- UPDATE
+--     mod_dt=new_record.mod_dt,
+--     reg_dt=new_record.reg_dt,
+--     authority=new_record.authority,
+--     email=new_record.email,
+--     exp=new_record.exp,
+--     is_deleted=new_record.is_deleted,
+--     is_online=new_record.is_online,
+--     level=new_record.level,
+--     nickname=new_record.nickname,
+--     password=new_record.password,
+--     play_count=new_record.play_count,
+--     profile_msg=new_record.profile_msg,
+--     win_count=new_record.win_count,
+--     character_id=new_record.character_id,
+--     draw_count=new_record.draw_count,
+--     lose_count=new_record.lose_count,
+--     start_spell=new_record.start_spell;
+--
+-- INSERT INTO `member`
+-- (member_id,mod_dt,reg_dt,authority,email,exp,is_deleted,is_online,level,nickname,password,play_count,profile_msg,win_count,character_id,draw_count,lose_count,start_spell)
+-- VALUES
+--     (3,'2023-03-28 13:28:39.159794','2023-03-28 13:28:39.159794','ROLE_USER','',0,0,0,1,'','$2a$10$Eu0Zb9TzxiLuSHftZGnIKe4dVytEP./6/Y3AcnpJQqtMrhgJmuHGe',0,NULL,0,1,0,0,'0')
+--     AS new_record
+-- ON DUPLICATE KEY
+-- UPDATE
+--     mod_dt=new_record.mod_dt,
+--     reg_dt=new_record.reg_dt,
+--     authority=new_record.authority,
+--     email=new_record.email,
+--     exp=new_record.exp,
+--     is_deleted=new_record.is_deleted,
+--     is_online=new_record.is_online,
+--     level=new_record.level,
+--     nickname=new_record.nickname,
+--     password=new_record.password,
+--     play_count=new_record.play_count,
+--     profile_msg=new_record.profile_msg,
+--     win_count=new_record.win_count,
+--     character_id=new_record.character_id,
+--     draw_count=new_record.draw_count,
+--     lose_count=new_record.lose_count,
+--     start_spell=new_record.start_spell;
+--
+-- INSERT INTO `member`
+-- (member_id,mod_dt,reg_dt,authority,email,exp,is_deleted,is_online,level,nickname,password,play_count,profile_msg,win_count,character_id,draw_count,lose_count,start_spell)
+-- VALUES
+--     (4,'2023-03-29 01:07:20.017511','2023-03-29 01:07:20.017511','ROLE_USER','lkc2',0,0,0,1,'absa','$2a$10$tUuQvWmwSa343HnjusQxeurSk8nZinzO3oD9i3MxERY651Ef1n.lG',0,NULL,0,1,0,0,'0')
+--     AS new_record
+-- ON DUPLICATE KEY
+-- UPDATE
+--     mod_dt=new_record.mod_dt,
+--     reg_dt=new_record.reg_dt,
+--     authority=new_record.authority,
+--     email=new_record.email,
+--     exp=new_record.exp,
+--     is_deleted=new_record.is_deleted,
+--     is_online=new_record.is_online,
+--     level=new_record.level,
+--     nickname=new_record.nickname,
+--     password=new_record.password,
+--     play_count=new_record.play_count,
+--     profile_msg=new_record.profile_msg,
+--     win_count=new_record.win_count,
+--     character_id=new_record.character_id,
+--     draw_count=new_record.draw_count,
+--     lose_count=new_record.lose_count,
+--     start_spell=new_record.start_spell;
+--
+-- INSERT INTO `member`
+-- (member_id,mod_dt,reg_dt,authority,email,exp,is_deleted,is_online,level,nickname,password,play_count,profile_msg,win_count,character_id,draw_count,lose_count,start_spell)
+-- VALUES
+--     (5,'2023-03-29 01:15:13.942261','2023-03-29 01:15:13.942261','ROLE_USER','lkc3',0,0,0,1,'absssa','$2a$10$DFqfDCBBSvoFlRhCPGOi8uJO3OqrW29PTqi3msMIlRBeviYTFWYLe',0,NULL,0,1,0,0,'가자가자')
+--     AS new_record
+-- ON DUPLICATE KEY
+-- UPDATE
+--     mod_dt=new_record.mod_dt,
+--     reg_dt=new_record.reg_dt,
+--     authority=new_record.authority,
+--     email=new_record.email,
+--     exp=new_record.exp,
+--     is_deleted=new_record.is_deleted,
+--     is_online=new_record.is_online,
+--     level=new_record.level,
+--     nickname=new_record.nickname,
+--     password=new_record.password,
+--     play_count=new_record.play_count,
+--     profile_msg=new_record.profile_msg,
+--     win_count=new_record.win_count,
+--     character_id=new_record.character_id,
+--     draw_count=new_record.draw_count,
+--     lose_count=new_record.lose_count,
+--     start_spell=new_record.start_spell;
+--
+-- INSERT INTO `member`
+-- (member_id,mod_dt,reg_dt,authority,email,exp,is_deleted,is_online,level,nickname,password,play_count,profile_msg,win_count,character_id,draw_count,lose_count,start_spell)
+-- VALUES
+--     (6,'2023-03-29 01:16:50.870543','2023-03-29 01:16:50.870543','ROLE_USER','lkc34',0,0,0,1,'감자튀김','$2a$10$jFLFElL8bbBPxsuRBI1ykedfpO4ek/7tZCJ9nTTPyvIOsJwzU3URm',0,NULL,0,1,0,0,'가자가자')
+--     AS new_record
+-- ON DUPLICATE KEY
+-- UPDATE
+--     mod_dt=new_record.mod_dt,
+--     reg_dt=new_record.reg_dt,
+--     authority=new_record.authority,
+--     email=new_record.email,
+--     exp=new_record.exp,
+--     is_deleted=new_record.is_deleted,
+--     is_online=new_record.is_online,
+--     level=new_record.level,
+--     nickname=new_record.nickname,
+--     password=new_record.password,
+--     play_count=new_record.play_count,
+--     profile_msg=new_record.profile_msg,
+--     win_count=new_record.win_count,
+--     character_id=new_record.character_id,
+--     draw_count=new_record.draw_count,
+--     lose_count=new_record.lose_count,
+--     start_spell=new_record.start_spell;
+--
+-- INSERT INTO `deck`
+-- (deck_id,card_id,member_id)
+-- VALUES
+--     (1,4,2),
+--     (2,5,2),
+--     (3,6,2),
+--     (4,6,1),
+--     (5,1,1),
+--     (6,4,1)
+--     AS new_record
+-- ON DUPLICATE KEY
+-- UPDATE
+--     card_id=new_record.card_id,
+--     member_id=new_record.member_id;
 
 -- INSERT INTO `friend_wait`
 -- (id,friend_email,friend_id,member_id)
