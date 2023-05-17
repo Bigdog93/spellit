@@ -1,22 +1,16 @@
+FROM openjdk:11-jdk
 
-FROM nginx
+VOLUME /tmp
 
-RUN mkdir /spellit
+# 생성된 이미지에서 열어줄 
+EXPOSE 8000
 
-WORKDIR /spellit
+# JAR_FILE 변수 정의
+ARG JAR_FILE=./build/libs/spellit-0.0.1-SNAPSHOT.jar
 
-RUN mkdir ./build
+# JAR 파일 메인 디렉터리에 복사
+COPY ${JAR_FILE} app.jar
 
-# spellit에 있는 build 배포파일을 생성한 image의 build 디렉터리로 복사
-COPY ./build ./build
-
-# nginx 의 default.conf 를 삭제
-RUN rm /etc/nginx/conf.d/default.conf
-
-# git nginx.conf 를 아래 경로에 복사
-COPY ./nginx/spellit.conf /etc/nginx/conf.d
-
-EXPOSE 3000
-
-CMD ["nginx", "-g", "daemon off;"]
+# 시스템 진입점 정의
+ENTRYPOINT ["java", "-jar", "-Dfile.encoding=UTF-8", "/app.jar"]
 
