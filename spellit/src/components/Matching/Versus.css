@@ -1,0 +1,126 @@
+.coin-flipper {
+    position: absolute;
+    top:0;
+}
+
+.vs {
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.player {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 40vw;
+    font-size: 12pt;
+}
+
+.character{
+  
+}
+
+.player-info {
+    position: absolute;
+    bottom: 0;
+}
+
+.player-info img{
+    width: 100%;
+    padding: 0 0;
+}
+
+
+.player1 {
+    position: absolute;
+    bottom: 0;
+    width: 90%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: left;
+    text-shadow: 1px 0 #FB7F96, 0 1px #FB7F96, 1px 0 #FB7F96, 0 1px #FB7F96;
+}
+
+.player2 {
+    position: absolute;
+    bottom: 0;
+    /* padding: 10px 0px 60px 0px;
+    width: 100%; */
+    width: 90%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    text-align: right;
+    text-shadow: 1px 0 #76A2F9, 0 1px #76A2F9, 1px 0 #76A2F9, 0 1px #76A2F9;
+}
+.upper-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.player1 div, .player2 div {
+    font-size: 24pt;
+}
+
+.leftSlider {
+    /* 애니메이션 이름 */
+    animation-name: leftSlider;
+    animation-duration:1.5s;
+    animation-timing-function: cubic-bezier(1,-0.06,.85,1.14);
+    animation-direction:alternate;
+    animation-fill-mode: forwards;
+}
+.rightSlider {
+    animation-name: rightSlider;
+    animation-duration:1.5s;
+    animation-timing-function: cubic-bezier(1,-0.06,.85,1.14);
+    animation-direction:alternate;
+    animation-fill-mode: forwards;
+}
+/* 키프레임 이름 = 애니메이션 이름 */
+@keyframes leftSlider {
+    0% {
+        left:-800px;
+    }
+    87% {
+        left: 50px;
+    }
+    95% {
+        left: -20px;
+    }
+    97% {
+        left : 10px;
+    }
+    100% {
+        left:0px;
+    }
+}
+  /* 키프레임 이름 = 애니메이션 이름 */
+@keyframes rightSlider {
+    0% {
+        left:800px;
+    }
+    87% {
+        left: -50px;
+    }
+    95% {
+        left: 20px;
+    }
+    97% {
+        left : -10px;
+    }
+    100% {
+        left:0px;
+    }
+}

@@ -1,0 +1,316 @@
+.pointer {
+  cursor: pointer !important;
+}
+.deckBtn {
+  background-color: transparent;
+  border: 0;
+}
+
+.homeBtn {
+  z-index: 50;
+  position: absolute; 
+  bottom: 10px;
+  right: 10px;
+  box-sizing: border-box;
+  width: 40px;
+  height: 40px;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.25s;
+  color: #ffffff;
+  cursor: pointer;
+  border: 1px solid #ffffff;
+  background-color: #ffffff15;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+.homeBtn:hover {
+  border: 1px solid #929292;
+  background-color: rgba(63, 63, 63, 0.796);
+}
+.homeBtn>img {
+  width: 30px;
+  height: 30px;
+}
+
+.deckBtn img{
+  width: 30px;
+  display: flex;
+  justify-content: center;
+}
+.characterkBtn {
+  background-color: transparent;
+  border: 0;
+}
+.characterPort{
+  width: 20vw;
+  display: flex;
+  justify-content: center;
+}
+.characterChangerImg {
+  box-sizing: border-box;
+  background-color: rgba(47, 40, 77, 1);
+  width: 50px;
+  padding: 4px;
+  border-radius: 50%;
+  border: 1px solid rgb(0, 0, 0);
+  position: absolute;
+  bottom: 8%;
+  right: 15%;
+  transition: .2s all;
+}
+.activate:hover {
+  background-color: rgb(69, 51, 129);
+  cursor: pointer;
+}
+.cardChangerImg {
+  box-sizing: border-box;
+  background-color: rgba(47, 40, 77, 1);
+  width: 50px;
+  padding: 4px;
+  border-radius: 50%;
+  border: 1px solid rgb(0, 0, 0);
+  position: absolute;
+  /* bottom: 8%;
+  right: 15%; */
+  cursor: pointer;
+  transition: .2s all;
+}
+.sidebar{
+  width: 30vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1;
+  /* vertical-align: middle; */
+}
+.deckBtn:hover {
+  cursor: pointer;
+}
+.deckBtn[disabled]
+{
+  background-color: transparent;
+  border: 0;
+  pointer-events: none;
+}
+
+.bg {
+  background-image: url('../../assets/ui/user-bg.png');
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cardItems {
+  background-color: rgba(47, 55, 75, 0.8);
+  height: 100vh;
+  width: 75vw;
+  display: grid;
+  grid-template-rows: repeat(auto-fill, minmax(400px, auto));
+  grid-template-columns: repeat(auto-fill, minmax(300px, auto));
+  align-items: center;
+  justify-items: center;
+  /* display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; */
+  overflow: scroll;
+  /* align-items: center; */
+}
+.cardsContainer {
+  height: 100vh;
+  width: 75vw;
+  text-align: center;
+}
+.cardItems::-webkit-scrollbar {
+  display: none;
+}
+
+.characterItems {
+  background-color: rgba(47, 55, 75, 0.8);
+  height: 100vh;
+  width: 75vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.characterDiv {
+  cursor: pointer;
+  width: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.characterImg{
+  height: 60vh;
+  transition: 0.2s all;
+}
+.characterImg:hover {
+  filter: drop-shadow(0px 0px 10px #d453ff4a);
+}
+.shadowCharacter {
+  filter: drop-shadow(0px 0px 22px #d453ff96) !important;
+}
+
+.cardcselectcontainer{
+  height: 100vh;
+  width: 25vw;
+  display: flex;
+  justify-content: center;
+}
+
+.selectedCharacter {
+  width: 20vw;
+  position: relative;
+}
+
+.selectedCards {
+  background-color: rgb(47, 55, 75);
+  border: solid 2px white;
+  border-radius: 10px;
+  height: 40vh;
+  width: 20vw;
+}
+.myDeckTittle{
+  position: relative;
+}
+
+.myDeck{
+  position:absolute;
+  font-size: 28px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.myDeckSettingBtn{
+  position: absolute;
+  bottom: 10px;
+  right: 15%;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  10% { transform: translateX(-10px); }
+  20% { transform: translateX(10px); }
+  30% { transform: translateX(-10px); }
+  40% { transform: translateX(10px); }
+  50% { transform: translateX(-10px); }
+  60% { transform: translateX(10px); }
+  70% { transform: translateX(-10px); }
+  80% { transform: translateX(10px); }
+  90% { transform: translateX(-10px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.5s;
+}
+
+
+.cardContainer {
+  /* margin: 100px auto; */
+  padding: 1rem;
+}
+
+.charcaterInfoContainer {
+  box-sizing: border-box;
+  position: absolute;
+  border-radius: 5px;
+  width: 270px;
+  height: 355px;
+  left: -290px;
+  top: -350px;
+  z-index: 10;
+}
+.CB {
+  background-color: rgba(113, 47, 47, 0.79)
+}
+.AK {
+  background-color: rgba(64, 76, 133, 0.792);
+}
+.LUNA {
+  background-color: rgba(0, 0, 0, 0.541);
+}
+.characterInfoDiv {
+  box-sizing: border-box;
+  padding: 20px;
+}
+.charcaterInfoContainer>img {
+  width: 270px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.characterInfoName {
+  font-size: 1.1rem;
+}
+.hanza {
+  font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+.characterInfoRow {
+  margin: 5px 0;
+}
+.characterStory {
+  color: rgb(211, 211, 211)
+}
+.myDeckContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: calc(40vh - 70px);
+}
+.selectedCardBtnBox{
+  /* display: flex;
+  flex-direction: column;
+  width: 100%; */
+  box-sizing: border-box;
+  cursor: default;
+  transition: .2s all;
+  padding: 2px 0;
+  border-radius: 10px;
+  border: 1px solid transparent;
+}
+.selectedCardBtnBox:hover {
+  border: 1px solid rgb(255, 255, 255);
+}
+.fire:hover {
+  background-color: rgba(133, 0, 0, 0.384);
+}
+.water:hover {
+  background-color: rgba(29, 0, 133, 0.384);
+}
+.wind:hover {
+  background-color: rgba(0, 133, 89, 0.384);
+}
+.earth:hover {
+  background-color: rgba(133, 89, 0, 0.384);
+}
+.light:hover {
+  background-color: rgba(255, 255, 255, 0.84);
+  color: black;
+}
+.dark:hover {
+  background-color: rgba(75, 75, 75, 0.384);
+}
+.selectedCardBtn{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.selectedCardBtnImg img{
+  width: 2.1rem;
+  height: 2rem;
+}
+
+.selectedCardtitle{
+  align-items: center;
+}

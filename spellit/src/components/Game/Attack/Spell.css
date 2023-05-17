@@ -1,0 +1,308 @@
+vbody {
+    background-color: #100f0f ;
+    height: "100vh";
+}
+
+.attack-bg {
+    height: 100vh;
+    background: url(../../../assets/InGame/BgImg1.png) no-repeat center;
+    background-size: cover;
+}
+
+.attack-top-items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    min-width: 1250px;
+
+    margin-bottom: 30px;
+
+}
+
+.profileLevelCircle {
+    display: flex;
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    width: 34px;
+    height: 34px;
+
+    background: #000000;
+    box-shadow: 0px 0px 6px #F8FFEE;
+    border-radius: 100%;
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 5;
+}
+
+.profileLevelCircle p {
+    font-size: xx-small;
+}
+
+
+.SpellBox {
+    position: relative;
+    display: inline-block;
+}
+
+.attack-bottom-items {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10rem;
+    margin-right: 10rem;
+}
+
+.SpellandBar {
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.spell-bar-box {
+    position: relative;
+    display: inline-block;
+    width: 800px;
+}
+
+.cardList {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    
+    padding-left: 10px;    
+}
+
+.p2SkillEffects {
+    display: inline-flex;
+    transform: scaleX(-1);
+}
+
+.myCharacter, .yourCharacter{
+    position: relative;
+    top: 0;
+    /* margin: 50px; */
+
+    animation: UpDown 1s ease-in Infinite Alternate;
+}
+
+
+@keyframes UpDown {
+    from {
+        top: 0px;
+    }
+    to {
+        top:50px;
+    }
+}
+
+#origin {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    font-size: xx-large;
+    font-weight: bolder;
+    color: #fff;
+    text-shadow:
+        0 0 2px rgb(0, 0, 0),
+        0 0 2px rgb(0, 0, 0),
+        0 0 5px #ffffff,
+        0 0 5px #ffffff,
+        0 0 5px #ffffff,
+        0 0 5px #ffffff,
+        0 0 5px #ffffff,
+        0 0 5px #ffffff;
+}
+#origin>div {
+    width: 90%;
+}
+
+.correct3{
+    color: rgb(23, 205, 72);
+    text-shadow:
+        0 0 2px rgb(0, 0, 0),
+        0 0 2px rgb(0, 0, 0),
+        0 0 10px #92ed99,
+        0 0 10px #92ed99,
+        0 0 10px #92ed99,
+        0 0 10px #92ed99,
+        0 0 10px #92ed99,
+        0 0 10px #92ed99;
+}
+
+.correct2{
+    color: rgb(205, 23, 23);
+    text-shadow:
+        0 0 2px rgb(0, 0, 0),
+        0 0 2px rgb(0, 0, 0),
+        0 0 10px #ed9292,
+        0 0 10px #ed9292,
+        0 0 10px #ed9292,
+        0 0 10px #ed9292,
+        0 0 10px #ed9292,
+        0 0 10px #ed9292;
+}
+
+.correct0{
+    color: rgb(205, 184, 23);
+    text-shadow:
+        0 0 2px rgb(0, 0, 0),
+        0 0 2px rgb(0, 0, 0),
+        0 0 10px #e7ed92,
+        0 0 10px #e7ed92,
+        0 0 10px #e7ed92,
+        0 0 10px #e7ed92,
+        0 0 10px #e7ed92,
+        0 0 10px #e7ed92;
+}
+
+.correct1{
+    color: rgb(23, 47, 205);
+    text-shadow:
+        0 0 2px rgb(0, 0, 0),
+        0 0 2px rgb(0, 0, 0),
+        0 0 10px #92bced,
+        0 0 10px #92bced,
+        0 0 10px #92bced,
+        0 0 10px #92bced,
+        0 0 10px #92bced,
+        0 0 10px #92bced;
+}
+
+/* .stormSpell-correct{
+    color: rgb(156, 205, 23);
+    text-shadow:
+        0 0 2px rgb(0, 0, 0),
+        0 0 2px rgb(0, 0, 0),
+        0 0 10px #c9ed92,
+        0 0 10px #edde92,
+        0 0 10px #edde92,
+        0 0 10px #edde92,
+        0 0 10px #edde92,
+        0 0 10px #edde92;
+} */
+
+.correct4{
+    color: rgb(28, 28, 28);
+    text-shadow:
+        0 0 2px rgb(0, 0, 0),
+        0 0 2px rgb(0, 0, 0),
+        0 0 10px #484848,
+        0 0 10px #484848,
+        0 0 10px #484848,
+        0 0 10px #484848,
+        0 0 10px #484848,
+        0 0 10px #484848;
+}
+
+.correct5{
+    color: rgb(28, 28, 28);
+    text-shadow:
+        0 0 2px rgb(0, 0, 0),
+        0 0 2px rgb(0, 0, 0),
+        0 0 10px #484848,
+        0 0 10px #484848,
+        0 0 10px #484848,
+        0 0 10px #484848,
+        0 0 10px #484848,
+        0 0 10px #484848;
+}
+
+#percent {
+    color: white;
+}
+
+.otherSpellParticle{
+    height: 100vh;
+    width: 100vw;
+    /* z-index: 1000; */
+}
+
+.hiddenEffect {
+    visibility: hidden;
+}
+
+.readyText, .startText {
+    position: absolute;
+    text-align: center;
+    left: 145px;
+    top: 50px;
+
+    font-family: 'Maiandra GD';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 120px;
+    line-height: 144px;
+    /* display: flex;
+    align-items: center;
+    text-align: center; */
+    letter-spacing: 0.2em;
+
+    color: #FFFFFF;
+
+    /* border: 2px solid #FFFFFF; */
+    text-shadow: 0px 0px 20px #FFFFFF;
+
+    animation: text-fadeIn 2s;
+    opacity: 0;
+}
+.readyText {
+    font-size: 40px;
+}
+.startText {
+    left: 160px;
+}
+
+@keyframes text-fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+.prior {
+    position: absolute;
+    z-index: 11;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.characterComboImg {
+    position: absolute;
+    height: 850px;
+    top: 50%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    clip-path: polygon(20% 0, 100% 0, 80% 100%, 0 100%);
+
+    /* 애니메이션 이름 */
+    animation-name: upperSlide;
+    animation-duration:3.5s;
+    animation-timing-function: cubic-bezier(0,1,1,.01);
+    animation-direction:alternate;
+    animation-fill-mode: forwards;
+}
+@keyframes upperSlide {
+    0% {
+        left: calc(-100vw);
+    }
+    100% {
+        left: 150vw;
+    }
+}

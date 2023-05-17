@@ -1,0 +1,18 @@
+.spell-and-character {
+  display: flex;
+  flex-direction: row;
+
+}
+.attack-character-1p{
+  width: 10rem;
+  transform: scaleX(-1);
+  
+}
+
+.attack-character-2p{
+  width: 10rem;
+}
+.characterComboImg {
+  position: absolute;
+  height: 400px;
+}

@@ -1,0 +1,133 @@
+.auth-bg {
+  background: url('../../assets/ui/auth-bg.png') ;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+	position: relative;
+  background-repeat: no-repeat;
+}
+.loginLogo{
+  width: 200px;
+}
+
+.login-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem 3rem;
+  border: 2px solid white;
+  background-color: rgba(77, 83, 111, 0.5);
+  width: 250px;
+}
+
+.font-red {
+  color: rgb(172, 0, 0);
+}
+
+input {
+  box-sizing: border-box;
+  height: 32px;
+  font-size: 15px;
+  border: 0;
+  border-radius: 15px;
+  outline: none;
+  padding-left: 10px;
+  background-color: rgb(233, 233, 233);
+}
+.loginInput {
+  width: 200px;
+}
+.message {
+  font-size: 0.9rem;
+  position: absolute;
+}
+.success {
+  color:rgb(214, 226, 255)
+}
+.error {
+  color: rgb(255, 0, 0);
+}
+.signupRow {
+  margin-bottom: 20px;
+}
+.signupBtn {
+  box-sizing: border-box;
+  width: 200px;
+  height: 32px;
+  position: relative;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.25s;
+  color: #ffffff;
+  cursor: pointer;
+  border: 1px solid #ffffff;
+  background-color: #ffffff15;
+}
+.signupBtn:hover {
+  background-color: #ffffff;
+  color: rgb(61, 61, 61);
+}
+
+.shape {
+  width: 100vw;
+  height: 100vh;
+  border: 600px solid black; 
+  border-radius: 100px;
+  position: absolute;
+	top: 25%;
+	left:25%;
+
+}
+
+.hole {
+	position: absolute;
+	left: -75%;
+	top: -75%;
+	border-radius: 50%;
+	width: 4000px;
+	height: 4000px;
+	box-shadow: 0 0 0 99999px rgb(0, 0, 0);
+	z-index: 3;
+
+}
+.holedown{
+	position: absolute;
+	left: 47%;
+	top: 47%;
+	border-radius: 50%;
+	width: 100px;
+	height: 100px;
+	box-shadow: 0 0 0 99999px #201c2c;
+	z-index: 3;
+	animation: resizedown .9s ease-in-out;
+}
+
+@keyframes resizedown {
+  0% {
+    transform: scale(25);
+  }
+	
+  100% {
+    transform: scale(0);
+  }
+}
+.disabled {
+  box-sizing: border-box;
+  width: 200px;
+  height: 32px;
+  position: relative;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.25s;
+  color: #c5c5c5;
+  cursor: default;
+  border: 1px solid #ffffff;
+  background-color: #707070ea;
+}
