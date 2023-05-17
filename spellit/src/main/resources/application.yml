@@ -1,0 +1,59 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  ssl:
+    enabled: false
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://j8d201.p.ssafy.io:3305/spellit?useSSL=false&autoReconnect=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    username: root
+    password: ssafy
+  jpa:
+    database: mysql
+#    database-platform: org.hibernate.spatial.dialect.mysql.MySQL56InnoDBSpatialDialect
+    hibernate:
+      ddl-auto: update
+    #    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: true
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+  servlet:
+    multipart:
+      location: /static/resources
+      enabled: true
+      max-file-size: 16MB
+      max-request-size: 16MB
+logging:
+  level:
+    root: info
+    org.hibernate.type: error
+
+secret:
+  key: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
+jwt:
+  token:
+    secret-key: [secret-key]
+  access-token:
+    expire-length: 1800000
+  refresh-token:
+    expire-length: 1209600000
+
+# 환경변수
+OPENVIDU_URL: https://j8d201.p.ssafy.io:8443/
+#OPENVIDU_URL: https://j8d201.p.ssafy.io/api/
+#OPENVIDU_URL: http://j8d201.p.ssafy.io:5443/
+OPENVIDU_SECRET: D201_SPELLIT
