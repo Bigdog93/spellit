@@ -137,7 +137,7 @@ DevOps
 <img src="https://github.com/lkc263/springawsbook/assets/72541544/88959fc2-4837-4afb-ade3-8cdd4acb819a" width="860" height="540"/>
 
 
-- 동전 던지를 통해 공격 선과 후가 결정됩니다.
+- 동전 던지기를 통해 공격 선과 후가 결정됩니다.
 
 <img src="https://github.com/lkc263/springawsbook/assets/72541544/0b9bc863-8121-493c-b719-ce69e35ba3e3" width="860" height="540"/>
 
